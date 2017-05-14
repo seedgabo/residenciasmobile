@@ -1,0 +1,30 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Residencias</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+    <ion-list>
+      <button ion-item *ngFor="let residence of residences">
+
+        <ion-icon *ngIf="residence.status=='solvente'" color="secondary" name="home" item-left></ion-icon>
+        <ion-icon *ngIf="residence.status=='moroso'" color="danger" name="home" item-left></ion-icon>
+        <h3>{{residence.name}}</h3>
+        <span *ngIf="residence.owner!=null">{{residence.owner.name}}</span>
+        <span ion-text color="light" *ngIf="residence.owner==null">Sin Propietario</span>
+        <strong item-right>{{residence.type}}</strong>
+
+      </button>
+    </ion-list>
+
+
+  
+</ion-content>
