@@ -1,6 +1,6 @@
 <ion-content padding>
   <div text-center>
-    <img src="http://localhost/residencias/public/img/logo-completo.png">
+    <img src="/assets/logo-completo.png" style="height:85px">
   </div>
   <ion-list>
     <ion-item>
@@ -18,13 +18,13 @@
     </button>
 
 
-    <button style="margin-top:15px" full ion-button icon-left>
+    <button style="margin-top:15px" full ion-button icon-left (click)="loginWithFacebook()">
       <ion-icon name="logo-facebook"></ion-icon>
       Iniciar sesion con Facebook
   </button>
 
 
-    <button style="margin-top:15px" full ion-button color="danger" icon-left>
+    <button style="margin-top:15px" full ion-button color="danger" icon-left (click)="loginWithGoogle()">
     <ion-icon name="logo-googleplus"></ion-icon>
     Iniciar sesion con Google
   </button>

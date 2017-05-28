@@ -16,7 +16,11 @@ import { Api } from "../providers/api";
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Camera } from '@ionic-native/camera';
-
+import { Facebook } from "@ionic-native/facebook";
+import { GooglePlus } from '@ionic-native/google-plus';
+import { BackgroundMode } from "@ionic-native/background-mode";
+import { AppMinimize } from "@ionic-native/app-minimize";
+import { CodePush } from '@ionic-native/code-push';
 @NgModule({
   declarations: [
     MyApp,
@@ -40,9 +44,7 @@ import { Camera } from '@ionic-native/camera';
     Residences
   ],
   providers: [
-    StatusBar,
-    SplashScreen,
-    Camera,
+    StatusBar, SplashScreen, Camera, Facebook, GooglePlus, AppMinimize, BackgroundMode, CodePush,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     Api
   ]

@@ -1,14 +1,17 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
-import { Api } from "../../providers/api";
 import { HomePage } from "../home/home";
+import { Api } from "../../providers/api";
+import { Facebook } from '@ionic-native/facebook';
+import { GooglePlus } from '@ionic-native/google-plus';
+
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html',
 })
 export class Login {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public api: Api, public alertCtrl: AlertController, public loadingCtrl: LoadingController) {
+  constructor(public facebook: Facebook, public google: GooglePlus, public navCtrl: NavController, public navParams: NavParams, public api: Api, public alertCtrl: AlertController, public loadingCtrl: LoadingController) {
   }
 
   ionViewDidLoad() {
@@ -17,7 +20,7 @@ export class Login {
 
   login() {
     let loading = this.loadingCtrl.create({
-       content: `
+      content: `
       <div>
         <img class="loading-img" src="${this.api.url + "img/logo-completo.png"}" alt="">
         <h3>Cargando ...</h3>
@@ -26,13 +29,13 @@ export class Login {
     });
 
     loading.present();
-   this.api.doLogin()
+    this.api.doLogin()
       .then((data) => {
         this.api.user = data;
         loading.dismiss();
         this.goTo()
         console.log(data);
-        
+
 
       })
 
@@ -46,6 +49,51 @@ export class Login {
         loading.dismiss();
         alert.present();
 
+      });
+  }
+
+  loginWithFacebook() {
+    let loading = this.loadingCtrl.create({
+      content: `
+      <div>
+        <img class="loading-img" src="${this.api.url + "img/logo-completo.png"}" alt="">
+        <h3>Cargando ...</h3>
+      </div>`,
+      spinner: 'hide',
+    });
+    loading.present();
+    this.facebook.login(['public_profile', 'email'])
+      .then((data) => {
+        console.log(data);
+        this.facebook.api(`${data.authResponse.userID}/?fields=id,email,name,picture,first_name,last_name,gender`, ['public_profile', 'email']).then((data) => {
+          console.log(data);
+          this.api.loginOAuth(data).then((data) => {
+            console.log(data);
+            this.api.saveData(data);
+            this.goTo();
+            loading.dismiss();
+          }).catch((err) => {
+            console.error(err);
+            loading.dismiss();
+          });
+        }).catch((err) => {
+          console.error(err);
+          loading.dismiss();
+
+        })
+      }).catch((err) => {
+        console.error(err);
+        loading.dismiss();
+      });
+  }
+
+  loginWithGoogle() {
+    this.google.login({})
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((err) => {
+        console.error(err);
       });
   }
 

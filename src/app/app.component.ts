@@ -2,12 +2,15 @@ import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform, NavController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { CodePush } from "@ionic-native/code-push";
+import { BackgroundMode } from '@ionic-native/background-mode';
 
 import { HomePage } from '../pages/home/home';
 import { ParkingsPage } from '../pages/parkings/parkings';
 import { Login } from '../pages/login/login';
 import { Residences } from "../pages/residences/residences";
 import { Api } from "../providers/api";
+
 
 @Component({
   templateUrl: 'app.html'
@@ -19,7 +22,7 @@ export class MyApp {
 
   pages: Array<any>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public api: Api) {
+  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public codepush: CodePush, public backgroundmode: BackgroundMode, public api: Api) {
     this.initializeApp();
     this.platform.ready().then(() => {
       this.api.ready.then(() => {
@@ -46,6 +49,13 @@ export class MyApp {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+
+      this.backgroundmode.configure({ hidden: true, silent: true, });
+      this.backgroundmode.enable();
+      this.backgroundmode.excludeFromTaskList();
+      this.backgroundmode.overrideBackButton();
+
+      this.codepush.sync().subscribe((syncStatus) => console.log(syncStatus), (err) => { console.warn(err) });
     });
   }
 
