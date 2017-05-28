@@ -75,25 +75,54 @@ export class Login {
           }).catch((err) => {
             console.error(err);
             loading.dismiss();
+            this.alertCtrl.create({
+              message: err,
+              title: "Error",
+            }).present();
+
           });
         }).catch((err) => {
           console.error(err);
           loading.dismiss();
+          this.alertCtrl.create({
+            message: err,
+            title: "Error",
+          }).present();
 
         })
       }).catch((err) => {
         console.error(err);
         loading.dismiss();
+        this.alertCtrl.create({
+          message: err,
+          title: "Error",
+        }).present();
+
       });
   }
 
   loginWithGoogle() {
-    this.google.login({})
+    let loading = this.loadingCtrl.create({
+      content: `
+      <div>
+        <img class="loading-img" src="${this.api.url + "img/logo-completo.png"}" alt="">
+        <h3>Cargando ...</h3>
+      </div>`,
+      spinner: 'hide',
+    });
+    loading.present();
+    this.google.login({ scopes: 'obj.email obj.userId obj.familyName obj.givenName obj.imageUrl' })
       .then((data) => {
         console.log(data);
+        loading.dismiss();
       })
       .catch((err) => {
         console.error(err);
+        loading.dismiss();
+        this.alertCtrl.create({
+          message: err,
+          title: "Error",
+        }).present();
       });
   }
 

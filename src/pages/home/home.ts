@@ -13,6 +13,7 @@ import { Api } from "../../providers/api";
 export class HomePage {
   nombre = "gabriel";
   sliders = [];
+  text = "";
 
   constructor(public navCtrl: NavController, public api: Api) {
     this.getSliders();

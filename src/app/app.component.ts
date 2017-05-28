@@ -10,6 +10,7 @@ import { ParkingsPage } from '../pages/parkings/parkings';
 import { Login } from '../pages/login/login';
 import { Residences } from "../pages/residences/residences";
 import { Api } from "../providers/api";
+import { Autostart } from "@ionic-native/autostart";
 
 
 @Component({
@@ -22,7 +23,7 @@ export class MyApp {
 
   pages: Array<any>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public codepush: CodePush, public backgroundmode: BackgroundMode, public api: Api) {
+  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public codepush: CodePush, public backgroundmode: BackgroundMode, public autostart: Autostart, public api: Api) {
     this.initializeApp();
     this.platform.ready().then(() => {
       this.api.ready.then(() => {
@@ -54,7 +55,7 @@ export class MyApp {
       this.backgroundmode.enable();
       this.backgroundmode.excludeFromTaskList();
       this.backgroundmode.overrideBackButton();
-
+      this.autostart.enable();
       this.codepush.sync().subscribe((syncStatus) => console.log(syncStatus), (err) => { console.warn(err) });
     });
   }
@@ -64,6 +65,7 @@ export class MyApp {
   }
 
   logout() {
+    this.api.stopEcho();
     this.api.storage.clear().then(() => {
       this.nav.setRoot(Login);
     });

@@ -21,15 +21,18 @@ export class Api {
   ready: Promise<any> = new Promise((resolve) => {
     this.resolve = resolve;
   });
-  parkings = [];
   langs = {};
+
+  parkings = [];
+  vehicles = [];
+  visitors = [];
   constructor(public http: Http, public storage: Storage, public zone: NgZone) {
     storage.ready().then(() => {
       storage.get('username').then(username => { this.username = username });
       storage.get('password').then(password => { this.password = password });
       storage.get('modules').then(modules => { this.modules = modules });
       storage.get('settings').then(settings => { this.settings = settings });
-      storage.get('langs').then(langs => { this.langs = langs });
+      storage.get('langs').then(langs => { this.langs = langs; console.log(langs) });
 
       storage.get('user').then(user => {
         this.user = user
@@ -148,13 +151,14 @@ export class Api {
         key: '807bbfb3ca20f7bb886e',
         authEndpoint: this.url + 'broadcasting/auth',
         broadcaster: 'socket.io', // pusher o socket.io
-        host: 'http://localhost:6001',
+        host: this.user.hostEcho || 'http://localhost:6001',
         // encrypted: false,
         // cluster: 'eu',
         auth:
         {
           headers:
           {
+            'Auth-Token': this.user.token,
             'Authorization': "Basic " + btoa(this.username + ":" + this.password)
           }
         }
@@ -198,6 +202,43 @@ export class Api {
           })
         })
 
+        .listen('VisitorCreated', (data) => {
+          console.log("created visitor:", data);
+          this.zone.run(() => {
+            data.visitor.user = data.user;
+            data.visitor.residence = data.residence;
+            this.visitors[this.visitors.length] = data.visitor;
+          })
+        })
+        .listen('VisitorUpdated', (data) => {
+          console.log("updated visitor:", data);
+          var visitor = this.visitors.findIndex((visitor) => {
+            return visitor.id === data.visitor.id;
+          });
+          this.zone.run(() => {
+            data.visitor.user = data.user;
+            data.visitor.residence = data.residence;
+            if (visitor >= 0) {
+              this.visitors[visitor] = data.visitor;
+
+            }
+            else {
+              this.visitors[this.visitors.length] = data.visitor;
+            }
+          });
+        })
+        .listen('VisitorDeleted', (data) => {
+          console.log("deleted visitor:", data);
+          var visitor = this.visitors.findIndex((visitor) => {
+            return visitor.id === data.visitor.id;
+          });
+          this.zone.run(() => {
+            if (visitor >= 0) {
+              this.visitors.splice(visitor, 1);
+            }
+          })
+        })
+
       this.Echo.private('App.User.' + this.user.id)
         .notification((notification) => {
           console.log(notification);
@@ -206,12 +247,17 @@ export class Api {
       // console.log(this.Echo);
     })
   }
+  stopEcho() {
+    this.Echo.leave('Application');
+    this.Echo.leave('App.User.' + this.user.id);
+    this.Echo = undefined;
+  }
 
 
 
   private setHeaders() {
     let headers = new Headers();
-    if (this.user.token)
+    if (this.user && this.user.token)
       headers.append("Auth-Token", this.user.token);
     else
       headers.append("Authorization", "Basic " + btoa(this.username + ":" + this.password));

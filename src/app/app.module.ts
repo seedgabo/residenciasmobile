@@ -12,6 +12,7 @@ import { Login } from "../pages/login/login";
 import { Residences } from "../pages/residences/residences";
 
 import { Api } from "../providers/api";
+import { TransPipe } from '../pipes/trans/trans';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -21,6 +22,7 @@ import { GooglePlus } from '@ionic-native/google-plus';
 import { BackgroundMode } from "@ionic-native/background-mode";
 import { AppMinimize } from "@ionic-native/app-minimize";
 import { CodePush } from '@ionic-native/code-push';
+import { Autostart } from "@ionic-native/autostart";
 @NgModule({
   declarations: [
     MyApp,
@@ -28,6 +30,7 @@ import { CodePush } from '@ionic-native/code-push';
     ParkingsPage,
     Login,
     Residences,
+    TransPipe,
   ],
   imports: [
     BrowserModule,
@@ -44,7 +47,7 @@ import { CodePush } from '@ionic-native/code-push';
     Residences
   ],
   providers: [
-    StatusBar, SplashScreen, Camera, Facebook, GooglePlus, AppMinimize, BackgroundMode, CodePush,
+    StatusBar, SplashScreen, Camera, Facebook, GooglePlus, AppMinimize, BackgroundMode, CodePush, Autostart,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     Api
   ]

@@ -17,4 +17,9 @@
 
     </ion-slide>
   </ion-slides>
+  <h2 ion-text color="primary" text-center>{{ text | trans }}</h2>
+  <ion-item>
+    <ion-label floating>text</ion-label>
+    <ion-input type="text" [(ngModel)]="text"></ion-input>
+  </ion-item>
 </ion-content>
