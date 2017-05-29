@@ -22,7 +22,7 @@ import { GooglePlus } from '@ionic-native/google-plus';
 import { BackgroundMode } from "@ionic-native/background-mode";
 import { AppMinimize } from "@ionic-native/app-minimize";
 import { CodePush } from '@ionic-native/code-push';
-import { Autostart } from "@ionic-native/autostart";
+import { NewVisitPage } from "../pages/new-visit/new-visit";
 @NgModule({
   declarations: [
     MyApp,
@@ -30,6 +30,7 @@ import { Autostart } from "@ionic-native/autostart";
     ParkingsPage,
     Login,
     Residences,
+    NewVisitPage,
     TransPipe,
   ],
   imports: [
@@ -44,10 +45,11 @@ import { Autostart } from "@ionic-native/autostart";
     HomePage,
     ParkingsPage,
     Login,
-    Residences
+    Residences,
+    NewVisitPage,
   ],
   providers: [
-    StatusBar, SplashScreen, Camera, Facebook, GooglePlus, AppMinimize, BackgroundMode, CodePush, Autostart,
+    StatusBar, SplashScreen, Camera, Facebook, GooglePlus, AppMinimize, BackgroundMode, CodePush,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     Api
   ]

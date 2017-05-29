@@ -6,6 +6,8 @@ import 'rxjs/add/operator/map';
 import Echo from 'laravel-echo';
 declare var window: any;
 import Pusher from 'pusher-js';
+import { PopoverController } from "ionic-angular";
+import { NewVisitPage } from "../pages/new-visit/new-visit";
 window.Pusher = Pusher;
 
 @Injectable()
@@ -13,7 +15,7 @@ export class Api {
   modules: any;
   settings: any;
   Echo: any;
-  url = "http://192.168.80.76/residencias/public/";
+  url = "http://192.168.40.109/residencias/public/";
   username = "seedgabo@gmail.com";
   password = "gab23gab";
   user;
@@ -26,7 +28,8 @@ export class Api {
   parkings = [];
   vehicles = [];
   visitors = [];
-  constructor(public http: Http, public storage: Storage, public zone: NgZone) {
+  visits = [];
+  constructor(public http: Http, public storage: Storage, public zone: NgZone, public popover: PopoverController) {
     storage.ready().then(() => {
       storage.get('username').then(username => { this.username = username });
       storage.get('password').then(password => { this.password = password });
@@ -151,7 +154,8 @@ export class Api {
         key: '807bbfb3ca20f7bb886e',
         authEndpoint: this.url + 'broadcasting/auth',
         broadcaster: 'socket.io', // pusher o socket.io
-        host: this.user.hostEcho || 'http://localhost:6001',
+        // host: this.user.hostEcho || 'http://192.168.40.109:6001',
+        host: "http://192.168.40.109:6001",
         // encrypted: false,
         // cluster: 'eu',
         auth:
@@ -205,25 +209,24 @@ export class Api {
         .listen('VisitorCreated', (data) => {
           console.log("created visitor:", data);
           this.zone.run(() => {
-            data.visitor.user = data.user;
-            data.visitor.residence = data.residence;
-            this.visitors[this.visitors.length] = data.visitor;
+            var visitor = this.visitors[this.visitors.length] = data.visitor;
+            if (data.image)
+              visitor.image = data.image;
           })
         })
         .listen('VisitorUpdated', (data) => {
           console.log("updated visitor:", data);
-          var visitor = this.visitors.findIndex((visitor) => {
+          var visitor_index = this.visitors.findIndex((visitor) => {
             return visitor.id === data.visitor.id;
           });
           this.zone.run(() => {
-            data.visitor.user = data.user;
-            data.visitor.residence = data.residence;
-            if (visitor >= 0) {
-              this.visitors[visitor] = data.visitor;
-
-            }
+            if (visitor_index > -1)
+              var visitor = this.visitors[visitor_index] = data.visitor;
             else {
-              this.visitors[this.visitors.length] = data.visitor;
+              var visitor = this.visitors[this.visitors.length] = data.visitor;
+            }
+            if (data.image) {
+              visitor.image = data.image;
             }
           });
         })
@@ -239,6 +242,49 @@ export class Api {
           })
         })
 
+
+        .listen('VisitCreated', (data) => {
+          console.log("created vist:", data);
+          this.zone.run(() => {
+            var visit = this.visits[this.visits.length] = data.visit;
+            if (data.visitor)
+              visit.visitor = data.visitor;
+          })
+        })
+        .listen('VisitUpdated', (data) => {
+          console.log("updated visit:", data);
+          var visit_index = this.visits.findIndex((visit) => {
+            return visit.id === data.visit.id;
+          });
+          this.zone.run(() => {
+            if (visit_index > -1)
+              var visits = this.visits[visit_index] = data.visit;
+            else {
+              var visit = this.visits[this.visits.length] = data.visit;
+            }
+            if (data.visitor) {
+              visit.visitor = data.visitor;
+            }
+          });
+        })
+        .listen('VisitDeleted', (data) => {
+          console.log("deleted visitor:", data);
+          var visit = this.visits.findIndex((visit) => {
+            return visit.id === data.visit.id;
+          });
+          this.zone.run(() => {
+            if (visit >= 0) {
+              this.visits.splice(visit, 1);
+            }
+          })
+        })
+
+      this.Echo.private('App.Residence.' + this.user.residence_id)
+        .listen('VisitConfirm', (data) => {
+          console.log("VisitConfirm: ", data);
+          this.newVisit(data.visit, data.visitor);
+        })
+
       this.Echo.private('App.User.' + this.user.id)
         .notification((notification) => {
           console.log(notification);
@@ -247,10 +293,39 @@ export class Api {
       // console.log(this.Echo);
     })
   }
+
   stopEcho() {
     this.Echo.leave('Application');
     this.Echo.leave('App.User.' + this.user.id);
     this.Echo = undefined;
+  }
+
+  trans(value, args = null) {
+    if (!this.langs) return value;
+    var splits = value.split('.');
+    if (splits.length == 2) {
+      var base = this.langs[splits[0]];
+      if (base) {
+        var trans = base[splits[1]];
+        if (trans) {
+          value = trans;
+        }
+      }
+    } else {
+      var base = this.langs["__"];
+      if (base) {
+        var trans = base[value];
+        if (trans) {
+          value = trans;
+        }
+      }
+    }
+    if (args) {
+      for (var k in args) {
+        value = value.replace(':' + k, args[k]);
+      }
+    }
+    return value;
   }
 
 
@@ -277,6 +352,17 @@ export class Api {
     else {
       return res;
     }
+  }
+
+  newVisit(visit, visitor) {
+    this.playSoundNotfication();
+    this.popover.create(NewVisitPage, { visit: visit, visitor: visitor }).present();
+  }
+
+  playSoundNotfication() {
+    var sound = new Audio('assets/sounds/notifcations.mp3');
+    sound.play();
+    return sound;
   }
 
 }
