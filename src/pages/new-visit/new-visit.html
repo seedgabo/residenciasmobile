@@ -1,17 +1,19 @@
-<ion-content padding>
+<ion-content>
+  <ion-toolbar color="primary">
+    <ion-title>
+      {{ '__.you have a new visit' | trans }}
+    </ion-title>
+  </ion-toolbar>
   <div text-center>
     <img [src]="visitor.image_url" alt="" style="border-radius:50%; height:70px">
   </div>
-  <h2 text-center color="primary">
-    {{ '__.you have a new visit' | trans }}
-  </h2>
-  <h3 text-cent>
+  <h4 text-center>
     {{ visitor.name }}
-  </h3>
+  </h4>
   <ion-grid>
     <ion-row>
-      <ion-col><button ion-button full color="secondary">{{'literals.confirm' | trans}}</button></ion-col>
-      <ion-col><button ion-button full color="danger">{{'literals.reject' | trans }}</button></ion-col>
+      <ion-col><button (click)="confirm()" ion-button full color="secondary">{{'literals.confirm' | trans}}</button></ion-col>
+      <ion-col><button (click)="reject()" ion-button full color="danger">{{'literals.reject' | trans }}</button></ion-col>
     </ion-row>
   </ion-grid>
 </ion-content>

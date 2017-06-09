@@ -8,6 +8,7 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { ParkingsPage } from '../pages/parkings/parkings';
+import { VisitorsPage } from '../pages/visitors/visitors';
 import { Login } from "../pages/login/login";
 import { Residences } from "../pages/residences/residences";
 
@@ -23,11 +24,14 @@ import { BackgroundMode } from "@ionic-native/background-mode";
 import { AppMinimize } from "@ionic-native/app-minimize";
 import { CodePush } from '@ionic-native/code-push';
 import { NewVisitPage } from "../pages/new-visit/new-visit";
+import { NewVisitorPage } from "../pages/new-visitor/new-visitor";
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
     ParkingsPage,
+    VisitorsPage,
+    NewVisitorPage,
     Login,
     Residences,
     NewVisitPage,
@@ -44,6 +48,9 @@ import { NewVisitPage } from "../pages/new-visit/new-visit";
     MyApp,
     HomePage,
     ParkingsPage,
+    VisitorsPage,
+    NewVisitPage,
+    NewVisitorPage,
     Login,
     Residences,
     NewVisitPage,

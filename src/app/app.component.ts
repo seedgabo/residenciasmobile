@@ -11,6 +11,7 @@ import { Login } from '../pages/login/login';
 import { Residences } from "../pages/residences/residences";
 import { Api } from "../providers/api";
 import { AppMinimize } from "@ionic-native/app-minimize";
+import { VisitorsPage } from "../pages/visitors/visitors";
 
 
 @Component({
@@ -39,9 +40,10 @@ export class MyApp {
 
     // used for an example of ngFor and navigation
     this.pages = [
-      { title: 'Home', component: HomePage },
-      { title: 'Parkings', component: ParkingsPage },
-      { title: "Residencias", component: Residences }
+      { title: 'Home', component: HomePage, icon: 'home' },
+      { title: "Visitantes", component: VisitorsPage, icon: 'contacts' },
+      { title: "Residencias", component: Residences, icon: 'albums' },
+      { title: 'Parkings', component: ParkingsPage, icon: 'car' },
     ];
 
   }

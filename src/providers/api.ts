@@ -15,19 +15,22 @@ export class Api {
   modules: any;
   settings: any;
   Echo: any;
-  url = "http://192.168.40.109/residencias/public/";
+  url = "http://localhost/residencias/public/";
   username = "seedgabo@gmail.com";
   password = "gab23gab";
   user;
+  residence;
   resolve;
   ready: Promise<any> = new Promise((resolve) => {
     this.resolve = resolve;
   });
   langs = {};
-
-  parkings = [];
+  workers = [];
   vehicles = [];
   visitors = [];
+  residences = [];
+  users = [];
+  parkings = [];
   visits = [];
   constructor(public http: Http, public storage: Storage, public zone: NgZone, public popover: PopoverController) {
     storage.ready().then(() => {
@@ -36,7 +39,7 @@ export class Api {
       storage.get('modules').then(modules => { this.modules = modules });
       storage.get('settings').then(settings => { this.settings = settings });
       storage.get('langs').then(langs => { this.langs = langs; console.log(langs) });
-
+      storage.get('residence').then(residence => { this.residence = residence; });
       storage.get('user').then(user => {
         this.user = user
         this.resolve(user);
@@ -52,9 +55,11 @@ export class Api {
         .subscribe(data => {
           resolve(data);
           this.user = data.user;
+          this.residence = data.residence;
           this.settings = data.settings;
           this.modules = data.modules;
           this.storage.set('user', data.user);
+          this.storage.set('residence', data.residence);
           this.storage.set('username', this.username);
           this.storage.set('password', this.password);
           this.storage.set('modules', this.modules);
@@ -76,6 +81,21 @@ export class Api {
       .catch((err) => {
         console.error('error trying to download translations', err);
       })
+  }
+
+  getAllData() {
+    var promise = this.get('getData');
+    promise.then((data: any) => {
+      console.log(data);
+      this.visitors = data.visitors;
+      this.vehicles = data.vehicles;
+      this.workers = data.workers;
+      this.users = data.users;
+      this.residences = data.residences;
+    }).catch((err) => {
+      console.error(err);
+    });
+    return promise;
   }
 
   get(uri) {
@@ -116,7 +136,7 @@ export class Api {
 
   delete(uri) {
     return new Promise((resolve, reject) => {
-      this.http.get(this.url + "api/" + uri, { headers: this.setHeaders() })
+      this.http.delete(this.url + "api/" + uri, { headers: this.setHeaders() })
         .map(res => res.json())
         .subscribe(data => {
           resolve(data);
@@ -154,8 +174,8 @@ export class Api {
         key: '807bbfb3ca20f7bb886e',
         authEndpoint: this.url + 'broadcasting/auth',
         broadcaster: 'socket.io', // pusher o socket.io
-        // host: this.user.hostEcho || 'http://192.168.40.109:6001',
-        host: "http://192.168.40.109:6001",
+        host: this.user.hostEcho || 'http://localhost:6001',
+        // host: "http://localhost:6001",
         // encrypted: false,
         // cluster: 'eu',
         auth:
@@ -208,6 +228,7 @@ export class Api {
 
         .listen('VisitorCreated', (data) => {
           console.log("created visitor:", data);
+          if (data.visitor.residence_id != this.residence.id) return;
           this.zone.run(() => {
             var visitor = this.visitors[this.visitors.length] = data.visitor;
             if (data.image)
@@ -216,6 +237,7 @@ export class Api {
         })
         .listen('VisitorUpdated', (data) => {
           console.log("updated visitor:", data);
+          if (data.visitor.residence_id != this.residence.id) return;
           var visitor_index = this.visitors.findIndex((visitor) => {
             return visitor.id === data.visitor.id;
           });
@@ -245,6 +267,8 @@ export class Api {
 
         .listen('VisitCreated', (data) => {
           console.log("created vist:", data);
+          if (data.visitor.residence_id != this.residence.id) return;
+
           this.zone.run(() => {
             var visit = this.visits[this.visits.length] = data.visit;
             if (data.visitor)
@@ -253,6 +277,7 @@ export class Api {
         })
         .listen('VisitUpdated', (data) => {
           console.log("updated visit:", data);
+          if (data.visitor.residence_id != this.residence.id) return;
           var visit_index = this.visits.findIndex((visit) => {
             return visit.id === data.visit.id;
           });
@@ -269,6 +294,8 @@ export class Api {
         })
         .listen('VisitDeleted', (data) => {
           console.log("deleted visitor:", data);
+          if (data.visitor.residence_id != this.residence.id) return;
+
           var visit = this.visits.findIndex((visit) => {
             return visit.id === data.visit.id;
           });
@@ -356,7 +383,7 @@ export class Api {
 
   newVisit(visit, visitor) {
     this.playSoundNotfication();
-    this.popover.create(NewVisitPage, { visit: visit, visitor: visitor }).present();
+    this.popover.create(NewVisitPage, { visit: visit, visitor: visitor }, { cssClass: "fullScreen", enableBackdropDismiss: false, showBackdrop: true }).present();
   }
 
   playSoundNotfication() {
