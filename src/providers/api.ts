@@ -18,7 +18,7 @@ export class Api {
   modules: any;
   settings: any;
   Echo: any;
-  url = "http://192.168.80.20/residencias/public/";
+  url = "http://residenciasonline.com/residencias/public/";
   username = "seedgabo@gmail.com";
   password = "gab23gab";
   user;
@@ -183,7 +183,7 @@ export class Api {
         key: '807bbfb3ca20f7bb886e',
         authEndpoint: this.url + 'broadcasting/auth',
         broadcaster: 'socket.io', // pusher o socket.io
-        host: this.user.hostEcho || 'http://192.168.80.20:6001',
+        host: this.user.hostEcho,
         // host: "http://localhost:6001",
         // encrypted: false,
         // cluster: 'eu',
