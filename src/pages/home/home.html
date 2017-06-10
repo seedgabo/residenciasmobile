@@ -8,12 +8,12 @@
 </ion-header>
 
 <ion-content>
-  <ion-slides style="height:33%" pager paginationType="bullets" autoplay="3000" *ngIf="sliders.length > 0">
+  <ion-slides style="height:33%" pager paginationType="bullets" autoplay="3000" loop="true" *ngIf="sliders.length > 0">
     <ion-slide *ngFor="let slider of sliders">
       <img src="{{slider.image.url}}" alt="{{slider.name}}" style="height:100%; width:100%">
 
-      <h2 style="position:absolute; top:25%; left:27%; color:white">{{slider.name}}</h2>
-      <p style="position:absolute; top:35%; left:27%; color: white">{{slider.text}}</p>
+      <h2 style="position:absolute; top:20%; left:12%; color:white">{{slider.name}}</h2>
+      <p style="position:absolute; top:35%; left:12%; color: white">{{slider.text}}</p>
 
     </ion-slide>
   </ion-slides>

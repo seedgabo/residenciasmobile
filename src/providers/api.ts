@@ -6,16 +6,19 @@ import 'rxjs/add/operator/map';
 import Echo from 'laravel-echo';
 declare var window: any;
 import Pusher from 'pusher-js';
-import { PopoverController } from "ionic-angular";
+import { PopoverController, ToastController, Events } from "ionic-angular";
 import { NewVisitPage } from "../pages/new-visit/new-visit";
+import moment from 'moment';
+moment.locale('es');
 window.Pusher = Pusher;
 
 @Injectable()
 export class Api {
+  sound: HTMLAudioElement;
   modules: any;
   settings: any;
   Echo: any;
-  url = "http://localhost/residencias/public/";
+  url = "http://192.168.80.20/residencias/public/";
   username = "seedgabo@gmail.com";
   password = "gab23gab";
   user;
@@ -32,7 +35,7 @@ export class Api {
   users = [];
   parkings = [];
   visits = [];
-  constructor(public http: Http, public storage: Storage, public zone: NgZone, public popover: PopoverController) {
+  constructor(public http: Http, public storage: Storage, public zone: NgZone, public popover: PopoverController, public toast: ToastController, public events: Events) {
     storage.ready().then(() => {
       storage.get('username').then(username => { this.username = username });
       storage.get('password').then(password => { this.password = password });
@@ -43,6 +46,10 @@ export class Api {
       storage.get('user').then(user => {
         this.user = user
         this.resolve(user);
+      });
+      this.events.subscribe('stopSound', () => {
+        if (this.sound)
+          this.sound.pause();
       });
 
     });
@@ -87,7 +94,9 @@ export class Api {
     var promise = this.get('getData');
     promise.then((data: any) => {
       console.log(data);
+      this.residence = data.residence;
       this.visitors = data.visitors;
+      this.visits = data.visits;
       this.vehicles = data.vehicles;
       this.workers = data.workers;
       this.users = data.users;
@@ -174,7 +183,7 @@ export class Api {
         key: '807bbfb3ca20f7bb886e',
         authEndpoint: this.url + 'broadcasting/auth',
         broadcaster: 'socket.io', // pusher o socket.io
-        host: this.user.hostEcho || 'http://localhost:6001',
+        host: this.user.hostEcho || 'http://192.168.80.20:6001',
         // host: "http://localhost:6001",
         // encrypted: false,
         // cluster: 'eu',
@@ -266,30 +275,36 @@ export class Api {
 
 
         .listen('VisitCreated', (data) => {
-          console.log("created vist:", data);
           if (data.visitor.residence_id != this.residence.id) return;
+          console.log("created vist:", data);
 
           this.zone.run(() => {
-            var visit = this.visits[this.visits.length] = data.visit;
+            this.visits.unshift(data.visit);
+            var visit = this.visits[0];
             if (data.visitor)
               visit.visitor = data.visitor;
+            this.visitStatus(visit);
           })
         })
         .listen('VisitUpdated', (data) => {
           console.log("updated visit:", data);
           if (data.visitor.residence_id != this.residence.id) return;
+          this.events.publish('VisitUpdated', data);
           var visit_index = this.visits.findIndex((visit) => {
             return visit.id === data.visit.id;
           });
           this.zone.run(() => {
             if (visit_index > -1)
-              var visits = this.visits[visit_index] = data.visit;
+              var visit = this.visits[visit_index] = data.visit;
             else {
-              var visit = this.visits[this.visits.length] = data.visit;
+              this.visits.unshift(data.visit);
+              var visit = this.visits[0];
             }
             if (data.visitor) {
               visit.visitor = data.visitor;
             }
+            this.visitStatus(visit);
+
           });
         })
         .listen('VisitDeleted', (data) => {
@@ -383,13 +398,26 @@ export class Api {
 
   newVisit(visit, visitor) {
     this.playSoundNotfication();
-    this.popover.create(NewVisitPage, { visit: visit, visitor: visitor }, { cssClass: "fullScreen", enableBackdropDismiss: false, showBackdrop: true }).present();
+    this.popover.create(NewVisitPage, { visit: visit, visitor: visitor, api: this }, { cssClass: "fullScreen", enableBackdropDismiss: false, showBackdrop: true }).present();
   }
 
+  visitStatus(visit) {
+    if (visit.status == 'waiting for confirmation') { return }
+    this.toast.create({ message: this.trans("literals.visit") + " " + this.trans('literals.' + visit.status) + ": " + visit.visitor.name, duration: 12000, showCloseButton: true, closeButtonText: "X", position: "top", cssClass: visit.status }).present();
+    this.playSoundBeep();
+  }
+
+
   playSoundNotfication() {
-    var sound = new Audio('assets/sounds/notifcations.mp3');
-    sound.play();
-    return sound;
+    this.sound = new Audio('assets/sounds/notifcations.mp3');
+    this.sound.play();
+    return this.sound;
+  }
+
+  playSoundBeep() {
+    this.sound = new Audio('assets/sounds/beep.mp3');
+    this.sound.play();
+    return this.sound;
   }
 
 }

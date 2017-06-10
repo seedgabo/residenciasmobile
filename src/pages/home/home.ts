@@ -25,14 +25,19 @@ export class HomePage {
   }
 
   getSliders() {
-    this.api.get("sliders?with[]=image")
-      .then((data: any) => {
-        console.log(data);
-        this.sliders = data;
-      })
-      .catch((error) => {
-        console.error("error trayendo los sliders:", error);
-      });
+    this.api.storage.get('sliders').then((sliders) => {
+      if (sliders)
+        this.sliders = sliders;
+      this.api.get("sliders?with[]=image")
+        .then((data: any) => {
+          this.api.storage.set('sliders', data);
+          console.log(data);
+          this.sliders = data;
+        })
+        .catch((error) => {
+          console.error("error trayendo los sliders:", error);
+        });
+    });
 
   }
 

@@ -16,7 +16,7 @@ import { Api } from "../../providers/api";
 export class NewVisitorPage {
 
   action: string = 'create';
-  visitor: any = {};
+  visitor: any = { sex: 'male' };
   constructor(public navCtrl: NavController, public navParams: NavParams, public api: Api, public viewCtrl: ViewController) {
     var visitor = navParams.get('visitor');
     if (visitor) {

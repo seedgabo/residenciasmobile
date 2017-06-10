@@ -12,19 +12,15 @@
 
 <ion-content padding>
 
-    <ion-list>
-      <button ion-item *ngFor="let residence of residences">
-
-        <ion-icon *ngIf="residence.status=='solvente'" color="secondary" name="home" item-left></ion-icon>
-        <ion-icon *ngIf="residence.status=='moroso'" color="danger" name="home" item-left></ion-icon>
+  <ion-list>
+    <button ion-item *ngFor="let residence of residences">
         <h3>{{residence.name}}</h3>
         <span *ngIf="residence.owner!=null">{{residence.owner.name}}</span>
         <span ion-text color="light" *ngIf="residence.owner==null">Sin Propietario</span>
         <strong item-right>{{residence.type}}</strong>
-
       </button>
-    </ion-list>
+  </ion-list>
 
 
-  
+
 </ion-content>

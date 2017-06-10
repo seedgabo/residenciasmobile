@@ -2,7 +2,7 @@
 
   <ion-navbar color="dark">
     <ion-title *ngIf="visitor.id">{{ 'crud.update' | trans }} {{ visitor.name }}</ion-title>
-    <ion-title *ngIf="!visitor.id">{{ 'crud.create' | trans }} {{ 'literals.visitor' | trans }}</ion-title>
+    <ion-title *ngIf="!visitor.id">{{ 'crud.add' | trans }} {{ 'literals.visitor' | trans }}</ion-title>
     <ion-buttons end>
       <button ion-button clear icon-only (click)="dismiss()">
         <ion-icon name="close"></ion-icon>

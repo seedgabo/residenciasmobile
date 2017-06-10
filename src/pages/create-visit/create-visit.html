@@ -1,0 +1,36 @@
+<ion-header>
+
+  <ion-navbar color="dark">
+    <ion-title>{{'crud.add' | trans }} {{ 'literals.visit' | trans }}</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="dismiss()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-list>
+    <ion-item>
+      <ion-label floating> {{'literals.visitor' | trans }} </ion-label>
+      <ion-select [(ngModel)]="visitor.id" disabled="true">
+        <ion-option [value]="visitor.id">{{visitor.name}}</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label floating> {{'__.note for the celator' | trans }} </ion-label>
+      <ion-textarea [(ngModel)]="visit.note"></ion-textarea>
+    </ion-item>
+
+
+  </ion-list>
+</ion-content>
+<ion-footer>
+  <button ion-button full color="secondary" icon-left (click)="create()">
+    <ion-icon name="add"></ion-icon>
+    {{'crud.add' | trans }} {{'literals.visit' | trans }}
+  </button>
+</ion-footer>

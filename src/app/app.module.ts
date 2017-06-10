@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
 import { IonicStorageModule } from '@ionic/storage';
+import { MomentModule } from 'angular2-moment';
 
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
@@ -25,21 +26,28 @@ import { AppMinimize } from "@ionic-native/app-minimize";
 import { CodePush } from '@ionic-native/code-push';
 import { NewVisitPage } from "../pages/new-visit/new-visit";
 import { NewVisitorPage } from "../pages/new-visitor/new-visitor";
+import { CreateVisitPage } from "../pages/create-visit/create-visit";
+import { VisitTabsPage } from "../pages/visit-tabs/visit-tabs";
+import { VisitsPage } from "../pages/visits/visits";
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
     ParkingsPage,
     VisitorsPage,
+    VisitsPage,
     NewVisitorPage,
     Login,
     Residences,
     NewVisitPage,
+    CreateVisitPage,
     TransPipe,
+    VisitTabsPage,
   ],
   imports: [
     BrowserModule,
     HttpModule,
+    MomentModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot(),
   ],
@@ -49,11 +57,14 @@ import { NewVisitorPage } from "../pages/new-visitor/new-visitor";
     HomePage,
     ParkingsPage,
     VisitorsPage,
+    VisitsPage,
     NewVisitPage,
     NewVisitorPage,
     Login,
     Residences,
     NewVisitPage,
+    CreateVisitPage,
+    VisitTabsPage,
   ],
   providers: [
     StatusBar, SplashScreen, Camera, Facebook, GooglePlus, AppMinimize, BackgroundMode, CodePush,

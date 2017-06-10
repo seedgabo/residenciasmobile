@@ -2,18 +2,20 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController, ActionSheetController } from 'ionic-angular';
 import { Api } from "../../providers/api";
 import { NewVisitorPage } from "../new-visitor/new-visitor";
-import { NewVisitPage } from "../new-visit/new-visit";
+import { CreateVisitPage } from "../create-visit/create-visit";
 @IonicPage()
 @Component({
   selector: 'page-visitors',
   templateUrl: 'visitors.html',
 })
 export class VisitorsPage {
+  query = "";
+  visitors = [];
   constructor(public navCtrl: NavController, public navParams: NavParams, public api: Api, public modal: ModalController, public actionsheet: ActionSheetController) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad VisitorsPage');
+    this.visitors = this.api.visitors;
   }
   addVisitor() {
     this.modal.create(NewVisitorPage, {}, { showBackdrop: true, enableBackdropDismiss: true }).present();
@@ -22,8 +24,18 @@ export class VisitorsPage {
     this.modal.create(NewVisitorPage, { visitor: visitor }, { showBackdrop: true, enableBackdropDismiss: true }).present();
   }
 
+  filter() {
+    if (this.query == "")
+      return this.visitors = this.api.visitors;
+    this.visitors = this.api.visitors.filter((visitor) => {
+      if (visitor.name.toLowerCase().indexOf(this.query.toLowerCase()) > -1 || visitor.document.toLowerCase().indexOf(this.query.toLowerCase()) > -1)
+        return true;
+      return false;
+    });
+  }
+
   addVisit(visitor) {
-    this.modal.create(NewVisitPage, { visitor: visitor }, { showBackdrop: true, enableBackdropDismiss: true }).present();
+    this.modal.create(CreateVisitPage, { visitor: visitor }, { showBackdrop: true, enableBackdropDismiss: true }).present();
   }
   delete(visitor) {
     this.api.delete('visitors/' + visitor.id).catch((err) => {

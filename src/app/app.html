@@ -1,8 +1,10 @@
 <ion-menu [content]="content">
   <ion-header>
-    <ion-toolbar color="primary">
-      <ion-title>Menu</ion-title>
-    </ion-toolbar>
+    <div class="user-info" *ngIf="api.user" padding>
+      <img [src]="api.user.image_url" class="avatar-user">
+      <h5 text-center>{{api.user.name}}</h5>
+      <h6 *ngIf="api.residence" text-right>{{api.residence.name}}</h6>
+    </div>
   </ion-header>
 
   <ion-content>
@@ -12,9 +14,11 @@
         {{p.title}}
       </button>
       <ion-item-divider>
+        <ion-icon name="settings" item-left></ion-icon>
         {{ 'literals.settings' | trans }}
       </ion-item-divider>
       <button menuClose ion-item (click)="logout()">
+        <ion-icon item-left name="log-out"></ion-icon>
         Cerrar Sesión
       </button>
     </ion-list>
