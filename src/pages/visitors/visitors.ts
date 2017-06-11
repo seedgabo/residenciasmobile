@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams, ModalController, ActionSheetContro
 import { Api } from "../../providers/api";
 import { NewVisitorPage } from "../new-visitor/new-visitor";
 import { CreateVisitPage } from "../create-visit/create-visit";
-@IonicPage()
+// @IonicPage()
 @Component({
   selector: 'page-visitors',
   templateUrl: 'visitors.html',

@@ -8,6 +8,7 @@ declare var window: any;
 import Pusher from 'pusher-js';
 import { PopoverController, ToastController, Events } from "ionic-angular";
 import { NewVisitPage } from "../pages/new-visit/new-visit";
+import { BackgroundMode } from "@ionic-native/background-mode";
 import moment from 'moment';
 moment.locale('es');
 window.Pusher = Pusher;
@@ -35,7 +36,7 @@ export class Api {
   users = [];
   parkings = [];
   visits = [];
-  constructor(public http: Http, public storage: Storage, public zone: NgZone, public popover: PopoverController, public toast: ToastController, public events: Events) {
+  constructor(public http: Http, public storage: Storage, public zone: NgZone, public popover: PopoverController, public toast: ToastController, public events: Events, public background: BackgroundMode) {
     storage.ready().then(() => {
       storage.get('username').then(username => { this.username = username });
       storage.get('password').then(password => { this.password = password });
@@ -398,6 +399,7 @@ export class Api {
 
   newVisit(visit, visitor) {
     this.playSoundNotfication();
+    this.moveToFront();
     this.popover.create(NewVisitPage, { visit: visit, visitor: visitor, api: this }, { cssClass: "fullScreen", enableBackdropDismiss: false, showBackdrop: true }).present();
   }
 
@@ -405,6 +407,11 @@ export class Api {
     if (visit.status == 'waiting for confirmation') { return }
     this.toast.create({ message: this.trans("literals.visit") + " " + this.trans('literals.' + visit.status) + ": " + visit.visitor.name, duration: 12000, showCloseButton: true, closeButtonText: "X", position: "top", cssClass: visit.status }).present();
     this.playSoundBeep();
+  }
+
+  moveToFront() {
+    this.background.wakeUp();
+    this.background.moveToForeground();
   }
 
 

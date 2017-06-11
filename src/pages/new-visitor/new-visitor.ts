@@ -8,7 +8,7 @@ import { Api } from "../../providers/api";
  * See http://ionicframework.com/docs/components/#navigation for more info
  * on Ionic pages and navigation.
  */
-@IonicPage()
+//@IonicPage()
 @Component({
   selector: 'page-new-visitor',
   templateUrl: 'new-visitor.html',

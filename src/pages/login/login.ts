@@ -32,11 +32,11 @@ export class Login {
     this.api.doLogin()
       .then((data) => {
         this.api.user = data;
-        loading.dismiss();
-        this.goTo()
-        console.log(data);
-
-
+        this.api.storage.set('user', data).then(() => {
+          loading.dismiss();
+          this.goTo()
+          console.log(data);
+        });
       })
 
       .catch((err) => {

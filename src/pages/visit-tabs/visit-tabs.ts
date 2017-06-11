@@ -6,7 +6,7 @@ import { VisitsPage } from "../visits/visits";
   selector: 'page-visit-tabs',
   templateUrl: 'visit-tabs.html'
 })
-@IonicPage()
+// @IonicPage()
 export class VisitTabsPage {
 
   visitorsRoot = VisitorsPage

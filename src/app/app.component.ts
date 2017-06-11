@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform, NavController } from 'ionic-angular';
+import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { CodePush } from "@ionic-native/code-push";
@@ -11,7 +11,6 @@ import { Login } from '../pages/login/login';
 import { Residences } from "../pages/residences/residences";
 import { Api } from "../providers/api";
 import { AppMinimize } from "@ionic-native/app-minimize";
-import { VisitorsPage } from "../pages/visitors/visitors";
 import { VisitTabsPage } from "../pages/visit-tabs/visit-tabs";
 
 
@@ -61,10 +60,15 @@ export class MyApp {
       });
 
       // this.backgroundmode.configure({ hidden: true, silent: true, });
-      this.backgroundmode.configure({ text: "Service Running", title: "Residencias Online" })
+      this.backgroundmode.setDefaults({
+        title: 'Residencias Online',
+        text: "",
+        bigText: true,
+      })
       this.backgroundmode.enable();
+      this.backgroundmode.configure({ text: "", title: "Residencias Online" });
       this.backgroundmode.excludeFromTaskList();
-      this.backgroundmode.overrideBackButton();
+      // this.backgroundmode.overrideBackButton();
       this.codepush.sync().subscribe((syncStatus) => console.log(syncStatus), (err) => { console.warn(err) });
     });
   }
