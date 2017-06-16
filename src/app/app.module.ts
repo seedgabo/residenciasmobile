@@ -12,6 +12,12 @@ import { ParkingsPage } from '../pages/parkings/parkings';
 import { VisitorsPage } from '../pages/visitors/visitors';
 import { Login } from "../pages/login/login";
 import { Residences } from "../pages/residences/residences";
+import { NewVisitPage } from "../pages/new-visit/new-visit";
+import { NewVisitorPage } from "../pages/new-visitor/new-visitor";
+import { CreateVisitPage } from "../pages/create-visit/create-visit";
+import { VisitTabsPage } from "../pages/visit-tabs/visit-tabs";
+import { VisitsPage } from "../pages/visits/visits";
+
 
 import { Api } from "../providers/api";
 import { TransPipe } from '../pipes/trans/trans';
@@ -24,11 +30,7 @@ import { GooglePlus } from '@ionic-native/google-plus';
 import { BackgroundMode } from "@ionic-native/background-mode";
 import { AppMinimize } from "@ionic-native/app-minimize";
 import { CodePush } from '@ionic-native/code-push';
-import { NewVisitPage } from "../pages/new-visit/new-visit";
-import { NewVisitorPage } from "../pages/new-visitor/new-visitor";
-import { CreateVisitPage } from "../pages/create-visit/create-visit";
-import { VisitTabsPage } from "../pages/visit-tabs/visit-tabs";
-import { VisitsPage } from "../pages/visits/visits";
+import { OneSignal } from "@ionic-native/onesignal";
 @NgModule({
   declarations: [
     MyApp,
@@ -67,7 +69,7 @@ import { VisitsPage } from "../pages/visits/visits";
     VisitTabsPage,
   ],
   providers: [
-    StatusBar, SplashScreen, Camera, Facebook, GooglePlus, AppMinimize, BackgroundMode, CodePush,
+    StatusBar, SplashScreen, Camera, Facebook, GooglePlus, AppMinimize, BackgroundMode, CodePush, OneSignal,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     Api
   ]

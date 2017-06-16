@@ -1,15 +1,19 @@
 import { Injectable, NgZone } from '@angular/core';
 import { Http, Headers } from '@angular/http';
-import { Storage } from '@ionic/storage';
 import 'rxjs/add/operator/map';
 
-import Echo from 'laravel-echo';
-declare var window: any;
-import Pusher from 'pusher-js';
 import { PopoverController, ToastController, Events } from "ionic-angular";
+import { Storage } from '@ionic/storage';
+
+import Echo from 'laravel-echo';
+import Pusher from 'pusher-js';
 import { NewVisitPage } from "../pages/new-visit/new-visit";
+
 import { BackgroundMode } from "@ionic-native/background-mode";
+import { OneSignal } from "@ionic-native/onesignal";
+
 import moment from 'moment';
+declare var window: any;
 moment.locale('es');
 window.Pusher = Pusher;
 
@@ -19,7 +23,8 @@ export class Api {
   modules: any;
   settings: any;
   Echo: any;
-  url = "http://residenciasonline.com/residencias/public/";
+  // url = "http://residenciasonline.com/residencias/public/";
+  url = "http://localhost/residencias/public/";
   username = "seedgabo@gmail.com";
   password = "gab23gab";
   user;
@@ -36,7 +41,7 @@ export class Api {
   users = [];
   parkings = [];
   visits = [];
-  constructor(public http: Http, public storage: Storage, public zone: NgZone, public popover: PopoverController, public toast: ToastController, public events: Events, public background: BackgroundMode) {
+  constructor(public http: Http, public storage: Storage, public zone: NgZone, public popover: PopoverController, public toast: ToastController, public events: Events, public background: BackgroundMode, public onesignal: OneSignal) {
     storage.ready().then(() => {
       storage.get('username').then(username => { this.username = username });
       storage.get('password').then(password => { this.password = password });
@@ -61,7 +66,6 @@ export class Api {
       this.http.get(this.url + "api/login", { headers: this.setHeaders() })
         .map(res => res.json())
         .subscribe(data => {
-          resolve(data);
           this.user = data.user;
           this.residence = data.residence;
           this.settings = data.settings;
@@ -73,6 +77,7 @@ export class Api {
           this.storage.set('modules', this.modules);
           this.storage.set('settings', this.settings);
           this.getLang();
+          resolve(data);
         }, error => {
           return reject(this.handleData(error));
         });
@@ -105,6 +110,7 @@ export class Api {
     }).catch((err) => {
       console.error(err);
     });
+    this.pushRegister();
     return promise;
   }
 
@@ -333,6 +339,19 @@ export class Api {
           console.log(notification);
         });
 
+      this.Echo.join('App.Mobile')
+        .here((data) => {
+          console.log("here:", data);
+        })
+        .joining((data) => {
+          console.log("joining", data);
+        })
+        .leaving((data) => {
+          console.log("leaving", data);
+        })
+
+
+
       // console.log(this.Echo);
     })
   }
@@ -340,7 +359,29 @@ export class Api {
   stopEcho() {
     this.Echo.leave('Application');
     this.Echo.leave('App.User.' + this.user.id);
+    this.Echo.leave('App.Residence.' + this.user.residence_id);
+    this.Echo.leave('App.Mobile');
     this.Echo = undefined;
+  }
+
+  pushRegister() {
+    this.onesignal.startInit("ebf07feb-3c76-4639-8c87-b1e7a2e9ddd8", "425679220353");
+    this.onesignal.inFocusDisplaying(this.onesignal.OSInFocusDisplayOption.InAppAlert);
+
+    this.onesignal.handleNotificationReceived().subscribe(() => {
+      // do something when notification is received
+    }, console.warn);
+
+    this.onesignal.handleNotificationOpened().subscribe(() => {
+      // do something when a notification is opened
+    }, console.warn);
+
+    this.onesignal.endInit();
+    this.onesignal.getIds().then((data) => {
+      console.log("onesignal ids", data)
+    }).catch(() => {
+
+    });
   }
 
   trans(value, args = null) {
@@ -370,7 +411,6 @@ export class Api {
     }
     return value;
   }
-
 
 
   private setHeaders() {
@@ -409,11 +449,12 @@ export class Api {
     this.playSoundBeep();
   }
 
+
+
   moveToFront() {
     this.background.wakeUp();
     this.background.moveToForeground();
   }
-
 
   playSoundNotfication() {
     this.sound = new Audio('assets/sounds/notifcations.mp3');

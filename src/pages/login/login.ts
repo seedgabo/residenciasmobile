@@ -30,9 +30,9 @@ export class Login {
 
     loading.present();
     this.api.doLogin()
-      .then((data) => {
-        this.api.user = data;
-        this.api.storage.set('user', data).then(() => {
+      .then((data: any) => {
+        this.api.user = data.user;
+        this.api.storage.set('user', data.user).then(() => {
           loading.dismiss();
           this.goTo()
           console.log(data);
