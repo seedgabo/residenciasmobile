@@ -198,6 +198,7 @@ export class Api {
 
   startEcho() {
     this.ready.then(() => {
+      console.log("echo to:", this.user.hostEcho);
       this.Echo = new Echo({
         key: '807bbfb3ca20f7bb886e',
         authEndpoint: this.url + 'broadcasting/auth',
@@ -378,12 +379,10 @@ export class Api {
 
   pushRegister() {
     this.onesignal.startInit("ebf07feb-3c76-4639-8c87-b1e7a2e9ddd8", "425679220353");
-    this.onesignal.inFocusDisplaying(this.onesignal.OSInFocusDisplayOption.InAppAlert);
+    this.onesignal.inFocusDisplaying(this.onesignal.OSInFocusDisplayOption.Notification);
     this.onesignal.syncHashedEmail(this.user.email);
-    this.onesignal.sendTags([
-      "user_id", this.user.id,
-      "residence_id", this.user.residence_id
-    ]);
+    this.onesignal.sendTag("user_id", this.user.id);
+    this.onesignal.sendTag("residence_id", this.user.residence_id);
     this.onesignal.handleNotificationReceived().subscribe((not) => {
       console.log("push notification received", not);
     }, console.warn);
