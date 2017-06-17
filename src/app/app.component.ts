@@ -81,7 +81,6 @@ export class MyApp {
   }
 
   registerDeepLinks() {
-    // Convenience to route with a given nav
     this.deeplinks.route({
       '/visit/:visitId': VisitTabsPage,
       '/visitor/:visitorId': VisitTabsPage,
@@ -91,7 +90,12 @@ export class MyApp {
       for (var key in match.$args) {
         args[key] = match.$args[key];
       }
-      this.nav.setRoot(this[match.$route.name], args);
+      if (match.$link.url.indexOf("residenciasOnline://app/visit")) {
+        this.nav.setRoot(VisitTabsPage, args);
+      }
+      if (match.$link.url.indexOf("residenciasOnline://app/visitor")) {
+        this.nav.setRoot(VisitTabsPage, args);
+      }
     }, (nomatch) => {
       this.nav.setRoot(HomePage);
       console.warn('Unmatched Route', nomatch);
