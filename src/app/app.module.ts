@@ -31,6 +31,8 @@ import { BackgroundMode } from "@ionic-native/background-mode";
 import { AppMinimize } from "@ionic-native/app-minimize";
 import { CodePush } from '@ionic-native/code-push';
 import { OneSignal } from "@ionic-native/onesignal";
+import { Device } from "@ionic-native/device";
+import { Deeplinks } from "@ionic-native/deeplinks";
 @NgModule({
   declarations: [
     MyApp,
@@ -69,7 +71,8 @@ import { OneSignal } from "@ionic-native/onesignal";
     VisitTabsPage,
   ],
   providers: [
-    StatusBar, SplashScreen, Camera, Facebook, GooglePlus, AppMinimize, BackgroundMode, CodePush, OneSignal,
+    StatusBar, SplashScreen, Camera, Facebook, GooglePlus, AppMinimize, BackgroundMode, CodePush, OneSignal, Device,
+    Deeplinks,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     Api
   ]

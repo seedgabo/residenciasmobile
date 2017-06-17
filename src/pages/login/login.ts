@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
+import { NavController, NavParams, AlertController, LoadingController, Events } from 'ionic-angular';
 import { HomePage } from "../home/home";
 import { Api } from "../../providers/api";
 import { Facebook } from '@ionic-native/facebook';
@@ -11,7 +11,7 @@ import { GooglePlus } from '@ionic-native/google-plus';
 })
 export class Login {
 
-  constructor(public facebook: Facebook, public google: GooglePlus, public navCtrl: NavController, public navParams: NavParams, public api: Api, public alertCtrl: AlertController, public loadingCtrl: LoadingController) {
+  constructor(public facebook: Facebook, public google: GooglePlus, public navCtrl: NavController, public navParams: NavParams, public api: Api, public alertCtrl: AlertController, public loadingCtrl: LoadingController, public events: Events) {
   }
 
   ionViewDidLoad() {
@@ -128,8 +128,8 @@ export class Login {
 
 
   goTo() {
+    this.events.publish('login', {});
     this.navCtrl.setRoot(HomePage);
-
   }
 
 }

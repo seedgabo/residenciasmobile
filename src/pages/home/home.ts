@@ -17,7 +17,6 @@ export class HomePage {
 
   constructor(public navCtrl: NavController, public api: Api) {
     this.getSliders();
-    this.api.getAllData();
   }
 
   ionViewDidLoad() {

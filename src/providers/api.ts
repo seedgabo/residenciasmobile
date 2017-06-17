@@ -5,13 +5,14 @@ import 'rxjs/add/operator/map';
 import { PopoverController, ToastController, Events } from "ionic-angular";
 import { Storage } from '@ionic/storage';
 
-import Echo from 'laravel-echo';
-import Pusher from 'pusher-js';
 import { NewVisitPage } from "../pages/new-visit/new-visit";
+
 
 import { BackgroundMode } from "@ionic-native/background-mode";
 import { OneSignal } from "@ionic-native/onesignal";
-
+import { Device } from "@ionic-native/device";
+import Echo from 'laravel-echo';
+import Pusher from 'pusher-js';
 import moment from 'moment';
 declare var window: any;
 moment.locale('es');
@@ -24,7 +25,7 @@ export class Api {
   settings: any;
   Echo: any;
   // url = "http://residenciasonline.com/residencias/public/";
-  url = "http://localhost/residencias/public/";
+  url = "http://192.168.80.20/residencias/public/";
   username = "seedgabo@gmail.com";
   password = "gab23gab";
   user;
@@ -41,7 +42,7 @@ export class Api {
   users = [];
   parkings = [];
   visits = [];
-  constructor(public http: Http, public storage: Storage, public zone: NgZone, public popover: PopoverController, public toast: ToastController, public events: Events, public background: BackgroundMode, public onesignal: OneSignal) {
+  constructor(public http: Http, public storage: Storage, public zone: NgZone, public popover: PopoverController, public toast: ToastController, public events: Events, public background: BackgroundMode, public onesignal: OneSignal, public device: Device) {
     storage.ready().then(() => {
       storage.get('username').then(username => { this.username = username });
       storage.get('password').then(password => { this.password = password });
@@ -52,6 +53,16 @@ export class Api {
       storage.get('user').then(user => {
         this.user = user
         this.resolve(user);
+      });
+      storage.get('allData').then((data) => {
+        if (!data) return;
+        this.residence = data.residence;
+        this.visitors = data.visitors;
+        this.visits = data.visits;
+        this.vehicles = data.vehicles;
+        this.workers = data.workers;
+        this.users = data.users;
+        this.residences = data.residences;
       });
       this.events.subscribe('stopSound', () => {
         if (this.sound)
@@ -107,6 +118,7 @@ export class Api {
       this.workers = data.workers;
       this.users = data.users;
       this.residences = data.residences;
+      this.storage.set('allData', data);
     }).catch((err) => {
       console.error(err);
     });
@@ -367,22 +379,37 @@ export class Api {
   pushRegister() {
     this.onesignal.startInit("ebf07feb-3c76-4639-8c87-b1e7a2e9ddd8", "425679220353");
     this.onesignal.inFocusDisplaying(this.onesignal.OSInFocusDisplayOption.InAppAlert);
-
-    this.onesignal.handleNotificationReceived().subscribe(() => {
-      // do something when notification is received
+    this.onesignal.syncHashedEmail(this.user.email);
+    this.onesignal.sendTags([
+      "user_id", this.user.id,
+      "residence_id", this.user.residence_id
+    ]);
+    this.onesignal.handleNotificationReceived().subscribe((not) => {
+      console.log("push notification received", not);
     }, console.warn);
 
-    this.onesignal.handleNotificationOpened().subscribe(() => {
-      // do something when a notification is opened
+    this.onesignal.handleNotificationOpened().subscribe((not) => {
+      console.log("push notification opened", not);
     }, console.warn);
 
     this.onesignal.endInit();
-    this.onesignal.getIds().then((data) => {
-      console.log("onesignal ids", data)
-    }).catch(() => {
-
-    });
+    this.onesignal.getIds().then((ids: any) => {
+      console.log("onesignal ids", ids)
+      var data = {
+        token: ids.userId,
+        user_id: this.user.id,
+        platform: this.device.platform,
+        model: this.device.model,
+        version: this.device.version,
+      };
+      this.post('register-push-device', data)
+        .then((response) => {
+          console.log('device registered:', response);
+        })
+        .catch(console.error);
+    }).catch(console.error);
   }
+
 
   trans(value, args = null) {
     if (!this.langs) return value;
