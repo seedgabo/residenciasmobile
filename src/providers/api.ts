@@ -42,6 +42,7 @@ export class Api {
   users = [];
   parkings = [];
   visits = [];
+  invoices = [];
   constructor(public http: Http, public storage: Storage, public zone: NgZone, public popover: PopoverController, public toast: ToastController, public events: Events, public background: BackgroundMode, public onesignal: OneSignal, public device: Device) {
     storage.ready().then(() => {
       storage.get('username').then(username => { this.username = username });
@@ -198,6 +199,10 @@ export class Api {
 
   startEcho() {
     this.ready.then(() => {
+      if (this.Echo) {
+        console.warn('already started Echo');
+        return;
+      }
       console.log("echo to:", this.user.hostEcho);
       this.Echo = new Echo({
         key: '807bbfb3ca20f7bb886e',

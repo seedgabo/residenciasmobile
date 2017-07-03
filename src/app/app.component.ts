@@ -14,6 +14,8 @@ import { Api } from "../providers/api";
 import { AppMinimize } from "@ionic-native/app-minimize";
 import { VisitTabsPage } from "../pages/visit-tabs/visit-tabs";
 import { EventsPage } from "../pages/events/events";
+import { InvoicesPage } from "../pages/invoices/invoices";
+import { DocumentsPage } from "../pages/documents/documents";
 
 
 @Component({
@@ -53,6 +55,8 @@ export class MyApp {
       { title: 'Home', component: HomePage, icon: 'home' },
       { title: "Visitantes", component: VisitTabsPage, icon: 'contacts' },
       { title: "Eventos", component: EventsPage, icon: 'calendar' },
+      { title: "Facturas", component: InvoicesPage, icon: 'card' },
+      { title: "Documentos", component: DocumentsPage, icon: 'document' },
       { title: 'Parkings', component: ParkingsPage, icon: 'car' },
       { title: "Residencias", component: Residences, icon: 'albums' },
     ];
