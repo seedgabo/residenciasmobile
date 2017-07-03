@@ -33,6 +33,8 @@ import { CodePush } from '@ionic-native/code-push';
 import { OneSignal } from "@ionic-native/onesignal";
 import { Device } from "@ionic-native/device";
 import { Deeplinks } from "@ionic-native/deeplinks";
+import { EventsPage } from "../pages/events/events";
+import { AddEventPage } from "../pages/add-event/add-event";
 @NgModule({
   declarations: [
     MyApp,
@@ -43,10 +45,12 @@ import { Deeplinks } from "@ionic-native/deeplinks";
     NewVisitorPage,
     Login,
     Residences,
+    EventsPage,
     NewVisitPage,
     CreateVisitPage,
     TransPipe,
     VisitTabsPage,
+    AddEventPage,
   ],
   imports: [
     BrowserModule,
@@ -66,9 +70,12 @@ import { Deeplinks } from "@ionic-native/deeplinks";
     NewVisitorPage,
     Login,
     Residences,
+    EventsPage,
     NewVisitPage,
     CreateVisitPage,
     VisitTabsPage,
+    AddEventPage,
+
   ],
   providers: [
     StatusBar, SplashScreen, Camera, Facebook, GooglePlus, AppMinimize, BackgroundMode, CodePush, OneSignal, Device,
