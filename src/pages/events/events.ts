@@ -24,8 +24,13 @@ export class EventsPage {
     this.api.get('events?take=200&afterEach[toCalendar]=null').then((data) => {
       console.log(data);
       $("#calendar").fullCalendar({
-        locale: 'es',
         events: data,
+        header: {
+          left: 'prev,next today',
+          center: 'title',
+          right: 'month,agendaWeek,basicDay,agendaWeek'
+        },
+        locale: 'es',
         eventClick: (calEvent, jsEvent, view) => {
           this.event(calEvent);
         }

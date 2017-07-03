@@ -14,6 +14,7 @@ export class HomePage {
   nombre = "gabriel";
   sliders = [];
   text = "";
+  nextEvents = [];
 
   constructor(public navCtrl: NavController, public api: Api) {
     this.getSliders();
@@ -21,6 +22,7 @@ export class HomePage {
 
   ionViewDidLoad() {
     this.api.startEcho();
+    this.getNextEvents()
   }
 
   getSliders() {
@@ -38,6 +40,15 @@ export class HomePage {
         });
     });
 
+  }
+  getNextEvents() {
+    this.api.get('events?scope[soon]')
+      .then((data: any) => {
+        this.nextEvents = data;
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   }
 
 

@@ -44,4 +44,20 @@
             </ion-list>
         </ion-card-content>
     </ion-card>
+
+    <ion-card *ngIf="nextEvents && nextEvents.length >0">
+        <ion-list>
+            <ion-list-header text-center>
+                <span color="primary" ion-text>
+                    {{'__.next events' | trans}}
+                </span>
+            </ion-list-header>
+            <ion-item *ngFor="let event of nextEvents" class="event-list" [ngClass]="[event.type,event.privacity]">
+                <h3>{{event.title}}</h3>
+                <p>
+                    {{event.start | amCalendar }} - {{event.end | amCalendar }}
+                </p>
+            </ion-item>
+        </ion-list>
+    </ion-card>
 </ion-content>
