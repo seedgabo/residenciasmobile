@@ -10,44 +10,47 @@
 </ion-header>
 
 
-<ion-content padding>
-    <ion-card *ngFor="let invoice of api.invoices" class="invoice-card" [ngClass]="[invoice.status,invoice.type]">
-        <ion-card-header text-center>
-            <ion-card-title ion-text color="primary" text-primary>
-              <b>
-                {{ invoice.date | amDateFormat:'MMMM/YYYY'}}
-              </b>
-            </ion-card-title>
-        </ion-card-header>
-        <ion-content>
-                <p>
-                    <b ion-text [color]="invoice.status == 'paid'?'success':'danger'">
-                        {{ invoice.total |  currency:'USD':true:'1.2-2' }}
-                    </b>
-                </p>
-                <p>
-                    <b>{{'literals.status' | trans }}</b>
-                    <span text-right>
-                        {{'literals.'+invoice.status | trans}}
-                    </span>
-                </p>
-            <hr>
-            <ion-grid>
-                <ion-row>
-                    <ion-col col-9>
-                        <button ion-button icon-left color="primary">
-                            <ion-icon name="document"></ion-icon>
-                            {{ 'literals.view_resource' | trans  }} {{'literals.invoice' | trans}}
-                        </button>
-                    </ion-col>
-                    <ion-col col-2>
-                        <button ion-fab color="favorite">
-                            <ion-icon name="logo-buffer"></ion-icon>
-                        </button>
-                    </ion-col>
-                </ion-row>
-            </ion-grid>
-        </ion-content>
-    </ion-card>
+<ion-content>
+    <ion-grid>
+        <ion-row>
+            <ion-col col-sm-6 *ngFor="let invoice of api.invoices">
+                <ion-card class="invoice-card" [ngClass]="[invoice.status,invoice.type]">
+                    <ion-card-header text-center>
+                        <ion-card-title ion-text color="primary" text-primary>
+                            <small>
+                        {{ invoice.date | amDateFormat:'MMMM/YYYY'}}
+                      </small>
+                        </ion-card-title>
+                    </ion-card-header>
+                    <ion-card-content>
+                        <p item-right [color]="invoice.status == 'paid'?'success':'danger'" ion-text text-center>
+                            {{ invoice.total | currency:'USD':true:'1.2-2' }}
+                        </p>
+                        <ion-item>
+                            <b>{{'literals.status' | trans }}:</b>
+                            <span>
+                              {{'literals.'+invoice.status | trans}}
+                            </span>
+                        </ion-item>
+                        <ion-grid>
+                            <ion-row>
+                                <ion-col col-9>
+                                    <button ion-button icon-left color="primary">
+                                    <ion-icon name="document"></ion-icon>
+                                    {{ 'literals.view_resource' | trans  }} {{'literals.invoice' | trans}}
+                                </button>
+                                </ion-col>
+                                <ion-col col-2>
+                                    <button ion-fab color="favorite">
+                                    <ion-icon name="logo-buffer"></ion-icon>
+                                </button>
+                                </ion-col>
+                            </ion-row>
+                        </ion-grid>
+                    </ion-card-content>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
 
 </ion-content>
