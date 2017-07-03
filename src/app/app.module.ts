@@ -35,6 +35,7 @@ import { Device } from "@ionic-native/device";
 import { Deeplinks } from "@ionic-native/deeplinks";
 import { EventsPage } from "../pages/events/events";
 import { AddEventPage } from "../pages/add-event/add-event";
+import { EventPage } from "../pages/event/event";
 @NgModule({
   declarations: [
     MyApp,
@@ -46,6 +47,7 @@ import { AddEventPage } from "../pages/add-event/add-event";
     Login,
     Residences,
     EventsPage,
+    EventPage,
     NewVisitPage,
     CreateVisitPage,
     TransPipe,
@@ -71,6 +73,7 @@ import { AddEventPage } from "../pages/add-event/add-event";
     Login,
     Residences,
     EventsPage,
+    EventPage,
     NewVisitPage,
     CreateVisitPage,
     VisitTabsPage,

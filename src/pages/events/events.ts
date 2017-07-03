@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Api } from "../../providers/api";
 import { AddEventPage } from "../add-event/add-event";
+import { EventPage } from "../event/event";
 declare var $: any;
 declare var moment: any;
 moment.locale('es');
@@ -41,8 +42,9 @@ export class EventsPage {
       });
   }
 
-  event(event) {
-    console.log(event);
+  event(ev) {
+    console.log(ev);
+    this.navCtrl.push(EventPage, { event: ev });
   }
 
   addEvent() {
