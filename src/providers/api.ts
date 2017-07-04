@@ -43,6 +43,7 @@ export class Api {
   parkings = [];
   visits = [];
   invoices = [];
+  _events = [];
   constructor(public http: Http, public storage: Storage, public zone: NgZone, public popover: PopoverController, public toast: ToastController, public events: Events, public background: BackgroundMode, public onesignal: OneSignal, public device: Device) {
     storage.ready().then(() => {
       storage.get('username').then(username => { this.username = username });
@@ -344,6 +345,43 @@ export class Api {
               this.visits.splice(visit, 1);
             }
           })
+        })
+
+
+        .listen('EventCreated', (data) => {
+          if (!(data.event.privacity == "public" || data.event.creator.residece_id == this.user.residence_id)) return;
+          console.log("created event:", data);
+          this.zone.run(() => {
+            this._events[this._events.length] = data.event
+          })
+          this.events.publish("events:changed", {});
+        })
+        .listen('EventUpdated', (data) => {
+          console.log("updated event:", data);
+          if (!(data.event.privacity == "public" || data.event.creator.residece_id == this.user.residence_id)) return;
+          var event_index = this._events.findIndex((ev) => {
+            return ev.id === data.event.id;
+          });
+          this.zone.run(() => {
+            if (event_index > -1)
+              var event = this._events[event_index] = data.event;
+          });
+          this.events.publish("events:changed", {});
+
+        })
+        .listen('EventDeleted', (data) => {
+          console.log("deleted event:", data);
+
+          var event = this.visits.findIndex((visit) => {
+            return event.id === data.event.id;
+          });
+          this.zone.run(() => {
+            if (event >= 0) {
+              this.visits.splice(event, 1);
+            }
+          })
+          this.events.publish("events:changed", {});
+
         })
 
       this.Echo.private('App.Residence.' + this.user.residence_id)
