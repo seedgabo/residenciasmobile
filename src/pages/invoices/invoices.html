@@ -35,13 +35,13 @@
                         <ion-grid>
                             <ion-row>
                                 <ion-col col-9>
-                                    <button ion-button icon-left color="primary">
+                                    <button ion-button icon-left color="primary" (click)="downloadinvoice(invoice)">
                                     <ion-icon name="document"></ion-icon>
                                     {{ 'literals.view_resource' | trans  }} {{'literals.invoice' | trans}}
                                 </button>
                                 </ion-col>
                                 <ion-col col-2>
-                                    <button ion-fab color="favorite">
+                                    <button ion-fab color="favorite" (click)="openMenu(invoice)">
                                     <ion-icon name="logo-buffer"></ion-icon>
                                 </button>
                                 </ion-col>

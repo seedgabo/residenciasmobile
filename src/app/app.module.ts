@@ -32,6 +32,9 @@ import { AppMinimize } from "@ionic-native/app-minimize";
 import { CodePush } from '@ionic-native/code-push';
 import { OneSignal } from "@ionic-native/onesignal";
 import { Device } from "@ionic-native/device";
+import { File } from '@ionic-native/file';
+import { FileOpener } from "@ionic-native/file-opener";
+import { Transfer } from "@ionic-native/transfer";
 import { Deeplinks } from "@ionic-native/deeplinks";
 import { EventsPage } from "../pages/events/events";
 import { AddEventPage } from "../pages/add-event/add-event";
@@ -88,7 +91,7 @@ import { DocumentsPage } from "../pages/documents/documents";
   ],
   providers: [
     StatusBar, SplashScreen, Camera, Facebook, GooglePlus, AppMinimize, BackgroundMode, CodePush, OneSignal, Device,
-    Deeplinks,
+    Deeplinks, Transfer, File, FileOpener,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     Api
   ]

@@ -91,8 +91,6 @@
         <variable name="APP_ID" value="796212907168839" />
         <variable name="APP_NAME" value="Residencias Online" />
     </plugin>
-    <plugin name="cordova-plugin-file-opener2" spec="^2.0.16" />
-    <plugin name="cordova-plugin-file-transfer" spec="^1.6.3" />
     <plugin name="cordova-plugin-googleplus" spec="^5.1.1">
         <variable name="REVERSED_CLIENT_ID" value="600000041642-d423nns9o78c2g8qcvrpj57kkshhjkid.apps.googleusercontent.com" />
     </plugin>
@@ -122,4 +120,7 @@
     </plugin>
     <plugin name="ionic-plugin-keyboard" spec="^2.2.1" />
     <plugin name="onesignal-cordova-plugin" spec="^2.1.1" />
+    <plugin name="cordova-plugin-file-transfer" spec="^1.6.3" />
+    <plugin name="cordova-plugin-file" spec="^4.3.3" />
+    <plugin name="cordova-plugin-file-opener2" spec="^2.0.16" />
 </widget>

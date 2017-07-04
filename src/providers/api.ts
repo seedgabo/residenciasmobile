@@ -23,7 +23,7 @@ export class Api {
   sound: HTMLAudioElement;
   modules: any;
   settings: any;
-  Echo: any;
+  Echo: any = undefined;
   url = "http://residenciasonline.com/residencias/public/";
   // url = "http://192.168.80.20/residencias/public/";
   username = "seedgabo@gmail.com";
