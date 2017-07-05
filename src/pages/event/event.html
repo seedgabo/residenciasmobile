@@ -30,7 +30,7 @@
                     <span item-right>{{ '__.'+ event.type |  trans }}</span>
                 </ion-item>
                 <ion-item>
-                    <ion-icon item-left [color]="event.privacity == 'public' ? 'success' : 'danger' " name="event.privacity == 'public' ? 'unlock' : 'lock' " ></ion-icon>
+                    <ion-icon item-left [color]="event.privacity == 'public' ? 'success' : 'danger' " [name]="event.privacity == 'public' ? 'unlock' : 'lock' "></ion-icon>
                     {{ 'literals.privacity' | trans}}
                     <span item-right>{{ '__.'+ event.privacity |  trans }}</span>
                 </ion-item>

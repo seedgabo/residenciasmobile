@@ -44,6 +44,7 @@ export class EventsPage {
   _renderCalendar() {
     $("#calendar").fullCalendar({
       events: this.api._events,
+      height: "auto",
       header: {
         left: 'prev,next today',
         center: 'title',
