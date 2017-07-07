@@ -74,11 +74,14 @@ export class MyApp {
         console.log("minimize");
       });
 
-      this.backgroundmode.configure({ silent: true, });
       this.backgroundmode.enable();
-      this.backgroundmode.excludeFromTaskList();
+      this.backgroundmode.configure({ silent: true, text: "Residencias", hidden: true, title: "Residencias Online" });
+      this.backgroundmode.setDefaults(
+        { silent: true, text: "Residencias", hidden: true, title: "Residencias Online" }
+      );
+      // this.backgroundmode.excludeFromTaskList();
       // this.backgroundmode.overrideBackButton();
-      this.codepush.sync().subscribe((syncStatus) => console.log(syncStatus), (err) => { console.warn(err) });
+      this.codepush.sync({ updateDialog: false, ignoreFailedUpdates: false, }).subscribe((syncStatus) => console.log(syncStatus), (err) => { console.warn(err) });
     });
   }
 
