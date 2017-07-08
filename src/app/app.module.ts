@@ -43,6 +43,11 @@ import { InvoicesPage } from "../pages/invoices/invoices";
 import { DocumentsPage } from "../pages/documents/documents";
 import { NewsComponent } from '../components/news/news';
 import { PostsPage } from "../pages/posts/posts";
+import { AddPostPage } from "../pages/add-post/add-post";
+
+import { AutoCompleteModule } from 'ionic2-auto-complete';
+
+
 @NgModule({
   declarations: [
     MyApp,
@@ -63,11 +68,13 @@ import { PostsPage } from "../pages/posts/posts";
     TransPipe,
     VisitTabsPage,
     AddEventPage,
+    AddPostPage,
     NewsComponent,
   ],
   imports: [
     BrowserModule,
     HttpModule,
+    AutoCompleteModule,
     MomentModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot(),
@@ -92,13 +99,14 @@ import { PostsPage } from "../pages/posts/posts";
     CreateVisitPage,
     VisitTabsPage,
     AddEventPage,
+    AddPostPage,
 
   ],
   providers: [
     StatusBar, SplashScreen, Camera, Facebook, GooglePlus, AppMinimize, BackgroundMode, CodePush, OneSignal, Device,
     Deeplinks, Transfer, File, FileOpener,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
-    Api
+    Api,
   ]
 })
 export class AppModule { }

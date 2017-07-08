@@ -48,7 +48,7 @@ export class EventsPage {
       header: {
         left: 'prev,next today',
         center: 'title',
-        right: 'month,agendaWeek,basicDay,agendaWeek'
+        right: 'month,agendaWeek,basicDay'
       },
       locale: 'es',
       eventClick: (calEvent, jsEvent, view) => {

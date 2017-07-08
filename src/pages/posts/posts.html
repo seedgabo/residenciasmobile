@@ -11,13 +11,21 @@
 
 
 <ion-content>
-    <div *ngFor="let post of posts">
+    <ion-refresher (ionRefresh)="getPosts($event)">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+    <ion-card *ngFor="let post of posts">
         <ion-card-header color="primary">
             {{post.title}}
         </ion-card-header>
         <ion-card-content>
             <div [innerHTML]="post.text" text-justify>
             </div>
+            <ion-chip *ngFor="let tag of post.tags;let i = index">
+                <ion-label>
+                    {{tag.name}}
+                </ion-label>
+            </ion-chip>
             <ion-item *ngIf="post.user" text-right>
                 <ion-avatar item-left>
                     <img [src]="post.user.image_url">
@@ -25,7 +33,15 @@
                 <span>
                 {{post.user.name}}
                 </span>
+                <button *ngIf="api.user.id == post.user_id" (click)="deletePost(post,i)" ion-button icon-only clear color="danger">
+                  <ion-icon name="trash"></ion-icon>
+                </button>
             </ion-item>
         </ion-card-content>
-    </div>
+    </ion-card>
+    <ion-fab bottom right>
+        <button ion-fab (click)="createPost()">
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-fab>
 </ion-content>
