@@ -24,8 +24,8 @@ export class Api {
   modules: any;
   settings: any;
   Echo: any = undefined;
-  url = "http://residenciasonline.com/residencias/public/";
-  // url = "http://192.168.80.20/residencias/public/";
+  // url = "http://residenciasonline.com/residencias/public/";
+  url = "http://localhost/residencias/public/";
   username = "seedgabo@gmail.com";
   password = "gab23gab";
   user;
@@ -364,7 +364,7 @@ export class Api {
           });
           this.zone.run(() => {
             if (event_index > -1)
-              var event = this._events[event_index] = data.event;
+              this._events[event_index] = data.event;
           });
           this.events.publish("events:changed", {});
 

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { Api } from "../../providers/api";
+import { PostsPage } from "../posts/posts";
 // import { Camera, CameraOptions } from '@ionic-native/camera';
 
 
@@ -15,14 +16,15 @@ export class HomePage {
   sliders = [];
   text = "";
   nextEvents = [];
-
+  news = [];
   constructor(public navCtrl: NavController, public api: Api) {
-    this.getSliders();
   }
 
   ionViewDidLoad() {
     this.api.startEcho();
+    this.getSliders();
     this.getNextEvents()
+    this.getNews();
   }
 
   getSliders() {
@@ -50,7 +52,18 @@ export class HomePage {
         console.error(err);
       });
   }
-
+  getNews() {
+    this.api.get('posts?order[created_at]=desc&limit=4&with[]=user.residence')
+      .then((data: any) => {
+        console.log("news", data);
+        this.news = data;
+      })
+      .catch((err) => {
+      });
+  }
+  gotoNews() {
+    this.navCtrl.push(PostsPage);
+  }
 
 }
 

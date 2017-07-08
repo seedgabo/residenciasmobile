@@ -59,4 +59,17 @@
             </ion-item>
         </ion-list>
     </ion-card>
+    <div *ngIf="news.length > 0">
+        <ion-card *ngFor="let new of news">
+            <ion-card-header>
+                {{new.title}}
+            </ion-card-header>
+            <ion-card-content>
+                <p [innerHTML]="new.text.substring(0,100)+'...'" style="white-space:normal;text-align:justify;"></p>
+            </ion-card-content>
+        </ion-card>
+        <button ion-button full clear (click)="gotoNews()">
+          {{'literals.view_resource' | trans }} {{'literals.more' | trans }}
+        </button>
+    </div>
 </ion-content>

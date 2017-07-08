@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Events } from 'ionic-angular';
+import { NavController, NavParams, Events } from 'ionic-angular';
 import { Api } from "../../providers/api";
 import { AddEventPage } from "../add-event/add-event";
 import { EventPage } from "../event/event";
@@ -44,7 +44,7 @@ export class EventsPage {
   _renderCalendar() {
     $("#calendar").fullCalendar({
       events: this.api._events,
-      height: "auto",
+      height: "parent",
       header: {
         left: 'prev,next today',
         center: 'title',

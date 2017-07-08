@@ -41,6 +41,8 @@ import { AddEventPage } from "../pages/add-event/add-event";
 import { EventPage } from "../pages/event/event";
 import { InvoicesPage } from "../pages/invoices/invoices";
 import { DocumentsPage } from "../pages/documents/documents";
+import { NewsComponent } from '../components/news/news';
+import { PostsPage } from "../pages/posts/posts";
 @NgModule({
   declarations: [
     MyApp,
@@ -56,10 +58,12 @@ import { DocumentsPage } from "../pages/documents/documents";
     InvoicesPage,
     DocumentsPage,
     NewVisitPage,
+    PostsPage,
     CreateVisitPage,
     TransPipe,
     VisitTabsPage,
     AddEventPage,
+    NewsComponent,
   ],
   imports: [
     BrowserModule,
@@ -83,6 +87,7 @@ import { DocumentsPage } from "../pages/documents/documents";
     EventPage,
     InvoicesPage,
     DocumentsPage,
+    PostsPage,
     NewVisitPage,
     CreateVisitPage,
     VisitTabsPage,

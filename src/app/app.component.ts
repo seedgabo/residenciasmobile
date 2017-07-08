@@ -16,6 +16,7 @@ import { VisitTabsPage } from "../pages/visit-tabs/visit-tabs";
 import { EventsPage } from "../pages/events/events";
 import { InvoicesPage } from "../pages/invoices/invoices";
 import { DocumentsPage } from "../pages/documents/documents";
+import { PostsPage } from "../pages/posts/posts";
 
 
 @Component({
@@ -54,6 +55,7 @@ export class MyApp {
     this.pages = [
       { title: 'Home', component: HomePage, icon: 'home' },
       { title: "Visitantes", component: VisitTabsPage, icon: 'contacts' },
+      { title: "Noticias", component: PostsPage, icon: 'paper' },
       { title: "Eventos", component: EventsPage, icon: 'calendar' },
       { title: "Facturas", component: InvoicesPage, icon: 'card' },
       { title: "Documentos", component: DocumentsPage, icon: 'document' },

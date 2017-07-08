@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController, ActionSheetController } from 'ionic-angular';
+import { NavController, NavParams, ModalController, ActionSheetController } from 'ionic-angular';
 import { Api } from "../../providers/api";
 import { NewVisitorPage } from "../new-visitor/new-visitor";
 import { CreateVisitPage } from "../create-visit/create-visit";

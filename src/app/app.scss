@@ -13,56 +13,98 @@
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
 .fullScreen {
-  .popover-content {
-    width: 90%;
-    left: 5% !important; // min-height: 50%;
-  }
+    .popover-content {
+        width: 90%;
+        left: 5% !important; // min-height: 50%;
+    }
 }
 
 .icon-primary {
-  ion-icon {
-    color: color($colors, 'primary');
-  }
+    ion-icon {
+        color: color($colors, 'primary');
+    }
 }
 
 .icon-secondary {
-  ion-icon {
-    color: color($colors, 'secondary');
-  }
+    ion-icon {
+        color: color($colors, 'secondary');
+    }
 }
 
 .icon-danger {
-  ion-icon {
-    color: color($colors, 'danger');
-  }
+    ion-icon {
+        color: color($colors, 'danger');
+    }
 }
 
 .user-info {
-  background-image: url('../assets/background-user.jpg');
-  background-size: cover; // height: 100px;
-  text-align: center;
-  height: 150px;
-  color: white;
-  .avatar-user {
-    height: 55px;
-    width: 55px;
-    border-radius: 50%;
-  }
+    background-image: url('../assets/background-user.jpg');
+    background-size: cover; // height: 100px;
+    text-align: center;
+    height: 150px;
+    color: white;
+    .avatar-user {
+        height: 55px;
+        width: 55px;
+        border-radius: 50%;
+    }
 }
 
 ion-toast {
-  &.approved {
-    .toast-container {
-      background-color: color($colors, 'secondary');
-      color: white;
+    &.approved {
+        .toast-container {
+            background-color: color($colors, 'secondary');
+            color: white;
+        }
+        .toast-message {}
     }
-    .toast-message {}
-  }
-  &.rejected {
-    .toast-container {
-      background-color: color($colors, 'danger');
-      color: white;
+    &.rejected {
+        .toast-container {
+            background-color: color($colors, 'danger');
+            color: white;
+        }
+        .toast-message {}
     }
-    .toast-message {}
-  }
+}
+
+#full-calendar {
+    padding-top: 30px;
+}
+
+#calendar h2 {
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    line-height: 35px;
+}
+
+#calendar .fc-day-header {
+    text-transform: uppercase;
+    font-weight: 400;
+}
+
+#external-events {
+    padding-top: 50px;
+}
+
+#external-events .fc-event {
+    color: #fff;
+    text-decoration: none;
+    padding: 5px;
+    margin-bottom: 10px;
+    cursor: all-scroll;
+    border: none;
+}
+
+.fc button {
+    background: #fff;
+}
+
+.fc td,
+.fc th {
+    border-width: 0px !important;
+}
+
+.fc-state-active,
+.fc-state-down {
+    color: #ff4081 !important;
 }
