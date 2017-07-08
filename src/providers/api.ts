@@ -24,10 +24,10 @@ export class Api {
   modules: any;
   settings: any;
   Echo: any = undefined;
-  // url = "http://residenciasonline.com/residencias/public/";
-  url = "http://localhost/residencias/public/";
-  username = "seedgabo@gmail.com";
-  password = "gab23gab";
+  url = "http://residenciasonline.com/residencias/public/";
+  // url = "http://localhost/residencias/public/";
+  username = "";
+  password = "";
   user;
   residence;
   resolve;
