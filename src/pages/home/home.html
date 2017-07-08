@@ -31,9 +31,8 @@
                 </ion-item>
                 <ion-item *ngIf="api.residence.owner">
                     <ion-icon name="person" item-left></ion-icon>
-
                     <b>{{'literals.owner'  | trans }}</b>
-                    <span item-right> {{ api.residence.owner }} </span>
+                    <span item-right> {{ api.residence.owner.name }} </span>
                 </ion-item>
                 <ion-item>
                     <ion-icon name="cash" item-left></ion-icon>

@@ -18,7 +18,7 @@ export class InvoicesPage {
   }
 
   getInvoices(refresher = null) {
-    this.api.get(`invoices?order[date]=desc&where[residence_id]=${this.api.user.residence_id}&with[]=user&take=12`)
+    this.api.get(`invoices?order[date]=desc&where[residence_id]=${this.api.user.residence_id}&with[]=user&with[]=receipts&take=12`)
       .then((data: any) => {
         console.log(data);
         this.api.invoices = data;
@@ -35,7 +35,12 @@ export class InvoicesPage {
 
   downloadinvoice(invoice) {
     var transfer: TransferObject = this.transfer.create();
-    transfer.download(invoice.url, this.file.dataDirectory + 'invoice.pdf')
+    var url = this.api.url + "api/invoice/" + invoice.id + "/pdf";
+    transfer.download(url, this.file.dataDirectory + 'invoice.pdf', true, {
+      headers: {
+        "Auth-Token": this.api.user.token
+      }
+    })
       .then((entry) => {
         console.log(entry)
         this._openFile(entry.toURL())
@@ -43,7 +48,27 @@ export class InvoicesPage {
       .catch((err) => {
         console.error(err)
       })
+  }
 
+  downloadReceipt(invoice) {
+    if (invoice.receipts.length == 0) {
+      return
+    }
+    var receipt = invoice.receipts[invoice.receipts.length - 1];
+    var transfer: TransferObject = this.transfer.create();
+    var url = this.api.url + "api/receipt/" + receipt.id + "/pdf";
+    transfer.download(url, this.file.dataDirectory + 'receipt.pdf', true, {
+      headers: {
+        "Auth-Token": this.api.user.token
+      }
+    })
+      .then((entry) => {
+        console.log(entry)
+        this._openFile(entry.toURL())
+      })
+      .catch((err) => {
+        console.error(err)
+      })
   }
 
   _openFile(url, type = "pdf") {
@@ -77,6 +102,17 @@ export class InvoicesPage {
         }
       }
     ];
+    if (invoice.receipts.length > 0) {
+      buttons.push({
+        text: this.api.trans("literals.download") + " " + this.api.trans('literals.receipt'),
+        icon: "filing",
+        cssClass: "secondary",
+        handler: () => {
+          this.downloadReceipt(invoice);
+        }
+      });
+    }
+
     var sheet = this.actionsheet.create({
       title: this.api.trans("literals.invoice") + "  " + invoice.number,
       buttons: buttons

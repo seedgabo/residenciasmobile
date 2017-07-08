@@ -478,7 +478,7 @@ export class Api {
         value = value.replace(':' + k, args[k]);
       }
     }
-    return value;
+    return value.replace('literals.', '').replace('__.', '');
   }
 
 
