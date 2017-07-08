@@ -1,7 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { Api } from "../../providers/api";
-import { CompleteTestService } from "../../providers/CompleteTestService";
 
 @Component({
   selector: 'page-add-post',
