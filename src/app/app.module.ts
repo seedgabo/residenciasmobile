@@ -46,6 +46,7 @@ import { PostsPage } from "../pages/posts/posts";
 import { AddPostPage } from "../pages/add-post/add-post";
 
 import { AutoCompleteModule } from 'ionic2-auto-complete';
+import { SurveysPage } from "../pages/surveys/surveys";
 
 
 @NgModule({
@@ -69,6 +70,7 @@ import { AutoCompleteModule } from 'ionic2-auto-complete';
     VisitTabsPage,
     AddEventPage,
     AddPostPage,
+    SurveysPage,
     NewsComponent,
   ],
   imports: [
@@ -100,6 +102,7 @@ import { AutoCompleteModule } from 'ionic2-auto-complete';
     VisitTabsPage,
     AddEventPage,
     AddPostPage,
+    SurveysPage,
 
   ],
   providers: [
