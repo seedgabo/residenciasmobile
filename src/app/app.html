@@ -1,30 +1,30 @@
-<ion-menu [content]="content">
-  <ion-header>
-    <div class="user-info" *ngIf="api.user" padding>
-      <img [src]="api.user.image_url" class="avatar-user">
-      <h5 text-center>{{api.user.name}}</h5>
-      <h6 *ngIf="api.residence" text-right>{{api.residence.name}}</h6>
-    </div>
-  </ion-header>
+<ion-split-pane>
+    <ion-menu [content]="content" *ngIf="api.user">
+        <ion-header>
+            <div class="user-info" padding>
+                <img [src]="api.user.image_url" class="avatar-user">
+                <h5 text-center>{{api.user.name}}</h5>
+                <h6 *ngIf="api.residence" text-right>{{api.residence.name}}</h6>
+            </div>
+        </ion-header>
+        <ion-content>
+            <ion-list>
+                <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
+            <ion-icon [name]="p.icon" item-left color="primary"></ion-icon>
+          {{p.title}}
+        </button>
+                <ion-item-divider>
+                    <ion-icon name="settings" item-left></ion-icon>
+                    {{ 'literals.settings' | trans }}
+                </ion-item-divider>
+                <button menuClose ion-item (click)="logout()">
+          <ion-icon item-left name="log-out"></ion-icon>
+          Cerrar Sesión
+        </button>
+            </ion-list>
+        </ion-content>
+    </ion-menu>
 
-  <ion-content>
-    <ion-list>
-      <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
-          <ion-icon [name]="p.icon" item-left color="primary"></ion-icon>
-        {{p.title}}
-      </button>
-      <ion-item-divider>
-        <ion-icon name="settings" item-left></ion-icon>
-        {{ 'literals.settings' | trans }}
-      </ion-item-divider>
-      <button menuClose ion-item (click)="logout()">
-        <ion-icon item-left name="log-out"></ion-icon>
-        Cerrar Sesión
-      </button>
-    </ion-list>
-  </ion-content>
-
-</ion-menu>
-
-<!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->
-<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>
+    <!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->
+    <ion-nav [root]="rootPage" main #content swipeBackEnabled="false"></ion-nav>
+</ion-split-pane>

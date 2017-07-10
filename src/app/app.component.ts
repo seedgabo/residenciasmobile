@@ -17,6 +17,7 @@ import { EventsPage } from "../pages/events/events";
 import { InvoicesPage } from "../pages/invoices/invoices";
 import { DocumentsPage } from "../pages/documents/documents";
 import { PostsPage } from "../pages/posts/posts";
+import { SurveysPage } from "../pages/surveys/surveys";
 
 
 @Component({
@@ -56,6 +57,7 @@ export class MyApp {
       { title: 'Home', component: HomePage, icon: 'home' },
       { title: "Visitantes", component: VisitTabsPage, icon: 'contacts' },
       { title: "Noticias", component: PostsPage, icon: 'paper' },
+      { title: "Encuestas", component: SurveysPage, icon: 'pie' },
       { title: "Eventos", component: EventsPage, icon: 'calendar' },
       { title: "Facturas", component: InvoicesPage, icon: 'card' },
       { title: "Documentos", component: DocumentsPage, icon: 'document' },

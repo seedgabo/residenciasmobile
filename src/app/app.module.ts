@@ -47,6 +47,7 @@ import { AddPostPage } from "../pages/add-post/add-post";
 
 import { AutoCompleteModule } from 'ionic2-auto-complete';
 import { SurveysPage } from "../pages/surveys/surveys";
+import { SurveyPage } from "../pages/survey/survey";
 
 
 @NgModule({
@@ -71,6 +72,7 @@ import { SurveysPage } from "../pages/surveys/surveys";
     AddEventPage,
     AddPostPage,
     SurveysPage,
+    SurveyPage,
     NewsComponent,
   ],
   imports: [
@@ -103,7 +105,7 @@ import { SurveysPage } from "../pages/surveys/surveys";
     AddEventPage,
     AddPostPage,
     SurveysPage,
-
+    SurveyPage,
   ],
   providers: [
     StatusBar, SplashScreen, Camera, Facebook, GooglePlus, AppMinimize, BackgroundMode, CodePush, OneSignal, Device,
