@@ -37,7 +37,9 @@
                 <ion-item *ngIf="event.zones">
                     <ion-icon item-left color="warning" name="partly-sunny"></ion-icon>
                     {{ 'literals.zones' | trans}}:
-                    <span *ngFor="let zone of event.zones"> {{ zone.name }} </span>
+                    <span item-right> 
+                       <span *ngFor="let zone of event.zones">{{ zone.name }} </span>
+                    </span>
                 </ion-item>
                 <ion-item *ngIf="event.creator">
                     <ion-icon item-left color="primary" name="person"></ion-icon>
