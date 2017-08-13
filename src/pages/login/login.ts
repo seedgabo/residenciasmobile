@@ -22,7 +22,7 @@ export class Login {
     let loading = this.loadingCtrl.create({
       content: `
       <div>
-        <img class="loading-img" src="${this.api.url + "img/logo-completo.png"}" alt="">
+        <img class="loading-img" src="${this.api.url + "img/logo.png"}" alt="">
         <h3>Cargando ...</h3>
       </div>`,
       spinner: 'hide',
@@ -76,7 +76,7 @@ export class Login {
             console.error(err);
             loading.dismiss();
             this.alertCtrl.create({
-              message: err,
+              message: JSON.stringify(err),
               title: "Error",
             }).present();
 
@@ -111,7 +111,7 @@ export class Login {
       spinner: 'hide',
     });
     loading.present();
-    this.google.login({ scopes: 'obj.email obj.userId obj.familyName obj.givenName obj.imageUrl' })
+    this.google.login({})
       .then((data) => {
         console.log(data);
         loading.dismiss();
