@@ -18,11 +18,9 @@ export class SurveyPage {
     this.renderChart();
     this.getVote();
     this.events.subscribe('survey:updated', this.surveyUpdated)
-
-
   }
   ionViewDidLeave() {
-    this.events.unsubscribe('survey:updted', this.surveyUpdated)
+    this.events.unsubscribe('survey:updated', this.surveyUpdated)
   }
   surveyUpdated(data) {
     this.survey = data.survey;

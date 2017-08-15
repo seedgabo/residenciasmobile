@@ -1,3 +1,4 @@
+import { Events } from 'ionic-angular';
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { Api } from "../../providers/api";
@@ -9,11 +10,19 @@ import { SurveyPage } from "../survey/survey";
 })
 export class SurveysPage {
   surveys = [];
-  constructor(public navCtrl: NavController, public navParams: NavParams, public api: Api) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public api: Api, public events: Events) {
   }
 
   ionViewDidLoad() {
     this.getSurveys();
+    this.events.subscribe('survey:created', this.getSurveys)
+    this.events.subscribe('survey:updated', this.getSurveys)
+    this.events.subscribe('survey:deleted', this.getSurveys)
+  }
+  ionViewDidLeave() {
+    this.events.unsubscribe('survey:created', this.getSurveys)
+    this.events.unsubscribe('survey:updated', this.getSurveys)
+    this.events.unsubscribe('survey:deleted', this.getSurveys)
   }
 
   getSurveys(refresher = null) {
@@ -21,12 +30,12 @@ export class SurveysPage {
       .then((data: any) => {
         console.log(data);
         this.surveys = data;
-        if (refresher)
+        if (refresher && typeof refresher.complete === 'function')
           refresher.complete()
       })
       .catch((err) => {
         console.error(err);
-        if (refresher)
+        if (refresher && typeof refresher.complete === 'function')
           refresher.complete()
       });
 
