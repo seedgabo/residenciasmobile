@@ -14,7 +14,7 @@
         <p> {{ visit.visitor.document}}</p>
       </div>
       <ng-template #unkown>
-        {{'literals.unkown visitor' | trans }}
+        {{'literals.visitante desconocido' | trans }}
       </ng-template>
       <span item-right ion-text [color]="visit.status == 'approved' ? 'success' : 'dark' ">
             {{ 'literals.'+ visit.status | trans  }}
