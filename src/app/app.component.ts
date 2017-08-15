@@ -38,6 +38,7 @@ export class MyApp {
         if (this.api.user) {
           this.rootPage = HomePage;
           this.api.getAllData();
+          this.api.getLang();
           this.registerDeepLinks();
         } else {
           this.rootPage = Login;
@@ -83,7 +84,7 @@ export class MyApp {
       this.backgroundmode.setDefaults(
         { silent: true, text: "Residencias", hidden: true, title: "Residencias Online" }
       );
-      // this.backgroundmode.excludeFromTaskList();
+      this.backgroundmode.excludeFromTaskList();
       // this.backgroundmode.overrideBackButton();
       this.codepush.sync({ updateDialog: false, ignoreFailedUpdates: false, }).subscribe((syncStatus) => console.log(syncStatus), (err) => { console.warn(err) });
     });

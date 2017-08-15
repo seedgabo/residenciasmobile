@@ -1,3 +1,4 @@
+import { Events } from 'ionic-angular';
 import { Component } from '@angular/core';
 import { NavController, NavParams, AlertController } from 'ionic-angular';
 import { Api } from "../../providers/api";
@@ -9,11 +10,22 @@ import Chart from 'chart.js';
 export class SurveyPage {
   survey: any;
   vote: any;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public api: Api, public alert: AlertController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public api: Api, public alert: AlertController, public events: Events) {
     this.survey = navParams.get('survey');
   }
 
   ionViewDidLoad() {
+    this.renderChart();
+    this.getVote();
+    this.events.subscribe('survey:updated', this.surveyUpdated)
+
+
+  }
+  ionViewDidLeave() {
+    this.events.unsubscribe('survey:updted', this.surveyUpdated)
+  }
+  surveyUpdated(data) {
+    this.survey = data.survey;
     this.renderChart();
     this.getVote();
   }

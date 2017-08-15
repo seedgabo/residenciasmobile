@@ -384,6 +384,21 @@ export class Api {
 
         })
 
+        .listen('SurveyCreated', (data) => {
+          console.log("created survey:", data);
+          this.events.publish('survey:created', data)
+        })
+        .listen('SurveyUpdated', (data) => {
+          console.log("updated survey:", data);
+          this.events.publish('survey:updated', data)
+
+        })
+        .listen('SurveyDeleted', (data) => {
+          console.log("deleted survey:", data);
+          this.events.publish('survey:deleted', data)
+
+        })
+
       this.Echo.private('App.Residence.' + this.user.residence_id)
         .listen('VisitConfirm', (data) => {
           console.log("VisitConfirm: ", data);

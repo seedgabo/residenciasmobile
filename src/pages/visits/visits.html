@@ -1,31 +1,31 @@
 <ion-header>
-    <ion-navbar color="primary">
-        <button ion-button icon-only menuToggle>
+  <ion-navbar color="primary">
+    <button ion-button icon-only menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-        <ion-title>{{ 'literals.visits' | trans }}</ion-title>
-    </ion-navbar>
+    <ion-title>{{ 'literals.visits' | trans }}</ion-title>
+  </ion-navbar>
 </ion-header>
 <ion-content padding>
-    <ion-list [virtualScroll]="visits">
-        <ion-item *virtualItem="let visit">
-            <div *ngIf="visit.visitor;else unkown">
-                <h2>{{ visit.visitor.name }}</h2>
-                <p> {{ visit.visitor.document}}</p>
-            </div>
-            <ng-template #unkown>
-                {{'__.unkown visitor' | trans }}
-            </ng-template>
-            <span item-right ion-text [color]="visit.status == 'approved' ? 'success' : 'dark' ">
-          {{ 'literals.'+ visit.status | trans  }}
+  <ion-list [virtualScroll]="visits">
+    <ion-item *virtualItem="let visit">
+      <div *ngIf="visit.visitor;else unkown">
+        <h2>{{ visit.visitor.name }}</h2>
+        <p> {{ visit.visitor.document}}</p>
+      </div>
+      <ng-template #unkown>
+        {{'literals.unkown visitor' | trans }}
+      </ng-template>
+      <span item-right ion-text [color]="visit.status == 'approved' ? 'success' : 'dark' ">
+            {{ 'literals.'+ visit.status | trans  }}
           <br>
           <small  style="color:black;">
             {{ visit.created_at  | amCalendar}}
           </small>
         </span>
-        </ion-item>
-    </ion-list>
-    <ion-infinite-scroll (ionInfinite)="loadMoreVisits($event)" [enabled]="visits.length!=0 && enable_loader">
-        <ion-infinite-scroll-content></ion-infinite-scroll-content>
-    </ion-infinite-scroll>
+    </ion-item>
+  </ion-list>
+  <ion-infinite-scroll (ionInfinite)="loadMoreVisits($event)" [enabled]="visits.length!=0 && enable_loader">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>
