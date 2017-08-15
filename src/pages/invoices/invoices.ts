@@ -1,16 +1,18 @@
+import { PaymentReportPage } from './../payment-report/payment-report';
 import { Component } from '@angular/core';
-import { NavController, NavParams, ActionSheetController } from 'ionic-angular';
+import { NavController, NavParams, ActionSheetController, PopoverController } from 'ionic-angular';
 import { Api } from "../../providers/api";
 import { Transfer, TransferObject } from "@ionic-native/transfer";
 import { File } from '@ionic-native/file';
 import { FileOpener } from "@ionic-native/file-opener";
+import { InvoicePage } from "../invoice/invoice";
 @Component({
   selector: 'page-invoices',
   templateUrl: 'invoices.html',
 })
 export class InvoicesPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public api: Api, public transfer: Transfer, public file: File, public fileOpener: FileOpener, public actionsheet: ActionSheetController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public api: Api, public transfer: Transfer, public file: File, public fileOpener: FileOpener, public actionsheet: ActionSheetController, public popover: PopoverController) {
   }
 
   ionViewDidLoad() {
@@ -18,7 +20,7 @@ export class InvoicesPage {
   }
 
   getInvoices(refresher = null) {
-    this.api.get(`invoices?order[date]=desc&where[residence_id]=${this.api.user.residence_id}&with[]=user&with[]=receipts&take=12`)
+    this.api.get(`invoices?order[date]=desc&where[residence_id]=${this.api.user.residence_id}&with[]=user&with[]=receipts&with[]=items&take=24`)
       .then((data: any) => {
         console.log(data);
         this.api.invoices = data;
@@ -77,6 +79,23 @@ export class InvoicesPage {
       .catch(e => console.log('Error openening file', e));
   }
 
+  viewInvoice(invoice) {
+    this.navCtrl.push(InvoicePage, { invoice: invoice });
+  }
+  reportPayment(invoice) {
+    var popover = this.popover.create(PaymentReportPage, { invoice: invoice });
+    popover.present();
+    popover.onWillDismiss(() => { this.getInvoices() });
+  }
+
+  sendMailInvoice(invoice) {
+    if (confirm(this.api.trans('__.are you sure?')))
+      this.api.post(`invoice/${invoice.id}/email`, {})
+        .then((data) => {
+        })
+        .catch(console.error);
+  }
+
   openMenu(invoice) {
     var buttons = [
       {
@@ -88,17 +107,11 @@ export class InvoicesPage {
         }
       },
       {
-        text: this.api.trans("__.report payment"),
-        icon: "cash",
-        cssClass: 'primary',
-        handler: () => {
-        }
-      },
-      {
         text: this.api.trans("literals.view_resource") + " " + this.api.trans('literals.details'),
         icon: "ios-list-box",
         cssClass: '',
         handler: () => {
+          this.viewInvoice(invoice);
         }
       }
     ];
@@ -111,6 +124,16 @@ export class InvoicesPage {
           this.downloadReceipt(invoice);
         }
       });
+    }
+    if (invoice.status !== "paid") {
+      buttons.push({
+        text: this.api.trans("__.report payment"),
+        icon: "cash",
+        cssClass: 'primary',
+        handler: () => {
+          this.reportPayment(invoice);
+        }
+      })
     }
 
     var sheet = this.actionsheet.create({

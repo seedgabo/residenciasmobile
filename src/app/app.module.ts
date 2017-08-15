@@ -1,3 +1,4 @@
+import { PaymentReportPage } from './../pages/payment-report/payment-report';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
 import { IonicStorageModule } from '@ionic/storage';
@@ -40,6 +41,7 @@ import { EventsPage } from "../pages/events/events";
 import { AddEventPage } from "../pages/add-event/add-event";
 import { EventPage } from "../pages/event/event";
 import { InvoicesPage } from "../pages/invoices/invoices";
+import { InvoicePage } from "../pages/invoice/invoice";
 import { DocumentsPage } from "../pages/documents/documents";
 import { NewsComponent } from '../components/news/news';
 import { PostsPage } from "../pages/posts/posts";
@@ -63,6 +65,7 @@ import { SurveyPage } from "../pages/survey/survey";
     EventsPage,
     EventPage,
     InvoicesPage,
+    InvoicePage,
     DocumentsPage,
     NewVisitPage,
     PostsPage,
@@ -73,6 +76,7 @@ import { SurveyPage } from "../pages/survey/survey";
     AddPostPage,
     SurveysPage,
     SurveyPage,
+    PaymentReportPage,
     NewsComponent,
   ],
   imports: [
@@ -97,6 +101,7 @@ import { SurveyPage } from "../pages/survey/survey";
     EventsPage,
     EventPage,
     InvoicesPage,
+    InvoicePage,
     DocumentsPage,
     PostsPage,
     NewVisitPage,
@@ -106,6 +111,7 @@ import { SurveyPage } from "../pages/survey/survey";
     AddPostPage,
     SurveysPage,
     SurveyPage,
+    PaymentReportPage,
   ],
   providers: [
     StatusBar, SplashScreen, Camera, Facebook, GooglePlus, AppMinimize, BackgroundMode, CodePush, OneSignal, Device,
