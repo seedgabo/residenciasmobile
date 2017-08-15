@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { Api } from "../../providers/api";
 import { SurveyPage } from "../survey/survey";
-
+var func
 @Component({
   selector: 'page-surveys',
   templateUrl: 'surveys.html',
@@ -15,14 +15,17 @@ export class SurveysPage {
 
   ionViewDidLoad() {
     this.getSurveys();
-    this.events.subscribe('survey:created', this.getSurveys)
-    this.events.subscribe('survey:updated', this.getSurveys)
-    this.events.subscribe('survey:deleted', this.getSurveys)
+    func = (data) => {
+      this.getSurveys(data)
+    }
+    this.events.subscribe('survey:created', func)
+    this.events.subscribe('survey:updated', func)
+    this.events.subscribe('survey:deleted', func)
   }
   ionViewDidLeave() {
-    this.events.unsubscribe('survey:created', this.getSurveys)
-    this.events.unsubscribe('survey:updated', this.getSurveys)
-    this.events.unsubscribe('survey:deleted', this.getSurveys)
+    this.events.unsubscribe('survey:created', func)
+    this.events.unsubscribe('survey:updated', func)
+    this.events.unsubscribe('survey:deleted', func)
   }
 
   getSurveys(refresher = null) {

@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, AlertController } from 'ionic-angular';
 import { Api } from "../../providers/api";
 import Chart from 'chart.js';
+var funct
 @Component({
   selector: 'page-survey',
   templateUrl: 'survey.html',
@@ -17,10 +18,13 @@ export class SurveyPage {
   ionViewDidLoad() {
     this.renderChart();
     this.getVote();
-    this.events.subscribe('survey:updated', this.surveyUpdated)
+    funct = (data) => {
+      this.update();
+    }
+    this.events.subscribe('survey:updated', funct)
   }
-  ionViewDidLeave() {
-    this.events.unsubscribe('survey:updated', this.surveyUpdated)
+  ionViewWillUnload() {
+    this.events.unsubscribe('survey:updated', funct)
   }
   surveyUpdated(data) {
     this.survey = data.survey;
