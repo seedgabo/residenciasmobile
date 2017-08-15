@@ -53,7 +53,7 @@ export class HomePage {
       });
   }
   getNews() {
-    this.api.get('posts?order[created_at]=desc&limit=4&with[]=user.residence')
+    this.api.get('posts?order[created_at]=desc&limit=7&with[]=user.residence&with[]=image')
       .then((data: any) => {
         console.log("news", data);
         this.news = data;

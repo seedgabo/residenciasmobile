@@ -17,7 +17,7 @@ export class PostsPage {
   }
 
   getPosts(refresher = null) {
-    this.api.get('posts?limit=50&order[created_at]=desc&with[]=user.residence&with[]=tags')
+    this.api.get('posts?limit=50&order[created_at]=desc&with[]=user.residence&with[]=tags&with[]=image')
       .then((data: any) => {
         console.log(data);
         this.posts = data;
