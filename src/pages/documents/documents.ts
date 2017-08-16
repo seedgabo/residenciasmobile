@@ -12,6 +12,7 @@ import { FileOpener } from "@ionic-native/file-opener";
 export class DocumentsPage {
   documents = [];
   selected = null;
+  query = "";
   constructor(public navCtrl: NavController, public navParams: NavParams, public api: Api, public sanitizer: DomSanitizer, public file: File, public transfer: Transfer, public fileOpener: FileOpener) {
   }
 
@@ -45,6 +46,16 @@ export class DocumentsPage {
         console.error(err)
       })
   }
+  documentsFilter() {
+    if (this.query === '') {
+      return this.documents;
+    }
+    return this.documents.filter((doc) => {
+      return (doc.title && doc.title.toLowerCase().indexOf(this.query.toLowerCase()) > -1)
+        || (doc.description && doc.description.toLowerCase().indexOf(this.query.toLowerCase()) > -1)
+        || (doc.type && doc.type.toLowerCase().indexOf(this.query.toLowerCase()) > -1);
+    })
+  }
 
   _openFile(url, type = "pdf") {
     if (type === 'pdf' || type === 'dynamic') {
@@ -70,19 +81,38 @@ export class DocumentsPage {
   iconColor(document) {
     var type = document.type
     if (type === 'pdf' || type === 'dynamic') {
-      return 'danger'
+      return '#F44336'
     }
     else if (type === 'jpg') {
-      return 'primary'
+      return '#00BCD4'
     }
     else if (type === 'png') {
-      return 'primary'
+      return '#00BCD4'
     }
     else if (type === 'xls' || type === 'xlsx') {
-      return 'secondary';
+      return '#4CAF50';
     }
     else {
-      return "dark";
+      return "#2196F3";
+    }
+  }
+
+  icon(document) {
+    var type = document.type
+    if (type === 'pdf' || type === 'dynamic') {
+      return 'fa-file-pdf-o'
+    }
+    else if (type === 'jpg') {
+      return 'fa-file-image-o'
+    }
+    else if (type === 'png') {
+      return 'fa-file-image-o'
+    }
+    else if (type === 'xls' || type === 'xlsx') {
+      return 'fa-file-excel-o';
+    }
+    else {
+      return "fa-file-o";
     }
   }
 }
