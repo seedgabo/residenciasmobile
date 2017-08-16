@@ -39,7 +39,7 @@ export class DocumentsPage {
     })
       .then((entry) => {
         console.log(entry)
-        this._openFile(entry.toURL())
+        this._openFile(entry.toURL(), document.type)
       })
       .catch((err) => {
         console.error(err)
@@ -47,8 +47,42 @@ export class DocumentsPage {
   }
 
   _openFile(url, type = "pdf") {
-    this.fileOpener.open(url, 'application/pdf')
+    if (type === 'pdf' || type === 'dynamic') {
+      var mime = 'application/pdf'
+    }
+    else if (type === 'jpg') {
+      var mime = 'image/jpeg'
+    }
+    else if (type === 'png') {
+      var mime = 'image/png'
+    }
+    else if (type === 'xls' || type === 'xlsx') {
+      var mime = 'application/vnd.ms-excel';
+    }
+    else {
+      var mime = "";
+    }
+    this.fileOpener.open(url, mime)
       .then(() => console.log('File is opened'))
       .catch(e => console.log('Error openening file', e));
+  }
+
+  iconColor(document) {
+    var type = document.type
+    if (type === 'pdf' || type === 'dynamic') {
+      return 'danger'
+    }
+    else if (type === 'jpg') {
+      return 'primary'
+    }
+    else if (type === 'png') {
+      return 'primary'
+    }
+    else if (type === 'xls' || type === 'xlsx') {
+      return 'secondary';
+    }
+    else {
+      return "dark";
+    }
   }
 }
