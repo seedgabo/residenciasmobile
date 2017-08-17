@@ -20,7 +20,7 @@
     </ion-card-header>
     <ion-card-content>
       <div text-center *ngIf="post.image">
-        <img [src]="post.image.url" style="margin: 0 auto;max-height:130px;">
+        <img [src]="post.image.url" style="margin: 0 auto; max-width:50%; max-height:130px;">
       </div>
       <div [innerHTML]="post.text" text-justify>
       </div>

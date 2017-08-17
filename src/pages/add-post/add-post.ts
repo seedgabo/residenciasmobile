@@ -12,6 +12,8 @@ export class AddPostPage {
   provider;
   tags = [];
   selected_tags = [];
+  post_image = null
+  uploading = false;
   constructor(public navCtrl: NavController, public navParams: NavParams, public api: Api) {
   }
 
@@ -37,18 +39,37 @@ export class AddPostPage {
 
 
   createPost() {
+    this.uploading = true
     this.selected_tags.forEach((tag) => {
       this.post.tags.push(tag.name);
     });
     this.api.post('posts', this.post)
-      .then((data) => {
-        console.log(data);
-        this.close();
+      .then((data: any) => {
+        if (this.post_image) {
+          this.uploadImage(data.id)
+            .then((resp) => {
+              this.uploading = false;
+              console.log(data);
+              this.close();
+            })
+            .catch((err) => {
+              console.error(err);
+            })
+        }
+        else {
+          this.uploading = false;
+          console.log(data);
+          this.close();
+        }
       })
       .catch((err) => {
         console.error(err);
       })
   }
+  uploadImage(id) {
+    return this.api.post('images/upload/post/' + id, { image: this.post_image })
+  }
+
   addTag(ev) {
     this.selected_tags.push(ev);
     this.searchbar.keyword = "";
@@ -59,6 +80,22 @@ export class AddPostPage {
   close() {
     this.navCtrl.pop();
   }
+  askFile() {
+    var filer: any = document.querySelector("#input-file")
+    filer.click();
+  }
+  readFile(event) {
+    try {
+      var reader: any = new FileReader();
+      reader.readAsDataURL(event.target.files[0])
+      reader.onload = (result) => {
+        this.post_image = result.target.result;
+      };
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
 
 
 }

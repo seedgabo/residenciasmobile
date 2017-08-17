@@ -59,7 +59,7 @@
       </ion-item>
     </ion-list>
   </ion-card>
-  <ion-list *ngIf="news.length > 0">
+  <ion-list *ngIf="news && news.length > 0">
     <ion-item *ngFor="let new of news">
       <ion-avatar *ngIf="new.image" item-left>
         <img [src]="new.image.url" alt="">
