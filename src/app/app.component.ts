@@ -1,3 +1,4 @@
+import { SurveyPage } from './../pages/survey/survey';
 import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform, Events } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -31,9 +32,9 @@ export class MyApp {
   pages: Array<any>;
   VisitTabsPage = VisitTabsPage;
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public codepush: CodePush, public backgroundmode: BackgroundMode, public api: Api, public minimize: AppMinimize, public deeplinks: Deeplinks, public events: Events) {
-    this.initializeApp();
     this.platform.ready().then(() => {
       this.api.ready.then(() => {
+        this.initializeApp();
         console.log(this.api.user);
         if (this.api.user) {
           this.rootPage = HomePage;
@@ -95,20 +96,24 @@ export class MyApp {
   }
 
   registerDeepLinks() {
-    this.deeplinks.route({
+    this.deeplinks.routeWithNavController(this.nav, {
       '/visit/:visitId': VisitTabsPage,
       '/visitor/:visitorId': VisitTabsPage,
+      '/surveys': SurveyPage,
     }).subscribe((match) => {
       console.log('Successfully routed', match);
       var args = {};
       for (var key in match.$args) {
         args[key] = match.$args[key];
       }
-      if (match.$link.url.indexOf("residenciasOnline://app/visit")) {
+      if (match.$link.url.indexOf("residenciasOnline://app/visit") > -1) {
         this.nav.setRoot(VisitTabsPage, args);
       }
-      if (match.$link.url.indexOf("residenciasOnline://app/visitor")) {
+      if (match.$link.url.indexOf("residenciasOnline://app/visitor") > -1) {
         this.nav.setRoot(VisitTabsPage, args);
+      }
+      if (match.$link.url.indexOf("residenciasOnline://app/surveys") > -1) {
+        this.nav.setRoot(SurveyPage, args);
       }
     }, (nomatch) => {
       this.nav.setRoot(HomePage);
