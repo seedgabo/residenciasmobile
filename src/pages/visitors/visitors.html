@@ -11,7 +11,7 @@
   <ion-list>
     <input type="file" accept="image/*" style="display:none;" id="input-file" (change)="readFile($event)">
     <button ion-item *ngFor="let visitor of visitors" (click)="actions(visitor)">
-      <ion-avatar item-left (click)="askFile(visitor)">
+      <ion-avatar item-left (click)="askFile(visitor);$event.stopPropagation()">
         <img [src]="visitor.image_url" alt="visitor.name">
       </ion-avatar>
       <h2>
