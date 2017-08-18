@@ -2,6 +2,7 @@ import { ToastController, ActionSheetController } from 'ionic-angular';
 import { Api } from './../../providers/api';
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { VehiclesEditorPage } from "../vehicle-editor/vehicle-editor";
 @Component({
   selector: 'page-vehicles',
   templateUrl: 'vehicles.html',
@@ -13,6 +14,15 @@ export class VehiclesPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public api: Api, public toast: ToastController, public actionsheet: ActionSheetController) {
     this.vehicles = this.api.residence.vehicles;
   }
+  ionViewDidEnter() {
+    this.getData()
+  }
+
+  getData() {
+    this.api.get('vehicles?where[residence_id]=' + this.api.user.residence_id)
+      .then((data: any) => { this.api.vehicles = data; this.filter() })
+      .catch(console.error)
+  }
 
   filter() {
     if (this.query == "")
@@ -23,15 +33,23 @@ export class VehiclesPage {
       return false;
     });
   }
+
   addVehicle() {
+    this.navCtrl.push(VehiclesEditorPage);
   }
+
   updateVehicle(vehicle) {
+    this.navCtrl.push(VehiclesEditorPage, { vehicle: vehicle });
   }
 
   delete(vehicle) {
-    this.api.delete('vehicles/' + vehicle.id).catch((err) => {
-      console.error(err);
-    });
+    this.api.delete('vehicles/' + vehicle.id)
+      .then((data) => {
+        this.getData();
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   }
 
 
@@ -60,7 +78,7 @@ export class VehiclesPage {
 
   askFile(vehicle) {
     this.vehicle_image = vehicle;
-    var filer: any = document.querySelector("#input-file")
+    var filer: any = document.querySelector("#input-file-vehicle")
     filer.click();
   }
 
@@ -94,14 +112,5 @@ export class VehiclesPage {
 }
 
 
-export class VehiclesEditorPage {
-  vehicle = {
-    plate: '',
-    line: ''
-  }
-  constructor(public navCtrl: NavController, public navParams: NavParams, public api: Api) {
-    var vehicle = navParams.get('vehicle')
-    if (vehicle)
-      this.vehicle = vehicle;
-  }
-}
+
+

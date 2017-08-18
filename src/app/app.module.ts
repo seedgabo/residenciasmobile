@@ -1,5 +1,6 @@
 import { WorkersPage } from './../pages/workers/workers';
-import { VehiclesPage } from './../pages/vehicles/vehicles';
+import { VehiclesPage, } from './../pages/vehicles/vehicles';
+import { VehiclesEditorPage } from './../pages/vehicle-editor/vehicle-editor';
 import { TablesPage } from './../pages/tables/tables';
 import { PaymentReportPage } from './../pages/payment-report/payment-report';
 import { BrowserModule } from '@angular/platform-browser';
@@ -80,6 +81,7 @@ import { RoundProgressModule } from 'angular-svg-round-progressbar';
     VisitTabsPage,
     TablesPage,
     VehiclesPage,
+    VehiclesEditorPage,
     WorkersPage,
     AddEventPage,
     AddPostPage,
@@ -117,6 +119,7 @@ import { RoundProgressModule } from 'angular-svg-round-progressbar';
     ProfilePage,
     TablesPage,
     VehiclesPage,
+    VehiclesEditorPage,
     WorkersPage,
     NewVisitPage,
     CreateVisitPage,
