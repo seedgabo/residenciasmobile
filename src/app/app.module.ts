@@ -50,6 +50,7 @@ import { AddPostPage } from "../pages/add-post/add-post";
 import { AutoCompleteModule } from 'ionic2-auto-complete';
 import { SurveysPage } from "../pages/surveys/surveys";
 import { SurveyPage } from "../pages/survey/survey";
+import { ProfilePage } from "../pages/profile/profile";
 
 
 @NgModule({
@@ -69,6 +70,7 @@ import { SurveyPage } from "../pages/survey/survey";
     DocumentsPage,
     NewVisitPage,
     PostsPage,
+    ProfilePage,
     CreateVisitPage,
     TransPipe,
     VisitTabsPage,
@@ -104,6 +106,7 @@ import { SurveyPage } from "../pages/survey/survey";
     InvoicePage,
     DocumentsPage,
     PostsPage,
+    ProfilePage,
     NewVisitPage,
     CreateVisitPage,
     VisitTabsPage,

@@ -19,6 +19,7 @@ import { InvoicesPage } from "../pages/invoices/invoices";
 import { DocumentsPage } from "../pages/documents/documents";
 import { PostsPage } from "../pages/posts/posts";
 import { SurveysPage } from "../pages/surveys/surveys";
+import { ProfilePage } from "../pages/profile/profile";
 
 
 @Component({
@@ -64,6 +65,7 @@ export class MyApp {
       { title: "Facturas", component: InvoicesPage, icon: 'card' },
       { title: "Documentos", component: DocumentsPage, icon: 'document' },
       { title: 'Parkings', component: ParkingsPage, icon: 'car' },
+      { title: "Perfil", component: ProfilePage, icon: 'user' },
       { title: "Residencias", component: Residences, icon: 'albums' },
     ];
 
