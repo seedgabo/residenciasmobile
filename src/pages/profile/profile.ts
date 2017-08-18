@@ -13,6 +13,8 @@ export class ProfilePage {
   profile: any = {};
   residence: any = {};
   editable = false
+  password = "";
+  password_confirmation = ""
   constructor(public navCtrl: NavController, public navParams: NavParams, public api: Api, public toast: ToastController) {
     this.monthShortNames = moment.monthsShort().join(", ");
     this.months = moment.months().join(", ");
@@ -67,6 +69,17 @@ export class ProfilePage {
           message: this.api.trans("literals.residence") + " " + this.api.trans("crud.updated"),
           duration: 1500,
           showCloseButton: true,
+        }).present();
+      })
+      .catch(console.error)
+  }
+
+  updatePassword() {
+    this.api.post('update-password', { password: this.password })
+      .then((data) => {
+        this.toast.create({
+          message: this.api.trans('literals.password') + " " + this.api.trans('crud.updated'),
+          duration: 1500
         }).present();
       })
       .catch(console.error)

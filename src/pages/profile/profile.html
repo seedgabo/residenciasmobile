@@ -129,4 +129,28 @@
     </ion-card-content>
   </ion-card>
 
+  <ion-card>
+    <ion-card-header>{{'literals.change' | trans }} {{'literals.password'| trans}}</ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item>
+          <ion-icon small name="lock" item-left [color]="password.length ==0 ? 'dark' :password.length>5? 'secondary' :'danger'"></ion-icon>
+          <ion-label floating>{{'literals.password' | trans }}</ion-label>
+          <ion-input type="password" [(ngModel)]="password"></ion-input>
+
+        </ion-item>
+
+        <ion-item>
+          <ion-icon small name="unlock" item-left [color]="password_confirmation.length ==0 ? 'dark' :password==password_confirmation? 'secondary' :'danger'"></ion-icon>
+          <ion-label floating>{{'literals.password_confirmation' | trans }} </ion-label>
+          <ion-input type="password" [(ngModel)]="password_confirmation"></ion-input>
+        </ion-item>
+        <button full (click)="updatePassword()" color="favorite" ion-button [disabled]="!(password.length>5 && password == password_confirmation)">
+          <ion-icon class="fa fa-save"></ion-icon> 
+            {{ 'crud.save' | trans}}
+        </button>
+
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
