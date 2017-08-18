@@ -115,13 +115,13 @@
             <ion-icon small item-left name="person"></ion-icon>
             <ion-label floating>{{'literals.owner' | trans }}</ion-label>
             <ion-select [(ngModel)]="residence.owner_id">
-              <ion-option value="user.id" *ngFor="let user of residence.users">{{user.name}}</ion-option>
+              <ion-option [value]="user.id" *ngFor="let user of residence.users">{{user.name}}</ion-option>
             </ion-select>
           </ion-item>
           <button ion-button full color="primary" icon-left *ngIf="canSaveResidence()" (click)="updateResidence()">
-                <ion-icon class="fa fa-save"></ion-icon>
-                {{'crud.save' | trans}}
-            </button>
+            <ion-icon class="fa fa-save"></ion-icon>
+            {{'crud.save' | trans}}
+          </button>
         </div>
       </ion-list>
     </ion-card-content>

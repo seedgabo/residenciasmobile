@@ -1,3 +1,5 @@
+import { ProfilePage } from './../profile/profile';
+import { InvoicesPage } from './../invoices/invoices';
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { Api } from "../../providers/api";
@@ -12,7 +14,6 @@ import { PostsPage } from "../posts/posts";
 
 
 export class HomePage {
-  nombre = "gabriel";
   sliders = [];
   text = "";
   nextEvents = [];
@@ -63,6 +64,12 @@ export class HomePage {
   }
   gotoNews() {
     this.navCtrl.push(PostsPage);
+  }
+  gotoInvoices() {
+    this.navCtrl.push(InvoicesPage)
+  }
+  gotoProfile() {
+    this.navCtrl.push(ProfilePage);
   }
 
 }

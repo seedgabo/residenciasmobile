@@ -1,3 +1,4 @@
+import { ToastController } from 'ionic-angular';
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { Api } from "../../providers/api";
@@ -12,7 +13,7 @@ export class ProfilePage {
   profile: any = {};
   residence: any = {};
   editable = false
-  constructor(public navCtrl: NavController, public navParams: NavParams, public api: Api) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public api: Api, public toast: ToastController) {
     this.monthShortNames = moment.monthsShort().join(", ");
     this.months = moment.months().join(", ");
     this.profile = JSON.parse(JSON.stringify(this.api.user));
@@ -41,7 +42,11 @@ export class ProfilePage {
         this.api.user.phone_number = data.phone_number;
         this.api.user.birthday = data.birthday;
         this.api.storage.set('user', this.api.user);
-
+        this.toast.create({
+          message: this.api.trans("literals.user") + " " + this.api.trans("crud.updated"),
+          duration: 1500,
+          showCloseButton: true,
+        }).present();
       })
       .catch(console.error)
   }
@@ -58,6 +63,11 @@ export class ProfilePage {
         this.api.residence.owner_id = data.owner_id;
         this.api.residence.owner = data.owner;
         this.api.storage.set('residence', this.api.residence);
+        this.toast.create({
+          message: this.api.trans("literals.residence") + " " + this.api.trans("crud.updated"),
+          duration: 1500,
+          showCloseButton: true,
+        }).present();
       })
       .catch(console.error)
   }
