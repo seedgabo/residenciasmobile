@@ -5,13 +5,14 @@
     </button>
     <ion-title>
       <ion-icon name="person"></ion-icon>
-      Perfil
+      {{'literals.profile' | trans }}
     </ion-title>
   </ion-navbar>
 </ion-header>
 
 
 <ion-content>
+
   <ion-card>
     <ion-card-header text-center padding class="hero">
       <input type="file" accept="image/*" style="display:none;" id="input-file" (change)="readFile($event)">

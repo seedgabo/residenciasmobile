@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ModalController, ActionSheetController } from 'ionic-angular';
+import { NavController, NavParams, ModalController, ActionSheetController, ToastController } from 'ionic-angular';
 import { Api } from "../../providers/api";
 import { NewVisitorPage } from "../new-visitor/new-visitor";
 import { CreateVisitPage } from "../create-visit/create-visit";
@@ -9,9 +9,10 @@ import { CreateVisitPage } from "../create-visit/create-visit";
   templateUrl: 'visitors.html',
 })
 export class VisitorsPage {
+  visitor_image: any;
   query = "";
   visitors = [];
-  constructor(public navCtrl: NavController, public navParams: NavParams, public api: Api, public modal: ModalController, public actionsheet: ActionSheetController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public api: Api, public modal: ModalController, public actionsheet: ActionSheetController, public toast: ToastController) {
   }
 
   ionViewDidLoad() {
@@ -68,6 +69,39 @@ export class VisitorsPage {
 
       ]
     }).present();
+  }
+
+  askFile(visitor) {
+    this.visitor_image = visitor;
+    var filer: any = document.querySelector("#input-file")
+    filer.click();
+  }
+
+  readFile(event) {
+    try {
+      var reader: any = new FileReader();
+      reader.readAsDataURL(event.target.files[0])
+      reader.onload = (result) => {
+        this.visitor_image.image_url = result.target.result;
+        this.uploadImage(this.visitor_image.id)
+      };
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  uploadImage(id) {
+    return this.api.post('images/upload/visitor/' + id, { image: this.visitor_image.image_url })
+      .then((data: any) => {
+        console.log(data);
+        this.visitor_image.image = data.image;
+        this.toast.create({
+          message: this.api.trans("literals.image") + " " + this.api.trans("crud.updated"),
+          duration: 1500,
+          showCloseButton: true,
+        }).present();
+      })
+      .catch(console.error)
   }
 
 }

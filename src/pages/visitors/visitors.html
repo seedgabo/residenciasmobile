@@ -9,8 +9,9 @@
 <ion-content>
   <ion-searchbar [(ngModel)]="query" debounce="500" (ionInput)="filter()"></ion-searchbar>
   <ion-list>
+    <input type="file" accept="image/*" style="display:none;" id="input-file" (change)="readFile($event)">
     <button ion-item *ngFor="let visitor of visitors" (click)="actions(visitor)">
-      <ion-avatar item-left>
+      <ion-avatar item-left (click)="askFile(visitor)">
         <img [src]="visitor.image_url" alt="visitor.name">
       </ion-avatar>
       <h2>
