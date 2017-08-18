@@ -65,7 +65,7 @@ export class MyApp {
       { title: "Facturas", component: InvoicesPage, icon: 'card' },
       { title: "Documentos", component: DocumentsPage, icon: 'document' },
       { title: 'Parkings', component: ParkingsPage, icon: 'car' },
-      { title: "Perfil", component: ProfilePage, icon: 'user' },
+      { title: "Perfil", component: ProfilePage, icon: 'person' },
       { title: "Residencias", component: Residences, icon: 'albums' },
     ];
 

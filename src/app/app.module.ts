@@ -52,6 +52,7 @@ import { SurveysPage } from "../pages/surveys/surveys";
 import { SurveyPage } from "../pages/survey/survey";
 import { ProfilePage } from "../pages/profile/profile";
 
+import { RoundProgressModule } from 'angular-svg-round-progressbar';
 
 @NgModule({
   declarations: [
@@ -86,6 +87,7 @@ import { ProfilePage } from "../pages/profile/profile";
     HttpModule,
     AutoCompleteModule,
     MomentModule,
+    RoundProgressModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot(),
   ],

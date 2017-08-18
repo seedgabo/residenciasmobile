@@ -70,6 +70,7 @@ export class Api {
         if (this.sound)
           this.sound.pause();
       });
+      window.$api = this;
 
     });
   }
