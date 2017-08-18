@@ -14,7 +14,8 @@
 <ion-content>
   <ion-card>
     <ion-card-header text-center padding class="hero">
-      <img [src]="profile.image_url" style="margin:0 auto;border-radius:50%; width:80px; height:80px;">
+      <input type="file" accept="image/*" style="display:none;" id="input-file" (change)="readFile($event)">
+      <img [src]="profile.image_url" style="margin:0 auto;border-radius:50%; width:80px; height:80px;" (click)="askFile()">
     </ion-card-header>
     <ion-list padding>
       <ion-item>

@@ -85,4 +85,38 @@ export class ProfilePage {
       (this.residence.owner_id)
   }
 
+  askFile() {
+    var filer: any = document.querySelector("#input-file")
+    filer.click();
+  }
+
+  readFile(event) {
+    try {
+      var reader: any = new FileReader();
+      reader.readAsDataURL(event.target.files[0])
+      reader.onload = (result) => {
+        this.profile.image_url = result.target.result;
+        this.uploadImage(this.api.user.id)
+      };
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  uploadImage(id) {
+    return this.api.post('images/upload/user/' + id, { image: this.profile.image_url })
+      .then((data: any) => {
+        console.log(data);
+        this.api.user.image = data.image;
+        this.api.user.image_url = data.resource.image_url;
+        this.api.user.image_id = data.resource.image_id
+        this.api.storage.set('user', this.api.user);
+        this.toast.create({
+          message: this.api.trans("literals.image") + " " + this.api.trans("crud.updated"),
+          duration: 1500,
+          showCloseButton: true,
+        }).present();
+      })
+      .catch(console.error)
+  }
 }
