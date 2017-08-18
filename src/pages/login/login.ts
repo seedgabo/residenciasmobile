@@ -127,7 +127,7 @@ export class Login {
   }
 
   recover(email) {
-    this.api.post('recover-password', { email: email })
+    this.api.post('forgot-password', { email: email })
       .then(() => {
         let alert = this.alertCtrl.create({
           title: "Listo!",

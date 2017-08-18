@@ -3,7 +3,7 @@
     <img src="./assets/logo-completo.png" style="height:85px">
   </div>
   <ion-list>
-    <div *ngIf="!recover">
+    <div *ngIf="!forgot">
 
       <ion-item>
         <ion-label floating>Email</ion-label>
@@ -31,7 +31,7 @@
                 Iniciar sesion con Google
             </button>
 
-      <button clear ion-button color="light" (click)="forgot=true">
+      <button full clear ion-button color="light" (click)="forgot=true">
             Olvido su contraseña
         </button>
     </div>
@@ -43,7 +43,7 @@
       <button style="margin-top:15px" full large ion-button color="secondary" (click)="recover(api.username)">
         Recuperar
       </button>
-      <button ion-button clear color="light" (click)="forgot=false">
+      <button ion-button clear full color="light" (click)="forgot=false">
         Volver al login
     </button>
 
