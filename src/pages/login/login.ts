@@ -10,7 +10,7 @@ import { GooglePlus } from '@ionic-native/google-plus';
   templateUrl: 'login.html',
 })
 export class Login {
-
+  forgot = false;
   constructor(public facebook: Facebook, public google: GooglePlus, public navCtrl: NavController, public navParams: NavParams, public api: Api, public alertCtrl: AlertController, public loadingCtrl: LoadingController, public events: Events) {
   }
 
@@ -123,6 +123,26 @@ export class Login {
           message: err,
           title: "Error",
         }).present();
+      });
+  }
+
+  recover(email) {
+    this.api.post('recover-password', { email: email })
+      .then(() => {
+        let alert = this.alertCtrl.create({
+          title: "Listo!",
+          subTitle: 'Le hemos enviado un correo de recuperación',
+          buttons: ['OK']
+        });
+        alert.present();
+      })
+      .catch(() => {
+        let alert = this.alertCtrl.create({
+          title: "Error",
+          subTitle: 'No hemos podido validar el usuario asegurese de escribirlo correctamente',
+          buttons: ['OK']
+        });
+        alert.present();
       });
   }
 

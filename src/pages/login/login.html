@@ -1,35 +1,55 @@
 <ion-content padding>
-    <div text-center>
-        <img src="./assets/logo-completo.png" style="height:85px">
-    </div>
-    <ion-list>
-        <ion-item>
-            <ion-label floating>Email</ion-label>
-            <ion-input type="email" [(ngModel)]="api.username"> </ion-input>
-        </ion-item>
-        <ion-item>
-            <ion-label floating>Contraseña</ion-label>
-            <ion-input type="password" [(ngModel)]="api.password"></ion-input>
-        </ion-item>
+  <div text-center>
+    <img src="./assets/logo-completo.png" style="height:85px">
+  </div>
+  <ion-list>
+    <div *ngIf="!recover">
 
-        <button style="margin-top:15px" full large ion-button color="secondary" icon-right (click)="login()">
-      Iniciar Sesion
-      <ion-icon name="log-in"></ion-icon>
+      <ion-item>
+        <ion-label floating>Email</ion-label>
+        <ion-input type="email" [(ngModel)]="api.username"> </ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Contraseña</ion-label>
+        <ion-input type="password" [(ngModel)]="api.password"></ion-input>
+      </ion-item>
+
+      <button style="margin-top:15px" full large ion-button color="secondary" icon-right (click)="login()">
+                Iniciar Sesion
+                <ion-icon name="log-in"></ion-icon>
+            </button>
+
+
+      <button style="margin-top:15px" full ion-button icon-left (click)="loginWithFacebook()">
+                <ion-icon name="logo-facebook"></ion-icon>
+                Iniciar sesion con Facebook
+            </button>
+
+
+      <button style="margin-top:15px" full ion-button color="danger" icon-left (click)="loginWithGoogle()">
+                <ion-icon name="logo-googleplus"></ion-icon>
+                Iniciar sesion con Google
+            </button>
+
+      <button clear ion-button color="light" (click)="forgot=true">
+            Olvido su contraseña
+        </button>
+    </div>
+    <div *ngIf="forgot">
+      <ion-item>
+        <ion-label floating>Email</ion-label>
+        <ion-input type="email" [(ngModel)]="api.username"> </ion-input>
+      </ion-item>
+      <button style="margin-top:15px" full large ion-button color="secondary" (click)="recover(api.username)">
+        Recuperar
+      </button>
+      <button ion-button clear color="light" (click)="forgot=false">
+        Volver al login
     </button>
 
-
-        <button style="margin-top:15px" full ion-button icon-left (click)="loginWithFacebook()">
-      <ion-icon name="logo-facebook"></ion-icon>
-      Iniciar sesion con Facebook
-  </button>
-
-
-        <button style="margin-top:15px" full ion-button color="danger" icon-left (click)="loginWithGoogle()">
-    <ion-icon name="logo-googleplus"></ion-icon>
-    Iniciar sesion con Google
-  </button>
+    </div>
 
 
 
-    </ion-list>
+  </ion-list>
 </ion-content>
