@@ -1,3 +1,4 @@
+import { TablesPage } from './../pages/tables/tables';
 import { SurveyPage } from './../pages/survey/survey';
 import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform, Events } from 'ionic-angular';
@@ -61,6 +62,7 @@ export class MyApp {
       { title: "Perfil", component: ProfilePage, icon: 'person' },
       { title: "Noticias", component: PostsPage, icon: 'paper' },
       { title: "Visitantes", component: VisitTabsPage, icon: 'contacts' },
+      { title: "Listas", component: TablesPage, icon: 'list' },
       { title: "Encuestas", component: SurveysPage, icon: 'pie' },
       { title: "Eventos", component: EventsPage, icon: 'calendar' },
       { title: "Facturas", component: InvoicesPage, icon: 'card' },

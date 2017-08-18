@@ -1,3 +1,6 @@
+import { WorkersPage } from './../pages/workers/workers';
+import { VehiclesPage } from './../pages/vehicles/vehicles';
+import { TablesPage } from './../pages/tables/tables';
 import { PaymentReportPage } from './../pages/payment-report/payment-report';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
@@ -75,6 +78,9 @@ import { RoundProgressModule } from 'angular-svg-round-progressbar';
     CreateVisitPage,
     TransPipe,
     VisitTabsPage,
+    TablesPage,
+    VehiclesPage,
+    WorkersPage,
     AddEventPage,
     AddPostPage,
     SurveysPage,
@@ -109,6 +115,9 @@ import { RoundProgressModule } from 'angular-svg-round-progressbar';
     DocumentsPage,
     PostsPage,
     ProfilePage,
+    TablesPage,
+    VehiclesPage,
+    WorkersPage,
     NewVisitPage,
     CreateVisitPage,
     VisitTabsPage,
