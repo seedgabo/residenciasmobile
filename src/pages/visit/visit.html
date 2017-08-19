@@ -6,18 +6,15 @@
 </ion-header>
 <ion-content>
     <ion-list>
-        <div *ngIf="visit.visitors.length > 0">
-            <ion-item>
+        <div *ngIf="visit.visitors && visit.visitors.length > 0">
+            <ion-list-header>
                 {{ 'literals.visitors' | trans }}
-            </ion-item>
-            <ion-item>
-                <span item-right *ngFor="let visitor of visit.visitors">
-              <span> {{visitor.name}}</span>
-                <br>
-                </span>
+            </ion-list-header>
+            <ion-item text-right *ngFor="let visitor of visit.visitors">
+                <span> {{visitor.name}}</span>
             </ion-item>
         </div>
-        <div *ngIf="visit.visitor">
+        <div *ngIf="(!visit.visitors || visit.visitors.length === 0) && visit.visitor">
             <ion-item>
                 <b>{{'literals.visitor' | trans }}</b>
                 <span item-right>{{visit.visitor.name}}</span>

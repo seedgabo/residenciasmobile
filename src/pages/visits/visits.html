@@ -10,7 +10,9 @@
     <ion-list [virtualScroll]="visits">
         <button ion-item *virtualItem="let visit" (click)="viewVisit(visit)">
       <div *ngIf="visit.visitor;else unkown">
-        <h2>{{ visit.visitor.name }}</h2>
+        <h2>{{ visit.visitor.name }}
+          <span *ngIf="visit.visitors && visit.visitors.length > 1">{{'__.and others' | trans }} {{visit.visitors.length - 1}}</span>
+        </h2>
         <p> {{ visit.visitor.document}}</p>
       </div>
       <ng-template #unkown>

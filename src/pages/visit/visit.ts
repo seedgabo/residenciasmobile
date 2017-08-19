@@ -8,11 +8,14 @@ import { Api } from "../../providers/api";
 export class VisitPage {
   visit: any = {};
   constructor(public navCtrl: NavController, public navParams: NavParams, public api: Api) {
-    this.visit = navParams.get('visit');
+    this.visit = navParams.data.visit;
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad VisitPage');
+    this.api.get(`visits/${this.visit.id}?with[]=visitor&with[]=visitors&with[]=parking&with[]=vehicle`)
+      .then(data => { this.visit = data })
+      .catch(console.error)
   }
 
   updateVisit() {

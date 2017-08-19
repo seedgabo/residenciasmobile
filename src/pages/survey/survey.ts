@@ -124,7 +124,7 @@ export class SurveyPage {
   }
   getVote() {
     this.api.get(`votes?user_id=${this.api.user.id}&survey_id=${this.survey.id}`)
-      .then((votes: any) => this.vote = votes[0])
+      .then((votes: any) => { this.vote = votes[0] })
       .catch((err) => { console.error(err) });
   }
   postVote(data) {

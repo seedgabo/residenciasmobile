@@ -9,12 +9,22 @@ import { Api } from "../../providers/api";
 export class CreateVisitPage {
 
   visitor: any;
+  visitors = [];
   visit: any = {
     status: 'approved',
   }
   constructor(public navCtrl: NavController, public navParams: NavParams, public api: Api, public viewCtrl: ViewController) {
-    this.visitor = navParams.get('visitor');
-    this.visit.visitor_id = this.visitor.id;
+    var visitor = navParams.get('visitor');
+    if (Array.isArray(visitor)) {
+      this.visitors = visitor;
+      this.visit.visitors = [];
+      this.visitors.forEach((visitor) => {
+        this.visit.visitors.push(visitor.id);
+      })
+    } else {
+      this.visitor = navParams.get('visitor');
+      this.visit.visitor_id = this.visitor.id;
+    }
     this.visit.residence_id = this.api.residence.id;
     this.visit.user_id = this.api.user.id;
   }
@@ -35,6 +45,7 @@ export class CreateVisitPage {
         console.error(err);
       })
   }
+
   dismiss() {
     this.viewCtrl.dismiss();
   }

@@ -12,15 +12,25 @@ export class VisitorsPage {
   visitor_image: any;
   query = "";
   visitors = [];
+  selecteds = [];
   constructor(public navCtrl: NavController, public navParams: NavParams, public api: Api, public modal: ModalController, public actionsheet: ActionSheetController, public toast: ToastController) {
   }
 
   ionViewDidLoad() {
     this.visitors = this.api.visitors;
   }
+
+  ionViewDidEnter() {
+    this.selecteds = [];
+    this.visitors.forEach((v) => {
+      v.selected = false;
+    })
+  }
+
   addVisitor() {
     this.modal.create(NewVisitorPage, {}, { showBackdrop: true, enableBackdropDismiss: true }).present();
   }
+
   updateVisitor(visitor) {
     this.modal.create(NewVisitorPage, { visitor: visitor }, { showBackdrop: true, enableBackdropDismiss: true }).present();
   }
@@ -35,14 +45,31 @@ export class VisitorsPage {
     });
   }
 
-  addVisit(visitor) {
-    this.modal.create(CreateVisitPage, { visitor: visitor }, { showBackdrop: true, enableBackdropDismiss: true }).present();
+  toggleSelect(visitor) {
+    if (visitor.selected) {
+      visitor.selected = false
+      this.selecteds.splice(this.selecteds.indexOf(visitor), 1);
+    } else {
+      visitor.selected = true
+      this.selecteds.push(visitor);
+    }
   }
+
+  addVisit(visitor) {
+    var modal = this.modal.create(CreateVisitPage, { visitor: visitor }, { showBackdrop: true, enableBackdropDismiss: true })
+    modal.present();
+    modal.onDidDismiss(() => {
+      this.ionViewDidEnter();
+    })
+
+  }
+
   delete(visitor) {
     this.api.delete('visitors/' + visitor.id).catch((err) => {
       console.error(err);
     });
   }
+
   actions(visitor) {
     this.actionsheet.create({
       title: this.api.trans('literals.actions') + " | " + visitor.name,

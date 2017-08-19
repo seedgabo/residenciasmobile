@@ -315,21 +315,26 @@ export class Api {
         })
         .listen('VisitUpdated', (data) => {
           console.log("updated visit:", data);
-          if (data.visitor.residence_id != this.residence.id) return;
+          if (data.visit.residence_id !== this.residence.id) return;
+          data.visit.visitor = data.visitor;
+          data.visit.visitors = data.visitors;
           this.events.publish('VisitUpdated', data);
+
           var visit_index = this.visits.findIndex((visit) => {
             return visit.id === data.visit.id;
           });
           this.zone.run(() => {
-            if (visit_index > -1)
+            if (visit_index > -1) {
               var visit = this.visits[visit_index] = data.visit;
+              if (this.visits[visit_index].status !== data.visit.status) {
+                this.visitStatus(visit);
+              }
+            }
             else {
               this.visits.unshift(data.visit);
               var visit = this.visits[0];
+              this.visitStatus(visit);
             }
-            visit.visitor = data.visitor;
-            visit.visitors = data.visitors;
-            this.visitStatus(visit);
 
           });
         })
@@ -541,6 +546,7 @@ export class Api {
 
 
   moveToFront() {
+    this.background.unlock();
     this.background.wakeUp();
     this.background.moveToForeground();
   }
