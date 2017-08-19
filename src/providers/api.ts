@@ -308,8 +308,8 @@ export class Api {
           this.zone.run(() => {
             this.visits.unshift(data.visit);
             var visit = this.visits[0];
-            if (data.visitor)
-              visit.visitor = data.visitor;
+            visit.visitor = data.visitor;
+            visit.visitors = data.visitors;
             this.visitStatus(visit);
           })
         })
@@ -327,9 +327,8 @@ export class Api {
               this.visits.unshift(data.visit);
               var visit = this.visits[0];
             }
-            if (data.visitor) {
-              visit.visitor = data.visitor;
-            }
+            visit.visitor = data.visitor;
+            visit.visitors = data.visitors;
             this.visitStatus(visit);
 
           });
@@ -403,7 +402,12 @@ export class Api {
       this.Echo.private('App.Residence.' + this.user.residence_id)
         .listen('VisitConfirm', (data) => {
           console.log("VisitConfirm: ", data);
-          this.newVisit(data.visit, data.visitor);
+          data.visit.visitor = data.visit.visitor;
+          data.visit.visitors = data.visit.visitors;
+          this.background.unlock();
+          this.background.wakeUp();
+          this.background.moveToForeground();
+          this.newVisit(data.visit);
         })
 
       this.Echo.private('App.User.' + this.user.id)
@@ -522,10 +526,10 @@ export class Api {
     }
   }
 
-  newVisit(visit, visitor) {
+  newVisit(visit) {
     this.playSoundNotfication();
     this.moveToFront();
-    this.popover.create(NewVisitPage, { visit: visit, visitor: visitor, api: this }, { cssClass: "fullScreen", enableBackdropDismiss: false, showBackdrop: true }).present();
+    this.popover.create(NewVisitPage, { visit: visit, api: this }, { cssClass: "fullScreen", enableBackdropDismiss: false, showBackdrop: true }).present();
   }
 
   visitStatus(visit) {

@@ -22,6 +22,7 @@ import { NewVisitorPage } from "../pages/new-visitor/new-visitor";
 import { CreateVisitPage } from "../pages/create-visit/create-visit";
 import { VisitTabsPage } from "../pages/visit-tabs/visit-tabs";
 import { VisitsPage } from "../pages/visits/visits";
+import { VisitPage } from "../pages/visit/visit";
 
 
 import { Api } from "../providers/api";
@@ -66,6 +67,7 @@ import { WorkersEditorPage } from "../pages/worker-editor/worker-editor";
     ParkingsPage,
     VisitorsPage,
     VisitsPage,
+    VisitPage,
     NewVisitorPage,
     Login,
     Residences,
@@ -108,6 +110,7 @@ import { WorkersEditorPage } from "../pages/worker-editor/worker-editor";
     ParkingsPage,
     VisitorsPage,
     VisitsPage,
+    VisitPage,
     NewVisitPage,
     NewVisitorPage,
     Login,

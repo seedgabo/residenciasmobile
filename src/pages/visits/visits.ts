@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { Api } from "../../providers/api";
+import { VisitPage } from "../visit/visit";
 // @IonicPage()
 @Component({
   selector: 'page-visits',
@@ -15,6 +16,10 @@ export class VisitsPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad VisitsPage');
     this.visits = this.api.visits;
+  }
+
+  viewVisit(visit) {
+    this.navCtrl.push(VisitPage, { visit: visit });
   }
 
 
@@ -35,5 +40,7 @@ export class VisitsPage {
           infiniteScroll.complete()
       });
   }
+
+
 
 }
