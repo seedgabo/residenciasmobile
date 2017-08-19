@@ -2,6 +2,7 @@ import { ToastController, ActionSheetController } from 'ionic-angular';
 import { Api } from './../../providers/api';
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { WorkersEditorPage } from "../worker-editor/worker-editor";
 @Component({
   selector: 'page-workers',
   templateUrl: 'workers.html',
@@ -11,29 +12,44 @@ export class WorkersPage {
   query = ""
   workers = [];
   constructor(public navCtrl: NavController, public navParams: NavParams, public api: Api, public toast: ToastController, public actionsheet: ActionSheetController) {
-    this.workers;
+    this.workers = this.api.residence.workers;
+  }
+  ionViewDidEnter() {
+    this.getData()
+  }
+
+  getData() {
+    this.api.get('workers?where[residence_id]=' + this.api.user.residence_id)
+      .then((data: any) => { this.api.workers = data; this.filter() })
+      .catch(console.error)
   }
 
   filter() {
     if (this.query == "")
       return this.workers = this.api.workers;
     this.workers = this.api.workers.filter((worker) => {
-      if (worker.name.toLowerCase().indexOf(this.query.toLowerCase()) > -1 || worker.plate.toLowerCase().indexOf(this.query.toLowerCase()) > -1)
+      if (worker.name.toLowerCase().indexOf(this.query.toLowerCase()) > -1)
         return true;
       return false;
     });
   }
 
-  addWorker() {
+  addworker() {
+    this.navCtrl.push(WorkersEditorPage);
   }
 
-  updateWorker(worker) {
+  updateworker(worker) {
+    this.navCtrl.push(WorkersEditorPage, { worker: worker });
   }
 
   delete(worker) {
-    this.api.delete('workers/' + worker.id).catch((err) => {
-      console.error(err);
-    });
+    this.api.delete('workers/' + worker.id)
+      .then((data) => {
+        this.getData();
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   }
 
 
@@ -45,7 +61,7 @@ export class WorkersPage {
           text: this.api.trans('crud.edit'),
           icon: 'create',
           cssClass: 'icon-secondary',
-          handler: () => { this.updateWorker(worker) }
+          handler: () => { this.updateworker(worker) }
         },
         {
           text: this.api.trans('crud.delete'),
@@ -62,7 +78,7 @@ export class WorkersPage {
 
   askFile(worker) {
     this.worker_image = worker;
-    var filer: any = document.querySelector("#input-file")
+    var filer: any = document.querySelector("#input-file-worker")
     filer.click();
   }
 
@@ -80,7 +96,7 @@ export class WorkersPage {
   }
 
   uploadImage(id) {
-    return this.api.post('images/upload/vehicle/' + id, { image: this.worker_image.image_url })
+    return this.api.post('images/upload/worker/' + id, { image: this.worker_image.image_url })
       .then((data: any) => {
         console.log(data);
         this.worker_image.image = data.image;
@@ -94,3 +110,7 @@ export class WorkersPage {
   }
 
 }
+
+
+
+

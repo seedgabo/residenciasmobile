@@ -57,6 +57,7 @@ import { SurveyPage } from "../pages/survey/survey";
 import { ProfilePage } from "../pages/profile/profile";
 
 import { RoundProgressModule } from 'angular-svg-round-progressbar';
+import { WorkersEditorPage } from "../pages/worker-editor/worker-editor";
 
 @NgModule({
   declarations: [
@@ -83,6 +84,7 @@ import { RoundProgressModule } from 'angular-svg-round-progressbar';
     VehiclesPage,
     VehiclesEditorPage,
     WorkersPage,
+    WorkersEditorPage,
     AddEventPage,
     AddPostPage,
     SurveysPage,
@@ -121,6 +123,7 @@ import { RoundProgressModule } from 'angular-svg-round-progressbar';
     VehiclesPage,
     VehiclesEditorPage,
     WorkersPage,
+    WorkersEditorPage,
     NewVisitPage,
     CreateVisitPage,
     VisitTabsPage,
