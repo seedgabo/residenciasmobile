@@ -11,11 +11,26 @@ import { GooglePlus } from '@ionic-native/google-plus';
 })
 export class Login {
   forgot = false;
+  ready = false;
+  servers = {};
+  code = "";
   constructor(public facebook: Facebook, public google: GooglePlus, public navCtrl: NavController, public navParams: NavParams, public api: Api, public alertCtrl: AlertController, public loadingCtrl: LoadingController, public events: Events) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad Login');
+    this.getServers();
+  }
+
+  verifyCode() {
+    if (this.servers[this.code] !== undefined) {
+      var server = this.servers[this.code]
+      this.api.url = server.url;
+      this.api.storage.set('url', server.url);
+    }
+  }
+  goBack() {
+    this.api.url = null;
+    this.api.storage.remove('url');
   }
 
   login() {
@@ -146,7 +161,15 @@ export class Login {
       });
   }
 
-
+  getServers() {
+    this.api.http.get('http://residenciasonline.com/residencias/public/servers.json')
+      .map(res => res.json())
+      .subscribe(data => {
+        this.servers = data
+        this.ready = true
+        console.log(this.servers);
+      }, (err) => { console.error(err) });
+  }
   goTo() {
     this.events.publish('login', {});
     this.navCtrl.setRoot(HomePage);

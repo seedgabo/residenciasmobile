@@ -24,7 +24,7 @@ export class Api {
   modules: any;
   settings: any;
   Echo: any = undefined;
-  url = "http://residenciasonline.com/residencias/public/";
+  url = null;
   // url = "http://localhost/residencias/public/";
   username = "";
   password = "";
@@ -46,6 +46,7 @@ export class Api {
   _events = [];
   constructor(public http: Http, public storage: Storage, public zone: NgZone, public popover: PopoverController, public toast: ToastController, public events: Events, public background: BackgroundMode, public onesignal: OneSignal, public device: Device) {
     storage.ready().then(() => {
+      storage.get('url').then(url => { this.url = url });
       storage.get('username').then(username => { this.username = username });
       storage.get('password').then(password => { this.password = password });
       storage.get('modules').then(modules => { this.modules = modules });
