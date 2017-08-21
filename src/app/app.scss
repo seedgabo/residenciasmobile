@@ -38,6 +38,12 @@
     }
 }
 
+.icon-favorite {
+    ion-icon {
+        color: color($colors, 'favorite');
+    }
+}
+
 .user-info {
     background-image: url('../assets/background-user.jpg');
     background-size: cover; // height: 100px;

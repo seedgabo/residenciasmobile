@@ -75,6 +75,12 @@ export class VisitorsPage {
       title: this.api.trans('literals.actions') + " | " + visitor.name,
       buttons: [
         {
+          text: this.api.trans('__.Seleccionar para visita multiple'),
+          icon: 'checkmark-circle',
+          cssClass: 'icon-favorite',
+          handler: () => { this.toggleSelect(visitor) }
+        },
+        {
           text: this.api.trans('literals.generate') + " " + this.api.trans('literals.visit'),
           icon: 'person-add',
           cssClass: 'icon-primary',
