@@ -59,6 +59,7 @@ import { ProfilePage } from "../pages/profile/profile";
 
 import { RoundProgressModule } from 'angular-svg-round-progressbar';
 import { WorkersEditorPage } from "../pages/worker-editor/worker-editor";
+import { ReservationsPage } from "../pages/reservations/reservations";
 
 @NgModule({
   declarations: [
@@ -68,6 +69,7 @@ import { WorkersEditorPage } from "../pages/worker-editor/worker-editor";
     VisitorsPage,
     VisitsPage,
     VisitPage,
+    ReservationsPage,
     NewVisitorPage,
     Login,
     Residences,
@@ -111,6 +113,7 @@ import { WorkersEditorPage } from "../pages/worker-editor/worker-editor";
     VisitorsPage,
     VisitsPage,
     VisitPage,
+    ReservationsPage,
     NewVisitPage,
     NewVisitorPage,
     Login,

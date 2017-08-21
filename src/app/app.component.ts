@@ -21,6 +21,7 @@ import { DocumentsPage } from "../pages/documents/documents";
 import { PostsPage } from "../pages/posts/posts";
 import { SurveysPage } from "../pages/surveys/surveys";
 import { ProfilePage } from "../pages/profile/profile";
+import { ReservationsPage } from "../pages/reservations/reservations";
 
 
 @Component({
@@ -67,6 +68,7 @@ export class MyApp {
       { title: "Eventos", component: EventsPage, icon: 'calendar' },
       { title: "Facturas", component: InvoicesPage, icon: 'card' },
       { title: "Documentos", component: DocumentsPage, icon: 'document' },
+      { title: "Reservaciones", component: ReservationsPage, icon: 'tennisball', beta: true },
       { title: 'Parkings', component: ParkingsPage, icon: 'car' },
       { title: "Residencias", component: Residences, icon: 'albums' },
     ];

@@ -10,9 +10,10 @@
         <ion-content>
             <ion-list>
                 <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
-            <ion-icon [name]="p.icon" item-left color="primary"></ion-icon>
-          {{p.title}}
-        </button>
+                <ion-icon [name]="p.icon" item-left color="primary"></ion-icon>
+                  {{p.title}}
+                <ion-badge item-right *ngIf="p.beta" color="secondary">BETA</ion-badge>
+              </button>
                 <ion-item-divider>
                     <ion-icon name="settings" item-left></ion-icon>
                     {{ 'literals.settings' | trans }}
