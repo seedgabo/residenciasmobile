@@ -126,7 +126,7 @@ export class Api {
     }).catch((err) => {
       console.error(err);
     });
-    this.pushRegister();
+    this.pushRegister(this.user.onesignal_appId);
     return promise;
   }
 
