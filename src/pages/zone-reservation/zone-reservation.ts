@@ -55,7 +55,7 @@ export class ZoneReservationPage {
           this.collection[ref].available -= reservation.quotas;
           if (reservation.user_id === this.api.user.id) {
             this.collection[ref].reserved = true
-            this.collection[ref].reservation_id = reservation.id
+            this.collection[ref].reservation = reservation
           }
         });
         this.loading = false
@@ -100,7 +100,17 @@ export class ZoneReservationPage {
   }
 
   viewReservation(interval) {
-
+    var alert = this.alert.create({
+      title: this.api.trans('literals.reservation') + " " + this.zone.name,
+      subTitle: this.api.trans('literals.quotas') + ": " + interval.reservation.quotas,
+      message: this.api.trans('literals.user') + ": " + this.api.user.name,
+      buttons: [
+        {
+          text: "OK"
+        }
+      ]
+    })
+    alert.present();
   }
 
   postReservation(interval, quotas) {
