@@ -20,7 +20,7 @@ export class EventsPage {
     var ev = this.navParams.get('event')
     this.getEvents(null, ev);
     this.events.subscribe("events:changed", () => {
-      this._renderCalendar();
+      this.getEvents();
     })
   }
 
