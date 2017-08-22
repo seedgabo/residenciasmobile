@@ -70,6 +70,12 @@ export class DocumentsPage {
     else if (type === 'xls' || type === 'xlsx') {
       var mime = 'application/vnd.ms-excel';
     }
+    else if (type === 'doc' || type === 'docx') {
+      var mime = 'application/msword';
+    }
+    else if (type === 'ppt' || type === 'pptx') {
+      var mime = 'vnd.ms-powerpoint';
+    }
     else {
       var mime = "";
     }

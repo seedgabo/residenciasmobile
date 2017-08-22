@@ -116,6 +116,7 @@ export class ZoneReservationPage {
   postReservation(interval, quotas) {
     this.api.post('reservations',
       {
+        quotas: quotas,
         zone_id: this.zone.id,
         user_id: this.api.user.id,
         start: this.date.format("YYYY-MM-DD") + " " + interval.time.format("HH:mm"),
