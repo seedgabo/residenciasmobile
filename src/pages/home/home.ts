@@ -1,3 +1,4 @@
+import { EventsPage } from './../events/events';
 import { ProfilePage } from './../profile/profile';
 import { InvoicesPage } from './../invoices/invoices';
 import { Component } from '@angular/core';
@@ -70,6 +71,9 @@ export class HomePage {
   }
   gotoProfile() {
     this.navCtrl.push(ProfilePage);
+  }
+  gotoCalendar(event) {
+    this.navCtrl.push(EventsPage, { event: event });
   }
 
 }

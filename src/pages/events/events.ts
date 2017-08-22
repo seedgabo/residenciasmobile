@@ -17,13 +17,14 @@ export class EventsPage {
   }
 
   ionViewDidLoad() {
-    this.getEvents();
+    var ev = this.navParams.get('event')
+    this.getEvents(null, ev);
     this.events.subscribe("events:changed", () => {
       this._renderCalendar();
     })
   }
 
-  getEvents(refresher = null) {
+  getEvents(refresher = null, event = null) {
     this.api.get('events?take=200&afterEach[toCalendar]=null')
       .then((data: any) => {
         console.log(data);
@@ -31,6 +32,9 @@ export class EventsPage {
         this._renderCalendar();
         if (refresher != null) {
           refresher.complete();
+        }
+        if (event !== null) {
+          this.event(event);
         }
       })
       .catch((err) => {
