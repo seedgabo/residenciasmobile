@@ -1,3 +1,4 @@
+import { ReservationsPage } from './../pages/reservations/reservations';
 import { TablesPage } from './../pages/tables/tables';
 import { SurveyPage } from './../pages/survey/survey';
 import { Component, ViewChild } from '@angular/core';
@@ -21,7 +22,6 @@ import { DocumentsPage } from "../pages/documents/documents";
 import { PostsPage } from "../pages/posts/posts";
 import { SurveysPage } from "../pages/surveys/surveys";
 import { ProfilePage } from "../pages/profile/profile";
-import { ReservationsPage } from "../pages/reservations/reservations";
 
 
 @Component({
@@ -40,7 +40,8 @@ export class MyApp {
         this.initializeApp();
         console.log(this.api.user);
         if (this.api.user) {
-          this.rootPage = HomePage;
+          // this.rootPage = HomePage;
+          this.rootPage = ReservationsPage;
           this.api.getAllData();
           this.api.getLang();
           this.registerDeepLinks();

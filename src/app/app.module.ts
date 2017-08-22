@@ -1,3 +1,4 @@
+import { ZoneReservationPage } from './../pages/zone-reservation/zone-reservation';
 import { WorkersPage } from './../pages/workers/workers';
 import { VehiclesPage, } from './../pages/vehicles/vehicles';
 import { VehiclesEditorPage } from './../pages/vehicle-editor/vehicle-editor';
@@ -57,6 +58,7 @@ import { SurveysPage } from "../pages/surveys/surveys";
 import { SurveyPage } from "../pages/survey/survey";
 import { ProfilePage } from "../pages/profile/profile";
 
+import { DatePickerModule } from 'datepicker-ionic2';
 import { RoundProgressModule } from 'angular-svg-round-progressbar';
 import { WorkersEditorPage } from "../pages/worker-editor/worker-editor";
 import { ReservationsPage } from "../pages/reservations/reservations";
@@ -95,12 +97,14 @@ import { ReservationsPage } from "../pages/reservations/reservations";
     SurveyPage,
     PaymentReportPage,
     NewsComponent,
+    ZoneReservationPage
   ],
   imports: [
     BrowserModule,
     HttpModule,
     AutoCompleteModule,
     MomentModule,
+    DatePickerModule,
     RoundProgressModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot(),
@@ -138,6 +142,7 @@ import { ReservationsPage } from "../pages/reservations/reservations";
     SurveysPage,
     SurveyPage,
     PaymentReportPage,
+    ZoneReservationPage,
   ],
   providers: [
     StatusBar, SplashScreen, Camera, Facebook, GooglePlus, AppMinimize, BackgroundMode, CodePush, OneSignal, Device,

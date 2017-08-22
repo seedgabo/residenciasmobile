@@ -1,14 +1,22 @@
-import { Component } from '@angular/core';
+import { ZoneReservationPage } from './../zone-reservation/zone-reservation';
+import { Component, ViewChild } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { Api } from "../../providers/api";
-
+import moment from 'moment'
 @Component({
   selector: 'page-reservations',
   templateUrl: 'reservations.html',
 })
 export class ReservationsPage {
+  @ViewChild('datetime') datetime: any
   zones = [];
   reservations = [];
+  selected;
+  date = moment().add(1, 'day').toDate() //.format('YYYY-MM-DD')
+  today = moment()
+  min = moment().toDate() //.format('YYYY-MM-DD')
+  max = moment().add(1, 'year').toDate() //.format('YYYY-MM-DD')
+  locale = { monday: true, weekdays: moment.weekdaysShort(), months: moment.months() }
   constructor(public navCtrl: NavController, public navParams: NavParams, public api: Api) {
 
   }
@@ -32,6 +40,16 @@ export class ReservationsPage {
 
   humanize(interval) {
     return interval + " " + "minutos";
+  }
+
+  reservate(zone) {
+    this.selected = zone
+    this.datetime.open()
+  }
+
+  setDate(ev, zone) {
+    var date = moment.utc(ev)
+    this.navCtrl.push(ZoneReservationPage, { zone: zone, date: date }, { animation: 'ios-transition' })
   }
 
 }
