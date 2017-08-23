@@ -87,6 +87,13 @@ export class Api {
           this.residence = data.residence;
           this.settings = data.settings;
           this.modules = data.modules;
+
+          this.visitors = this.residence.visitors;
+          this.visits = this.residence.visits;
+          this.vehicles = this.residence.vehicles;
+          this.workers = this.residence.workers;
+          this.users = this.residence.users;
+
           this.storage.set('user', data.user);
           this.storage.set('residence', data.residence);
           this.storage.set('username', this.username);
