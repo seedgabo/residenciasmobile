@@ -93,6 +93,8 @@ export class Api {
           this.vehicles = this.residence.vehicles;
           this.workers = this.residence.workers;
           this.users = this.residence.users;
+          this.parkings = this.residence.parkings;
+          this.invoices = this.residence.invoices;
 
           this.storage.set('user', data.user);
           this.storage.set('residence', data.residence);
@@ -130,6 +132,8 @@ export class Api {
       this.vehicles = data.vehicles;
       this.workers = data.workers;
       this.users = data.users;
+      this.parkings = data.parkings;
+      this.invoices = data.invoices;
       this.residences = data.residences;
       this.storage.set('allData', data);
     }).catch((err) => {
