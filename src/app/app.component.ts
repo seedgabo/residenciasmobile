@@ -40,8 +40,8 @@ export class MyApp {
         this.initializeApp();
         console.log(this.api.user);
         if (this.api.user) {
-          // this.rootPage = HomePage;
-          this.rootPage = ReservationsPage;
+          this.rootPage = HomePage;
+          // this.rootPage = ReservationsPage;
           this.api.getAllData();
           this.api.getLang();
           this.registerDeepLinks();
@@ -130,6 +130,9 @@ export class MyApp {
 
   logout() {
     this.api.stopEcho();
+    this.api.username = ""
+    this.api.url = ""
+    this.api.password = ""
     this.api.storage.clear().then(() => {
       this.nav.setRoot(Login);
     });

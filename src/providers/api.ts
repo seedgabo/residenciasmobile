@@ -46,16 +46,18 @@ export class Api {
   _events = [];
   constructor(public http: Http, public storage: Storage, public zone: NgZone, public popover: PopoverController, public toast: ToastController, public events: Events, public background: BackgroundMode, public onesignal: OneSignal, public device: Device) {
     storage.ready().then(() => {
-      storage.get('url').then(url => { this.url = url });
       storage.get('username').then(username => { this.username = username });
       storage.get('password').then(password => { this.password = password });
       storage.get('modules').then(modules => { this.modules = modules });
       storage.get('settings').then(settings => { this.settings = settings });
       storage.get('langs').then(langs => { this.langs = langs; console.log(langs) });
       storage.get('residence').then(residence => { this.residence = residence; });
-      storage.get('user').then(user => {
-        this.user = user
-        this.resolve(user);
+      storage.get('url').then(url => {
+        this.url = url
+        storage.get('user').then(user => {
+          this.user = user
+          this.resolve(user);
+        });
       });
       storage.get('allData').then((data) => {
         if (!data) return;
