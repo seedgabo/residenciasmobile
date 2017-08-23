@@ -13,8 +13,8 @@
     <img [src]="zone.image_url" style="max-height:200px;width:100%">
     <ion-fab right top>
       <button ion-fab>
-              <ion-icon name="pin"></ion-icon>
-            </button>
+        <ion-icon name="pin"></ion-icon>
+      </button>
     </ion-fab>
 
     <ion-item>
@@ -46,12 +46,11 @@
       </p>
     </ion-item>
 
-    <ion-item>
-      <span ion-datepicker [localeStrings]="locale" (ionChanged)="setDate($event,zone)" [value]="date" [min]="min" clear class="ScheduleDate">
-        <button ion-button clear item-end>
-          {{'literals.reservate' | trans }}
-        </button>
-      </span>
+    <ion-item (tap)="reservate(zone)">
+      <button ion-button clear>
+        {{'literals.reservate' | trans }}
+      </button>
+      <span ion-datepicker [disabledDates]="disabledDates" item-end  [localeStrings]="locale" (ionChanged)="setDate($event,zone)" [value]="date" [min]="min" clear class="ScheduleDate"></span>
     </ion-item>
 
   </ion-card>

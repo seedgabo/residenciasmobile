@@ -33,7 +33,7 @@
         <ion-avatar item-left>
           <img [src]="post.user.image_url" alt="profile" style="width:40px;height:40px; border-radius:50%">
         </ion-avatar>
-        <p>
+        <p *ngIf="post.user">
           {{post.user.name}}
         </p>
         <small>

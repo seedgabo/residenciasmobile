@@ -50,8 +50,8 @@
     <ion-list>
       <ion-list-header text-center>
         <span color="primary" ion-text>
-                    {{'__.next events' | trans}}
-                </span>
+            {{'__.next events' | trans}}
+        </span>
       </ion-list-header>
       <ion-item (click)="gotoCalendar(event)" *ngFor="let event of nextEvents" class="event-list" [ngClass]="[event.type,event.privacity]">
         <h3>{{event.title}}</h3>
@@ -68,7 +68,9 @@
       </ion-avatar>
       {{new.title}}
       <p text-right>
-        {{new.user.name}}
+        <span *ngIf="new.user">
+              {{new.user.name}}
+        </span>
         <br>
         <small>
             {{new.created_at | amCalendar}}
