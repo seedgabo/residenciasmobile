@@ -29,7 +29,14 @@ export class ZoneReservationPage {
     this.options = [];
     var time = moment(this.zone.start, "HH:mm");
     var end = moment(this.zone.end, "HH:mm");
+
+    if (this.zone.start == null)
+      time = moment().startOf('day')
+    if (this.zone.end == null)
+      end = moment().startOf('day').add(23, 'hours')
+
     console.log(time, end)
+
     if (time < end && this.zone.interval > 0)
       do {
         var ref = {

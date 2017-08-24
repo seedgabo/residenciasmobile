@@ -42,7 +42,21 @@ export class ReservationsPage {
   }
 
   humanize(interval) {
-    return interval + " " + "minutos";
+    if (interval === "60" || interval === 60) {
+      return "1 hora";
+    } else if (interval === "90" || interval === 90) {
+      return "1 hora y media";
+    } else if (interval === "180" || interval === 180) {
+      return "2 horas";
+    } else if (interval === "360" || interval === 360) {
+      return "6 horas";
+    } else if (interval === "720" || interval === 720) {
+      return "12 horas";
+    } else if (interval === "1440" || interval === 1440) {
+      return "24 horas";
+    } else {
+      return interval + " " + "minutos";
+    }
   }
 
   reservate(zone) {
