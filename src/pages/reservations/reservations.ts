@@ -18,7 +18,7 @@ export class ReservationsPage {
   today = moment.utc()
   min = moment.utc().startOf('day').toDate() //.format('YYYY-MM-DD')
   max = moment.utc().startOf('day').add(1, 'year').toDate() //.format('YYYY-MM-DD')
-  locale = { monday: true, weekdays: moment.weekdaysShort(), months: moment.months() }
+  locale = { monday: false, weekdays: moment.weekdaysShort(), months: moment.months() }
   disabledDates = []
   constructor(public navCtrl: NavController, public navParams: NavParams, public api: Api) {
 
@@ -64,12 +64,13 @@ export class ReservationsPage {
     var notDays = this.arr_diff(availables_days, ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]);
     var disabledDates = []
     notDays.forEach((day) => {
-      disabledDates = this.disabledDates.concat(
+      disabledDates = disabledDates.concat(
         this.getDaysBetweenDates(
           this.min, this.max, day
         )
       )
     })
+    console.log(disabledDates)
     return disabledDates;
   }
 
@@ -78,13 +79,11 @@ export class ReservationsPage {
     var days = { sun: 0, mon: 1, tue: 2, wed: 3, thu: 4, fri: 5, sat: 6 };
     var day = days[dayName.toLowerCase().substr(0, 3)];
     // Copy start date
-    var current = new Date(start);
-    // Shift to next of required days
-    current.setDate(current.getUTCDate() + (day - current.getUTCDate() + 7) % 7);
-    // While less than end date, add dates to result array
-    while (current < new Date(end)) {
-      result.push(new Date(+current));
-      current.setDate(current.getDate() + 7);
+    var current = moment(start).clone();
+    var _end = moment(end).clone();
+
+    while (current.day(7 + day).isBefore(_end)) {
+      result.push(current.toDate());
     }
     return result;
   }
