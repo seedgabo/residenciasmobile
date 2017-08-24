@@ -16,15 +16,35 @@ export class VisitsPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad VisitsPage');
     this.visits = this.api.visits;
+    this.getVisits();
   }
 
   viewVisit(visit) {
     this.navCtrl.push(VisitPage, { visit: visit });
   }
 
+  getVisits(loading = null) {
+    this.api.get(`visits?with[]=visitor&with[]=user&with[]=visitors&where[residence_id]=${this.api.residence.id}}&limit=500&order[created_at]=desc`)
+      .then((data: any) => {
+        loading.complete()
+        if (data.length == 0) {
+          this.enable_loader = false;
+        }
+        this.visits = this.visits = data;
+        if (loading)
+          loading.complete()
+      })
+      .catch((err) => {
+        console.error(err);
+        if (loading)
+          loading.complete()
+      });
+  }
 
+
+  // Broke
   loadMoreVisits(infiniteScroll = null) {
-    this.api.get(`visits?where[residence_id]=${this.api.residence.id}&whereGt[id]=${this.visits[0].id}`)
+    this.api.get(`visits?with[]=visitor&with[]=user&with[]=visitors&where[residence_id]=${this.api.residence.id}}&limit=500&order[created_at]=desc&whereGt[id]=${this.visits[0].id}`)
       .then((data: any) => {
         infiniteScroll.complete()
         if (data.length == 0) {
