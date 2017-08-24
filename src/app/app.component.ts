@@ -88,9 +88,8 @@ export class MyApp {
       });
 
       this.backgroundmode.enable();
-      this.backgroundmode.configure({ silent: true, text: "Residencias", hidden: true, title: "Residencias Online" });
       this.backgroundmode.setDefaults(
-        { silent: true, text: "Residencias", hidden: true, title: "Residencias Online" }
+        { icon: 'icon', text: "", title: "Residenes Online" }
       );
       this.backgroundmode.excludeFromTaskList();
       // this.backgroundmode.overrideBackButton();
