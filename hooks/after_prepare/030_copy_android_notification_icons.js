@@ -22,8 +22,6 @@ var filestocopy = [{
     "resources/android/icon/drawable-xxhdpi-icon.png": "platforms/android/res/drawable-xxhdpi/icon.png"
   }, {
     "resources/android/icon/drawable-xxxhdpi-icon.png": "platforms/android/res/drawable-xxxhdpi/icon.png"
-  }, {
-    "resources/android/icon/drawable-xxxhdpi-icon.png": "platforms/android/res/drawable/icon.png"
   },
 ];
 

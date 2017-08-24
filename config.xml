@@ -91,6 +91,10 @@
     <engine name="ios" spec="^4.4.0" />
     <plugin name="cordova-plugin-appminimize" spec="git+https://github.com/tomloprod/cordova-plugin-appminimize.git" />
     <plugin name="cordova-plugin-background-mode" spec="^0.7.2" />
+    <plugin name="cordova-plugin-camera" spec="^2.4.1">
+        <variable name="CAMERA_USAGE_DESCRIPTION" value="Residentes quiere usar tu camara para subir fotos de tus activos" />
+        <variable name="PHOTOLIBRARY_USAGE_DESCRIPTION" value="Residentes quiere acceder a tus fotos para compartir fotos de tus activos" />
+    </plugin>
     <plugin name="cordova-plugin-code-push" spec="^1.9.4-beta" />
     <plugin name="cordova-plugin-console" spec="^1.0.7" />
     <plugin name="cordova-plugin-device" spec="^1.1.6" />
@@ -130,8 +134,4 @@
     </plugin>
     <plugin name="ionic-plugin-keyboard" spec="^2.2.1" />
     <plugin name="onesignal-cordova-plugin" spec="^2.1.2" />
-    <plugin name="cordova-plugin-camera" spec="^2.4.1">
-        <variable name="CAMERA_USAGE_DESCRIPTION" value="Residentes quiere usar tu camara para subir fotos de tus activos" />
-        <variable name="PHOTOLIBRARY_USAGE_DESCRIPTION" value="Residentes quiere acceder a tus fotos para compartir fotos de tus activos" />
-    </plugin>
 </widget>
