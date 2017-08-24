@@ -107,6 +107,14 @@ export class ZoneReservationPage {
       buttons: [
         {
           text: "OK"
+        },
+        {
+          text: this.api.trans("crud.cancel") + " " + this.api.trans("literals.reservation"),
+          role: "destructive",
+          handler: () => {
+            this.alert.create({ message: "no disponible aun" }).present()
+          }
+
         }
       ]
     })

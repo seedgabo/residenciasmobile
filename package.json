@@ -106,10 +106,6 @@
                 "REVERSED_CLIENT_ID": "600000041642-d423nns9o78c2g8qcvrpj57kkshhjkid.apps.googleusercontent.com"
             },
             "cordova-plugin-background-mode": {},
-            "cordova-plugin-camera": {
-                "CAMERA_USAGE_DESCRIPTION": " ",
-                "PHOTOLIBRARY_USAGE_DESCRIPTION": " "
-            },
             "cordova-plugin-appminimize": {},
             "cordova-plugin-file-transfer": {},
             "cordova-plugin-vibration": {},
@@ -135,7 +131,11 @@
                 "DEEPLINK_5_SCHEME": " ",
                 "DEEPLINK_5_HOST": " "
             },
-            "cordova-plugin-file": {}
+            "cordova-plugin-file": {},
+            "cordova-plugin-camera": {
+                "CAMERA_USAGE_DESCRIPTION": "Residentes quiere usar tu camara para subir fotos de tus activos",
+                "PHOTOLIBRARY_USAGE_DESCRIPTION": "Residentes quiere acceder a tus fotos para compartir fotos de tus activos"
+            }
         },
         "platforms": [
             "android",
