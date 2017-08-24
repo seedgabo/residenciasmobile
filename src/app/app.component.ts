@@ -89,7 +89,7 @@ export class MyApp {
 
       this.backgroundmode.enable();
       this.backgroundmode.setDefaults(
-        { icon: 'icon', text: "", title: "Residenes Online" }
+        { icon: 'icon', text: "", title: "Residentes Online", color: "#42f459", bigText: true }
       );
       this.backgroundmode.excludeFromTaskList();
       // this.backgroundmode.overrideBackButton();
