@@ -103,7 +103,7 @@ export class MyApp {
   }
 
   registerDeepLinks() {
-    this.deeplinks.routeWithNavController(this.nav, {
+    this.deeplinks.route({
       '/visit/:visitId': VisitTabsPage,
       '/visitor/:visitorId': VisitTabsPage,
       '/surveys': SurveyPage,
