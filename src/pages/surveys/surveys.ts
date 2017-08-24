@@ -22,6 +22,11 @@ export class SurveysPage {
     this.events.subscribe('survey:updated', func)
     this.events.subscribe('survey:deleted', func)
   }
+  ionViewDidEnter() {
+    this.getSurveys();
+
+  }
+
   ionViewDidLeave() {
     this.events.unsubscribe('survey:created', func)
     this.events.unsubscribe('survey:updated', func)

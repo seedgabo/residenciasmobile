@@ -123,7 +123,7 @@ export class SurveyPage {
     }).present();
   }
   getVote() {
-    this.api.get(`votes?user_id=${this.api.user.id}&survey_id=${this.survey.id}`)
+    this.api.get(`votes?where[user_id]=${this.api.user.id}&where[survey_id]=${this.survey.id}`)
       .then((votes: any) => { this.vote = votes[0] })
       .catch((err) => { console.error(err) });
   }
