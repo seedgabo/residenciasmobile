@@ -34,7 +34,8 @@ export class ProfilePage {
       document: this.profile.document,
       sex: this.profile.sex,
       phone_number: this.profile.phone_number,
-      birthday: this.profile.birthday
+      birthday: this.profile.birthday,
+      relationship: this.profile.relationship,
     })
       .then((data: any) => {
         this.api.user.name = data.name;
@@ -93,10 +94,12 @@ export class ProfilePage {
       (this.profile.email && this.profile.email.length > 5) &&
       (this.profile.document && this.profile.document.length > 3)
   }
+
   canSaveResidence() {
     return (this.residence.name && this.residence.name.length > 3) &&
       (this.residence.owner_id)
   }
+
 
   askFile() {
     var filer: any = document.querySelector("#input-file")

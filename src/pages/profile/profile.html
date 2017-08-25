@@ -41,7 +41,7 @@
       </ion-item>
       <ion-item>
         <ion-label stacked>{{'literals.sex' | trans}}</ion-label>
-        <ion-select type="number" [(ngModel)]="profile.sex">
+        <ion-select [(ngModel)]="profile.sex">
           <ion-option value="male">{{'literals.male' | trans}}</ion-option>
           <ion-option value="female">{{'literals.female' | trans}}</ion-option>
         </ion-select>
@@ -51,6 +51,17 @@
         <ion-label stacked>{{'literals.birthday' | trans}}</ion-label>
         <ion-datetime [(ngModel)]="profile.birthday" [monthNames]="months" [monthShortNames]="monthShortNames"></ion-datetime>
         <ion-icon item-left small name="calendar"></ion-icon>
+      </ion-item>
+      <ion-item *ngIf="api.user.id !== api.residence.owner_id">
+        <ion-label stacked>{{'literals.relationship' | trans}}</ion-label>
+        <ion-select [(ngModel)]="profile.relationship">
+          <ion-option value="son">{{'literals.son' | trans}}</ion-option>
+          <ion-option value="spouse">{{'literals.spouse' | trans}}</ion-option>
+          <ion-option value="parent">{{'literals.parent' | trans}}</ion-option>
+          <ion-option value="brother">{{'literals.brother' | trans}}</ion-option>
+          <ion-option value="other">{{'literals.other' | trans}}</ion-option>
+        </ion-select>
+        <ion-icon item-left small name="transgender"></ion-icon>
       </ion-item>
       <button ion-button full color="primary" icon-left *ngIf="canSaveUser()" (click)="updateProfile()">
           <ion-icon class="fa fa-save"></ion-icon>
