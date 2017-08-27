@@ -132,6 +132,7 @@ export class Api {
       this.vehicles = data.vehicles;
       this.workers = data.workers;
       this.users = data.users;
+      this.user.residences = data.residences;
       this.parkings = data.parkings;
       this.invoices = data.invoices;
       this.residences = data.residences;
@@ -193,6 +194,7 @@ export class Api {
 
   saveData(userData) {
     this.user = userData.user;
+    this.user.residences = userData.residences;
     this.settings = userData.settings;
     this.modules = userData.modules;
     this.storage.set('user', this.user);

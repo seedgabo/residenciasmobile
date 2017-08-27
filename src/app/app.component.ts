@@ -31,7 +31,7 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   rootPage: any;
-
+  see_residences = false
   pages: Array<any>;
   VisitTabsPage = VisitTabsPage;
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public codepush: CodePush, public backgroundmode: BackgroundMode, public api: Api, public minimize: AppMinimize, public deeplinks: Deeplinks, public events: Events) {
@@ -95,6 +95,14 @@ export class MyApp {
       // this.backgroundmode.overrideBackButton();
       this.codepush.sync({ updateDialog: false, ignoreFailedUpdates: false, }).subscribe((syncStatus) => console.log(syncStatus), (err) => { console.warn(err) });
     });
+  }
+  changeResidence(residence) {
+    this.api.put('users/' + this.api.user.id, { residence_id: residence.id })
+      .then((data) => {
+        console.log("change residence:", data);
+        window.location.reload();
+      })
+      .catch(console.error)
   }
 
   openPage(page) {
