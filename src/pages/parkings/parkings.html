@@ -1,16 +1,16 @@
 <ion-header>
-  <ion-navbar color="primary">
-    <button ion-button menuToggle>
+    <ion-navbar color="primary">
+        <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Parkings</ion-title>
-  </ion-navbar>
+        <ion-title>{{'literals.parkings' | trans }}</ion-title>
+    </ion-navbar>
 </ion-header>
 
 <ion-content>
-  <ion-searchbar (ionInput)="filter()" [(ngModel)]="query" [placeholder]="'crud.search' | trans" debounce="700"></ion-searchbar>
-  <ion-list>
-    <button ion-item *ngFor="let parking of parkings" (click)="false && park(parking)">
+    <ion-searchbar (ionInput)="filter()" [(ngModel)]="query" [placeholder]="'crud.search' | trans" debounce="700"></ion-searchbar>
+    <ion-list>
+        <button ion-item *ngFor="let parking of parkings" (click)="false && park(parking)">
         <h2> {{parking.name}} </h2>
         <p *ngIf="parking.user"> {{parking.user.full_name}}</p>
         <p *ngIf="!parking.user">Public</p>
@@ -18,5 +18,5 @@
           {{ parking.status == 'available' ? ('literals.available' | trans ) : ('literals.occuped' | trans )  }}
         </span>
     </button>
-  </ion-list>
+    </ion-list>
 </ion-content>
