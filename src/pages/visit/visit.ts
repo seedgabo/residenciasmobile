@@ -18,14 +18,28 @@ export class VisitPage {
       .catch(console.error)
   }
 
-  updateVisit() {
+  prepareVisitors(visitors) {
+    var obj = {}
+    visitors.forEach(person => {
+      obj[person.id] = { status: person.pivot.status }
+    });
+    return obj;
+  }
+
+  updateVisit(close = false) {
     console.log(this.visit)
-    this.api.put('visits/' + this.visit.id, { status: this.visit.status })
+    this.api.put('visits/' + this.visit.id, {
+      status: this.visit.status,
+      visitors: this.prepareVisitors(this.visit.visitors)
+    })
       .then((data) => {
         console.log(data)
+        if (close)
+          this.dismiss();
       })
       .catch(console.error)
   }
+
   dismiss() {
     this.navCtrl.pop();
   }
