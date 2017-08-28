@@ -97,6 +97,8 @@ export class MyApp {
     });
   }
   changeResidence(residence) {
+    this.api.user.residence_id = residence.id;
+    this.api.storage.set("user", this.api.user);
     this.api.put('users/' + this.api.user.id, { residence_id: residence.id })
       .then((data) => {
         console.log("change residence:", data);
