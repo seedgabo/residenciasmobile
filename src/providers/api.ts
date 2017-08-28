@@ -127,6 +127,7 @@ export class Api {
     promise.then((data: any) => {
       console.log(data);
       this.residence = data.residence;
+      this.user.residence_id = data.residence.id;
       this.visitors = data.visitors;
       this.visits = data.visits;
       this.vehicles = data.vehicles;

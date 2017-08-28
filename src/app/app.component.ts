@@ -96,6 +96,7 @@ export class MyApp {
       this.codepush.sync({ updateDialog: false, ignoreFailedUpdates: false, }).subscribe((syncStatus) => console.log(syncStatus), (err) => { console.warn(err) });
     });
   }
+
   changeResidence(residence) {
     this.api.user.residence_id = residence.id;
     this.api.storage.set("user", this.api.user);
@@ -142,6 +143,8 @@ export class MyApp {
     this.api.username = ""
     this.api.url = ""
     this.api.password = ""
+    this.api.user = undefined;
+    this.api.residence = undefined;
     this.api.storage.clear().then(() => {
       this.nav.setRoot(Login);
     });
