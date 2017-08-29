@@ -7,21 +7,29 @@ import { NavController, NavParams, ViewController, Events } from 'ionic-angular'
 })
 export class NewVisitPage {
   dismissforUpdate: (data: any) => void;
-  visitor: any = {};
   visit: any = {};
   api: any;
   already_dismiss = false;
   constructor(public navCtrl: NavController, public navParams: NavParams, public viewctrl: ViewController, public events: Events) {
     this.visit = navParams.get('visit');
-    this.visitor = navParams.get('visitor');
     this.api = navParams.get('api');
-
+    console.log(this.visit);
+    this.getVisit();
     this.dismissforUpdate = (data) => {
       if (data.visit.id == this.visit.id) {
         this.dismiss();
       }
     };
   }
+  getVisit() {
+    this.api.get(`visits/${this.visit.id}?with[]=visitor&with[]=vehicle&with[]=visitors&with[]=user`)
+      .then((data) => {
+        this.visit = data;
+        console.log(this.visit);
+      })
+      .catch(console.error)
+  }
+
 
   ionViewDidLoad() {
     this.events.subscribe('VisitUpdated', this.dismissforUpdate);
