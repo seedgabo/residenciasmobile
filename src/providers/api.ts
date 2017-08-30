@@ -220,7 +220,7 @@ export class Api {
     this.ready.then(() => {
       if (this.Echo) {
         console.warn('already started Echo');
-        return;
+        this.stopEcho()
       }
       console.log("echo to:", this.user.hostEcho);
       this.Echo = new Echo({
