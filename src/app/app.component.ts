@@ -142,9 +142,9 @@ export class MyApp {
     this.api.stopEcho();
     this.api.username = ""
     this.api.url = ""
+    this.api.user = "";
     this.api.password = ""
-    this.api.user = undefined;
-    this.api.residence = undefined;
+    this.api.residence = {};
     this.api.storage.clear().then(() => {
       this.nav.setRoot(Login);
     });
