@@ -9,9 +9,11 @@ export class PetsEditorPage {
   pet: any = {
     name: '',
     document: '',
-    work: '',
-    sex: '',
-    extras: '',
+    breed: '',
+    specie: '',
+    color: '',
+    sex: 'male',
+    extra: '',
     residence_id: this.api.user.residence_id
   }
   constructor(public navCtrl: NavController, public navParams: NavParams, public api: Api) {
@@ -22,9 +24,11 @@ export class PetsEditorPage {
         id: pet.id,
         name: pet.name,
         document: pet.document,
-        work: pet.work,
+        breed: pet.breed,
+        specie: pet.specie,
         sex: pet.sex,
-        extras: pet.extras,
+        color: pet.color,
+        extra: pet.extra,
         residence_id: pet.residence_id
       };
 
@@ -32,8 +36,8 @@ export class PetsEditorPage {
 
   canSave() {
     return this.pet.name.length > 1 &&
-      this.pet.document.length > 1 &&
-      this.pet.work.length > 1
+      this.pet.breed.length > 1 &&
+      this.pet.specie.length > 1
   }
 
   save() {

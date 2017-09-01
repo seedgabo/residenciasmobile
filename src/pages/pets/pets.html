@@ -13,7 +13,16 @@
         <img *ngIf="pet.image_url"  [src]="pet.image_url" [alt]="pet.name">
         <ion-icon name="camera"  *ngIf="!pet.image_url"></ion-icon>
       </ion-avatar>
-      {{pet.name}}
+        <h2>
+          {{pet.name}}
+        </h2>
+        <p>
+            {{pet.specie }} - {{pet.breed}}
+        </p>
+        <small>
+            {{ pet.document }}
+        </small>
+      
     </button>
   </ion-list>
   <ion-fab bottom right>

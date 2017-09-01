@@ -28,7 +28,9 @@ export class PetsPage {
     if (this.query == "")
       return this.pets = this.api.pets;
     this.pets = this.api.pets.filter((pet) => {
-      if (pet.name.toLowerCase().indexOf(this.query.toLowerCase()) > -1)
+      if (pet.name.toLowerCase().indexOf(this.query.toLowerCase()) > -1
+        || pet.document.toLowerCase().indexOf(this.query.toLowerCase()) > -1
+      )
         return true;
       return false;
     });
