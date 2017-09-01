@@ -1,3 +1,4 @@
+import { PetsPage } from './../pages/pets/pets';
 import { ZoneReservationPage } from './../pages/zone-reservation/zone-reservation';
 import { WorkersPage } from './../pages/workers/workers';
 import { VehiclesPage, } from './../pages/vehicles/vehicles';
@@ -61,6 +62,7 @@ import { ProfilePage } from "../pages/profile/profile";
 import { DatePickerModule } from 'datepicker-ionic2';
 import { RoundProgressModule } from 'angular-svg-round-progressbar';
 import { WorkersEditorPage } from "../pages/worker-editor/worker-editor";
+import { PetsEditorPage } from "../pages/pet-editor/pet-editor";
 import { ReservationsPage } from "../pages/reservations/reservations";
 
 @NgModule({
@@ -91,6 +93,8 @@ import { ReservationsPage } from "../pages/reservations/reservations";
     VehiclesEditorPage,
     WorkersPage,
     WorkersEditorPage,
+    PetsPage,
+    PetsEditorPage,
     AddEventPage,
     AddPostPage,
     SurveysPage,
@@ -134,6 +138,8 @@ import { ReservationsPage } from "../pages/reservations/reservations";
     VehiclesEditorPage,
     WorkersPage,
     WorkersEditorPage,
+    PetsPage,
+    PetsEditorPage,
     NewVisitPage,
     CreateVisitPage,
     VisitTabsPage,

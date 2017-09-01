@@ -43,6 +43,7 @@ export class Api {
   parkings = [];
   visits = [];
   invoices = [];
+  pets = [];
   _events = [];
   constructor(public http: Http, public storage: Storage, public zone: NgZone, public popover: PopoverController, public toast: ToastController, public events: Events, public background: BackgroundMode, public onesignal: OneSignal, public device: Device) {
     storage.ready().then(() => {
@@ -92,6 +93,7 @@ export class Api {
           this.visits = this.residence.visits;
           this.vehicles = this.residence.vehicles;
           this.workers = this.residence.workers;
+          this.pets = this.residence.pets;
           this.users = this.residence.users;
           this.parkings = this.residence.parkings;
           this.invoices = this.residence.invoices;
@@ -132,6 +134,7 @@ export class Api {
       this.visits = data.visits;
       this.vehicles = data.vehicles;
       this.workers = data.workers;
+      this.pets = data.pets;
       this.users = data.users;
       this.user.residences = data.residences;
       this.parkings = data.parkings;
@@ -242,6 +245,7 @@ export class Api {
 
       });
       this.Echo.private('Application')
+
         .listen('ParkingCreated', (data) => {
           console.log("created parking:", data);
           this.zone.run(() => {
@@ -365,6 +369,82 @@ export class Api {
           this.zone.run(() => {
             if (visit >= 0) {
               this.visits.splice(visit, 1);
+            }
+          })
+        })
+
+        .listen('PetCreated', (data) => {
+          console.log("created pet:", data);
+          if (data.pet.residence_id != this.residence.id) return;
+          this.zone.run(() => {
+            var pet = this.pets[this.pets.length] = data.pet;
+            if (data.image)
+              pet.image = data.image;
+          })
+        })
+        .listen('PetUpdated', (data) => {
+          console.log("updated pet:", data);
+          if (data.pet.residence_id != this.residence.id) return;
+          var pet_index = this.pets.findIndex((pet) => {
+            return pet.id === data.pet.id;
+          });
+          this.zone.run(() => {
+            if (pet_index > -1)
+              var pet = this.pets[pet_index] = data.pet;
+            else {
+              var pet = this.pets[this.pets.length] = data.pet;
+            }
+            if (data.image) {
+              pet.image = data.image;
+            }
+          });
+        })
+        .listen('PetDeleted', (data) => {
+          console.log("deleted pet:", data);
+          var pet = this.pets.findIndex((pet) => {
+            return pet.id === data.pet.id;
+          });
+          this.zone.run(() => {
+            if (pet >= 0) {
+              this.pets.splice(pet, 1);
+            }
+          })
+        })
+
+        .listen('WorkerCreated', (data) => {
+          console.log("created worker:", data);
+          if (data.worker.residence_id != this.residence.id) return;
+          this.zone.run(() => {
+            var worker = this.workers[this.workers.length] = data.worker;
+            if (data.image)
+              worker.image = data.image;
+          })
+        })
+        .listen('WorkerUpdated', (data) => {
+          console.log("updated worker:", data);
+          if (data.worker.residence_id != this.residence.id) return;
+          var worker_index = this.workers.findIndex((worker) => {
+            return worker.id === data.worker.id;
+          });
+          this.zone.run(() => {
+            if (worker_index > -1)
+              var worker = this.workers[worker_index] = data.worker;
+            else {
+              var worker = this.workers[this.workers.length] = data.worker;
+            }
+            if (data.image) {
+              worker.image = data.image;
+            }
+          });
+        })
+        .listen('WorkerDeleted', (data) => {
+          console.log("deleted worker:", data);
+          var worker = this.workers.findIndex((worker) => {
+            return worker.id === data.worker.id;
+          });
+          this.zone.run(() => {
+            if (worker >= 0) {
+              this.workers.splice(worker, 1);
             }
           })
         })
