@@ -125,6 +125,9 @@ export class MyApp {
       }
       if (match.$link.url.indexOf("residenciasOnline://app/visit") > -1) {
         this.nav.setRoot(VisitTabsPage, args);
+        setTimeout(() => {
+          this.api.newVisit(args);
+        }, 2000)
       }
       if (match.$link.url.indexOf("residenciasOnline://app/visitor") > -1) {
         this.nav.setRoot(VisitTabsPage, args);
