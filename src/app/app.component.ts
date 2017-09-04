@@ -60,18 +60,18 @@ export class MyApp {
 
     // used for an example of ngFor and navigation
     this.pages = [
-      { title: 'Home', component: HomePage, icon: 'home' },
-      { title: "Perfil", component: ProfilePage, icon: 'person' },
-      { title: "Noticias", component: PostsPage, icon: 'paper' },
-      { title: "Visitantes", component: VisitTabsPage, icon: 'contacts' },
-      { title: "Listas", component: TablesPage, icon: 'list' },
-      { title: "Encuestas", component: SurveysPage, icon: 'pie' },
-      { title: "Eventos", component: EventsPage, icon: 'calendar' },
-      { title: "Facturas", component: InvoicesPage, icon: 'card' },
-      { title: "Documentos", component: DocumentsPage, icon: 'document' },
-      { title: "Reservaciones", component: ReservationsPage, icon: 'tennisball', beta: true },
-      { title: 'Parkings', component: ParkingsPage, icon: 'car' },
-      { title: "Residencias", component: Residences, icon: 'albums' },
+      { title: "home", component: HomePage, icon: 'home' },
+      { title: "profile", component: ProfilePage, icon: 'person' },
+      { title: "posts", component: PostsPage, icon: 'paper' },
+      { title: "visitors", component: VisitTabsPage, icon: 'contacts' },
+      { title: "lists", component: TablesPage, icon: 'list' },
+      { title: "surveys", component: SurveysPage, icon: 'pie' },
+      { title: "events", component: EventsPage, icon: 'calendar' },
+      { title: "invoices", component: InvoicesPage, icon: 'card' },
+      { title: "dynamic_documents", component: DocumentsPage, icon: 'document' },
+      { title: "reservations", component: ReservationsPage, icon: 'tennisball', beta: true },
+      { title: "parkings", component: ParkingsPage, icon: 'car' },
+      { title: "residences", component: Residences, icon: 'albums' },
     ];
 
   }
