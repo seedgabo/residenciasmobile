@@ -1,4 +1,3 @@
-import { PetsPage } from './../pets/pets';
 import { WorkersPage } from './../workers/workers';
 import { VehiclesPage } from './../vehicles/vehicles';
 import { VisitorsPage } from './../visitors/visitors';
