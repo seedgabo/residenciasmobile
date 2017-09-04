@@ -543,7 +543,6 @@ export class Api {
   }
 
   pushRegister(appid = "ebf07feb-3c76-4639-8c87-b1e7a2e9ddd8") {
-    this.onesignal.setSubscription(true);
     this.onesignal.startInit(appid, "425679220353");
     this.onesignal.inFocusDisplaying(this.onesignal.OSInFocusDisplayOption.Notification);
     this.onesignal.syncHashedEmail(this.user.email);
@@ -558,6 +557,7 @@ export class Api {
     }, console.warn);
 
     this.onesignal.endInit();
+    this.onesignal.setSubscription(true);
     this.onesignal.getIds().then((ids: any) => {
       console.log("onesignal ids", ids)
       var data = {
