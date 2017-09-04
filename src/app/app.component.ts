@@ -148,6 +148,7 @@ export class MyApp {
     this.api.user = null;
     this.api.password = ""
     this.api.residence = null;
+    this.api.onesignal.setSubscription(false);
     this.api.storage.clear().then(() => {
       this.nav.setRoot(Login);
     });
