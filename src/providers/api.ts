@@ -661,4 +661,19 @@ export class Api {
     return this.sound;
   }
 
+  panic() {
+    var data = {
+      user: this.user,
+      location: null,
+
+    }
+    var promise = this.post('panic', data)
+    promise
+      .then((data) => {
+        console.log("panic sent:", data)
+      })
+      .catch(console.error)
+    return promise;
+  }
+
 }
