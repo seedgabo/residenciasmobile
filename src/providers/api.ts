@@ -44,6 +44,7 @@ export class Api {
   visits = [];
   invoices = [];
   pets = [];
+  chats = [];
   _events = [];
   constructor(public http: Http, public storage: Storage, public zone: NgZone, public popover: PopoverController, public toast: ToastController, public events: Events, public background: BackgroundMode, public onesignal: OneSignal, public device: Device, public platform: Platform) {
     storage.ready().then(() => {
@@ -516,6 +517,15 @@ export class Api {
         })
 
       this.Echo.private('App.User.' + this.user.id)
+        .listen('Chat', (data) => {
+          console.log("new chat event", data);
+          var thread = data.thread
+          var message = data.message
+          var sender = data.sender
+          var residence = data.residence
+          this.newChatMessage(thread, message, sender)
+          this.events.publish('Chat', { thread: thread, message: message, sender: sender, residence: residence });
+        })
         .notification((notification) => {
           console.log(notification);
         });
@@ -644,6 +654,20 @@ export class Api {
     this.playSoundBeep();
   }
 
+  newChatMessage(thread, message, sender) {
+    if (this.user.id !== sender.id) {
+      var sender = sender;
+      var message = message.body;
+    }
+    this.toast.create({
+      message: `${sender.name}: ${message}`,
+      closeButtonText: "X",
+      showCloseButton: true,
+      duration: 2000,
+    }).present()
+    this.sound = new Audio('./static/sounds/chat.mp3');
+    this.sound.play();
+  }
 
 
   moveToFront() {
@@ -660,6 +684,12 @@ export class Api {
 
   playSoundBeep() {
     this.sound = new Audio('assets/sounds/beep.mp3');
+    this.sound.play();
+    return this.sound;
+  }
+
+  playSoundChat() {
+    this.sound = new Audio('assets/sounds/chat.mp3');
     this.sound.play();
     return this.sound;
   }
@@ -690,6 +720,7 @@ export class Api {
       prefs.putString('residence_id', this.user.residence_id)
     }, console.error);
   }
+
   clearSharedPreferences() {
     if (!this.platform.is('android'))
       return;

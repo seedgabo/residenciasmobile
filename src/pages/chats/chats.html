@@ -1,0 +1,37 @@
+<ion-header>
+
+  <ion-navbar color="favorite">
+    <button ion-button menuToggle icon-only>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title text-capitalize>{{ 'literals.chats' | trans }}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content>
+  <ion-list inset #chatBody *ngIf="chat" class="chat-body">
+    <ion-list-header>
+      <b>{{chat.title}}</b>
+    </ion-list-header>
+    <div *ngFor="let msg of messages">
+      {{msg.body}}
+    </div>
+  </ion-list>
+</ion-content>
+
+
+<ion-footer>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-11>
+        <input type="text" class="text-input" #chatInput [(ngModel)]="message" [placeholder]="api.trans('__.type here')">
+      </ion-col>
+      <ion-col col-1>
+        <button clear icon-only ion-button (click)="send()" color="primary">
+          <ion-icon name="send"></ion-icon>
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-footer>
