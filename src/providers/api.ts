@@ -710,27 +710,39 @@ export class Api {
   }
 
   saveSharedPreferences() {
-    if (!this.platform.is('android'))
-      return;
-    var prefs = window.SharedPreferences
-    prefs.getSharedPreferences('residentes_online', 'MODE_PRIVATE', () => {
-      prefs.putString('url', this.url)
-      prefs.putString('token', this.user.token)
-      prefs.putString('user_id', this.user.id)
-      prefs.putString('residence_id', this.user.residence_id)
-    }, console.error);
+    try {
+      if (!this.platform.is('android'))
+        return;
+      var prefs = window.SharedPreferences
+      prefs.getSharedPreferences('residentes_online', 'MODE_PRIVATE', () => {
+        prefs.putString('url', this.url)
+        prefs.putString('token', this.user.token)
+        prefs.putString('user_id', this.user.id)
+        prefs.putString('residence_id', this.user.residence_id)
+      }, console.error);
+
+    }
+    catch (e) {
+      console.error("catch error saving shared pref", e)
+    }
   }
 
   clearSharedPreferences() {
-    if (!this.platform.is('android'))
-      return;
-    var prefs = window.SharedPreferences
-    prefs.getSharedPreferences('residentes_online', 'MODE_PRIVATE', () => {
-      prefs.remove('url')
-      prefs.remove('token')
-      prefs.remove('user_id')
-      prefs.remove('residence_id')
-    }, console.error);
+    try {
+      if (!this.platform.is('android'))
+        return;
+      var prefs = window.SharedPreferences
+      prefs.getSharedPreferences('residentes_online', 'MODE_PRIVATE', () => {
+        prefs.remove('url')
+        prefs.remove('token')
+        prefs.remove('user_id')
+        prefs.remove('residence_id')
+      }, console.error);
+    }
+    catch (e) {
+      console.error("catch error saving shared pref", e)
+    }
+
   }
 
 }
