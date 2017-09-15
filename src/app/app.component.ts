@@ -34,6 +34,7 @@ export class MyApp {
   see_residences = false
   pages: Array<any>;
   VisitTabsPage = VisitTabsPage;
+  disabled_panic = false;
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public codepush: CodePush, public backgroundmode: BackgroundMode, public api: Api, public minimize: AppMinimize, public deeplinks: Deeplinks, public events: Events) {
     this.platform.ready().then(() => {
       this.api.ready.then(() => {
@@ -152,5 +153,17 @@ export class MyApp {
     this.api.storage.clear().then(() => {
       this.nav.setRoot(Login);
     });
+  }
+
+  panic() {
+    this.disabled_panic = true;
+    this.api.panic()
+      .then(() => {
+        this.disabled_panic = false;
+      })
+      .catch(() => {
+        this.disabled_panic = false;
+      });
+
   }
 }

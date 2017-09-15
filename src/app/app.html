@@ -3,6 +3,12 @@
 
         <ion-header>
             <div class="user-info" padding>
+                <ion-fab bottom left>
+                    <button ion-fab color="danger" class="pulse" (click)="!disable_panic && panic()">
+                        <ion-icon name="help-buoy"></ion-icon>
+                    </button>
+                </ion-fab>
+
                 <img *ngIf="api.user" [src]="api.user.image_url" class="avatar-user">
                 <h5 text-center *ngIf="api.user">{{api.user.name}}</h5>
                 <div text-right>
