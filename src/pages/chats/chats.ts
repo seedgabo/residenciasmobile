@@ -1,6 +1,6 @@
 import { Api } from './../../providers/api';
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, Events } from 'ionic-angular';
 
 @Component({
   selector: 'page-chats',
@@ -13,11 +13,57 @@ export class ChatsPage {
   loading = false;
   sending = false;
   messages = [];
-  constructor(public navCtrl: NavController, public navParams: NavParams, public api: Api) {
+  residences = [];
+  constructor(public navCtrl: NavController, public navParams: NavParams, public events: Events,
+    public api: Api) {
   }
 
   ionViewDidLoad() {
     this.getData();
+    this.events.subscribe("Chat", this.newMessage);
+    this.api.get("residences")
+      .then((data: any) => {
+        this.residences = data;
+      })
+      .catch(console.error)
+  }
+  ionViewWillUnload() {
+    this.events.unsubscribe("Chat", this.newMessage);
+  }
+
+  newMessage(data) {
+    if (this.chat && data.thread.id == this.chat.id && data.sender.id != this.api.user.id) {
+      var msg = {
+        user: data.sender,
+        body: data.message.body,
+      };
+      msg.user.residence = data.residence;
+      this.messages.push(msg);
+    }
+    else if (this.isIn(data.thread.id, this.api.chats, "id")) {
+      var length = this.api.chats.length;
+      for (var i = 0; i < length; i++) {
+        if (this.api.chats[i].id === data.thread.id)
+          if (this.api.chats[i].unread)
+            this.api.chats[i].unread = 1
+          else
+            this.api.chats[i].unread++;
+      }
+    }
+    else {
+      this.api.chats.push(data.thread);
+      this.selectChat(data.thread);
+      data.thread.unread = 1;
+    }
+  }
+
+  isIn(search, array, key) {
+    var length = array.length;
+    for (var i = 0; i < length; i++) {
+      if (search === array[i][key])
+        return true
+    }
+    return false;
   }
 
   getData() {
@@ -56,8 +102,7 @@ export class ChatsPage {
   }
 
   addChat(residence) {
-    console.log(residence);
-    this.createChat(residence);
+    // this.navCtrl.push(addChatPage,{});
   }
 
   createChat(residence) {
@@ -99,4 +144,5 @@ export class ChatsPage {
       } catch (err) { }
     }, 50)
   }
+
 }
