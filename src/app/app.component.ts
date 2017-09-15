@@ -150,6 +150,7 @@ export class MyApp {
     this.api.password = ""
     this.api.residence = null;
     this.api.onesignal.setSubscription(false);
+    this.api.clearSharedPreferences();
     this.api.storage.clear().then(() => {
       this.nav.setRoot(Login);
     });

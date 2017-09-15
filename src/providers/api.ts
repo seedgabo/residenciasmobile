@@ -2,7 +2,7 @@ import { Injectable, NgZone } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
 
-import { PopoverController, ToastController, Events } from "ionic-angular";
+import { PopoverController, ToastController, Events, Platform } from "ionic-angular";
 import { Storage } from '@ionic/storage';
 
 import { NewVisitPage } from "../pages/new-visit/new-visit";
@@ -45,7 +45,7 @@ export class Api {
   invoices = [];
   pets = [];
   _events = [];
-  constructor(public http: Http, public storage: Storage, public zone: NgZone, public popover: PopoverController, public toast: ToastController, public events: Events, public background: BackgroundMode, public onesignal: OneSignal, public device: Device) {
+  constructor(public http: Http, public storage: Storage, public zone: NgZone, public popover: PopoverController, public toast: ToastController, public events: Events, public background: BackgroundMode, public onesignal: OneSignal, public device: Device, public platform: Platform) {
     storage.ready().then(() => {
       storage.get('username').then(username => { this.username = username });
       storage.get('password').then(password => { this.password = password });
@@ -105,6 +105,8 @@ export class Api {
           this.storage.set('modules', this.modules);
           this.storage.set('settings', this.settings);
           this.getLang();
+
+          this.saveSharedPreferences();
           resolve(data);
         }, error => {
           return reject(this.handleData(error));
@@ -141,6 +143,7 @@ export class Api {
       this.invoices = data.invoices;
       this.residences = data.residences;
       this.storage.set('allData', data);
+      this.saveSharedPreferences();
     }).catch((err) => {
       console.error(err);
     });
@@ -674,6 +677,29 @@ export class Api {
       })
       .catch(console.error)
     return promise;
+  }
+
+  saveSharedPreferences() {
+    if (!this.platform.is('android'))
+      return;
+    var prefs = window.SharedPreferences
+    prefs.getSharedPreferences('residentes_online', 'MODE_PRIVATE', () => {
+      prefs.putString('url', this.url)
+      prefs.putString('token', this.user.token)
+      prefs.putString('user_id', this.user.id)
+      prefs.putString('residence_id', this.user.residence_id)
+    }, console.error);
+  }
+  clearSharedPreferences() {
+    if (!this.platform.is('android'))
+      return;
+    var prefs = window.SharedPreferences
+    prefs.getSharedPreferences('residentes_online', 'MODE_PRIVATE', () => {
+      prefs.remove('url')
+      prefs.remove('token')
+      prefs.remove('user_id')
+      prefs.remove('residence_id')
+    }, console.error);
   }
 
 }
