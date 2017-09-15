@@ -68,10 +68,10 @@ export class MyApp {
       { title: "lists", component: TablesPage, icon: 'list' },
       { title: "surveys", component: SurveysPage, icon: 'pie' },
       { title: "events", component: EventsPage, icon: 'calendar' },
-      { title: "invoices", component: InvoicesPage, icon: 'card' },
+      { title: "invoices", component: InvoicesPage, icon: 'card', modules: 'finanze' },
       { title: "dynamic_documents", component: DocumentsPage, icon: 'document' },
-      { title: "reservations", component: ReservationsPage, icon: 'tennisball', beta: true },
-      { title: "parkings", component: ParkingsPage, icon: 'car' },
+      { title: "reservations", component: ReservationsPage, icon: 'tennisball', modules: 'reservations', beta: true },
+      { title: "parkings", component: ParkingsPage, icon: 'car', modules: 'parkings' },
       { title: "residences", component: Residences, icon: 'albums' },
     ];
 
@@ -166,5 +166,15 @@ export class MyApp {
         this.disabled_panic = false;
       });
 
+  }
+
+  siteHas(modul) {
+    if (this.api.modules === undefined) {
+      return true;
+    }
+    else if (modul === undefined || this.api.modules[modul] === undefined) {
+      return true
+    }
+    return this.api.modules[modul];
   }
 }

@@ -698,7 +698,6 @@ export class Api {
     var data = {
       user: this.user,
       location: null,
-
     }
     var promise = this.post('panic', data)
     promise
