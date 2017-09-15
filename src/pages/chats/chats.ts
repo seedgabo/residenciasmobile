@@ -1,6 +1,7 @@
 import { Api } from './../../providers/api';
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { NavController, NavParams, Events } from 'ionic-angular';
+import { AddChatPage } from '../add-chat/add-chat';
 
 @Component({
   selector: 'page-chats',
@@ -102,7 +103,7 @@ export class ChatsPage {
   }
 
   addChat(residence) {
-    // this.navCtrl.push(addChatPage,{});
+    this.navCtrl.push(AddChatPage, { residences: this.residences });
   }
 
   createChat(residence) {

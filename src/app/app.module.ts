@@ -1,3 +1,4 @@
+import { AddChatPage } from './../pages/add-chate/add-chate';
 import { ChatsPage } from './../pages/chats/chats';
 import { PetsPage } from './../pages/pets/pets';
 import { ZoneReservationPage } from './../pages/zone-reservation/zone-reservation';
@@ -104,6 +105,7 @@ import { ReservationsPage } from "../pages/reservations/reservations";
     NewsComponent,
     ZoneReservationPage,
     ChatsPage,
+    AddChatPage,
   ],
   imports: [
     BrowserModule,
@@ -152,6 +154,7 @@ import { ReservationsPage } from "../pages/reservations/reservations";
     PaymentReportPage,
     ZoneReservationPage,
     ChatsPage,
+    AddChatPage,
   ],
   providers: [
     StatusBar, SplashScreen, Camera, Facebook, GooglePlus, AppMinimize, BackgroundMode, CodePush, OneSignal, Device,
