@@ -64,6 +64,12 @@ export class WorkersPage {
           handler: () => { this.updateworker(worker) }
         },
         {
+          text: this.api.trans('crud.edit') + " " + this.api.trans('literals.image'),
+          icon: 'photo',
+          cssClass: 'icon-purple',
+          handler: () => { this.askFile(worker) }
+        },
+        {
           text: this.api.trans('crud.delete'),
           icon: 'trash',
           role: 'destructive',
