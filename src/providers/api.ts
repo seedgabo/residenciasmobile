@@ -658,15 +658,17 @@ export class Api {
     if (this.user.id !== sender.id) {
       var sender = sender;
       var message = message.body;
+      this.toast.create({
+        message: `${sender.name}: ${message}`,
+        closeButtonText: "X",
+        showCloseButton: true,
+        duration: 2000,
+        position: "top"
+      }).present();
     }
-    this.toast.create({
-      message: `${sender.name}: ${message}`,
-      closeButtonText: "X",
-      showCloseButton: true,
-      duration: 2000,
-    }).present()
-    this.sound = new Audio('./static/sounds/chat.mp3');
+    this.sound = new Audio('assets/sounds/chat.mp3');
     this.sound.play();
+    return this.sound;
   }
 
 

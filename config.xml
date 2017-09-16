@@ -108,6 +108,7 @@
     <plugin name="cordova-plugin-googleplus" spec="^5.1.1">
         <variable name="REVERSED_CLIENT_ID" value="600000041642-d423nns9o78c2g8qcvrpj57kkshhjkid.apps.googleusercontent.com" />
     </plugin>
+    <plugin name="cordova-plugin-shared-preferences" spec="0.0.1" />
     <plugin name="cordova-plugin-splashscreen" spec="^4.0.3" />
     <plugin name="cordova-plugin-statusbar" spec="^2.2.3" />
     <plugin name="cordova-plugin-vibration" spec="^2.1.5" />
@@ -134,5 +135,4 @@
     </plugin>
     <plugin name="ionic-plugin-keyboard" spec="^2.2.1" />
     <plugin name="onesignal-cordova-plugin" spec="^2.1.2" />
-    <plugin name="cordova-plugin-shared-preferences" spec="0.0.1" />
 </widget>

@@ -22,6 +22,7 @@ import { DocumentsPage } from "../pages/documents/documents";
 import { PostsPage } from "../pages/posts/posts";
 import { SurveysPage } from "../pages/surveys/surveys";
 import { ProfilePage } from "../pages/profile/profile";
+import { ChatsPage } from '../pages/chats/chats';
 
 
 @Component({
@@ -73,6 +74,7 @@ export class MyApp {
       { title: "reservations", component: ReservationsPage, icon: 'tennisball', modules: 'reservations', beta: true },
       { title: "parkings", component: ParkingsPage, icon: 'car', modules: 'parkings' },
       { title: "residences", component: Residences, icon: 'albums' },
+      { title: "chats", component: ChatsPage, icon: 'chatbubbles', modules: 'chat' },
     ];
 
   }
