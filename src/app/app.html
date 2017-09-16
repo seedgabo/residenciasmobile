@@ -10,13 +10,11 @@
 
                 <img *ngIf="api.user" [src]="api.user.image_url" class="avatar-user">
                 <h5 text-center *ngIf="api.user">{{api.user.name}}</h5>
-                <div text-right>
+                <ion-fab bottom right>
                     <button (click)="see_residences=!see_residences" color="light" ion-button icon-right *ngIf="api.residence" clear>{{api.residence.name}}
                       <ion-icon [name]="see_residences? 'arrow-dropdown' :'arrow-dropleft'"></ion-icon>
                     </button>
-                    <br><br>
-                </div>
-                <br>
+                </ion-fab>
             </div>
         </ion-header>
         <ion-content>
