@@ -171,8 +171,8 @@ export class MyApp {
   }
 
   siteHas(modul) {
-    if (this.api.modules === undefined) {
-      return true;
+    if (!this.api.modules) {
+      return false;
     }
     else if (modul === undefined || this.api.modules[modul] === undefined) {
       return true
