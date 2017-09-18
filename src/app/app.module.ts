@@ -1,4 +1,4 @@
-import { AddChatPage } from './../pages/add-chate/add-chate';
+import { AddChatPage } from './../pages/add-chat/add-chat';
 import { ChatsPage } from './../pages/chats/chats';
 import { PetsPage } from './../pages/pets/pets';
 import { ZoneReservationPage } from './../pages/zone-reservation/zone-reservation';

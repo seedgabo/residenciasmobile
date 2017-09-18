@@ -1,35 +1,44 @@
 import { Api } from './../../providers/api';
-import { Component, ViewChild, ElementRef } from '@angular/core';
-import { NavController, NavParams, Events } from 'ionic-angular';
+import { Component, ViewChild, ElementRef, NgZone } from '@angular/core';
+import { NavController, NavParams, Events, MenuController, Content } from 'ionic-angular';
 import { AddChatPage } from '../add-chat/add-chat';
-
+import $ from 'jquery';
+var func;
 @Component({
   selector: 'page-chats',
   templateUrl: 'chats.html',
 })
 export class ChatsPage {
-  @ViewChild('scrollMe') private chatBody: ElementRef;
   message = "";
   chat = null;
   loading = false;
   sending = false;
   messages = [];
   residences = [];
-  constructor(public navCtrl: NavController, public navParams: NavParams, public events: Events,
+  constructor(public menuCtrl: MenuController, public ngzone: NgZone, public navCtrl: NavController, public navParams: NavParams, public events: Events,
     public api: Api) {
   }
 
   ionViewDidLoad() {
     this.getData();
-    this.events.subscribe("Chat", this.newMessage);
+    func = (data) => {
+      this.newMessage
+    }
+    this.events.subscribe("Chat", func);
     this.api.get("residences")
       .then((data: any) => {
         this.residences = data;
       })
       .catch(console.error)
+
+    setTimeout(() => {
+      this.menuCtrl.open('chatMenu')
+
+    }, 550)
+
   }
   ionViewWillUnload() {
-    this.events.unsubscribe("Chat", this.newMessage);
+    this.events.unsubscribe("Chat", func);
   }
 
   newMessage(data) {
@@ -78,7 +87,7 @@ export class ChatsPage {
   }
 
   send() {
-    if (this.message.length === 0) {
+    if (this.message.length === 0 || !this.chat) {
       return;
     }
     this.sending = true;
@@ -140,9 +149,9 @@ export class ChatsPage {
 
   scrolltoBottom() {
     setTimeout(() => {
-      try {
-        this.chatBody.nativeElement.scrollTop = this.chatBody.nativeElement.scrollHeight;
-      } catch (err) { }
+      this.ngzone.run(() => {
+        $("#chat .scroll-content").animate({ scrollTop: $("#chat .scroll-content").height() + 10000 }, 1000);
+      })
     }, 50)
   }
 
