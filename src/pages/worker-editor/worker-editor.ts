@@ -11,7 +11,7 @@ export class WorkersEditorPage {
     document: '',
     work: '',
     sex: '',
-    extras: '',
+    extra: '',
     residence_id: this.api.user.residence_id
   }
   constructor(public navCtrl: NavController, public navParams: NavParams, public api: Api) {
@@ -24,7 +24,7 @@ export class WorkersEditorPage {
         document: worker.document,
         work: worker.work,
         sex: worker.sex,
-        extras: worker.extras,
+        extra: worker.extra,
         residence_id: worker.residence_id
       };
 
