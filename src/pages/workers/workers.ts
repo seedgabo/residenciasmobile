@@ -65,7 +65,7 @@ export class WorkersPage {
         },
         {
           text: this.api.trans('crud.edit') + " " + this.api.trans('literals.image'),
-          icon: 'photo',
+          icon: 'camera',
           cssClass: 'icon-purple',
           handler: () => { this.askFile(worker) }
         },
