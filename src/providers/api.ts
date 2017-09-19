@@ -658,9 +658,9 @@ export class Api {
   newChatMessage(thread, message, sender) {
     if (this.user.id !== sender.id) {
       var sender = sender;
-      var message = message.body;
+      var msg = message.body;
       this.toast.create({
-        message: `${sender.name}: ${message}`,
+        message: `${thread.title} - ${sender.name}: ${msg}`,
         closeButtonText: "X",
         showCloseButton: true,
         duration: 2000,
