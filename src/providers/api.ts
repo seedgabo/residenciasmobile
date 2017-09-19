@@ -14,6 +14,7 @@ import { Device } from "@ionic-native/device";
 import Echo from 'laravel-echo';
 import Pusher from 'pusher-js';
 import moment from 'moment';
+import { Vibration } from '@ionic-native/vibration';
 declare var window: any;
 moment.locale('es');
 window.Pusher = Pusher;
@@ -46,7 +47,7 @@ export class Api {
   pets = [];
   chats = [];
   _events = [];
-  constructor(public http: Http, public storage: Storage, public zone: NgZone, public popover: PopoverController, public toast: ToastController, public events: Events, public background: BackgroundMode, public onesignal: OneSignal, public device: Device, public platform: Platform) {
+  constructor(public http: Http, public storage: Storage, public zone: NgZone, public popover: PopoverController, public toast: ToastController, public events: Events, public background: BackgroundMode, public onesignal: OneSignal, public device: Device, public platform: Platform, public vibration: Vibration) {
     storage.ready().then(() => {
       storage.get('username').then(username => { this.username = username });
       storage.get('password').then(password => { this.password = password });
@@ -705,8 +706,25 @@ export class Api {
     promise
       .then((data) => {
         console.log("panic sent:", data)
+        this.toast.create({
+          message: this.trans("__.panico enviado"),
+          duration: 5000,
+          position: 'top',
+        }).present();
+        this.vibration.vibrate(300)
+        setTimeout(() => {
+          this.vibration.vibrate(300)
+        }, 600);
       })
-      .catch(console.error)
+      .catch((err) => {
+        console.error(err)
+        this.toast.create({
+          message: this.trans("__.error enviado el panico"),
+          duration: 5000,
+          position: 'top',
+        }).present();
+
+      })
     return promise;
   }
 
