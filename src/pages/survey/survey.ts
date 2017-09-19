@@ -10,7 +10,7 @@ var funct
 })
 export class SurveyPage {
   survey: any;
-  vote: any;
+  vote: any = null;
   constructor(public navCtrl: NavController, public navParams: NavParams, public api: Api, public alert: AlertController, public events: Events) {
     this.survey = navParams.get('survey');
   }
