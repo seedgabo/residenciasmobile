@@ -35,6 +35,7 @@ import { TransPipe } from '../pipes/trans/trans';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Camera } from '@ionic-native/camera';
+import { Vibration } from '@ionic-native/vibration';
 import { Facebook } from "@ionic-native/facebook";
 import { GooglePlus } from '@ionic-native/google-plus';
 import { BackgroundMode } from "@ionic-native/background-mode";
@@ -158,7 +159,7 @@ import { ReservationsPage } from "../pages/reservations/reservations";
   ],
   providers: [
     StatusBar, SplashScreen, Camera, Facebook, GooglePlus, AppMinimize, BackgroundMode, CodePush, OneSignal, Device,
-    Deeplinks, Transfer, File, FileOpener,
+    Deeplinks, Transfer, File, FileOpener, Vibration,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     Api,
   ]
