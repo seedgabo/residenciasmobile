@@ -667,6 +667,12 @@ export class Api {
         position: "top"
       }).present();
     }
+    this.chats.forEach((chat) => {
+      if (thread.id == chat.id) {
+        if (!chat.unread) chat.unread = 1;
+        chat.unread++;
+      }
+    });
     this.sound = new Audio('assets/sounds/chat.mp3');
     this.sound.play();
     return this.sound;

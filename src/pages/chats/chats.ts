@@ -1,6 +1,6 @@
 import { Api } from './../../providers/api';
 import { Component, ViewChild, ElementRef, NgZone } from '@angular/core';
-import { NavController, NavParams, Events, MenuController, Content } from 'ionic-angular';
+import { NavController, NavParams, Events, MenuController, Content, ModalController } from 'ionic-angular';
 import { AddChatPage } from '../add-chat/add-chat';
 import $ from 'jquery';
 var func;
@@ -15,8 +15,7 @@ export class ChatsPage {
   sending = false;
   messages = [];
   residences = [];
-  constructor(public menuCtrl: MenuController, public ngzone: NgZone, public navCtrl: NavController, public navParams: NavParams, public events: Events,
-    public api: Api) {
+  constructor(public menuCtrl: MenuController, public ngzone: NgZone, public navCtrl: NavController, public navParams: NavParams, public events: Events, public modal: ModalController, public api: Api) {
   }
 
   ionViewDidLoad() {
@@ -112,7 +111,13 @@ export class ChatsPage {
   }
 
   addChat(residence) {
-    this.navCtrl.push(AddChatPage, { residences: this.residences });
+    var modal = this.modal.create(AddChatPage, { residences: this.residences });
+    modal.onWillDismiss((thread) => {
+      this.getData();
+      this.selectChat(thread);
+      this.getData();
+    });
+    modal.present();
   }
 
   createChat(residence) {
