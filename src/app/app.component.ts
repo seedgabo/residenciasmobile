@@ -43,7 +43,6 @@ export class MyApp {
         console.log(this.api.user);
         if (this.api.user) {
           this.rootPage = HomePage;
-          // this.rootPage = ReservationsPage;
           this.api.getAllData();
           this.api.getLang();
           this.registerDeepLinks();
@@ -62,7 +61,7 @@ export class MyApp {
 
     // used for an example of ngFor and navigation
     this.pages = [
-      { title: "home", component: HomePage, icon: 'home' },
+      // { title: "home", component: HomePage, icon: 'home' },
       { title: "profile", component: ProfilePage, icon: 'person' },
       { title: "posts", component: PostsPage, icon: 'paper' },
       { title: "visitors", component: VisitTabsPage, icon: 'contacts' },
@@ -86,8 +85,10 @@ export class MyApp {
       this.platform.registerBackButtonAction(() => {
         if (this.nav.canGoBack())
           return this.nav.pop();
-        this.minimize.minimize();
-        console.log("minimize");
+        else {
+          this.minimize.minimize();
+          console.log("minimize");
+        }
       });
 
       this.backgroundmode.enable();
@@ -112,7 +113,12 @@ export class MyApp {
   }
 
   openPage(page) {
-    this.nav.setRoot(page.component);
+    // this.nav.setRoot(page.component);
+    this.nav.push(page.component);
+  }
+
+  backToHome() {
+    this.nav.setRoot(HomePage);
   }
 
   registerDeepLinks() {

@@ -19,6 +19,10 @@
         </ion-header>
         <ion-content>
             <ion-list *ngIf="!see_residences">
+                <button menuClose ion-item (click)="backToHome()">
+                  <ion-icon name="home" item-left color="primary"></ion-icon>
+                      {{ api.trans('literals.home')}}
+                </button>
                 <ng-container *ngFor="let p of pages">
                     <button menuClose ion-item (click)="openPage(p)" *ngIf="siteHas(p.module)">
                       <ion-icon [name]="p.icon" item-left color="primary"></ion-icon>

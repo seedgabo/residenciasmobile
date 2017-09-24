@@ -332,7 +332,8 @@ export class Api {
           console.log("created vist:", data);
 
           this.zone.run(() => {
-            this.visits.unshift(data.visit);
+            if (this.visits)
+              this.visits.unshift(data.visit);
             var visit = this.visits[0];
             visit.visitor = data.visitor;
             visit.visitors = data.visitors;
