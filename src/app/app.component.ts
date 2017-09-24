@@ -145,16 +145,17 @@ export class MyApp {
   }
 
   logout() {
-    this.api.stopEcho();
-    this.api.username = ""
-    this.api.url = ""
-    this.api.user = null;
-    this.api.password = ""
-    this.api.residence = null;
-    this.api.onesignal.setSubscription(false);
-    this.api.clearSharedPreferences();
     this.api.storage.clear().then(() => {
-      this.nav.setRoot(Login);
+      this.nav.setRoot(Login).then(() => {
+        this.api.stopEcho();
+        this.api.username = ""
+        this.api.url = ""
+        this.api.user = null;
+        this.api.password = ""
+        this.api.residence = null;
+        this.api.onesignal.setSubscription(false);
+        this.api.clearSharedPreferences();
+      });
     });
   }
 

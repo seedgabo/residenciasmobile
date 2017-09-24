@@ -26,7 +26,8 @@
             <button ion-button menuToggle icon-only>
                 <ion-icon name="menu"></ion-icon>
             </button>
-            <ion-title text-capitalize>{{ 'literals.chats' | trans }}</ion-title>
+            <ion-title text-capitalize>{{ chat ? chat.title : ('literals.chats' | trans) }}
+            </ion-title>
             <ion-buttons end>
                 <button ion-button icon-only (click)="scrolltoBottom()">
                   <ion-icon name="arrow-down"></ion-icon>
@@ -43,15 +44,12 @@
 
     <ion-content id="chat">
         <ion-list inset #chatBody *ngIf="chat" class="chat-body">
-            <h4>
-                <b>{{chat.title}}</b>
-            </h4>
             <div text-center *ngIf="loading">
                 <ion-spinner color="primary"></ion-spinner>
             </div>
             <div class="chat-msg" *ngFor="let msg of messages">
                 <ion-grid>
-                    <ion-row *ngIf="msg.user.id !== api.user.id">
+                    <ion-row *ngIf="msg.user.id != api.user.id">
                         <ion-col col-2>
                             <img [src]="msg.user.image_url" class="chat-avatar">
                         </ion-col>
@@ -68,7 +66,7 @@
                             </div>
                         </ion-col>
                     </ion-row>
-                    <ion-row *ngIf="msg.user.id === api.user.id">
+                    <ion-row *ngIf="msg.user.id == api.user.id">
                         <ion-col col-10>
                             <div class="chat-text me">
                                 {{msg.body}}

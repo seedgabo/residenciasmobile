@@ -658,7 +658,7 @@ export class Api {
   newChatMessage(thread, message, sender) {
     if (this.user.id !== sender.id) {
       var sender = sender;
-      var msg = message.body;
+      var msg = message;
       this.toast.create({
         message: `${thread.title} - ${sender.name}: ${msg}`,
         closeButtonText: "X",
@@ -667,6 +667,7 @@ export class Api {
         position: "top"
       }).present();
     }
+
     this.chats.forEach((chat) => {
       if (thread.id == chat.id) {
         if (!chat.unread) chat.unread = 1;
