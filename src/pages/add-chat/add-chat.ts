@@ -8,7 +8,7 @@ import { NavController, NavParams, ViewController } from 'ionic-angular';
 export class AddChatPage {
   residences = [];
   constructor(public navCtrl: NavController, public navParams: NavParams, public viewctrl: ViewController, public api: Api) {
-    this.navParams.get('residences');
+    this.residences = this.navParams.get('residences');
   }
 
   ionViewDidLoad() {

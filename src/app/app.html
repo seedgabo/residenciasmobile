@@ -39,7 +39,7 @@
                 <ion-list-header>
                     {{api.trans('literals.my')}} {{api.trans('literals.residences')}}
                 </ion-list-header>
-                <button [disabled]="res.id == api.residence.id" menuClose ion-item (click)="changeResidence(res)" *ngFor="let res of api.user.residences" icon-left>
+                <button [disabled]="api.residence && res.id == api.residence.id" menuClose ion-item (click)="changeResidence(res)" *ngFor="let res of api.user.residences" icon-left>
                   <ion-icon name="home" [color]="res.status == 'solvent'? 'secondary':'danger'"></ion-icon>
                   {{res.name}}
                 </button>
