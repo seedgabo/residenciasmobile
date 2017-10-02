@@ -332,7 +332,8 @@ export class Api {
           console.log("created vist:", data);
 
           this.zone.run(() => {
-            this.visits.unshift(data.visit);
+            if (this.visits)
+              this.visits.unshift(data.visit);
             var visit = this.visits[0];
             visit.visitor = data.visitor;
             visit.visitors = data.visitors;
@@ -658,7 +659,7 @@ export class Api {
   newChatMessage(thread, message, sender) {
     if (this.user.id !== sender.id) {
       var sender = sender;
-      var msg = message.body;
+      var msg = message;
       this.toast.create({
         message: `${thread.title} - ${sender.name}: ${msg}`,
         closeButtonText: "X",
@@ -667,6 +668,7 @@ export class Api {
         position: "top"
       }).present();
     }
+
     this.chats.forEach((chat) => {
       if (thread.id == chat.id) {
         if (!chat.unread) chat.unread = 1;

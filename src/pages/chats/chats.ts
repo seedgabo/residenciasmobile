@@ -96,10 +96,12 @@ export class ChatsPage {
           body: this.message,
           created_at: new Date(),
           user: {
+            id: this.api.user.id,
             name: this.api.user.name,
             image_url: this.api.user.image_url,
             residence: {
-              name: this.api.residence.name
+              name: this.api.residence.name,
+              id: this.api.residence.id
             }
           }
         };

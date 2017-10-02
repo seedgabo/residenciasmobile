@@ -43,7 +43,6 @@ export class MyApp {
         console.log(this.api.user);
         if (this.api.user) {
           this.rootPage = HomePage;
-          // this.rootPage = ReservationsPage;
           this.api.getAllData();
           this.api.getLang();
           this.registerDeepLinks();
@@ -62,7 +61,7 @@ export class MyApp {
 
     // used for an example of ngFor and navigation
     this.pages = [
-      { title: "home", component: HomePage, icon: 'home' },
+      // { title: "home", component: HomePage, icon: 'home' },
       { title: "profile", component: ProfilePage, icon: 'person' },
       { title: "posts", component: PostsPage, icon: 'paper' },
       { title: "visitors", component: VisitTabsPage, icon: 'contacts', siteHas: 'visits' },
@@ -86,8 +85,10 @@ export class MyApp {
       this.platform.registerBackButtonAction(() => {
         if (this.nav.canGoBack())
           return this.nav.pop();
-        this.minimize.minimize();
-        console.log("minimize");
+        else {
+          this.minimize.minimize();
+          console.log("minimize");
+        }
       });
 
       this.backgroundmode.enable();
@@ -112,7 +113,12 @@ export class MyApp {
   }
 
   openPage(page) {
-    this.nav.setRoot(page.component);
+    // this.nav.setRoot(page.component);
+    this.nav.push(page.component);
+  }
+
+  backToHome() {
+    this.nav.setRoot(HomePage);
   }
 
   registerDeepLinks() {
@@ -120,6 +126,7 @@ export class MyApp {
       '/visit/:visitId': VisitTabsPage,
       '/visitor/:visitorId': VisitTabsPage,
       '/surveys': SurveyPage,
+      '/chat:chatId': ChatsPage,
     }).subscribe((match) => {
       console.log('Successfully routed', match);
       var args = {};
@@ -138,6 +145,9 @@ export class MyApp {
       if (match.$link.url.indexOf("residenciasOnline://app/surveys") > -1) {
         this.nav.setRoot(SurveyPage, args);
       }
+      if (match.$link.url.indexOf("residenciasOnline://app/chat") > -1) {
+        this.nav.push(ChatsPage, args);
+      }
     }, (nomatch) => {
       this.nav.setRoot(HomePage);
       console.warn('Unmatched Route', nomatch);
@@ -145,16 +155,17 @@ export class MyApp {
   }
 
   logout() {
-    this.api.stopEcho();
-    this.api.username = ""
-    this.api.url = ""
-    this.api.user = null;
-    this.api.password = ""
-    this.api.residence = null;
-    this.api.onesignal.setSubscription(false);
-    this.api.clearSharedPreferences();
     this.api.storage.clear().then(() => {
-      this.nav.setRoot(Login);
+      this.nav.setRoot(Login).then(() => {
+        this.api.stopEcho();
+        this.api.username = ""
+        this.api.url = ""
+        this.api.user = null;
+        this.api.password = ""
+        this.api.residence = null;
+        this.api.onesignal.setSubscription(false);
+        this.api.clearSharedPreferences();
+      });
     });
   }
 
