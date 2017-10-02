@@ -38,25 +38,17 @@
                   <ion-icon item-left name="log-out"></ion-icon>
                   Cerrar Sesión
                 </button>
-        <<<<<<< HEAD </ion-list>
-          <ion-list *ngIf="see_residences">
-            <ion-list-header>
-              {{api.trans('literals.my')}} {{api.trans('literals.residences')}}
-            </ion-list-header>
-            <button [disabled]="res.id == api.residence.id" menuClose ion-item (click)="changeResidence(res)" *ngFor="let res of api.user.residences"
-              icon-left>
-=======
-            </ion-list>
-            <ion-list *ngIf="see_residences">
-                <ion-list-header>
-                    {{api.trans('literals.my')}} {{api.trans('literals.residences')}}
-                </ion-list-header>
-                <button [disabled]="api.residence && res.id == api.residence.id" menuClose ion-item (click)="changeResidence(res)" *ngFor="let res of api.user.residences" icon-left>
->>>>>>> c74af92301afb86e5f1e52f23cb315651fb22890
+      </ion-list>
+      <ion-list *ngIf="see_residences">
+        <ion-list-header>
+          {{api.trans('literals.my')}} {{api.trans('literals.residences')}}
+        </ion-list-header>
+        <button [disabled]="res.id == api.residence.id" menuClose ion-item (click)="changeResidence(res)" *ngFor="let res of api.user.residences"
+          icon-left>
                   <ion-icon name="home" [color]="res.status == 'solvent'? 'secondary':'danger'"></ion-icon>
                   {{res.name}}
                 </button>
-          </ion-list>
+      </ion-list>
     </ion-content>
   </ion-menu>
 
