@@ -47,7 +47,7 @@
   </ion-card>
   <div style="height:100px"></div>
   <ion-fab bottom right>
-    <button ion-fab (click)="createPost()">
+    <button ion-fab (click)="createPost()" *ngIf="api.settings && api.settings.users_can_create_posts">
         <ion-icon name="add"></ion-icon>
       </button>
   </ion-fab>
