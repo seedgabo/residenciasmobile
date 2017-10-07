@@ -25,10 +25,9 @@ import { File } from '@ionic-native/file';
 import { FileOpener } from "@ionic-native/file-opener";
 import { Transfer } from "@ionic-native/transfer";
 import { Deeplinks } from "@ionic-native/deeplinks";
-import { DatePickerModule } from 'datepicker-ionic2';
 import { PipesModule } from '../pipes/pipes.module';
 
-
+import { DatePickerModule } from 'datepicker-ionic2';
 
 
 @NgModule({
@@ -38,10 +37,9 @@ import { PipesModule } from '../pipes/pipes.module';
   imports: [
     BrowserModule,
     HttpModule,
-    MomentModule,
-    DatePickerModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot(),
+    DatePickerModule,
     PipesModule
   ],
   bootstrap: [IonicApp],

@@ -6,7 +6,6 @@ import { NavController, IonicPage } from 'ionic-angular';
   selector: 'page-visit-tabs',
   templateUrl: 'visit-tabs.html'
 })
-// @IonicPage()
 export class VisitTabsPage {
 
   visitorsRoot = 'VisitorsPage'

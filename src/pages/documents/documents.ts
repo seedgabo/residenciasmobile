@@ -5,7 +5,7 @@ import { Api } from "../../providers/api";
 import { Transfer, TransferObject } from "@ionic-native/transfer";
 import { File } from "@ionic-native/file";
 import { FileOpener } from "@ionic-native/file-opener";
-import {IonicPage} from "ionic-angular";
+import { IonicPage } from "ionic-angular";
 
 @IonicPage()
 @Component({
@@ -61,26 +61,27 @@ export class DocumentsPage {
   }
 
   _openFile(url, type = "pdf") {
+    var mime;
     if (type === 'pdf' || type === 'dynamic') {
-      var mime = 'application/pdf'
+      mime = 'application/pdf'
     }
     else if (type === 'jpg') {
-      var mime = 'image/jpeg'
+      mime = 'image/jpeg'
     }
     else if (type === 'png') {
-      var mime = 'image/png'
+      mime = 'image/png'
     }
     else if (type === 'xls' || type === 'xlsx') {
-      var mime = 'application/vnd.ms-excel';
+      mime = 'application/vnd.ms-excel';
     }
     else if (type === 'doc' || type === 'docx') {
-      var mime = 'application/msword';
+      mime = 'application/msword';
     }
     else if (type === 'ppt' || type === 'pptx') {
-      var mime = 'vnd.ms-powerpoint';
+      mime = 'vnd.ms-powerpoint';
     }
     else {
-      var mime = "";
+      mime = "";
     }
     this.fileOpener.open(url, mime)
       .then(() => console.log('File is opened'))
