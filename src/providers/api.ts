@@ -1,13 +1,8 @@
 import { Injectable, NgZone } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
-
 import { PopoverController, ToastController, Events, Platform } from "ionic-angular";
 import { Storage } from '@ionic/storage';
-
-
-
-
 import { BackgroundMode } from "@ionic-native/background-mode";
 import { OneSignal } from "@ionic-native/onesignal";
 import { Device } from "@ionic-native/device";
