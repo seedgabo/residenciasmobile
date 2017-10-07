@@ -5,7 +5,7 @@ import 'rxjs/add/operator/map';
 import { PopoverController, ToastController, Events, Platform } from "ionic-angular";
 import { Storage } from '@ionic/storage';
 
-import { NewVisitPage } from "../pages/new-visit/new-visit";
+
 
 
 import { BackgroundMode } from "@ionic-native/background-mode";
@@ -647,7 +647,7 @@ export class Api {
   newVisit(visit) {
     this.playSoundNotfication();
     this.moveToFront();
-    this.popover.create(NewVisitPage, { visit: visit, api: this }, { cssClass: "fullScreen", enableBackdropDismiss: false, showBackdrop: true }).present();
+    this.popover.create('NewVisitPage', { visit: visit, api: this }, { cssClass: "fullScreen", enableBackdropDismiss: false, showBackdrop: true }).present();
   }
 
   visitStatus(visit) {

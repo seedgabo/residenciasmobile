@@ -2,7 +2,10 @@ import { ToastController, ActionSheetController } from 'ionic-angular';
 import { Api } from './../../providers/api';
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { PetsEditorPage } from "../pet-editor/pet-editor";
+
+import {IonicPage} from "ionic-angular";
+
+@IonicPage()
 @Component({
   selector: 'page-pets',
   templateUrl: 'pets.html',
@@ -37,11 +40,11 @@ export class PetsPage {
   }
 
   addpet() {
-    this.navCtrl.push(PetsEditorPage);
+    this.navCtrl.push('PetsEditorPage');
   }
 
   updatepet(pet) {
-    this.navCtrl.push(PetsEditorPage, { pet: pet });
+    this.navCtrl.push('PetsEditorPage', { pet: pet });
   }
 
   delete(pet) {

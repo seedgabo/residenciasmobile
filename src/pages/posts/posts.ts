@@ -1,8 +1,11 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { Api } from "../../providers/api";
-import { AddPostPage } from "../add-post/add-post";
 
+
+import {IonicPage} from "ionic-angular";
+
+@IonicPage()
 @Component({
   selector: 'page-posts',
   templateUrl: 'posts.html',
@@ -32,7 +35,7 @@ export class PostsPage {
   }
 
   createPost() {
-    this.navCtrl.push(AddPostPage);
+    this.navCtrl.push('AddPostPage');
   }
 
   deletePost(post, index) {

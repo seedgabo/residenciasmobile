@@ -1,10 +1,13 @@
-import { ZoneReservationPage } from './../zone-reservation/zone-reservation';
+
 import { Component, ViewChild } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { Api } from "../../providers/api";
 import { DatePickerDirective } from 'datepicker-ionic2';
 import moment from 'moment'
 
+import {IonicPage} from "ionic-angular";
+
+@IonicPage()
 @Component({
   selector: 'page-reservations',
   templateUrl: 'reservations.html',
@@ -69,7 +72,7 @@ export class ReservationsPage {
 
   setDate(ev, zone) {
     var date = moment.utc(ev)
-    this.navCtrl.push(ZoneReservationPage, { zone: zone, date: date }, { animation: 'ios-transition' })
+    this.navCtrl.push('ZoneReservationPage', { zone: zone, date: date }, { animation: 'ios-transition' })
   }
 
 
