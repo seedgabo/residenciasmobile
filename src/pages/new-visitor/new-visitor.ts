@@ -1,14 +1,8 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ViewController } from 'ionic-angular';
+import { NavController, NavParams, ViewController, IonicPage } from 'ionic-angular';
 import { Api } from "../../providers/api";
 
-/**
- * Generated class for the NewVisitorPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
-//@IonicPage()
+@IonicPage()
 @Component({
   selector: 'page-new-visitor',
   templateUrl: 'new-visitor.html',

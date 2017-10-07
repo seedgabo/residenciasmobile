@@ -1,6 +1,3 @@
-
-
-
 import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform, Events } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -8,23 +5,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { CodePush } from "@ionic-native/code-push";
 import { BackgroundMode } from '@ionic-native/background-mode';
 import { Deeplinks } from "@ionic-native/deeplinks";
-
-
-
-
-
 import { Api } from "../providers/api";
 import { AppMinimize } from "@ionic-native/app-minimize";
-
-
-
-
-
-
-
-
-
-
 @Component({
   templateUrl: 'app.html'
 })
@@ -34,7 +16,7 @@ export class MyApp {
   rootPage: any;
   see_residences = false
   pages: Array<any>;
-  'VisitTabsPage' = 'VisitTabsPage';
+  VisitTabsPage = 'VisitTabsPage';
   disabled_panic = false;
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public codepush: CodePush, public backgroundmode: BackgroundMode, public api: Api, public minimize: AppMinimize, public deeplinks: Deeplinks, public events: Events) {
     this.platform.ready().then(() => {

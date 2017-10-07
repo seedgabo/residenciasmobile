@@ -25,7 +25,6 @@ import { File } from '@ionic-native/file';
 import { FileOpener } from "@ionic-native/file-opener";
 import { Transfer } from "@ionic-native/transfer";
 import { Deeplinks } from "@ionic-native/deeplinks";
-import { AutoCompleteModule } from 'ionic2-auto-complete';
 import { DatePickerModule } from 'datepicker-ionic2';
 import { PipesModule } from '../pipes/pipes.module';
 
@@ -39,7 +38,6 @@ import { PipesModule } from '../pipes/pipes.module';
   imports: [
     BrowserModule,
     HttpModule,
-    AutoCompleteModule,
     MomentModule,
     DatePickerModule,
     IonicModule.forRoot(MyApp),

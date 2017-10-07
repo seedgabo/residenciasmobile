@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ModalController, ActionSheetController, ToastController } from 'ionic-angular';
+import { NavController, NavParams, ModalController, ActionSheetController, ToastController, IonicPage } from 'ionic-angular';
 import { Api } from "../../providers/api";
 
 
-// @IonicPage()
+@IonicPage()
 @Component({
   selector: 'page-visitors',
   templateUrl: 'visitors.html',
