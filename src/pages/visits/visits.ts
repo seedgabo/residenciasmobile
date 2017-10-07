@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, IonicPage } from 'ionic-angular';
 import { Api } from "../../providers/api";
-import { VisitPage } from "../visit/visit";
-// @IonicPage()
+
+@IonicPage()
 @Component({
   selector: 'page-visits',
   templateUrl: 'visits.html',
@@ -20,7 +20,7 @@ export class VisitsPage {
   }
 
   viewVisit(visit) {
-    this.navCtrl.push(VisitPage, { visit: visit });
+    this.navCtrl.push('VisitPage', { visit: visit });
   }
 
   getVisits(loading = null) {

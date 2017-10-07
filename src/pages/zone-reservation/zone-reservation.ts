@@ -2,6 +2,9 @@ import { Api } from './../../providers/api';
 import { Component } from '@angular/core';
 import { NavController, NavParams, AlertController } from 'ionic-angular';
 import moment from 'moment';
+import {IonicPage} from "ionic-angular";
+
+@IonicPage()
 @Component({
   selector: 'page-zone-reservation',
   templateUrl: 'zone-reservation.html',

@@ -1,6 +1,9 @@
 import { Api } from './../../providers/api';
 import { NavController, NavParams } from 'ionic-angular';
 import { Component } from '@angular/core';
+import {IonicPage} from "ionic-angular";
+
+@IonicPage()
 @Component({
     selector: 'page-vehicle-editor',
     templateUrl: 'vehicle-editor.html',

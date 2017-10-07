@@ -23,9 +23,6 @@
         "@angular/http": "4.4.3",
         "@angular/platform-browser": "4.4.3",
         "@angular/platform-browser-dynamic": "4.4.3",
-        "ionic-angular": "3.7.0",
-        "rxjs": "5.4.3",
-        "zone.js": "0.8.17",
         "@ionic-native/app-minimize": "^3.10.3",
         "@ionic-native/background-mode": "^3.10.3",
         "@ionic-native/camera": "^3.10.3",
@@ -74,7 +71,9 @@
         "datepicker-ionic2": "^2.5.1",
         "de.appplant.cordova.plugin.local-notification": "^0.8.5",
         "es6-promise-plugin": "^4.1.0",
+        "font-awesome": "^4.7.0",
         "fullcalendar": "^3.4.0",
+        "ionic-angular": "3.7.0",
         "ionic-plugin-deeplinks": "^1.0.15",
         "ionic-plugin-keyboard": "^2.2.1",
         "ionic2-auto-complete": "^1.5.0-beta",
@@ -84,7 +83,9 @@
         "moment-weekdaysin": "^1.0.1",
         "onesignal-cordova-plugin": "^2.1.2",
         "pusher-js": "^4.1.0",
-        "sw-toolbox": "3.6.0"
+        "rxjs": "5.4.3",
+        "sw-toolbox": "3.6.0",
+        "zone.js": "0.8.17"
     },
     "devDependencies": {
         "@ionic/app-scripts": "3.0.0",

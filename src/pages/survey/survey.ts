@@ -4,6 +4,9 @@ import { NavController, NavParams, AlertController } from 'ionic-angular';
 import { Api } from "../../providers/api";
 import Chart from 'chart.js';
 var funct
+import {IonicPage} from "ionic-angular";
+
+@IonicPage()
 @Component({
   selector: 'page-survey',
   templateUrl: 'survey.html',

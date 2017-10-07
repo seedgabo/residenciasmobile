@@ -1,13 +1,8 @@
 import { Injectable, NgZone } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
-
 import { PopoverController, ToastController, Events, Platform } from "ionic-angular";
 import { Storage } from '@ionic/storage';
-
-import { NewVisitPage } from "../pages/new-visit/new-visit";
-
-
 import { BackgroundMode } from "@ionic-native/background-mode";
 import { OneSignal } from "@ionic-native/onesignal";
 import { Device } from "@ionic-native/device";
@@ -304,10 +299,11 @@ export class Api {
             return visitor.id === data.visitor.id;
           });
           this.zone.run(() => {
+            var visitor;
             if (visitor_index > -1)
-              var visitor = this.visitors[visitor_index] = data.visitor;
+              visitor = this.visitors[visitor_index] = data.visitor;
             else {
-              var visitor = this.visitors[this.visitors.length] = data.visitor;
+              visitor = this.visitors[this.visitors.length] = data.visitor;
             }
             if (data.image) {
               visitor.image = data.image;
@@ -351,15 +347,16 @@ export class Api {
             return visit.id === data.visit.id;
           });
           this.zone.run(() => {
+            var visit;
             if (visit_index > -1) {
-              var visit = this.visits[visit_index] = data.visit;
+              visit = this.visits[visit_index] = data.visit;
               if (this.visits[visit_index].status !== data.visit.status) {
                 this.visitStatus(visit);
               }
             }
             else {
               this.visits.unshift(data.visit);
-              var visit = this.visits[0];
+              visit = this.visits[0];
               this.visitStatus(visit);
             }
 
@@ -395,10 +392,11 @@ export class Api {
             return pet.id === data.pet.id;
           });
           this.zone.run(() => {
+            var pet;
             if (pet_index > -1)
-              var pet = this.pets[pet_index] = data.pet;
+              pet = this.pets[pet_index] = data.pet;
             else {
-              var pet = this.pets[this.pets.length] = data.pet;
+              pet = this.pets[this.pets.length] = data.pet;
             }
             if (data.image) {
               pet.image = data.image;
@@ -433,10 +431,11 @@ export class Api {
             return worker.id === data.worker.id;
           });
           this.zone.run(() => {
+            var worker;
             if (worker_index > -1)
-              var worker = this.workers[worker_index] = data.worker;
+              worker = this.workers[worker_index] = data.worker;
             else {
-              var worker = this.workers[this.workers.length] = data.worker;
+              worker = this.workers[this.workers.length] = data.worker;
             }
             if (data.image) {
               worker.image = data.image;
@@ -594,18 +593,19 @@ export class Api {
   trans(value, args = null) {
     if (!this.langs) return value;
     var splits = value.split('.');
+    var base, trans;
     if (splits.length == 2) {
-      var base = this.langs[splits[0]];
+      base = this.langs[splits[0]];
       if (base) {
-        var trans = base[splits[1]];
+        trans = base[splits[1]];
         if (trans) {
           value = trans;
         }
       }
     } else {
-      var base = this.langs["__"];
+      base = this.langs["__"];
       if (base) {
-        var trans = base[value];
+        trans = base[value];
         if (trans) {
           value = trans;
         }
@@ -647,7 +647,7 @@ export class Api {
   newVisit(visit) {
     this.playSoundNotfication();
     this.moveToFront();
-    this.popover.create(NewVisitPage, { visit: visit, api: this }, { cssClass: "fullScreen", enableBackdropDismiss: false, showBackdrop: true }).present();
+    this.popover.create('NewVisitPage', { visit: visit, api: this }, { cssClass: "fullScreen", enableBackdropDismiss: false, showBackdrop: true }).present();
   }
 
   visitStatus(visit) {
