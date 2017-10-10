@@ -2,8 +2,8 @@
 
   <ion-navbar color="primary">
     <button ion-button menuToggle>
-       <ion-icon name="menu"></ion-icon>
-     </button>
+      <ion-icon name="menu"></ion-icon>
+    </button>
     <ion-title>{{'literals.posts' | trans }}</ion-title>
   </ion-navbar>
 
@@ -15,8 +15,8 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
   <ion-card *ngFor="let post of posts; let i=index">
-    <ion-card-header color="primary">
-      {{post.title}}
+    <ion-card-header>
+      <h3> {{post.title}} </h3>
     </ion-card-header>
     <ion-card-content>
       <div text-center *ngIf="post.image">
@@ -40,7 +40,7 @@
           {{post.created_at | amCalendar}}
         </small>
         <button *ngIf="api.user.id == post.user_id" (click)="deletePost(post,i)" ion-button icon-only clear color="danger">
-            <ion-icon name="trash"></ion-icon>
+          <ion-icon name="trash"></ion-icon>
         </button>
       </ion-item>
     </ion-card-content>
@@ -48,7 +48,7 @@
   <div style="height:100px"></div>
   <ion-fab bottom right>
     <button ion-fab (click)="createPost()" *ngIf="api.settings && api.settings.users_can_create_posts">
-        <ion-icon name="add"></ion-icon>
-      </button>
+      <ion-icon name="add"></ion-icon>
+    </button>
   </ion-fab>
 </ion-content>
