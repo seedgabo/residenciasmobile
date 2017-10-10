@@ -10,6 +10,9 @@
   <h4 text-center *ngIf="visit.visitor">
     {{ visit.visitor.name }}
   </h4>
+  <h4 text-center *ngIf="visit.creator">
+    <b>{{'literals.creator' | trans }}:</b> {{ visit.creator.name }}
+  </h4>
   <ion-list *ngIf="visit.visitors && visit.visitors.length > 1">
     <ion-item *ngFor="let person of visit.visitors">
       <ion-avatar item-left>
@@ -20,8 +23,12 @@
   </ion-list>
   <ion-grid>
     <ion-row>
-      <ion-col><button (click)="confirm()" ion-button full color="secondary">{{'literals.confirm' | trans}}</button></ion-col>
-      <ion-col><button (click)="reject()" ion-button full color="danger">{{'literals.reject' | trans }}</button></ion-col>
+      <ion-col>
+        <button (click)="confirm()" ion-button full color="secondary">{{'literals.confirm' | trans}}</button>
+      </ion-col>
+      <ion-col>
+        <button (click)="reject()" ion-button full color="danger">{{'literals.reject' | trans }}</button>
+      </ion-col>
     </ion-row>
   </ion-grid>
 </ion-content>

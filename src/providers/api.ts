@@ -333,6 +333,7 @@ export class Api {
             var visit = this.visits[0];
             visit.visitor = data.visitor;
             visit.visitors = data.visitors;
+            visit.creator = data.creator;
             this.visitStatus(visit);
           })
         })
@@ -509,8 +510,9 @@ export class Api {
       this.Echo.private('App.Residence.' + this.user.residence_id)
         .listen('VisitConfirm', (data) => {
           console.log("VisitConfirm: ", data);
-          data.visit.visitor = data.visit.visitor;
-          data.visit.visitors = data.visit.visitors;
+          data.visit.visitor = data.visitor;
+          data.visit.visitors = data.visitors;
+          data.visit.creator = data.creator;
           this.background.unlock();
           this.background.wakeUp();
           this.background.moveToForeground();

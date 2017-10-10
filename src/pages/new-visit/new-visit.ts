@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, ViewController, Events } from 'ionic-angular';
 
-import {IonicPage} from "ionic-angular";
+import { IonicPage } from "ionic-angular";
 
 @IonicPage()
 @Component({
@@ -24,8 +24,10 @@ export class NewVisitPage {
       }
     };
   }
+
+
   getVisit() {
-    this.api.get(`visits/${this.visit.id}?with[]=visitor&with[]=vehicle&with[]=visitors&with[]=user`)
+    this.api.get(`visits/${this.visit.id}?with[]=visitor&with[]=vehicle&with[]=visitors&with[]=user&with[]=creator`)
       .then((data) => {
         this.visit = data;
         console.log(this.visit);
@@ -33,11 +35,9 @@ export class NewVisitPage {
       .catch(console.error)
   }
 
-
   ionViewDidLoad() {
     this.events.subscribe('VisitUpdated', this.dismissforUpdate);
   }
-
 
   dismiss() {
     this.events.unsubscribe('VisitUpdated', this.dismissforUpdate);
