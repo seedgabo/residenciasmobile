@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ModalController, ActionSheetController, ToastController } from 'ionic-angular';
+import { NavController, NavParams, ModalController, ActionSheetController, ToastController, IonicPage } from 'ionic-angular';
 import { Api } from "../../providers/api";
-import { NewVisitorPage } from "../new-visitor/new-visitor";
-import { CreateVisitPage } from "../create-visit/create-visit";
-// @IonicPage()
+
+
+@IonicPage()
 @Component({
   selector: 'page-visitors',
   templateUrl: 'visitors.html',
@@ -28,11 +28,11 @@ export class VisitorsPage {
   }
 
   addVisitor() {
-    this.modal.create(NewVisitorPage, {}, { showBackdrop: true, enableBackdropDismiss: true }).present();
+    this.modal.create('NewVisitorPage', {}, { showBackdrop: true, enableBackdropDismiss: true }).present();
   }
 
   updateVisitor(visitor) {
-    this.modal.create(NewVisitorPage, { visitor: visitor }, { showBackdrop: true, enableBackdropDismiss: true }).present();
+    this.modal.create('NewVisitorPage', { visitor: visitor }, { showBackdrop: true, enableBackdropDismiss: true }).present();
   }
 
   filter() {
@@ -56,7 +56,7 @@ export class VisitorsPage {
   }
 
   addVisit(visitor) {
-    var modal = this.modal.create(CreateVisitPage, { visitor: visitor }, { showBackdrop: true, enableBackdropDismiss: true })
+    var modal = this.modal.create('CreateVisitPage', { visitor: visitor }, { showBackdrop: true, enableBackdropDismiss: true })
     modal.present();
     modal.onDidDismiss(() => {
       this.ionViewDidEnter();

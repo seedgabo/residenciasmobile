@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { Api } from "../../providers/api";
+import {IonicPage} from "ionic-angular";
+
+@IonicPage()
 @Component({
   selector: 'page-visit',
   templateUrl: 'visit.html',

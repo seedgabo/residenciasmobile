@@ -45,7 +45,7 @@
 }
 
 .user-info {
-    background-image: url('../assets/background-user.jpg');
+    background-image: url('../assets/background-user.png');
     background-size: cover; // height: 100px;
     text-align: center;
     height: 150px;
@@ -155,4 +155,8 @@ ion-toast {
     to {
         box-shadow: 0 0 0 45px rgba(232, 76, 61, 0);
     }
+}
+
+.toolbar-title {
+    color: color($colors, 'favorite');
 }

@@ -2,7 +2,10 @@ import { ToastController, ActionSheetController } from 'ionic-angular';
 import { Api } from './../../providers/api';
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { VehiclesEditorPage } from "../vehicle-editor/vehicle-editor";
+
+import {IonicPage} from "ionic-angular";
+
+@IonicPage()
 @Component({
   selector: 'page-vehicles',
   templateUrl: 'vehicles.html',
@@ -35,11 +38,11 @@ export class VehiclesPage {
   }
 
   addVehicle() {
-    this.navCtrl.push(VehiclesEditorPage);
+    this.navCtrl.push('VehiclesEditorPage');
   }
 
   updateVehicle(vehicle) {
-    this.navCtrl.push(VehiclesEditorPage, { vehicle: vehicle });
+    this.navCtrl.push('VehiclesEditorPage', { vehicle: vehicle });
   }
 
   delete(vehicle) {

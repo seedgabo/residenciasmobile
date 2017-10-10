@@ -2,6 +2,9 @@ import { Component, ViewChild } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { Api } from "../../providers/api";
 
+import {IonicPage} from "ionic-angular";
+
+@IonicPage()
 @Component({
   selector: 'page-add-post',
   templateUrl: 'add-post.html',

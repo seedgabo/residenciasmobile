@@ -1,9 +1,12 @@
 import { Api } from './../../providers/api';
 import { Component, ViewChild, ElementRef, NgZone } from '@angular/core';
 import { NavController, NavParams, Events, MenuController, Content, ModalController } from 'ionic-angular';
-import { AddChatPage } from '../add-chat/add-chat';
+
 import $ from 'jquery';
 var func;
+import {IonicPage} from "ionic-angular";
+
+@IonicPage()
 @Component({
   selector: 'page-chats',
   templateUrl: 'chats.html',
@@ -113,7 +116,7 @@ export class ChatsPage {
   }
 
   addChat(residence) {
-    var modal = this.modal.create(AddChatPage, { residences: this.residences });
+    var modal = this.modal.create('AddChatPage', { residences: this.residences });
     modal.onWillDismiss((thread) => {
       this.getData();
       this.selectChat(thread);

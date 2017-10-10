@@ -2,7 +2,10 @@ import { ToastController, ActionSheetController } from 'ionic-angular';
 import { Api } from './../../providers/api';
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { WorkersEditorPage } from "../worker-editor/worker-editor";
+
+import {IonicPage} from "ionic-angular";
+
+@IonicPage()
 @Component({
   selector: 'page-workers',
   templateUrl: 'workers.html',
@@ -35,11 +38,11 @@ export class WorkersPage {
   }
 
   addworker() {
-    this.navCtrl.push(WorkersEditorPage);
+    this.navCtrl.push('WorkersEditorPage');
   }
 
   updateworker(worker) {
-    this.navCtrl.push(WorkersEditorPage, { worker: worker });
+    this.navCtrl.push('WorkersEditorPage', { worker: worker });
   }
 
   delete(worker) {

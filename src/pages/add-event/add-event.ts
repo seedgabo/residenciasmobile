@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { Api } from "../../providers/api";
 declare var moment: any;
+import {IonicPage} from "ionic-angular";
+
+@IonicPage()
 @Component({
   selector: 'page-add-event',
   templateUrl: 'add-event.html',

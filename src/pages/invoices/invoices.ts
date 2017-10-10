@@ -1,11 +1,14 @@
-import { PaymentReportPage } from './../payment-report/payment-report';
+
 import { Component } from '@angular/core';
 import { NavController, NavParams, ActionSheetController, PopoverController } from 'ionic-angular';
 import { Api } from "../../providers/api";
 import { Transfer, TransferObject } from "@ionic-native/transfer";
 import { File } from '@ionic-native/file';
 import { FileOpener } from "@ionic-native/file-opener";
-import { InvoicePage } from "../invoice/invoice";
+
+import {IonicPage} from "ionic-angular";
+
+@IonicPage()
 @Component({
   selector: 'page-invoices',
   templateUrl: 'invoices.html',
@@ -80,10 +83,10 @@ export class InvoicesPage {
   }
 
   viewInvoice(invoice) {
-    this.navCtrl.push(InvoicePage, { invoice: invoice });
+    this.navCtrl.push('InvoicePage', { invoice: invoice });
   }
   reportPayment(invoice) {
-    var popover = this.popover.create(PaymentReportPage, { invoice: invoice });
+    var popover = this.popover.create('PaymentReportPage', { invoice: invoice });
     popover.present();
     popover.onWillDismiss(() => { this.getInvoices() });
   }

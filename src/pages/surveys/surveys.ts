@@ -2,8 +2,11 @@ import { Events } from 'ionic-angular';
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { Api } from "../../providers/api";
-import { SurveyPage } from "../survey/survey";
+
 var func
+import {IonicPage} from "ionic-angular";
+
+@IonicPage()
 @Component({
   selector: 'page-surveys',
   templateUrl: 'surveys.html',
@@ -50,7 +53,7 @@ export class SurveysPage {
   }
 
   gotoSurvey(survey) {
-    this.navCtrl.push(SurveyPage, { survey: survey });
+    this.navCtrl.push('SurveyPage', { survey: survey });
   }
 
 }

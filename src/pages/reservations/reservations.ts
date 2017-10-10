@@ -1,10 +1,13 @@
-import { ZoneReservationPage } from './../zone-reservation/zone-reservation';
+
 import { Component, ViewChild } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { Api } from "../../providers/api";
 import { DatePickerDirective } from 'datepicker-ionic2';
+import { IonicPage } from "ionic-angular";
 import moment from 'moment'
 
+
+@IonicPage()
 @Component({
   selector: 'page-reservations',
   templateUrl: 'reservations.html',
@@ -69,7 +72,7 @@ export class ReservationsPage {
 
   setDate(ev, zone) {
     var date = moment.utc(ev)
-    this.navCtrl.push(ZoneReservationPage, { zone: zone, date: date }, { animation: 'ios-transition' })
+    this.navCtrl.push('ZoneReservationPage', { zone: zone, date: date }, { animation: 'ios-transition' })
   }
 
 
@@ -103,13 +106,13 @@ export class ReservationsPage {
   }
 
   arr_diff(a1, a2) {
-    var a = [], diff = [];
+    var a = [], diff = [], i = 0;
 
-    for (var i = 0; i < a1.length; i++) {
+    for (i = 0; i < a1.length; i++) {
       a[a1[i]] = true;
     }
 
-    for (var i = 0; i < a2.length; i++) {
+    for (i = 0; i < a2.length; i++) {
       if (a[a2[i]]) {
         delete a[a2[i]];
       } else {
