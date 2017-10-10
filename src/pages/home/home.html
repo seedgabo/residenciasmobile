@@ -3,11 +3,15 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Home</ion-title>
+    <ion-title>
+      <img src="./assets/logo-completo.png" style="height:50px" *ngIf="!api.url">
+      <img [src]="api.url + 'img/logo.png'" style="height:50px" *ngIf="api.url">
+    </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
+
   <div *ngIf="sliders && sliders.length > 0">
     <ion-slides style="height:200px" pager paginationType="bullets" autoplay="3000" loop="true">
       <ion-slide *ngFor="let slider of sliders">
@@ -61,6 +65,7 @@
       </ion-item>
     </ion-list>
   </ion-card>
+
   <ion-list *ngIf="news && news.length > 0">
     <ion-item *ngFor="let new of news">
       <ion-avatar *ngIf="new.image" item-left>
@@ -83,4 +88,5 @@
       {{'literals.view_resource' | trans }} {{'literals.more' | trans }}
     </button>
   </ion-list>
+
 </ion-content>
