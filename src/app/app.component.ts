@@ -145,7 +145,7 @@ export class MyApp {
         this.api.user = null;
         this.api.password = ""
         this.api.residence = null;
-        this.api.onesignal.setSubscription(false);
+        this.api.pushUnregister();
         this.api.clearSharedPreferences();
       });
     });
