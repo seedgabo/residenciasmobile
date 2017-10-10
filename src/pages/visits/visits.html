@@ -1,17 +1,17 @@
 <ion-header>
-  <ion-navbar color="primary">
-    <button ion-button icon-only menuToggle>
+    <ion-navbar xcolor="primary">
+        <button ion-button icon-only menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>{{ 'literals.visits' | trans }}</ion-title>
-  </ion-navbar>
+        <ion-title>{{ 'literals.visits' | trans }}</ion-title>
+    </ion-navbar>
 </ion-header>
 <ion-content padding>
-  <ion-refresher (ionRefresh)="getVisits($event)">>
-    <ion-refresher-content></ion-refresher-content>
-  </ion-refresher>
-  <ion-list [virtualScroll]="visits">
-    <button ion-item *virtualItem="let visit" (click)="viewVisit(visit)">
+    <ion-refresher (ionRefresh)="getVisits($event)">>
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+    <ion-list [virtualScroll]="visits">
+        <button ion-item *virtualItem="let visit" (click)="viewVisit(visit)">
       <div *ngIf="visit.visitor;else unkown">
         <h2>{{ visit.visitor.name }}
           <span *ngIf="visit.visitors && visit.visitors.length > 1">{{'__.and others' | trans }} {{visit.visitors.length - 1}}</span>
@@ -32,8 +32,8 @@
           </small>
         </span>
     </button>
-  </ion-list>
-  <!-- <ion-infinite-scroll (ionInfinite)="loadMoreVisits($event)" [enabled]="visits.length!=0 && enable_loader">
+    </ion-list>
+    <!-- <ion-infinite-scroll (ionInfinite)="loadMoreVisits($event)" [enabled]="visits.length!=0 && enable_loader">
     <ion-infinite-scroll-content></ion-infinite-scroll-content>
   </ion-infinite-scroll> -->
 </ion-content>
