@@ -9,10 +9,10 @@
     <ion-list>
         <input type="file" accept="image/*" style="display:none;" id="input-file-pet" (change)="readFile($event)">
         <button ion-item *ngFor="let pet of pets" (click)="actions(pet)">
-      <ion-avatar item-left (click)="askFile(pet);$event.stopPropagation()">
+      <ion-thumbnail item-left (click)="askFile(pet);$event.stopPropagation()">
         <img *ngIf="pet.image_url"  [src]="pet.image_url" [alt]="pet.name">
         <ion-icon name="camera"  *ngIf="!pet.image_url"></ion-icon>
-      </ion-avatar>
+      </ion-thumbnail>
         <h2>
           {{pet.name}}
         </h2>
