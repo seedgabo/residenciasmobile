@@ -564,15 +564,22 @@ export class Api {
     this.onesignal.syncHashedEmail(this.user.email);
     this.onesignal.sendTag("user_id", this.user.id);
     this.onesignal.sendTag("residence_id", this.user.residence_id);
+    if (!this.user.onesignal_app_name) {
+      this.user.onesignal_app_name = "Residentes Online";
+    }
+    this.onesignal.sendTag("app_name", this.user.onesignal_app_name);
+
     this.onesignal.handleNotificationReceived().subscribe((not) => {
       console.log("push notification received", not);
     }, console.warn);
+
 
     this.onesignal.handleNotificationOpened().subscribe((not) => {
       console.log("push notification opened", not);
     }, console.warn);
 
     this.onesignal.endInit();
+
     this.onesignal.setSubscription(true);
     this.onesignal.getIds().then((ids: any) => {
       console.log("onesignal ids", ids)
@@ -589,6 +596,11 @@ export class Api {
         })
         .catch(console.error);
     }).catch(console.error);
+  }
+
+  pushUnregister() {
+    this.onesignal.deleteTags(['user_id', 'residence_id', 'app_name']);
+    this.onesignal.setSubscription(false);
   }
 
 
