@@ -72,6 +72,8 @@ export class NewVisitPage {
   }
 
   reject() {
+    if (!this.visit || !this.visit.id)
+      this.dismiss();
     this.api.post(`visits/${this.visit.id}/visitApprove`, { status: 'rejected' })
       .then(
       (data) => {
