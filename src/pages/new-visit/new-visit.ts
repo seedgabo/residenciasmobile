@@ -17,7 +17,16 @@ export class NewVisitPage {
     this.visit = navParams.get('visit');
     this.api = navParams.get('api');
     console.log(this.visit);
-    this.getVisit();
+    if (!this.visit) {
+      this.api.get(`visits?where[residence_id]=${this.api.user.residence_id}&limit=1&order[created_at]=desc`)
+        .then((data) => {
+          this.visit = data[0];
+          this.getVisit();
+        })
+    }
+    else {
+      this.getVisit();
+    }
     this.dismissforUpdate = (data) => {
       if (data.visit.id == this.visit.id) {
         this.dismiss();
