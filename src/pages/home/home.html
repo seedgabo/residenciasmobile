@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-navbar xcolor="primary">
+  <ion-navbar color="primary">
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
@@ -57,7 +57,7 @@
           {{'__.next events' | trans}}
         </span>
       </ion-list-header>
-      <ion-item (click)="gotoCalendar(event)" *ngFor="let event of nextEvents" class="event-list" [ngClass]="[event.type,event.privacity]">
+      <ion-item (click)="gotoCalendar(event)" *ngFor="let event of nextEvents" class="event-list" [ngClass]="[event.type,event.privacity]" [ngStyle]="{ 'border-right' : '8px solid ' + event.color }">
         <h3>{{event.title}}</h3>
         <p>
           {{event.start | amCalendar }} - {{event.end | amCalendar }}
@@ -66,27 +66,36 @@
     </ion-list>
   </ion-card>
 
-  <ion-list *ngIf="news && news.length > 0">
-    <ion-item *ngFor="let new of news">
-      <ion-avatar *ngIf="new.image" item-left>
-        <img [src]="new.image.url" alt="">
-      </ion-avatar>
-      {{new.title}}
-      <p text-right>
-        <span *ngIf="new.user">
-          {{new.user.name}}
-        </span>
-        <br>
-        <small>
-          {{new.created_at | amCalendar}}
-        </small>
-      </p>
-      <div [innerHTML]="new.text" text-justify></div>
+  <ion-card>
 
-    </ion-item>
-    <button ion-button full clear (click)="gotoNews()">
-      {{'literals.view_resource' | trans }} {{'literals.more' | trans }}
-    </button>
-  </ion-list>
+    <ion-list *ngIf="news && news.length > 0">
+      <ion-list-header text-center>
+        <span>
+          {{'literals.posts' | trans}}
+        </span>
+      </ion-list-header>
+      <ion-item *ngFor="let new of news">
+        <ion-avatar *ngIf="new.image" item-left>
+          <img [src]="new.image.url" alt="">
+        </ion-avatar>
+        {{new.title}}
+        <p text-right>
+          <span *ngIf="new.user">
+            {{new.user.name}}
+          </span>
+          <br>
+          <small>
+            {{new.created_at | amCalendar}}
+          </small>
+        </p>
+        <div [innerHTML]="new.text" text-justify></div>
+
+      </ion-item>
+      <button ion-button full clear (click)="gotoNews()">
+        {{'literals.view_resource' | trans }} {{'literals.more' | trans }}
+      </button>
+    </ion-list>
+
+  </ion-card>
 
 </ion-content>

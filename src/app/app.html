@@ -3,12 +3,12 @@
         <ion-header>
             <div class="user-info" padding>
                 <ion-fab bottom left>
-                    <button ion-fab color="danger" class="pulse" (click)="!disable_panic && panic()" *ngIf="siteHas('panic')">
+                    <button ion-fab color="danger" xclass="pulse" (click)="!disable_panic && panic()" *ngIf="siteHas('panic')">
                         <ion-icon name="help-buoy"></ion-icon>
                     </button>
                 </ion-fab>
 
-                <img *ngIf="api.user" [src]="api.user.image_url" class="avatar-user">
+                <img *ngIf="api.user" [src]="api.user.image_url" class="avatar-user" (click)="openPage({component:'ProfilePage'})" menuClose>
                 <h5 text-center *ngIf="api.user">{{api.user.name}}</h5>
                 <ion-fab bottom right style="bottom:0px;">
                     <button (click)="see_residences=!see_residences" color="light" ion-button icon-right *ngIf="api.residence" clear>{{api.residence.name}}

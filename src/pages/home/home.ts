@@ -1,6 +1,3 @@
-
-
-
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { Api } from "../../providers/api";
@@ -8,7 +5,7 @@ import { Api } from "../../providers/api";
 // import { Camera, CameraOptions } from '@ionic-native/camera';
 
 
-import {IonicPage} from "ionic-angular";
+import { IonicPage } from "ionic-angular";
 
 @IonicPage()
 @Component({

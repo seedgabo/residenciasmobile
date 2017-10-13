@@ -31,7 +31,6 @@ export class MyApp {
         } else {
           this.rootPage = 'Login';
         }
-
       });
       events.subscribe('login', () => {
         this.registerDeepLinks();

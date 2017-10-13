@@ -6,7 +6,7 @@ import { Transfer, TransferObject } from "@ionic-native/transfer";
 import { File } from '@ionic-native/file';
 import { FileOpener } from "@ionic-native/file-opener";
 
-import {IonicPage} from "ionic-angular";
+import { IonicPage } from "ionic-angular";
 
 @IonicPage()
 @Component({
@@ -14,7 +14,9 @@ import {IonicPage} from "ionic-angular";
   templateUrl: 'invoices.html',
 })
 export class InvoicesPage {
-
+  types = 'all'
+  toShow = [];
+  view = 'grid'
   constructor(public navCtrl: NavController, public navParams: NavParams, public api: Api, public transfer: Transfer, public file: File, public fileOpener: FileOpener, public actionsheet: ActionSheetController, public popover: PopoverController) {
   }
 
@@ -27,6 +29,7 @@ export class InvoicesPage {
       .then((data: any) => {
         console.log(data);
         this.api.invoices = data;
+        this.filter()
         if (refresher != null)
           refresher.complete();
       })
@@ -36,6 +39,18 @@ export class InvoicesPage {
           refresher.complete();
 
       });
+  }
+
+  filter() {
+    if (this.types === 'all')
+      return this.toShow = this.api.invoices;
+    this.toShow = this.api.invoices.filter((inv) => {
+      return inv.type == this.types;
+    });
+  }
+
+  changeView() {
+    this.view = this.view === 'grid' ? 'list' : 'grid'
   }
 
   downloadinvoice(invoice) {

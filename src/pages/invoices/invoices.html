@@ -1,56 +1,95 @@
 <ion-header>
 
-    <ion-navbar xcolor="primary">
-        <button ion-button menuToggle>
+  <ion-navbar xcolor="primary">
+    <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-        <ion-title>{{'literals.invoices' | trans }}</ion-title>
-    </ion-navbar>
+    <ion-title>{{'literals.invoices' | trans }}</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only clear (click)="changeView()">
+        <ion-icon name="eye"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+  <ion-toolbar>
+    <ion-segment [(ngModel)]="types" (ionChange)="filter()">
+      <ion-segment-button value="all">
+        {{'literals.all' | trans }}
+      </ion-segment-button>
+      <ion-segment-button value="normal">
+        {{'literals.normal' | trans }}
+      </ion-segment-button>
+      <ion-segment-button value="residential">
+        {{'literals.residential' | trans }}
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
 
 </ion-header>
 
 
 <ion-content>
-    <ion-grid>
-        <ion-row>
-            <ion-col col-12 col-md-6 *ngFor="let invoice of api.invoices">
-                <ion-card class="invoice-card" [ngClass]="[invoice.status,invoice.type]">
-                    <ion-card-header text-center>
-                        <ion-card-title ion-text color="primary" text-primary>
-                            <small>
-                        {{ invoice.date | amDateFormat:'MMMM/YYYY'}}
-                      </small>
-                        </ion-card-title>
-                    </ion-card-header>
-                    <ion-card-content>
-                        <p item-right [color]="invoice.status == 'paid'?'success':'danger'" ion-text text-center>
-                            {{ invoice.total | currency:'USD':true:'1.2-2' }}
-                        </p>
-                        <ion-item>
-                            <b>{{'literals.status' | trans }}:</b>
-                            <span>
-                              {{'literals.'+invoice.status | trans}}
-                            </span>
-                        </ion-item>
-                        <ion-grid>
-                            <ion-row>
-                                <ion-col col-9>
-                                    <button ion-button icon-left color="primary" (click)="downloadinvoice(invoice)">
-                                    <ion-icon name="document"></ion-icon>
-                                    {{ 'literals.view_resource' | trans  }} {{'literals.invoice' | trans}}
-                                </button>
-                                </ion-col>
-                                <ion-col col-2>
-                                    <button ion-fab color="favorite" (click)="openMenu(invoice)">
-                                    <ion-icon name="logo-buffer"></ion-icon>
-                                </button>
-                                </ion-col>
-                            </ion-row>
-                        </ion-grid>
-                    </ion-card-content>
-                </ion-card>
-            </ion-col>
-        </ion-row>
-    </ion-grid>
 
+  <ion-grid *ngIf="view === 'grid'">
+    <ion-row>
+      <ion-col col-12 col-md-6 *ngFor="let invoice of toShow">
+        <ion-card class="invoice-card" [ngClass]="[invoice.status,invoice.type]">
+          <ion-card-header text-center>
+            <ion-card-title ion-text color="primary" text-primary>
+              <small *ngIf="invoice.type==='residential'">
+                {{ invoice.date | amDateFormat:'MMMM/YYYY'}}
+              </small>
+              <small *ngIf="invoice.type === 'normal'">
+                {{'literals.invoice' | trans }} # {{ invoice.number }}
+              </small>
+            </ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <p item-right [color]="invoice.status == 'paid'?'success':'danger'" ion-text text-center>
+              {{ invoice.total | currency:'USD':true:'1.2-2' }}
+            </p>
+            <ion-item>
+              <b>{{'literals.status' | trans }}:</b>
+              <span>
+                {{'literals.'+invoice.status | trans}}
+              </span>
+            </ion-item>
+            <ion-grid>
+              <ion-row>
+                <ion-col col-9>
+                  <button ion-button icon-left color="primary" (click)="downloadinvoice(invoice)">
+                    <ion-icon name="document"></ion-icon>
+                    {{ 'literals.view_resource' | trans }} {{'literals.invoice' | trans}}
+                  </button>
+                </ion-col>
+                <ion-col col-2>
+                  <button ion-fab color="favorite" (click)="openMenu(invoice)">
+                    <ion-icon name="logo-buffer"></ion-icon>
+                  </button>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-list *ngIf="view=='list'">
+    <button ion-item *ngFor="let invoice of toShow" (click)="openMenu(invoice)">
+      <h2 *ngIf="invoice.type==='residential'">
+        {{ invoice.date | amDateFormat:'MMMM/YYYY'}}
+      </h2>
+      <h2 *ngIf="invoice.type === 'normal'">
+        {{'literals.invoice' | trans }} # {{ invoice.number }}
+      </h2>
+      <b>{{'literals.status' | trans }}:</b>
+      <span>
+        {{'literals.'+invoice.status | trans}}
+      </span>
+      <p item-right [color]="invoice.status == 'paid'?'success':'danger'" ion-text text-center>
+        {{ invoice.total | currency:'USD':true:'1.2-2' }}
+      </p>
+    </button>
+  </ion-list>
 </ion-content>
