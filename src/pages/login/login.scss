@@ -1,7 +1,7 @@
 page-login {
     ion-content {
         // background-image: url(https://www.androidcentral.com/sites/androidcentral.com/files/styles/larger/public/article_images/2016/06/midngiht-city-material-wall.jpg?itok=s_cbP4x7);
-        background-image: url(/assets/background.jpg);
+        background-image: url(../assets/background.jpg);
         background-size: cover;
     }
     ion-item {
@@ -9,7 +9,7 @@ page-login {
     }
     ion-input,
     ion-label {
-        color: white;
+        // color: white;
     }
     input.code {
         display: block;
