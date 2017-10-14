@@ -39,7 +39,7 @@ export class ReservationsPage {
   }
 
   getZones() {
-    this.api.get('zones?scope[reservable]=')
+    this.api.get('zones?with[]=schedule&scope[reservable]=')
       .then((data: any) => { this.zones = data; console.log("zones:", data) })
       .catch(console.error)
   }

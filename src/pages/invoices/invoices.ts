@@ -133,6 +133,7 @@ export class InvoicesPage {
         }
       }
     ];
+
     if (invoice.receipts.length > 0) {
       buttons.push({
         text: this.api.trans("literals.download") + " " + this.api.trans('literals.receipt'),
@@ -143,6 +144,7 @@ export class InvoicesPage {
         }
       });
     }
+
     if (invoice.status !== "paid") {
       buttons.push({
         text: this.api.trans("__.report payment"),
