@@ -43,6 +43,10 @@
               <small *ngIf="invoice.type === 'normal'">
                 {{'literals.invoice' | trans }} # {{ invoice.number }}
               </small>
+              <small *ngIf="invoice.type === 'normal'">
+                {{'crud.date' | trans }}:{{ invoice.date | amCalendar }}
+              </small>
+
             </ion-card-title>
           </ion-card-header>
           <ion-card-content>
@@ -83,9 +87,12 @@
       <h2 *ngIf="invoice.type === 'normal'">
         {{'literals.invoice' | trans }} # {{ invoice.number }}
       </h2>
+      <p *ngIf="invoice.type === 'normal'">
+        {{'crud.date' | trans }}:{{ invoice.date | amCalendar }}
+      </p>
       <b>{{'literals.status' | trans }}:</b>
       <span>
-        {{'literals.'+invoice.status | trans}}
+        {{'literals.' + invoice.status | trans}}
       </span>
       <p item-right [color]="invoice.status == 'paid'?'success':'danger'" ion-text text-center>
         {{ invoice.total | currency:'USD':true:'1.2-2' }}
