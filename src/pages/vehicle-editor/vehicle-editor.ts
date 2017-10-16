@@ -27,6 +27,7 @@ export class VehiclesEditorPage {
                 model: vehicle.model,
                 plate: vehicle.plate,
                 color: vehicle.color,
+                type: vehicle.type,
                 note: vehicle.note,
                 residence_id: vehicle.residence_id
             };
