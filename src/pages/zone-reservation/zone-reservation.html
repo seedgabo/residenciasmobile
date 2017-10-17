@@ -15,13 +15,13 @@
     <button ion-item *ngFor="let interval of options" (click)="reservate(interval)">
       <ion-icon item-left name="time" [color]="interval.available == 0 ? 'danger': 'secondary'"></ion-icon>
       <h2>
-        {{ interval.start.format("hh:mm A") }}
+        {{ interval.start.format("hh:mm A") }} - {{ interval.end.format("hh:mm A") }}
       </h2>
       <div *ngIf="!interval.reserved">
-        <p *ngIf="interval.limit_user !== 0 " [color]="interval.available == 0 ? 'danger': 'secondary'" ion-text>
+        <p *ngIf="interval.limit_user != 0 " [color]="interval.available == 0 ? 'danger': 'secondary'" ion-text>
           {{'literals.available' | trans }}: {{ interval.available }}
         </p>
-        <p *ngIf="interval.limit_user === 0">
+        <p *ngIf="interval.limit_user == 0">
           {{'__.Cupos Ilimitados' | trans }}
         </p>
       </div>

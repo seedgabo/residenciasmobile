@@ -21,6 +21,7 @@ export class ZoneReservationPage {
     this.zone = navParams.get('zone')
     this.date = navParams.get('date')
     this.schedule = navParams.get('schedule');
+    console.log(this.schedule, this.zone, this.date);
   }
 
   ionViewDidLoad() {
@@ -32,7 +33,7 @@ export class ZoneReservationPage {
 
   buildList() {
     this.options = [];
-    var intervals = this.schedule[this.date.format('dddd')];
+    var intervals = this.schedule["" + this.date.locale('en').format('dddd').toLowerCase()];
 
     intervals.forEach(element => {
       var start = this.date.clone().startOf('day').add(element[0].split(':')[0], 'hours').add(element[0].split(':')[1], 'minutes')
@@ -42,7 +43,8 @@ export class ZoneReservationPage {
       var ref = {
         available: this.zone.limit_user == 0 ? Number.MAX_SAFE_INTEGER : this.zone.limit_user,
         limit_user: this.zone.limit_user,
-        time: start,
+        start: start,
+        end: end,
         ref: start.format("HH:mm")
       }
       this.options[this.options.length] = ref
