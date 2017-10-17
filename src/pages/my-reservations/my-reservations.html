@@ -1,0 +1,57 @@
+<ion-header>
+
+  <ion-navbar color="light">
+    <button ion-button icon-only menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>{{ '__.mys' | trans }} {{ 'literals.reservations' | trans }} </ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only clear (click)="changeView()">
+        <ion-icon [name]="view == 'list' ? 'list' : 'calendar'"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+<ion-content>
+  <ion-list *ngIf="view == 'list'">
+    <ion-item *ngFor="let reserv of reservations">
+
+      <ion-thumbnail item-left *ngIf="reserv.zone && reserv.zone.image">
+        <img [src]="reserv.zone.image.url" alt="">
+      </ion-thumbnail>
+
+      <h2 text-wrap *ngIf="reserv.zone" text-center>
+        {{reserv.zone.name}}
+      </h2>
+
+      <p text-wrap>
+        <b>
+          {{'literals.period' | trans }}:
+        </b>
+        <span>
+          {{ reserv.start | amCalendar }} - {{reserv.end | amCalendar }}
+        </span>
+      </p>
+
+      <small text-wrap *ngIf="reserv.event">
+        {{reserv.event.name}}
+      </small>
+
+      <p text-wrap>
+        <b>{{'literals.status' | trans }}</b>
+        <span>
+          {{ ('literals.'+reserv.status) | trans }}
+        </span>
+      </p>
+
+    </ion-item>
+  </ion-list>
+
+  <ion-card style="height:95%" *ngIf="view == 'calendar'">
+    <ion-card-content style="height:95%">
+      <div id="calendar-reservations"></div>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>

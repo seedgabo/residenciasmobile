@@ -115,6 +115,10 @@ export class ReservationsPage {
     this.navCtrl.push('ZoneReservationPage', { zone: zone, date: date, schedule: zone.schedule }, { animation: 'ios-transition' })
   }
 
+  gotoMyReservations() {
+    this.navCtrl.push('MyReservationsPage', { reservations: this.reservations });
+  }
+
 
 
   getDisabledDays(availables_days) {
