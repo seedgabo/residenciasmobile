@@ -24,7 +24,6 @@ export class ReservationsPage {
   locale = { monday: false, weekdays: moment.weekdaysShort(), months: moment.months() }
   disabledDates = []
   constructor(public navCtrl: NavController, public navParams: NavParams, public api: Api) {
-
   }
 
   ionViewDidLoad() {
@@ -39,8 +38,11 @@ export class ReservationsPage {
   }
 
   getZones() {
-    this.api.get('zones?scope[reservable]=')
-      .then((data: any) => { this.zones = data; console.log("zones:", data) })
+    this.api.get('zones?with[]=schedule&scope[reservable]=')
+      .then((data: any) => {
+        this.zones = data;
+        console.log("zones:", data)
+      })
       .catch(console.error)
   }
 
