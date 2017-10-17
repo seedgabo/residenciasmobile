@@ -1,7 +1,7 @@
 import { Api } from './../../providers/api';
 import { NavController, NavParams } from 'ionic-angular';
 import { Component } from '@angular/core';
-import {IonicPage} from "ionic-angular";
+import { IonicPage } from "ionic-angular";
 
 @IonicPage()
 @Component({
@@ -15,6 +15,7 @@ export class VehiclesEditorPage {
         model: '',
         color: '',
         note: '',
+        type: 'car',
         residence_id: this.api.user.residence_id
     }
     constructor(public navCtrl: NavController, public navParams: NavParams, public api: Api) {
@@ -26,6 +27,7 @@ export class VehiclesEditorPage {
                 model: vehicle.model,
                 plate: vehicle.plate,
                 color: vehicle.color,
+                type: vehicle.type,
                 note: vehicle.note,
                 residence_id: vehicle.residence_id
             };

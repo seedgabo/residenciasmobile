@@ -2,10 +2,10 @@
   <ion-navbar color="secondary">
     <ion-title>
       <span *ngIf="!vehicle.id">
-        {{'crud.add' | trans }} 
+        {{'crud.add' | trans }}
       </span>
       <span *ngIf="vehicle.id">
-         {{'crud.edit' | trans }}        
+        {{'crud.edit' | trans }}
       </span> {{ 'literals.vehicle' | trans }}
     </ion-title>
   </ion-navbar>
@@ -32,14 +32,28 @@
       <ion-label floating="">{{'literals.color' | trans }}</ion-label>
       <ion-input [(ngModel)]="vehicle.color"></ion-input>
     </ion-item>
+    <ion-item>
+      <!-- <ion-icon name="" item-left></ion-icon> -->
+      <ion-label floating="">{{'literals.type' | trans }}</ion-label>
+      <ion-select [(ngModel)]="vehicle.type">
+        <ion-option value="car">{{'literals.car' | trans }}</ion-option>
+        <ion-option value="moto">{{'literals.moto' | trans }}</ion-option>
+        <ion-option value="van">{{'literals.van' | trans }}</ion-option>
+        <ion-option value="bicycle">{{'literals.bicycle' | trans }}</ion-option>
+        <ion-option value="boat">{{'literals.boat' | trans }}</ion-option>
+        <ion-option value="golf cart">{{'literals.golf cart' | trans }}</ion-option>
+        <ion-option value="bus">{{'literals.bus' | trans }}</ion-option>
+        <ion-option value="ambulance">{{'literals.ambulance' | trans }}</ion-option>
+      </ion-select>
+    </ion-item>
   </ion-list>
 </ion-content>
 
 <ion-footer>
   <ion-toolbar>
     <button ion-button full [disabled]="!canSave()" color="secondary" icon-left (click)="save()">
-        <ion-icon class="fa fa-save" ></ion-icon>
-        {{'crud.save' | trans }}
+      <ion-icon class="fa fa-save"></ion-icon>
+      {{'crud.save' | trans }}
     </button>
   </ion-toolbar>
 </ion-footer>
