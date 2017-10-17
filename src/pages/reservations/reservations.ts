@@ -41,9 +41,47 @@ export class ReservationsPage {
     this.api.get('zones?with[]=schedule&scope[reservable]=')
       .then((data: any) => {
         this.zones = data;
+        this.formatZones();
         console.log("zones:", data)
       })
       .catch(console.error)
+  }
+
+  formatZones() {
+    this.zones.forEach((zone) => {
+      if (zone.schedule) {
+        zone.days = []
+
+        if (zone.schedule.monday.length > 0) {
+          zone.days.push('monday')
+        }
+
+        if (zone.schedule.tuesday.length > 0) {
+          zone.days.push('tuesday')
+        }
+
+        if (zone.schedule.wednesday.length > 0) {
+          zone.days.push('wednesday')
+        }
+
+        if (zone.schedule.thursday.length > 0) {
+          zone.days.push('thursday')
+        }
+
+        if (zone.schedule.friday.length > 0) {
+          zone.days.push('friday')
+        }
+
+        if (zone.schedule.saturday.length > 0) {
+          zone.days.push('saturday')
+        }
+
+        if (zone.schedule.sunday.length > 0) {
+          zone.days.push('sunday')
+        }
+
+      }
+    })
   }
 
   humanize(interval) {
@@ -74,7 +112,7 @@ export class ReservationsPage {
 
   setDate(ev, zone) {
     var date = moment.utc(ev)
-    this.navCtrl.push('ZoneReservationPage', { zone: zone, date: date }, { animation: 'ios-transition' })
+    this.navCtrl.push('ZoneReservationPage', { zone: zone, date: date, schedule: zone.schedule }, { animation: 'ios-transition' })
   }
 
 

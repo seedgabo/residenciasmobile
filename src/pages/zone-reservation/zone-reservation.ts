@@ -2,7 +2,7 @@ import { Api } from './../../providers/api';
 import { Component } from '@angular/core';
 import { NavController, NavParams, AlertController } from 'ionic-angular';
 import moment from 'moment';
-import {IonicPage} from "ionic-angular";
+import { IonicPage } from "ionic-angular";
 
 @IonicPage()
 @Component({
@@ -15,10 +15,12 @@ export class ZoneReservationPage {
   options = []
   collection = {}
   reservations = [];
+  schedule = [];
   loading = true
   constructor(public navCtrl: NavController, public navParams: NavParams, public api: Api, public alert: AlertController) {
     this.zone = navParams.get('zone')
     this.date = navParams.get('date')
+    this.schedule = navParams.get('schedule');
   }
 
   ionViewDidLoad() {
@@ -30,28 +32,22 @@ export class ZoneReservationPage {
 
   buildList() {
     this.options = [];
-    var time = moment(this.zone.start, "HH:mm");
-    var end = moment(this.zone.end, "HH:mm");
+    var intervals = this.schedule[this.date.format('dddd')];
 
-    if (this.zone.start == null)
-      time = moment().startOf('day')
-    if (this.zone.end == null)
-      end = moment().startOf('day').add(23, 'hours')
+    intervals.forEach(element => {
+      var start = this.date.clone().startOf('day').add(element[0].split(':')[0], 'hours').add(element[0].split(':')[1], 'minutes')
 
-    console.log(time, end)
+      var end = this.date.clone().startOf('day').add(element[1].split(':')[0], 'hours').add(element[1].split(':')[1], 'minutes')
 
-    if (time < end && this.zone.interval > 0)
-      do {
-        var ref = {
-          available: this.zone.limit_user == 0 ? Number.MAX_SAFE_INTEGER : this.zone.limit_user,
-          limit_user: this.zone.limit_user,
-          time: time.clone(),
-          ref: time.clone().format("HH:mm")
-        }
-        this.options[this.options.length] = ref
-        this.collection["" + time.clone().format("HH:mm")] = ref
-        time = time.add(this.zone.interval, 'm')
-      } while (time <= end)
+      var ref = {
+        available: this.zone.limit_user == 0 ? Number.MAX_SAFE_INTEGER : this.zone.limit_user,
+        limit_user: this.zone.limit_user,
+        time: start,
+        ref: start.format("HH:mm")
+      }
+      this.options[this.options.length] = ref
+      this.collection["" + start.clone().format("HH:mm")] = ref
+    });
   }
 
   getReservations() {
@@ -137,8 +133,8 @@ export class ZoneReservationPage {
         quotas: quotas,
         zone_id: this.zone.id,
         user_id: this.api.user.id,
-        start: this.date.format("YYYY-MM-DD") + " " + interval.time.format("HH:mm"),
-        end: this.date.format("YYYY-MM-DD") + " " + interval.time.clone().add(this.zone.interval, "m").format("HH:mm")
+        start: interval.start.format("YYYY-MM-DD HH:mm"),
+        end: interval.end.format("YYYY-MM-DD HH:mm"),
       })
       .then((data) => {
         console.log(data);
