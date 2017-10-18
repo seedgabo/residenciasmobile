@@ -33,7 +33,7 @@ export class MyReservationsPage {
 
   prepareReservations() {
     this.reservations.forEach((reserv) => {
-      reserv.title = `<b>${reserv.zone.name}</b>: ${reserv.start.format('LLLL')} - ${reserv.end.format('LLLL')}`
+      reserv.title = `${reserv.zone.name}  ${reserv.event ? '-' + reserv.event.name : ''} : ${reserv.quotas} ${this.api.trans('literals.persons')}`
     })
   }
 
