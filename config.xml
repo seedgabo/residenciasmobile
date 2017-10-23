@@ -135,4 +135,7 @@
     </plugin>
     <plugin name="ionic-plugin-keyboard" spec="^2.2.1" />
     <plugin name="onesignal-cordova-plugin" spec="^2.1.2" />
+    <plugin name="cordova-plugin-geolocation" spec="^2.4.3">
+        <variable name="GEOLOCATION_USAGE_DESCRIPTION" value="To share to your location with the app" />
+    </plugin>
 </widget>

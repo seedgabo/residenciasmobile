@@ -33,6 +33,7 @@
     "@ionic-native/facebook": "^3.10.3",
     "@ionic-native/file": "^3.13.0",
     "@ionic-native/file-opener": "^3.13.0",
+    "@ionic-native/geolocation": "^4.3.2",
     "@ionic-native/google-plus": "^3.10.3",
     "@ionic-native/local-notifications": "^3.10.3",
     "@ionic-native/onesignal": "^3.12.1",
@@ -60,6 +61,7 @@
     "cordova-plugin-file": "^4.3.3",
     "cordova-plugin-file-opener2": "^2.0.19",
     "cordova-plugin-file-transfer": "^1.6.3",
+    "cordova-plugin-geolocation": "^2.4.3",
     "cordova-plugin-googleplus": "^5.1.1",
     "cordova-plugin-shared-preferences": "0.0.1",
     "cordova-plugin-splashscreen": "^4.0.3",
@@ -140,7 +142,10 @@
         "CAMERA_USAGE_DESCRIPTION": "Residentes quiere usar tu camara para subir fotos de tus activos",
         "PHOTOLIBRARY_USAGE_DESCRIPTION": "Residentes quiere acceder a tus fotos para compartir fotos de tus activos"
       },
-      "cordova-plugin-shared-preferences": {}
+      "cordova-plugin-shared-preferences": {},
+      "cordova-plugin-geolocation": {
+        "GEOLOCATION_USAGE_DESCRIPTION": "To share to your location with the app"
+      }
     },
     "platforms": [
       "android",
