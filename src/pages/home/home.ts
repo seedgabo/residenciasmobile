@@ -27,6 +27,7 @@ export class HomePage {
     this.getSliders();
     this.getNextEvents()
     this.getNews();
+    this.getCorrespondences();
   }
 
   getSliders() {
@@ -74,6 +75,21 @@ export class HomePage {
   }
   gotoCalendar(event) {
     this.navCtrl.push('EventsPage', { event: event });
+  }
+
+  getCorrespondences() {
+    if (this.api.modules.correspondences) {
+      this.api.get(`correspondences?where[residence_id]=${this.api.user.residence_id}&where[status]=arrival`)
+        .then((data) => {
+          console.log(data);
+          this.api.user.correspondences = data
+        })
+        .catch(console.error)
+    }
+  }
+
+  gotoCorrespondences() {
+    this.navCtrl.push('CorrespondencesPage');
   }
 
 }
