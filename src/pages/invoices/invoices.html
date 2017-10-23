@@ -44,7 +44,7 @@
                 {{'literals.invoice' | trans }} # {{ invoice.number }}
               </small>
               <small *ngIf="invoice.type === 'normal'">
-                {{'crud.date' | trans }}:{{ invoice.date | amCalendar }}
+                <br> {{ 'date.date' | trans }}:{{ invoice.date | amCalendar }}
               </small>
 
             </ion-card-title>
