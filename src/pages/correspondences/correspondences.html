@@ -31,9 +31,11 @@
         {{corres.receptor.name}}
       </p>
       <small>
+        
         {{ corres.created_at | amCalendar }}
       </small>
-      <ion-icon small item-right [name]="corres.status === 'arrival' ? 'cube' : corres.status === 'delivered'?'dropbox':'albums'" [color]="corres.status === 'arrival' ? 'primary' : corres.status === 'secondary'?'dropbox':'warning'"></ion-icon>
+      <ion-icon small item-right [name]="corres.status === 'arrival' ? 'mail' : corres.status === 'delivered'?'mail-open':'archive'"
+        [color]="corres.status === 'arrival' ? 'primary' : corres.status === 'delivered' ? 'secondary':'warning'"></ion-icon>
     </button>
   </ion-list>
 </ion-content>

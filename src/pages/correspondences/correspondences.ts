@@ -7,10 +7,10 @@ import { IonicPage, NavController, NavParams, ActionSheetController } from 'ioni
   templateUrl: 'correspondences.html',
 })
 export class CorrespondencesPage {
-  correspondeces = [];
+  correspondences = [];
   loading = true;
   constructor(public navCtrl: NavController, public navParams: NavParams, public action: ActionSheetController, public api: Api) {
-    this.correspondeces = this.api.user.correspondences;
+    this.correspondences = this.api.user.correspondences;
   }
 
   ionViewDidLoad() {
@@ -20,7 +20,7 @@ export class CorrespondencesPage {
   getCorrespondences(refresher = null) {
     this.api.get(`correspondences?where[residence_id]=${this.api.user.residence_id}&order[status]=asc&limit=100`)
       .then((data: any) => {
-        this.correspondeces = this.api.user.correspondences = data;
+        this.correspondences = this.api.user.correspondences = data;
         if (refresher)
           refresher.complete()
         this.loading = false;

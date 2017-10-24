@@ -84,7 +84,8 @@ export class HomePage {
         this.api.get(`correspondences?where[residence_id]=${this.api.user.residence_id}&where[status]=arrival`)
           .then((data: any) => {
             console.log(data);
-            this.correspondences = this.api.user.correspondences = data
+            this.correspondences = data
+            this.api.user.correspondences = data
           })
           .catch(console.error)
       }
