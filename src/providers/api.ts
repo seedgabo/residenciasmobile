@@ -141,6 +141,11 @@ export class Api {
       this.parkings = data.parkings;
       this.invoices = data.invoices;
       this.residences = data.residences;
+
+      this.modules = data.modules;
+      this.settings = data.settings;
+
+      this.saveData(data);
       this.storage.set('allData', data);
       this.saveSharedPreferences();
     }).catch((err) => {

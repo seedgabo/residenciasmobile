@@ -50,7 +50,7 @@
         <button *ngIf="api.user && api.modules.correspondences" ion-item (click)="gotoCorrespondences()">
           <ion-icon name="cube" item-left></ion-icon>
           <b>{{'literals.correspondences' | trans }}</b>
-          <span item-right *ngIf="api.user.correspondences"> {{ api.user.correspondences.length }} </span>
+          <ion-badge color="favorite" item-right *ngIf="api.user"> {{ correspondences.length }} </ion-badge>
 
         </button>
       </ion-list>
