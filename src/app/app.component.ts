@@ -47,7 +47,7 @@ export class MyApp {
       { title: "posts", component: 'PostsPage', icon: 'paper' },
       { title: "visitors", component: 'VisitTabsPage', icon: 'contacts', siteHas: 'visits' },
       { title: "lists", component: 'TablesPage', icon: 'list' },
-      { title: "correspondences", component: 'CorrespondencessPage', icon: 'cube', siteHas: 'correspondences' },
+      { title: "correspondences", component: 'CorrespondencesPage', icon: 'cube', siteHas: 'correspondences' },
       { title: "surveys", component: 'SurveysPage', icon: 'pie', siteHas: 'surveys' },
       { title: "events", component: 'EventsPage', icon: 'calendar', siteHas: 'events' },
       { title: "invoices", component: 'InvoicesPage', icon: 'card', modules: 'finanze', siteHas: 'invoices' },
