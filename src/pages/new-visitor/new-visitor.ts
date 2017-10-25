@@ -11,6 +11,7 @@ export class NewVisitorPage {
 
   action: string = 'create';
   visitor: any = { sex: 'male' };
+  loading = false;
   constructor(public navCtrl: NavController, public navParams: NavParams, public api: Api, public viewCtrl: ViewController) {
     var visitor = navParams.get('visitor');
     if (visitor) {
@@ -39,19 +40,27 @@ export class NewVisitorPage {
       sex: this.visitor.sex
     };
     if (this.action == 'create') {
+      this.loading = true;
       this.api.post('visitors', data).then((response) => {
         console.log(response);
         this.viewCtrl.dismiss();
+        this.loading = false;
       }).catch((err) => {
         console.log(err);
+        this.loading = false;
+        this.api.Error(err);
       });
     }
     if (this.action == 'update') {
+      this.loading = true;
       this.api.put('visitors/' + this.visitor.id, data).then((response) => {
         console.log(response);
         this.viewCtrl.dismiss();
+        this.loading = false;
       }).catch((err) => {
         console.log(err);
+        this.loading = false;
+        this.api.Error(err);
       });
     }
 

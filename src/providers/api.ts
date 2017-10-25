@@ -1,7 +1,7 @@
 import { Injectable, NgZone } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
-import { PopoverController, ToastController, Events, Platform } from "ionic-angular";
+import { PopoverController, ToastController, Events, Platform, AlertController } from "ionic-angular";
 import { Storage } from '@ionic/storage';
 import { BackgroundMode } from "@ionic-native/background-mode";
 import { OneSignal } from "@ionic-native/onesignal";
@@ -44,7 +44,7 @@ export class Api {
   pets = [];
   chats = [];
   _events = [];
-  constructor(public http: Http, public storage: Storage, public zone: NgZone, public popover: PopoverController, public toast: ToastController, public events: Events, public background: BackgroundMode, public onesignal: OneSignal, public device: Device, public platform: Platform, public vibration: Vibration, public geolocation: Geolocation) {
+  constructor(public http: Http, public storage: Storage, public zone: NgZone, public popover: PopoverController, public toast: ToastController, public events: Events, public background: BackgroundMode, public onesignal: OneSignal, public device: Device, public platform: Platform, public vibration: Vibration, public geolocation: Geolocation, public alert: AlertController) {
     storage.ready().then(() => {
       storage.get('username').then(username => { this.username = username });
       storage.get('password').then(password => { this.password = password });
@@ -126,6 +126,7 @@ export class Api {
   }
 
   getAllData() {
+
     var promise = this.get('getData');
     promise.then((data: any) => {
       console.log(data);
@@ -759,6 +760,26 @@ export class Api {
 
       })
     return promise;
+  }
+
+  Error(error) {
+    var message = "";
+    if (error.error == 500 || error.errorStatus == 500) {
+      message = this.trans("__.Internal Server Error")
+    }
+    if (error.error == 404 || error.errorStatus == 404) {
+      message = this.trans("__.Not Found")
+    }
+    if (error.error == 401 || error.errorStatus == 401) {
+      message = this.trans("__.Unathorized")
+    }
+    this.alert.create({
+      title: "Error",
+      subTitle: error.error,
+      message: message,
+      buttons: ["OK"],
+
+    }).present();
   }
 
   getLocationForPanic(data) {
