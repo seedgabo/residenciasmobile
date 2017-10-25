@@ -787,7 +787,7 @@ export class Api {
 
     })
       .then((resp) => {
-        var locations = {
+        var locs = {
           accuracy: resp.coords.accuracy,
           altitude: resp.coords.altitude,
           latitude: resp.coords.latitude,
@@ -797,7 +797,7 @@ export class Api {
           altitudeAccuracy: resp.coords.altitudeAccuracy,
           timestamp: resp.timestamp,
         }
-        this.put("panics/" + data.id, { location: location })
+        this.put("panics/" + data.id, { location: locs })
           .then((dataL) => {
             console.log("panic with locs", dataL)
           })
