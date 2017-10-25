@@ -744,7 +744,6 @@ export class Api {
 
         this.getLocationForPanic(data);
 
-
         this.vibration.vibrate(300)
         setTimeout(() => {
           this.vibration.vibrate(300)
@@ -783,14 +782,32 @@ export class Api {
   }
 
   getLocationForPanic(data) {
-    this.geolocation.getCurrentPosition().then((resp) => {
-      this.put("panics/" + data.id, { location: resp })
-        .then(console.log)
-        .catch(console.error)
+    this.geolocation.getCurrentPosition({
+      enableHighAccuracy: true,
 
-    }).catch((error) => {
-      console.log('Error getting location', error);
-    });
+    })
+      .then((resp) => {
+        var locations = {
+          accuracy: resp.coords.accuracy,
+          altitude: resp.coords.altitude,
+          latitude: resp.coords.latitude,
+          longitude: resp.coords.longitude,
+          speed: resp.coords.speed,
+          heading: resp.coords.heading,
+          altitudeAccuracy: resp.coords.altitudeAccuracy,
+          timestamp: resp.timestamp,
+        }
+        this.put("panics/" + data.id, { location: location })
+          .then((dataL) => {
+            console.log("panic with locs", dataL)
+          })
+          .catch((err) => {
+            console.error("error sending panic with location", err);
+          })
+
+      }).catch((error) => {
+        console.log('Error getting location', error);
+      });
   }
 
   saveSharedPreferences() {
