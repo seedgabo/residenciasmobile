@@ -7,6 +7,7 @@ import { BackgroundMode } from '@ionic-native/background-mode';
 import { Deeplinks } from "@ionic-native/deeplinks";
 import { Api } from "../providers/api";
 import { AppMinimize } from "@ionic-native/app-minimize";
+
 @Component({
   templateUrl: 'app.html'
 })
