@@ -24,24 +24,10 @@
     <ion-item>
       <ion-icon color="secondary" name="cash" item-start large></ion-icon>
       <h2>
-        {{'literals.price' | trans }} ( x {{'literals.user' | trans }})
+        {{'literals.price' | trans }} ( x {{'literals.person' | trans }})
       </h2>
       <p *ngIf="zone.price>0">{{zone.price | currency:'USD'}}</p>
       <p *ngIf="zone.price===0">{{ 'literals.free' | trans }}</p>
-    </ion-item>
-
-    <ion-item>
-      <ion-icon color="favorite" name="clock" item-start large></ion-icon>
-      <h2>
-        {{'literals.schedule' | trans }}
-      </h2>
-      <p *ngIf="zone.start">
-        {{zone.start | amParse: 'HH:mm' | amDateFormat:'hh:mm A' }}
-        <span *ngIf="zone.end"> - {{ zone.end | amParse: 'HH:mm' | amDateFormat:'hh:mm A' }}</span>
-      </p>
-      <p *ngIf="zone.interval">
-        {{'literals.every' | trans }}: {{ humanize(zone.interval) }}
-      </p>
     </ion-item>
 
     <ion-item *ngIf="zone.days">

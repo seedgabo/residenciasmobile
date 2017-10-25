@@ -6,6 +6,8 @@ import { Storage } from '@ionic/storage';
 import { BackgroundMode } from "@ionic-native/background-mode";
 import { OneSignal } from "@ionic-native/onesignal";
 import { Device } from "@ionic-native/device";
+import { Geolocation } from '@ionic-native/geolocation';
+
 import Echo from 'laravel-echo';
 import Pusher from 'pusher-js';
 import moment from 'moment';
@@ -42,7 +44,7 @@ export class Api {
   pets = [];
   chats = [];
   _events = [];
-  constructor(public http: Http, public storage: Storage, public zone: NgZone, public popover: PopoverController, public toast: ToastController, public events: Events, public background: BackgroundMode, public onesignal: OneSignal, public device: Device, public platform: Platform, public vibration: Vibration) {
+  constructor(public http: Http, public storage: Storage, public zone: NgZone, public popover: PopoverController, public toast: ToastController, public events: Events, public background: BackgroundMode, public onesignal: OneSignal, public device: Device, public platform: Platform, public vibration: Vibration, public geolocation: Geolocation) {
     storage.ready().then(() => {
       storage.get('username').then(username => { this.username = username });
       storage.get('password').then(password => { this.password = password });
@@ -139,6 +141,11 @@ export class Api {
       this.parkings = data.parkings;
       this.invoices = data.invoices;
       this.residences = data.residences;
+
+      this.modules = data.modules;
+      this.settings = data.settings;
+
+      this.saveData(data);
       this.storage.set('allData', data);
       this.saveSharedPreferences();
     }).catch((err) => {
@@ -733,6 +740,10 @@ export class Api {
           duration: 5000,
           position: 'top',
         }).present();
+
+        this.getLocationForPanic(data);
+
+
         this.vibration.vibrate(300)
         setTimeout(() => {
           this.vibration.vibrate(300)
@@ -748,6 +759,17 @@ export class Api {
 
       })
     return promise;
+  }
+
+  getLocationForPanic(data) {
+    this.geolocation.getCurrentPosition().then((resp) => {
+      this.put("panics/" + data.id, { location: resp })
+        .then(console.log)
+        .catch(console.error)
+
+    }).catch((error) => {
+      console.log('Error getting location', error);
+    });
   }
 
   saveSharedPreferences() {

@@ -19,6 +19,7 @@ export class HomePage {
   text = "";
   nextEvents = [];
   news = [];
+  correspondences = [];
   constructor(public navCtrl: NavController, public api: Api) {
   }
 
@@ -27,6 +28,7 @@ export class HomePage {
     this.getSliders();
     this.getNextEvents()
     this.getNews();
+    this.getCorrespondences();
   }
 
   getSliders() {
@@ -74,6 +76,24 @@ export class HomePage {
   }
   gotoCalendar(event) {
     this.navCtrl.push('EventsPage', { event: event });
+  }
+
+  getCorrespondences() {
+    this.api.ready.then(() => {
+      if (this.api.modules.correspondences) {
+        this.api.get(`correspondences?where[residence_id]=${this.api.user.residence_id}&where[status]=arrival`)
+          .then((data: any) => {
+            console.log(data);
+            this.correspondences = data
+            this.api.user.correspondences = data
+          })
+          .catch(console.error)
+      }
+    })
+  }
+
+  gotoCorrespondences() {
+    this.navCtrl.push('CorrespondencesPage');
   }
 
 }
