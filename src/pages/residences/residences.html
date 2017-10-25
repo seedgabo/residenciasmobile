@@ -1,25 +1,25 @@
 <ion-header>
 
-    <ion-navbar xcolor="primary">
-        <button ion-button menuToggle>
+  <ion-navbar xcolor="primary">
+    <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-        <ion-title>{{'literals.residences' | trans }}</ion-title>
-    </ion-navbar>
+    <ion-title>{{'literals.residences' | trans }}</ion-title>
+  </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
 
-    <ion-list>
-        <button ion-item *ngFor="let residence of residences">
-        <h3>{{residence.name}}</h3>
-        <span *ngIf="residence.owner!=null">{{residence.owner.name}}</span>
-        <span ion-text color="light" *ngIf="residence.owner==null">Sin Propietario</span>
-        <strong item-right>{{residence.type}}</strong>
-      </button>
-    </ion-list>
+  <ion-list>
+    <button ion-item *ngFor="let residence of residences">
+      <h3>{{residence.name}}</h3>
+      <span *ngIf="residence.owner!=null">{{residence.owner.name}}</span>
+      <span ion-text color="light" *ngIf="residence.owner==null">Sin Propietario</span>
+      <strong item-right>{{ 'literals.' + residence.type | trans }}</strong>
+    </button>
+  </ion-list>
 
 
 
