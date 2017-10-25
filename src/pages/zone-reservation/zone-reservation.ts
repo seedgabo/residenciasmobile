@@ -2,7 +2,7 @@ import { Api } from './../../providers/api';
 import { Component } from '@angular/core';
 import { NavController, NavParams, AlertController } from 'ionic-angular';
 import moment from 'moment';
-import { IonicPage } from "ionic-angular";
+import { IonicPage, ToastController } from "ionic-angular";
 
 @IonicPage()
 @Component({
@@ -17,10 +17,10 @@ export class ZoneReservationPage {
   reservations = [];
   schedule = [];
   loading = true
-  constructor(public navCtrl: NavController, public navParams: NavParams, public api: Api, public alert: AlertController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public api: Api, public alert: AlertController, public toast: ToastController) {
     this.zone = navParams.get('zone')
     this.date = navParams.get('date')
-    this.schedule = navParams.get('schedule');
+    this.schedule = this.zone.schedule;
     console.log(this.schedule, this.zone, this.date);
   }
 
@@ -34,7 +34,14 @@ export class ZoneReservationPage {
   buildList() {
     this.options = [];
     var intervals = this.schedule["" + this.date.locale('en').format('dddd').toLowerCase()];
-
+    if (!intervals || intervals[0] == null) {
+      this.navCtrl.pop();
+      this.toast.create({
+        message: this.api.trans("__.no disponible"),
+        duration: 3500
+      }).present();
+      return
+    }
     intervals.forEach(element => {
       var start = this.date.clone().startOf('day').add(element[0].split(':')[0], 'hours').add(element[0].split(':')[1], 'minutes')
 

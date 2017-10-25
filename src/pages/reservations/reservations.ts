@@ -52,31 +52,31 @@ export class ReservationsPage {
       if (zone.schedule) {
         zone.days = []
 
-        if (zone.schedule.monday.length > 0) {
+        if (zone.schedule.monday.length > 0 && zone.schedule.monday[0] != null) {
           zone.days.push('monday')
         }
 
-        if (zone.schedule.tuesday.length > 0) {
+        if (zone.schedule.tuesday.length > 0 && zone.schedule.tuesday[0] != null) {
           zone.days.push('tuesday')
         }
 
-        if (zone.schedule.wednesday.length > 0) {
+        if (zone.schedule.wednesday.length > 0 && zone.schedule.wednesday[0] != null) {
           zone.days.push('wednesday')
         }
 
-        if (zone.schedule.thursday.length > 0) {
+        if (zone.schedule.thursday.length > 0 && zone.schedule.thursday[0] != null) {
           zone.days.push('thursday')
         }
 
-        if (zone.schedule.friday.length > 0) {
+        if (zone.schedule.friday.length > 0 && zone.schedule.friday[0] != null) {
           zone.days.push('friday')
         }
 
-        if (zone.schedule.saturday.length > 0) {
+        if (zone.schedule.saturday.length > 0 && zone.schedule.saturday[0] != null) {
           zone.days.push('saturday')
         }
 
-        if (zone.schedule.sunday.length > 0) {
+        if (zone.schedule.sunday.length > 0 && zone.schedule.sunday[0] != null) {
           zone.days.push('sunday')
         }
 
@@ -112,7 +112,7 @@ export class ReservationsPage {
 
   setDate(ev, zone) {
     var date = moment.utc(ev)
-    this.navCtrl.push('ZoneReservationPage', { zone: zone, date: date, schedule: zone.schedule }, { animation: 'ios-transition' })
+    this.navCtrl.push('ZoneReservationPage', { zone: this.selected, date: date, schedule: this.selected.schedule }, { animation: 'ios-transition' })
   }
 
   gotoMyReservations() {
