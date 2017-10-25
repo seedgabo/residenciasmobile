@@ -122,6 +122,7 @@ export class MyApp {
       '/visitor/:visitorId': 'VisitTabsPage',
       '/surveys': 'SurveyPage',
       '/chat:chatId': 'ChatsPage',
+      '/correspondences:correspondenceId': 'CorrespondencesPage',
     }).subscribe((match) => {
       console.log('Successfully routed', match);
       var args = {};
@@ -136,6 +137,9 @@ export class MyApp {
       }
       if (match.$link.url.indexOf("residenciasOnline://app/visitor") > -1) {
         this.nav.setRoot('VisitTabsPage', args);
+      }
+      if (match.$link.url.indexOf("residenciasOnline://app/correspondences") > -1) {
+        this.nav.setRoot('CorrespondencesPage', args);
       }
       if (match.$link.url.indexOf("residenciasOnline://app/surveys") > -1) {
         this.nav.setRoot('SurveyPage', args);
