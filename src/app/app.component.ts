@@ -79,6 +79,7 @@ export class MyApp {
         { icon: 'icon', text: "", title: "Residentes Online", color: "#42f459", bigText: true }
       );
       this.backgroundmode.excludeFromTaskList();
+      this.backgroundmode.disableWebViewOptimizations();
       // this.backgroundmode.overrideBackButton();
 
       var sync = () => {
