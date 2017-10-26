@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform, Events } from 'ionic-angular';
+import { Nav, Platform, Events, ViewController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { CodePush } from "@ionic-native/code-push";
@@ -19,7 +19,7 @@ export class MyApp {
   pages: Array<any>;
   VisitTabsPage = 'VisitTabsPage';
   disabled_panic = false;
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public codepush: CodePush, public backgroundmode: BackgroundMode, public api: Api, public minimize: AppMinimize, public deeplinks: Deeplinks, public events: Events) {
+  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public codepush: CodePush, public backgroundmode: BackgroundMode, public api: Api, public minimize: AppMinimize, public deeplinks: Deeplinks, public events: Events, public viewctrl: ViewController) {
     this.platform.ready().then(() => {
       this.api.ready.then(() => {
         this.initializeApp();
@@ -66,11 +66,16 @@ export class MyApp {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
       this.platform.registerBackButtonAction(() => {
-        if (this.nav.canGoBack())
-          return this.nav.pop();
-        else {
-          this.minimize.minimize();
-          console.log("minimize");
+        try {
+          this.viewctrl.dismiss();
+        } catch (error) {
+
+          if (this.nav.canGoBack())
+            return this.nav.pop();
+          else {
+            this.minimize.minimize();
+            console.log("minimize");
+          }
         }
       });
 
