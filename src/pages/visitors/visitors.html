@@ -26,6 +26,9 @@
       <p>
         {{visitor.document}}
       </p>
+      <small *ngIf="visitor.relationship">
+        {{ visitor.relationship }}
+      </small>
     </button>
   </ion-list>
   <ion-fab bottom right *ngIf="selecteds.length === 0">
