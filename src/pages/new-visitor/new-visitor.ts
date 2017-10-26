@@ -24,11 +24,13 @@ export class NewVisitorPage {
 
   ionViewDidLoad() {
   }
+
   dismiss() {
     if (this.action == 'update')
       this.visitor = this.navParams.get('visitor');
     this.viewCtrl.dismiss();
   }
+
   canSave() {
     return this.visitor.name && this.visitor.name.length > 3 && this.visitor.document && this.visitor.residence_id;
   }
@@ -37,7 +39,8 @@ export class NewVisitorPage {
       name: this.visitor.name,
       document: this.visitor.document,
       residence_id: this.visitor.residence_id,
-      sex: this.visitor.sex
+      sex: this.visitor.sex,
+      relationship: this.visitor.relationship
     };
     if (this.action == 'create') {
       this.loading = true;
