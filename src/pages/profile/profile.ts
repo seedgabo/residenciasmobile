@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { Api } from "../../providers/api";
 import moment from 'moment';
-import {IonicPage} from "ionic-angular";
+import { IonicPage } from "ionic-angular";
 
 @IonicPage()
 @Component({
@@ -24,6 +24,13 @@ export class ProfilePage {
     this.profile = JSON.parse(JSON.stringify(this.api.user));
     this.profile.birthday = moment(this.api.user.birthday).format('YYYY-MM-DD');
     this.residence = JSON.parse(JSON.stringify(this.api.residence));
+    if (!this.residence.emergency_contact) {
+      this.residence.emergency_contact = {
+        name: "",
+        phone: "",
+        email: ""
+      }
+    }
   }
 
   ionViewDidLoad() {
@@ -61,7 +68,8 @@ export class ProfilePage {
     this.api.put(`residences/${this.api.user.residence_id}?with[]=owner`, {
       name: this.residence.name,
       number_of_people: this.residence.number_of_people,
-      owner_id: this.residence.owner_id
+      owner_id: this.residence.owner_id,
+      emergency_contact: this.residence.emergency_contact
     })
       .then((data: any) => {
         this.api.residence.name = data.name;
