@@ -45,9 +45,8 @@
       <button ion-button clear item-end>
         {{'literals.reservate' | trans }}
       </button>
-      <span ion-datepicker [disabledDates]="disabledDates" [localeStrings]="locale" (ionChanged)="setDate($event,zone)" [value]="date"
-        [min]="min" clear class="ScheduleDate"></span>
     </ion-item>
-
   </ion-card>
+  <span ion-datepicker [disabledDates]="disabledDates" [localeStrings]="locale" (ionChanged)="setDate($event,zone)" [value]="date"
+    [min]="min" clear class="ScheduleDate"></span>
 </ion-content>

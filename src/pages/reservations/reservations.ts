@@ -110,7 +110,7 @@ export class ReservationsPage {
     }, 200)
   }
 
-  setDate(ev, zone) {
+  setDate(ev) {
     var date = moment.utc(ev)
     this.navCtrl.push('ZoneReservationPage', { zone: this.selected, date: date, schedule: this.selected.schedule }, { animation: 'ios-transition' })
   }
