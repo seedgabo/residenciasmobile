@@ -25,7 +25,7 @@ export class InvoicesPage {
   }
 
   getInvoices(refresher = null) {
-    this.api.get(`invoices?order[date]=desc&where[residence_id]=${this.api.user.residence_id}&with[]=user&with[]=receipts&with[]=items&take=24`)
+    this.api.get(`invoices?order[date]=desc&orWhere[residence_id]=${this.api.user.residence_id}&orWhere[user_id]=${this.api.user.id}&with[]=user&with[]=receipts&with[]=items&take=50`)
       .then((data: any) => {
         console.log(data);
         this.api.invoices = data;
