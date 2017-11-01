@@ -13,6 +13,7 @@ export class CreateVisitPage {
   visit: any = {
     status: 'approved',
   }
+  loading = false
   constructor(public navCtrl: NavController, public navParams: NavParams, public api: Api, public viewCtrl: ViewController) {
     var visitor = navParams.get('visitor');
     if (Array.isArray(visitor)) {
@@ -34,14 +35,18 @@ export class CreateVisitPage {
   }
 
   create() {
+    this.loading = true;
     this.api.post('visits', this.visit)
       .then(
       (data) => {
         console.log(data);
+        this.loading = false
         this.dismiss();
       })
       .catch(
       (err) => {
+        this.loading = false
+        this.api.Error(err)
         console.error(err);
       })
   }

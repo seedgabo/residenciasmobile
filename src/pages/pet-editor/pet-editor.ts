@@ -1,7 +1,7 @@
 import { Api } from './../../providers/api';
 import { NavController, NavParams } from 'ionic-angular';
 import { Component } from '@angular/core';
-import {IonicPage} from "ionic-angular";
+import { IonicPage } from "ionic-angular";
 
 @IonicPage()
 @Component({
@@ -19,6 +19,7 @@ export class PetsEditorPage {
     extra: '',
     residence_id: this.api.user.residence_id
   }
+  loading = false;
   constructor(public navCtrl: NavController, public navParams: NavParams, public api: Api) {
     var pet = navParams.get('pet')
     console.log(pet)
@@ -45,6 +46,7 @@ export class PetsEditorPage {
 
   save() {
     var promise: Promise<any>;
+    this.loading = true;
     if (this.pet.id) {
       promise = this.api.put('pets/' + this.pet.id, this.pet);
     } else {
@@ -52,9 +54,14 @@ export class PetsEditorPage {
     }
     promise.then((data) => {
       this.pet = data;
+      this.loading = false;
       this.dismiss();
     })
-      .catch(console.error)
+      .catch((err) => {
+        this.loading = false;
+        this.api.Error(err);
+        console.error(err);
+      })
   }
 
   dismiss() {

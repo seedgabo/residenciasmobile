@@ -28,6 +28,10 @@ export class HomePage {
     this.getSliders();
     this.getNextEvents()
     this.getNews();
+    // this.getCorrespondences();
+  }
+
+  ionViewDidEnter() {
     this.getCorrespondences();
   }
 

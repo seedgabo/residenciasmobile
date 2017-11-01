@@ -5,7 +5,7 @@ import { Api } from "../../providers/api";
 import { Facebook } from '@ionic-native/facebook';
 import { GooglePlus } from '@ionic-native/google-plus';
 
-import {IonicPage} from "ionic-angular";
+import { IonicPage } from "ionic-angular";
 
 @IonicPage()
 @Component({
@@ -15,7 +15,7 @@ import {IonicPage} from "ionic-angular";
 export class Login {
   forgot = false;
   ready = false;
-  servers = {};
+  servers = { "0000": { "url": "http:\/\/residenciasonline.com\/residencias\/public\/", "name": "El Pe\u00f1on", "url_newton": "http:\/\/residenciasonline.com\/newton\/public" }, "1905": { "url": "http:\/\/residenciasonline.com\/aseinteg\/public\/", "name": "Aseinteg Especial", "url_newton": "http:\/\/residenciasonline.com\/newton\/public" }, "0001": { "url": "http:\/\/residenciasonline.com\/aseinteg\/public\/" }, "7000": { "url": "http:\/\/residenciasonline.com\/penon\/public\/", "name": "El Pe\u00f1on", "url_newton": "" }, "3720": { "url": "http:\/\/residenciasonline.com\/chestnut\/public\/", "name": "Prado Chestnut Hill", "url_newton": "" } };
   code = "";
   constructor(public facebook: Facebook, public google: GooglePlus, public navCtrl: NavController, public navParams: NavParams, public api: Api, public alertCtrl: AlertController, public loadingCtrl: LoadingController, public events: Events) {
   }
@@ -31,6 +31,7 @@ export class Login {
       this.api.storage.set('url', server.url);
     }
   }
+
   goBack() {
     this.api.url = null;
     this.api.storage.remove('url');
@@ -171,7 +172,10 @@ export class Login {
         this.servers = data
         this.ready = true
         console.log(this.servers);
-      }, (err) => { console.error(err) });
+      }, (err) => {
+        console.error(err)
+        this.api.Error(err);
+      });
   }
   goTo() {
     this.events.publish('login', {});

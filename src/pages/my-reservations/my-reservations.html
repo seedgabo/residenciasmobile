@@ -24,6 +24,12 @@
       <h2 text-wrap *ngIf="reserv.zone" text-center>
         {{reserv.zone.name}}
       </h2>
+      <h3 text-wrap text-center>
+        <b>{{'literals.status' | trans }}</b>
+        <span>
+          {{'literals.' + reserv.status | trans }}
+        </span>
+      </h3>
 
       <p text-wrap>
         <b>
@@ -33,6 +39,10 @@
           {{ reserv.start | amCalendar }} - {{reserv.end | amCalendar }}
         </span>
       </p>
+
+      <small text-wrap *ngIf="reserv.note">
+        {{reserv.note}}
+      </small>
 
       <small text-wrap *ngIf="reserv.event">
         {{reserv.event.name}}

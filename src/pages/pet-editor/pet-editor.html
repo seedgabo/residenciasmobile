@@ -5,7 +5,7 @@
         {{'crud.add' | trans }}
       </span>
       <span *ngIf="pet.id">
-         {{'crud.edit' | trans }}
+        {{'crud.edit' | trans }}
       </span> {{ 'literals.pet' | trans }}
     </ion-title>
   </ion-navbar>
@@ -50,9 +50,9 @@
 
 <ion-footer>
   <ion-toolbar>
-    <button ion-button full [disabled]="!canSave()" color="secondary" icon-left (click)="save()">
-        <ion-icon class="fa fa-save" ></ion-icon>
-        {{ 'crud.save' | trans }}
+    <button ion-button full [disabled]="!canSave() || loading" color="secondary" icon-left (click)="save()">
+      <ion-icon class="fa fa-save"></ion-icon>
+      {{ 'crud.save' | trans }}
     </button>
   </ion-toolbar>
 </ion-footer>

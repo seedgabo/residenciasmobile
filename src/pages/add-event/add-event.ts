@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { Api } from "../../providers/api";
 declare var moment: any;
-import {IonicPage} from "ionic-angular";
+import { IonicPage } from "ionic-angular";
 
 @IonicPage()
 @Component({
@@ -38,6 +38,7 @@ export class AddEventPage {
     'funeral',
   ];
   zones = [];
+  loading = false;
   constructor(public navCtrl: NavController, public navParams: NavParams, public api: Api) {
   }
 
@@ -51,13 +52,17 @@ export class AddEventPage {
     });
   }
   addEvent() {
+    this.loading = true;
     this.newEvent.creator_id = this.api.user.id;
     this.api.post('events', this.newEvent)
       .then((data) => {
         console.log(data);
+        this.loading = false;
         this.navCtrl.pop();
       })
       .catch((err) => {
+        this.api.Error(err);
+        this.loading = false;
         console.error(err);
       });
   }

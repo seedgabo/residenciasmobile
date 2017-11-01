@@ -3,7 +3,7 @@ import { NavController, NavParams, AlertController } from 'ionic-angular';
 import { Api } from "../../providers/api";
 
 
-import {IonicPage} from "ionic-angular";
+import { IonicPage } from "ionic-angular";
 
 @IonicPage()
 @Component({
@@ -11,8 +11,8 @@ import {IonicPage} from "ionic-angular";
   templateUrl: 'residences.html',
 })
 export class Residences {
-  residences: any=[];
-  
+  residences: any = [];
+
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController, public api: Api) {
@@ -20,7 +20,6 @@ export class Residences {
   }
 
   ionViewDidLoad() {
-    console.log('ya me carge: Residences');
     this.getResidences();
   }
   getResidences() {
@@ -32,17 +31,12 @@ export class Residences {
       })
       .catch((err) => {
         console.error(err);
-        let alert = this.alertCtrl.create({
-          title: "Error",
-          subTitle: 'Ups ocurrio un error al traer datos',
-          buttons: ['OK']
-        });
-        alert.present();
+        this.api.Error(err);
 
       })
   }
 }
-  
+
 
 
 

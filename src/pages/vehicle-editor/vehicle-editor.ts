@@ -18,6 +18,7 @@ export class VehiclesEditorPage {
         type: 'car',
         residence_id: this.api.user.residence_id
     }
+    loading = false;
     constructor(public navCtrl: NavController, public navParams: NavParams, public api: Api) {
         var vehicle = navParams.get('vehicle')
         if (vehicle !== undefined)
@@ -44,6 +45,7 @@ export class VehiclesEditorPage {
 
     save() {
         var promise: Promise<any>;
+        this.loading = true;
         if (this.vehicle.id) {
             promise = this.api.put('vehicles/' + this.vehicle.id, this.vehicle);
         } else {
@@ -52,8 +54,13 @@ export class VehiclesEditorPage {
         promise.then((data) => {
             this.vehicle = data;
             this.dismiss();
+            this.loading = false;
         })
-            .catch(console.error)
+            .catch((err) => {
+                console.error(err);
+                this.loading = false
+                this.api.Error(err);
+            })
     }
 
     dismiss() {
