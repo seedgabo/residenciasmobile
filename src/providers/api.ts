@@ -569,7 +569,7 @@ export class Api {
     this.Echo = undefined;
   }
 
-  pushRegister(appid = "ebf07feb-3c76-4639-8c87-b1e7a2e9ddd8") {
+  pushRegister(appid = "60e79092-443c-401a-be1b-4b1f57ef7446") {
     this.onesignal.startInit(appid, "425679220353");
     this.onesignal.inFocusDisplaying(this.onesignal.OSInFocusDisplayOption.Notification);
     this.onesignal.syncHashedEmail(this.user.email);
