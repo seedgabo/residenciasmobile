@@ -1,5 +1,5 @@
 {
-  "name": "residencias2",
+  "name": "penon-residencias",
   "version": "0.0.1",
   "author": "Ionic Framework",
   "homepage": "http://ionicframework.com/",
@@ -11,9 +11,9 @@
     "ionic:build": "ionic-app-scripts build",
     "ionic:serve": "ionic-app-scripts serve",
     "migrate-to-lazy": "node ./make-lazy-script/migrate-to-lazy-loading.js",
-    "release-android": "ionic cordova build android --prod && code-push release-cordova residencias android -d Android --mandatory",
-    "release-ios": "ionic cordova build ios --prod && code-push release-cordova residencias ios -d Ios --mandatory",
-    "build-android": "cordova build android --release -- --keystore='./residencias.jks' --storePassword=gab23gab --alias=residencias"
+    "release-android": "ionic cordova build android --prod && code-push release-cordova penon android -d Android --mandatory",
+    "release-ios": "ionic cordova build ios --prod && code-push release-cordova penon ios -d Ios --mandatory",
+    "build-android": "cordova build android --release -- --keystore='./residencias.jks' --storePassword=gab23gab --alias=penon"
   },
   "dependencies": {
     "@angular/common": "4.4.3",
