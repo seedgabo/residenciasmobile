@@ -52,8 +52,11 @@ export class Api {
       storage.get('settings').then(settings => { this.settings = settings });
       storage.get('langs').then(langs => { this.langs = langs; console.log(langs) });
       storage.get('residence').then(residence => { this.residence = residence; });
-      storage.get('url').then(url => {
-        this.url = url
+      storage.get('url').then(url_data => {
+        if (url_data)
+          this.url = url_data;
+        else if (window.url)
+          this.url = window.url;
         storage.get('user').then(user => {
           this.user = user
           this.resolve(user);
