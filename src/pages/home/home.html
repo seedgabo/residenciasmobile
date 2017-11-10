@@ -83,9 +83,9 @@
         </span>
       </ion-list-header>
       <ion-item *ngFor="let new of news">
-        <ion-avatar *ngIf="new.image" item-left>
-          <img [src]="new.image.url" alt="">
-        </ion-avatar>
+        <ion-thumbnail item-left>
+          <img *ngIf="new.image" [src]="new.image.url" alt="">
+        </ion-thumbnail>
         {{new.title}}
         <p text-right>
           <span *ngIf="new.user">
