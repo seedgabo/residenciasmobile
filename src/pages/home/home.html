@@ -86,7 +86,10 @@
         <ion-thumbnail item-left>
           <img *ngIf="new.image" [src]="new.image.url" alt="">
         </ion-thumbnail>
-        {{new.title}}
+        <h2>
+          {{new.title}}
+        </h2>
+        <div [innerHTML]="new.text" text-justify></div>
         <p text-right>
           <span *ngIf="new.user">
             {{new.user.name}}
@@ -96,7 +99,6 @@
             {{new.created_at | amCalendar}}
           </small>
         </p>
-        <div [innerHTML]="new.text" text-justify></div>
 
       </ion-item>
       <button ion-button full clear (click)="gotoNews()">

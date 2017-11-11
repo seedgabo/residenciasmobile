@@ -82,6 +82,13 @@ export class ZoneReservationPage {
     if (interval.reserved) {
       return this.viewReservation(interval)
     }
+    if (!this.canReservate(interval)) {
+      return this.alert.create({
+        title: this.api.trans('literals.reservation') + " " + this.api.trans('literals.cancelled'),
+        message: this.api.trans('__.No puedes reservar en este intervalo por que tu o alguien de tu :residence ya reservo en un horario cercano', { residence: this.api.trans('literals.residence') }),
+        buttons: ["OK"]
+      }).present();
+    }
     var alert = this.alert.create({
       title: this.api.trans('literals.reservation') + " " + this.zone.name,
       message: this.api.trans("__.elija la cantidad de personas"),
@@ -112,6 +119,21 @@ export class ZoneReservationPage {
       ]
     })
     alert.present()
+  }
+
+  canReservate(interval) {
+    var reservable = true;
+    this.reservations.forEach((reserv) => {
+      if (reserv.user_id == this.api.user.id || reserv.residence_id == this.api.user.residence_id) {
+        if (moment.utc(reserv.start).format('HH:mm') == moment.utc(interval.start).format('HH:mm')
+          || moment.utc(reserv.start).format('HH:mm') == moment.utc(interval.end).format('HH:mm')
+          || moment.utc(reserv.end).format('HH:mm') == moment.utc(interval.start).format('HH:mm')
+          || moment.utc(reserv.end).format('HH:mm') == moment.utc(interval.end).format('HH:mm')) {
+          reservable = false;
+        }
+      }
+    })
+    return reservable;
   }
 
   viewReservation(interval) {
