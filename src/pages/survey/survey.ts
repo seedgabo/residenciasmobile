@@ -4,7 +4,7 @@ import { NavController, NavParams, AlertController } from 'ionic-angular';
 import { Api } from "../../providers/api";
 import Chart from 'chart.js';
 var funct
-import {IonicPage} from "ionic-angular";
+import { IonicPage } from "ionic-angular";
 
 @IonicPage()
 @Component({
@@ -37,29 +37,41 @@ export class SurveyPage {
   renderChart() {
     var ctx: any = (document.getElementById("surveyChart"))
     ctx = ctx.getContext("2d");
+    var data = [];
+    var labels = [];
+    if (this.survey.response_1) {
+      data.push(this.survey.results[1])
+      labels.push(this.survey.response_1)
+    }
+    if (this.survey.response_2) {
+      data.push(this.survey.results[2])
+      labels.push(this.survey.response_2)
+    }
+    if (this.survey.response_3) {
+      data.push(this.survey.results[3])
+      labels.push(this.survey.response_3)
+    }
+    if (this.survey.response_4) {
+      data.push(this.survey.results[4])
+      labels.push(this.survey.response_4)
+    }
+    if (this.survey.response_5) {
+      data.push(this.survey.results[5])
+      labels.push(this.survey.response_5)
+    }
+    if (this.survey.response_6) {
+      data.push(this.survey.results[6])
+      labels.push(this.survey.response_6)
+    }
     new Chart(ctx, {
       type: 'pie',
       data: {
         datasets: [{
-          data: [
-            this.survey.results[1],
-            this.survey.results[2],
-            this.survey.results[3],
-            this.survey.results[4],
-            this.survey.results[5],
-            this.survey.results[6],
-          ],
+          data: data,
           backgroundColor: ['#2196F3', '#F44336', '#FFC107', '#4CAF50', '#9C27B0', '#E91E63',],
           label: this.api.trans('__.# of Votes'),
         }],
-        labels: [
-          this.survey.response_1,
-          this.survey.response_2,
-          this.survey.response_3,
-          this.survey.response_4,
-          this.survey.response_5,
-          this.survey.response_6,
-        ]
+        labels: labels
       },
       options: {
         responsive: true
