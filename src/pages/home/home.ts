@@ -101,7 +101,7 @@ export class HomePage {
   }
 
   gotoPost(post) {
-    this.navCtrl.push("PostPage", { post: post };)
+    this.navCtrl.push("PostPage", { post: post });
   }
 
 }
