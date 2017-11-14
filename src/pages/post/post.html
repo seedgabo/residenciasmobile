@@ -1,20 +1,17 @@
 <ion-header>
 
-  <ion-navbar xcolor="primary">
-    <button ion-button menuToggle>
+  <ion-navbar color="favorite">
+    <button ion-button menuToggle icon-only>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>{{'literals.posts' | trans }}</ion-title>
+    <ion-title>{{ post.title }}</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content>
-  <ion-refresher (ionRefresh)="getPosts($event)">
-    <ion-refresher-content></ion-refresher-content>
-  </ion-refresher>
-  <ion-card *ngFor="let post of posts; let i=index" (click)="gotoPost(post)">
+  <ion-card>
     <ion-card-header>
       <h3> {{post.title}} </h3>
     </ion-card-header>
@@ -39,16 +36,10 @@
         <small>
           {{post.created_at | amCalendar}}
         </small>
-        <button *ngIf="api.user.id == post.user_id" (click)="deletePost(post,i)" ion-button icon-only clear color="danger">
+        <button *ngIf="api.user.id == post.user_id" (click)="deletePost()" ion-button icon-only clear color="danger">
           <ion-icon name="trash"></ion-icon>
         </button>
       </ion-item>
     </ion-card-content>
   </ion-card>
-  <div style="height:100px"></div>
-  <ion-fab bottom right>
-    <button ion-fab (click)="createPost()" *ngIf="api.settings && api.settings.users_can_create_posts">
-      <ion-icon name="add"></ion-icon>
-    </button>
-  </ion-fab>
 </ion-content>

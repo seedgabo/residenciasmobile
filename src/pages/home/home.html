@@ -82,7 +82,7 @@
           {{'literals.posts' | trans}}
         </span>
       </ion-list-header>
-      <ion-item *ngFor="let new of news">
+      <button ion-item (click)="gotoPost(new)" *ngFor="let new of news">
         <ion-thumbnail item-left>
           <img *ngIf="new.image" [src]="new.image.url" alt="">
         </ion-thumbnail>
@@ -100,7 +100,7 @@
           </small>
         </p>
 
-      </ion-item>
+      </button>
       <button ion-button full clear (click)="gotoNews()">
         {{'literals.view_resource' | trans }} {{'literals.more' | trans }}
       </button>
