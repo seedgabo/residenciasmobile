@@ -3,36 +3,44 @@ import { NavController, NavParams, ViewController, IonicPage } from 'ionic-angul
 import { Api } from "../../providers/api";
 @IonicPage()
 @Component({
-  selector: 'page-create-visit',
-  templateUrl: 'create-visit.html',
+  selector: 'page-create-visit-guest',
+  templateUrl: 'create-visit-guest.html',
 })
-export class CreateVisitPage {
-
-  visitor: any;
-  visitors = [];
+export class CreateVisitGuestPage {
   visit: any = {
     status: 'approved',
+    guest: {
+      name: "",
+      document: "",
+      reason: this.api.trans("literals.delivery")
+    }
   }
   loading = false
   constructor(public navCtrl: NavController, public navParams: NavParams, public api: Api, public viewCtrl: ViewController) {
-    var visitor = navParams.get('visitor');
     var guest = navParams.get('guest');
-    if (Array.isArray(visitor)) {
-      this.visitors = visitor;
-      this.visit.visitors = [];
-      this.visitors.forEach((visitor) => {
-        this.visit.visitors.push(visitor.id);
-      })
-    } else {
-      this.visitor = navParams.get('visitor');
-      this.visit.visitor_id = this.visitor.id;
+    if (guest) {
+      this.visit.guest = guest
     }
-    this.visit.residence_id = this.api.residence.id;
-    this.visit.user_id = this.api.user.id;
+
+    if (navParams.get('residence')) {
+      this.visit.residence_id = navParams.get('residence').id;
+    } else {
+      this.visit.residence_id = this.api.residence.id;
+    }
+
+
+    if (navParams.get('user')) {
+      this.visit.user_id = navParams.get('residence').id;
+    } else {
+      this.visit.user_id = this.api.user.id;
+    }
+
+    if (navParams.get('status')) {
+      this.visit.status = navParams.get('status');
+    }
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad CreateVisitPage');
   }
 
   create() {
@@ -48,12 +56,15 @@ export class CreateVisitPage {
       (err) => {
         this.loading = false
         this.api.Error(err)
-        console.error(err);
       })
   }
 
   dismiss() {
     this.viewCtrl.dismiss();
+  }
+
+  canSave() {
+    return this.visit.guest.name.length > 0 && this.visit.guest.reason.length > 0
   }
 
 }
