@@ -109,6 +109,30 @@ export class VisitorsPage {
       ]
     }).present();
   }
+  more() {
+    this.actionsheet.create({
+      title: this.api.trans('literals.actions'),
+      buttons: [
+        {
+          text: this.api.trans('crud.add') + " " + this.api.trans('literals.person'),
+          icon: 'person-add',
+          cssClass: 'icon-primary',
+          handler: () => { this.addVisitor() }
+        },
+        {
+          text: this.api.trans('crud.add') + " " + this.api.trans('literals.delivery'),
+          icon: 'basket',
+          cssClass: 'icon-favorite',
+          handler: () => {
+            var modal = this.modal.create("CreateVisitGuestPage", {})
+            modal.present();
+            modal.onWillDismiss(() => {
+            })
+          }
+        }
+      ]
+    }).present();
+  }
 
   askFile(visitor) {
     this.visitor_image = visitor;

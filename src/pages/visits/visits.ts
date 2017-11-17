@@ -24,7 +24,7 @@ export class VisitsPage {
   }
 
   getVisits(loading = null) {
-    this.api.get(`visits?with[]=visitor&with[]=user&with[]=visitors&where[residence_id]=${this.api.residence.id}}&limit=500&order[created_at]=desc`)
+    this.api.get(`visits?with[]=visitor&with[]=user&with[]=visitors&where[residence_id]=${this.api.residence.id}}&limit=500&order[created_at]=desc&append[]=guest`)
       .then((data: any) => {
         loading.complete()
         if (data.length == 0) {

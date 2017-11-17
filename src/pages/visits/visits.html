@@ -12,7 +12,7 @@
   </ion-refresher>
   <ion-list [virtualScroll]="visits">
     <button ion-item *virtualItem="let visit" (click)="viewVisit(visit)">
-      <div *ngIf="visit.visitor;else unkown">
+      <div *ngIf="visit.visitor">
         <h2>{{ visit.visitor.name }}
           <span *ngIf="visit.visitors && visit.visitors.length > 1">{{'__.and others' | trans }} {{visit.visitors.length - 1}}</span>
         </h2>
@@ -21,8 +21,20 @@
           {{'literals.user' | trans }}: {{ visit.user.name }}
         </p>
       </div>
-      <ng-template #unkown>
-        {{'literals.visitante desconocido' | trans }}
+      <div *ngIf="visit.guest">
+        <h2>{{ visit.guest.name }}
+        </h2>
+        <p> {{ visit.guest.document}}</p>
+        <small>
+          <b>{{'literals.reason' | trans }}</b>
+          <span>{{ visit.guest.reason }}</span>
+        </small>
+        <p *ngIf="visit.user">
+          {{'literals.user' | trans }}: {{ visit.user.name }}
+        </p>
+      </div>
+      <ng-template *ngIf="!visit.visitor && visit.guest">
+        {{'__.visitante desconocido' | trans }}
       </ng-template>
       <span item-right ion-text [color]="visit.status == 'approved' ? 'success' : 'dark' ">
         {{ 'literals.'+ visit.status | trans }}
