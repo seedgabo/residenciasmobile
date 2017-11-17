@@ -343,6 +343,7 @@ export class Api {
               this.visits.unshift(data.visit);
             var visit = this.visits[0];
             visit.visitor = data.visitor;
+            visit.guest = data.guest;
             visit.visitors = data.visitors;
             visit.creator = data.creator;
             this.visitStatus(visit);
@@ -352,6 +353,7 @@ export class Api {
           console.log("updated visit:", data);
           if (data.visit.residence_id !== this.residence.id) return;
           data.visit.visitor = data.visitor;
+          data.visit.guest = data.guest;
           data.visit.visitors = data.visitors;
           this.events.publish('VisitUpdated', data);
 
@@ -522,6 +524,7 @@ export class Api {
         .listen('VisitConfirm', (data) => {
           console.log("VisitConfirm: ", data);
           data.visit.visitor = data.visitor;
+          data.visit.guest = data.guest;
           data.visit.visitors = data.visitors;
           data.visit.creator = data.creator;
           this.background.unlock();
