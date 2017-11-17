@@ -670,7 +670,9 @@ export class Api {
 
   visitStatus(visit) {
     if (visit.status == 'waiting for confirmation') { return }
-    this.toast.create({ message: this.trans("literals.visit") + " " + this.trans('literals.' + visit.status) + ": " + visit.visitor.name, duration: 12000, showCloseButton: true, closeButtonText: "X", position: "top", cssClass: visit.status }).present();
+    this.toast.create({
+      message: this.trans("literals.visit") + " " + this.trans('literals.' + visit.status) + ": " + (visit.visitor ? visit.visitor.name : visit.guest ? visit.guest.name : ''), duration: 12000, showCloseButton: true, closeButtonText: "X", position: "top", cssClass: visit.status
+    }).present();
     this.playSoundBeep();
   }
 
