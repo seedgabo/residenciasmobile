@@ -1,5 +1,5 @@
 import { Injectable, NgZone } from '@angular/core';
-import { Http, Headers } from '@angular/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import 'rxjs/add/operator/map';
 import { PopoverController, ToastController, Events, Platform, AlertController } from "ionic-angular";
 import { Storage } from '@ionic/storage';
@@ -44,7 +44,7 @@ export class Api {
   pets = [];
   chats = [];
   _events = [];
-  constructor(public http: Http, public storage: Storage, public zone: NgZone, public popover: PopoverController, public toast: ToastController, public events: Events, public background: BackgroundMode, public onesignal: OneSignal, public device: Device, public platform: Platform, public vibration: Vibration, public geolocation: Geolocation, public alert: AlertController) {
+  constructor(public http: HttpClient, public storage: Storage, public zone: NgZone, public popover: PopoverController, public toast: ToastController, public events: Events, public background: BackgroundMode, public onesignal: OneSignal, public device: Device, public platform: Platform, public vibration: Vibration, public geolocation: Geolocation, public alert: AlertController) {
     storage.ready().then(() => {
       storage.get('username').then(username => { this.username = username });
       storage.get('password').then(password => { this.password = password });
@@ -84,8 +84,7 @@ export class Api {
   doLogin() {
     return new Promise((resolve, reject) => {
       this.http.get(this.url + "api/login", { headers: this.setHeaders() })
-        .map(res => res.json())
-        .subscribe(data => {
+        .subscribe((data: any) => {
           this.user = data.user;
           this.residence = data.residence;
           this.settings = data.settings;
@@ -162,7 +161,6 @@ export class Api {
   get(uri) {
     return new Promise((resolve, reject) => {
       this.http.get(this.url + "api/" + uri, { headers: this.setHeaders() })
-        .map(res => res.json())
         .subscribe(data => {
           resolve(data);
         }, error => {
@@ -174,7 +172,6 @@ export class Api {
   post(uri, data) {
     return new Promise((resolve, reject) => {
       this.http.post(this.url + "api/" + uri, data, { headers: this.setHeaders() })
-        .map(res => res.json())
         .subscribe(data => {
           resolve(data);
         }, error => {
@@ -186,7 +183,6 @@ export class Api {
   put(uri, data) {
     return new Promise((resolve, reject) => {
       this.http.put(this.url + "api/" + uri, data, { headers: this.setHeaders() })
-        .map(res => res.json())
         .subscribe(data => {
           resolve(data);
         }, error => {
@@ -198,7 +194,6 @@ export class Api {
   delete(uri) {
     return new Promise((resolve, reject) => {
       this.http.delete(this.url + "api/" + uri, { headers: this.setHeaders() })
-        .map(res => res.json())
         .subscribe(data => {
           resolve(data);
         }, error => {
@@ -221,7 +216,6 @@ export class Api {
   loginOAuth(userData) {
     return new Promise((resolve, reject) => {
       this.http.post(this.url + "api/login/oauth", userData, {})
-        .map(res => res.json())
         .subscribe(data => {
           resolve(data);
         }, error => {
@@ -246,13 +240,13 @@ export class Api {
         // encrypted: false,
         // cluster: 'eu',
         auth:
-        {
-          headers:
           {
-            'Auth-Token': this.user.token,
-            'Authorization': "Basic " + btoa(this.username + ":" + this.password)
+            headers:
+              {
+                'Auth-Token': this.user.token,
+                'Authorization': "Basic " + btoa(this.username + ":" + this.password)
+              }
           }
-        }
 
       });
       this.Echo.private('Application')
@@ -646,12 +640,11 @@ export class Api {
 
 
   private setHeaders() {
-    let headers = new Headers();
+    const headers = "";
     if (this.user && this.user.token)
-      headers.append("Auth-Token", this.user.token);
+      return new HttpHeaders().set("Auth-Token", this.user.token);
     else
-      headers.append("Authorization", "Basic " + btoa(this.username + ":" + this.password));
-    return headers;
+      return new HttpHeaders().set("Authorization", "Basic " + btoa(this.username + ":" + this.password));
   }
 
   private handleData(res) {
