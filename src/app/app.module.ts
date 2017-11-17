@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpModule } from '@angular/http';
 import { IonicStorageModule } from '@ionic/storage';
 import { MomentModule } from 'angular2-moment';
 
@@ -38,7 +38,7 @@ import { DatePickerModule } from 'datepicker-ionic2';
   ],
   imports: [
     BrowserModule,
-    HttpClientModule,
+    HttpModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot(),
     DatePickerModule,

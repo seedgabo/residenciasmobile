@@ -1,5 +1,5 @@
 import { Injectable, NgZone } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Http, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { PopoverController, ToastController, Events, Platform, AlertController } from "ionic-angular";
 import { Storage } from '@ionic/storage';
@@ -44,7 +44,7 @@ export class Api {
   pets = [];
   chats = [];
   _events = [];
-  constructor(public http: HttpClient, public storage: Storage, public zone: NgZone, public popover: PopoverController, public toast: ToastController, public events: Events, public background: BackgroundMode, public onesignal: OneSignal, public device: Device, public platform: Platform, public vibration: Vibration, public geolocation: Geolocation, public alert: AlertController) {
+  constructor(public http: Http, public storage: Storage, public zone: NgZone, public popover: PopoverController, public toast: ToastController, public events: Events, public background: BackgroundMode, public onesignal: OneSignal, public device: Device, public platform: Platform, public vibration: Vibration, public geolocation: Geolocation, public alert: AlertController) {
     storage.ready().then(() => {
       storage.get('username').then(username => { this.username = username });
       storage.get('password').then(password => { this.password = password });
@@ -84,6 +84,7 @@ export class Api {
   doLogin() {
     return new Promise((resolve, reject) => {
       this.http.get(this.url + "api/login", { headers: this.setHeaders() })
+        .map(res => res.json())
         .subscribe((data: any) => {
           this.user = data.user;
           this.residence = data.residence;
@@ -161,6 +162,7 @@ export class Api {
   get(uri) {
     return new Promise((resolve, reject) => {
       this.http.get(this.url + "api/" + uri, { headers: this.setHeaders() })
+        .map(res => res.json())
         .subscribe(data => {
           resolve(data);
         }, error => {
@@ -172,6 +174,7 @@ export class Api {
   post(uri, data) {
     return new Promise((resolve, reject) => {
       this.http.post(this.url + "api/" + uri, data, { headers: this.setHeaders() })
+        .map(res => res.json())
         .subscribe(data => {
           resolve(data);
         }, error => {
@@ -183,6 +186,7 @@ export class Api {
   put(uri, data) {
     return new Promise((resolve, reject) => {
       this.http.put(this.url + "api/" + uri, data, { headers: this.setHeaders() })
+        .map(res => res.json())
         .subscribe(data => {
           resolve(data);
         }, error => {
@@ -194,6 +198,7 @@ export class Api {
   delete(uri) {
     return new Promise((resolve, reject) => {
       this.http.delete(this.url + "api/" + uri, { headers: this.setHeaders() })
+        .map(res => res.json())
         .subscribe(data => {
           resolve(data);
         }, error => {
@@ -216,6 +221,7 @@ export class Api {
   loginOAuth(userData) {
     return new Promise((resolve, reject) => {
       this.http.post(this.url + "api/login/oauth", userData, {})
+        .map(res => res.json())
         .subscribe(data => {
           resolve(data);
         }, error => {
@@ -554,7 +560,6 @@ export class Api {
       // console.log(this.Echo);
     })
   }
-
   stopEcho() {
     this.Echo.leave('Application');
     this.Echo.leave('App.User.' + this.user.id);
@@ -640,11 +645,12 @@ export class Api {
 
 
   private setHeaders() {
-    const headers = "";
+    let headers = new Headers();
     if (this.user && this.user.token)
-      return new HttpHeaders().set("Auth-Token", this.user.token);
+      headers.append("Auth-Token", this.user.token);
     else
-      return new HttpHeaders().set("Authorization", "Basic " + btoa(this.username + ":" + this.password));
+      headers.append("Authorization", "Basic " + btoa(this.username + ":" + this.password));
+    return headers;
   }
 
   private handleData(res) {
