@@ -51,7 +51,7 @@
           </ion-card-header>
           <ion-card-content>
             <p item-right [color]="invoice.status == 'paid'?'success':'danger'" ion-text text-center>
-              {{ invoice.total | currency:'USD':true:'1.2-2' }}
+              {{ invoice.total | currency:'COP':'symbol-narrow':'1.2-2' }}
             </p>
             <ion-item>
               <b>{{'literals.status' | trans }}:</b>
@@ -95,7 +95,7 @@
         {{'literals.' + invoice.status | trans}}
       </span>
       <p item-right [color]="invoice.status == 'paid'?'success':'danger'" ion-text text-center>
-        {{ invoice.total | currency:'USD':true:'1.2-2' }}
+        {{ invoice.total | currency:'COP':'symbol-narrow':'1.2-2' }}
       </p>
     </button>
   </ion-list>
