@@ -15,7 +15,7 @@
     <ion-item *ngFor="let item of invoice.items">
       <b>{{item.concept}}</b>
       <small>({{item.quantity}})</small>
-      <span item-right>{{ item.amount | currency:'USD':true:'1.2-2' }}</span>
+      <span item-right>{{ item.amount | currency:'COP':'symbol-narrow':'1.2-2' }}</span>
     </ion-item>
   </ion-list>
 </ion-content>

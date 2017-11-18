@@ -29,6 +29,14 @@
         </ion-label>
       </ion-item>
     </div>
+    <div *ngIf="visit.guest">
+      <ion-item>
+        <b>{{'literals.visitor' | trans }}</b>
+        <ion-label>
+          <span item-right>{{visit.guest.name}}</span>
+        </ion-label>
+      </ion-item>
+    </div>
     <ion-item>
       <ion-label inline> {{'literals.status' | trans }}</ion-label>
       <ion-select [(ngModel)]="visit.status" (ionChange)="updateVisit()">

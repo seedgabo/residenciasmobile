@@ -100,5 +100,9 @@ export class HomePage {
     this.navCtrl.push('CorrespondencesPage');
   }
 
+  gotoPost(post) {
+    this.navCtrl.push("PostPage", { post: post });
+  }
+
 }
 

@@ -44,7 +44,7 @@
         <button ion-item (click)="gotoInvoices()">
           <ion-icon name="cash" item-left></ion-icon>
           <b>{{'literals.debt' | trans }}</b>
-          <span item-right> {{ api.residence.debt | currency:'USD':true:'1.2-2' }} </span>
+          <span item-right> {{ api.residence.debt | currency:'COP':'symbol-narrow':'1.2-2' }} </span>
         </button>
 
         <button *ngIf="api.user && api.modules.correspondences" ion-item (click)="gotoCorrespondences()">
@@ -82,7 +82,7 @@
           {{'literals.posts' | trans}}
         </span>
       </ion-list-header>
-      <ion-item *ngFor="let new of news">
+      <button ion-item (click)="gotoPost(new)" *ngFor="let new of news">
         <ion-thumbnail item-left>
           <img *ngIf="new.image" [src]="new.image.url" alt="">
         </ion-thumbnail>
@@ -100,7 +100,7 @@
           </small>
         </p>
 
-      </ion-item>
+      </button>
       <button ion-button full clear (click)="gotoNews()">
         {{'literals.view_resource' | trans }} {{'literals.more' | trans }}
       </button>

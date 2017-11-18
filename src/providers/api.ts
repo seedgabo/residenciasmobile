@@ -85,7 +85,7 @@ export class Api {
     return new Promise((resolve, reject) => {
       this.http.get(this.url + "api/login", { headers: this.setHeaders() })
         .map(res => res.json())
-        .subscribe(data => {
+        .subscribe((data: any) => {
           this.user = data.user;
           this.residence = data.residence;
           this.settings = data.settings;
@@ -246,13 +246,13 @@ export class Api {
         // encrypted: false,
         // cluster: 'eu',
         auth:
-        {
-          headers:
           {
-            'Auth-Token': this.user.token,
-            'Authorization': "Basic " + btoa(this.username + ":" + this.password)
+            headers:
+              {
+                'Auth-Token': this.user.token,
+                'Authorization': "Basic " + btoa(this.username + ":" + this.password)
+              }
           }
-        }
 
       });
       this.Echo.private('Application')
@@ -335,7 +335,7 @@ export class Api {
 
 
         .listen('VisitCreated', (data) => {
-          if (data.visitor.residence_id != this.residence.id) return;
+          if (data.visit.residence_id != this.residence.id) return;
           console.log("created vist:", data);
 
           this.zone.run(() => {
@@ -343,6 +343,7 @@ export class Api {
               this.visits.unshift(data.visit);
             var visit = this.visits[0];
             visit.visitor = data.visitor;
+            visit.guest = data.guest;
             visit.visitors = data.visitors;
             visit.creator = data.creator;
             this.visitStatus(visit);
@@ -352,6 +353,7 @@ export class Api {
           console.log("updated visit:", data);
           if (data.visit.residence_id !== this.residence.id) return;
           data.visit.visitor = data.visitor;
+          data.visit.guest = data.guest;
           data.visit.visitors = data.visitors;
           this.events.publish('VisitUpdated', data);
 
@@ -376,7 +378,7 @@ export class Api {
         })
         .listen('VisitDeleted', (data) => {
           console.log("deleted visitor:", data);
-          if (data.visitor.residence_id != this.residence.id) return;
+          if (data.visit.residence_id != this.residence.id) return;
 
           var visit = this.visits.findIndex((visit) => {
             return visit.id === data.visit.id;
@@ -491,7 +493,7 @@ export class Api {
         .listen('EventDeleted', (data) => {
           console.log("deleted event:", data);
 
-          var event = this.visits.findIndex((visit) => {
+          var event = this.visits.findIndex((event) => {
             return event.id === data.event.id;
           });
           this.zone.run(() => {
@@ -522,6 +524,7 @@ export class Api {
         .listen('VisitConfirm', (data) => {
           console.log("VisitConfirm: ", data);
           data.visit.visitor = data.visitor;
+          data.visit.guest = data.guest;
           data.visit.visitors = data.visitors;
           data.visit.creator = data.creator;
           this.background.unlock();
@@ -560,7 +563,6 @@ export class Api {
       // console.log(this.Echo);
     })
   }
-
   stopEcho() {
     this.Echo.leave('Application');
     this.Echo.leave('App.User.' + this.user.id);
@@ -677,7 +679,9 @@ export class Api {
 
   visitStatus(visit) {
     if (visit.status == 'waiting for confirmation') { return }
-    this.toast.create({ message: this.trans("literals.visit") + " " + this.trans('literals.' + visit.status) + ": " + visit.visitor.name, duration: 12000, showCloseButton: true, closeButtonText: "X", position: "top", cssClass: visit.status }).present();
+    this.toast.create({
+      message: this.trans("literals.visit") + " " + this.trans('literals.' + visit.status) + ": " + (visit.visitor ? visit.visitor.name : visit.guest ? visit.guest.name : ''), duration: 12000, showCloseButton: true, closeButtonText: "X", position: "top", cssClass: visit.status
+    }).present();
     this.playSoundBeep();
   }
 

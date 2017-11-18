@@ -7,9 +7,9 @@ import { RoundProgressModule } from 'angular-svg-round-progressbar';
 @NgModule({
   declarations: [ProfilePage],
   imports: [
+    RoundProgressModule,
     IonicPageModule.forChild(ProfilePage),
     PipesModule,
-    RoundProgressModule,
   ],
 })
 export class ProfilePageModule { }

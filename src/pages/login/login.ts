@@ -173,7 +173,7 @@ export class Login {
   getServers() {
     this.api.http.get('http://residenciasonline.com/residencias/public/servers.json')
       .map(res => res.json())
-      .subscribe(data => {
+      .subscribe((data: any) => {
         this.servers = data
         this.ready = true
         console.log(this.servers);
@@ -182,6 +182,7 @@ export class Login {
         this.api.Error(err);
       });
   }
+
   goTo() {
     this.events.publish('login', {});
     this.navCtrl.setRoot('HomePage');

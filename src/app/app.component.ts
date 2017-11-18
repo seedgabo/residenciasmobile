@@ -7,7 +7,7 @@ import { BackgroundMode } from '@ionic-native/background-mode';
 import { Deeplinks } from "@ionic-native/deeplinks";
 import { Api } from "../providers/api";
 import { AppMinimize } from "@ionic-native/app-minimize";
-
+declare var window: any;
 @Component({
   templateUrl: 'app.html'
 })
@@ -160,7 +160,9 @@ export class MyApp {
       this.nav.setRoot('Login').then(() => {
         this.api.stopEcho();
         this.api.username = ""
-        this.api.url = ""
+        if (!window.url) {
+          this.api.url = ""
+        };
         this.api.user = null;
         this.api.password = ""
         this.api.residence = null;
