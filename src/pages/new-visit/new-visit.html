@@ -2,13 +2,20 @@
   <ion-toolbar color="primary">
     <ion-title>
       {{ '__.you have a new visit' | trans }}
+      <span *ngIf="visit.guest && visit.guest.reason"> | {{visit.guest.reason}}</span>
     </ion-title>
   </ion-toolbar>
   <div text-center *ngIf="visit.visitor">
     <img [src]="visit.visitor.image_url" alt="" style="border-radius:50%; height:70px">
   </div>
+  <div text-center *ngIf="visit.guest && visit.guest.image">
+    <img [src]="visit.visitor.image_url" alt="" style="border-radius:50%; height:70px">
+  </div>
   <h4 text-center *ngIf="visit.visitor">
     {{ visit.visitor.name }}
+  </h4>
+  <h4 text-center *ngIf="visit.guest">
+    {{ visit.guest.name }}
   </h4>
   <h4 text-center *ngIf="visit.creator">
     <b>{{'literals.creator' | trans }}:</b> {{ visit.creator.name }}

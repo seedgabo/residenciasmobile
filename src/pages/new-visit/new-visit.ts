@@ -17,8 +17,8 @@ export class NewVisitPage {
     this.visit = navParams.get('visit');
     this.api = navParams.get('api');
     console.log(this.visit);
-    if (!this.visit || !this.visit.visitor) {
-      this.api.get(`visits?where[residence_id]=${this.api.user.residence_id}&limit=1&order[created_at]=desc`)
+    if (!this.visit || (!this.visit.guest && !this.visit.visitor)) {
+      this.api.get(`visits?where[residence_id]=${this.api.user.residence_id}&limit=1&order[created_at]=desc&append[]=guest`)
         .then((data) => {
           this.visit = data[0];
           this.getVisit();
@@ -36,7 +36,7 @@ export class NewVisitPage {
 
 
   getVisit() {
-    this.api.get(`visits/${this.visit.id}?with[]=visitor&with[]=vehicle&with[]=visitors&with[]=user&with[]=creator`)
+    this.api.get(`visits/${this.visit.id}?with[]=visitor&with[]=vehicle&with[]=visitors&with[]=user&with[]=creator&&append[]=guest`)
       .then((data) => {
         this.visit = data;
         console.log(this.visit);
