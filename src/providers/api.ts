@@ -335,7 +335,7 @@ export class Api {
 
 
         .listen('VisitCreated', (data) => {
-          if (data.visitor.residence_id != this.residence.id) return;
+          if (data.visit.residence_id != this.residence.id) return;
           console.log("created vist:", data);
 
           this.zone.run(() => {
@@ -378,7 +378,7 @@ export class Api {
         })
         .listen('VisitDeleted', (data) => {
           console.log("deleted visitor:", data);
-          if (data.visitor.residence_id != this.residence.id) return;
+          if (data.visit.residence_id != this.residence.id) return;
 
           var visit = this.visits.findIndex((visit) => {
             return visit.id === data.visit.id;
@@ -493,7 +493,7 @@ export class Api {
         .listen('EventDeleted', (data) => {
           console.log("deleted event:", data);
 
-          var event = this.visits.findIndex((visit) => {
+          var event = this.visits.findIndex((event) => {
             return event.id === data.event.id;
           });
           this.zone.run(() => {
