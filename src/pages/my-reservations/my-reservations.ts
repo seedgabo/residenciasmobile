@@ -69,9 +69,12 @@ export class MyReservationsPage {
   }
 
   actions(reserv) {
-    this.actionsheet.create({
+    var sheet = this.actionsheet.create({
       title: this.api.trans('literals.actions') + " " + this.api.trans('literals.reservation'),
-      buttons: [{
+    })
+
+    if (this.canCancel(reserv)) {
+      sheet.addButton({
         text: this.api.trans("crud.cancel") + " " + this.api.trans('literals.reservation'),
         icon: 'remove-circle',
         role: 'destructive',
@@ -79,8 +82,26 @@ export class MyReservationsPage {
         handler: () => {
           this.cancelReservation(reserv);
         }
-      }]
-    }).present()
+      })
+    }
+
+
+    sheet.addButton({
+      text: this.api.trans('crud.cancel'),
+      icon: 'close',
+      role: 'cancel',
+      handler: () => { }
+    })
+
+    sheet.present()
+  }
+
+  canCancel(reserv) {
+    var hours = this.api.settings.hours_to_cancel_reservation
+    if (!hours) {
+      hours = 24;
+    }
+    return moment(reserv.start).subtract(hours, "hours") <= moment()
   }
 
   cancelReservation(reservation) {
@@ -132,6 +153,7 @@ export class MyReservationsPage {
         console.error(error);
       })
   }
+
 
 
 }

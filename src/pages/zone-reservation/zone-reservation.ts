@@ -60,7 +60,7 @@ export class ZoneReservationPage {
   }
 
   getReservations() {
-    this.api.get(`reservations?where[zone_id]=${this.zone.id}&whereDateBetween[start]=${this.date.format("YYYY-MM-DD")},${this.date.clone().add(1, 'd').format("YYYY-MM-DD")}`)
+    this.api.get(`reservations?whereNot[status]=${'cancelled'}&whereNot[status]=${'rejected'}&${this.zone.id}&whereDateBetween[start]=${this.date.format("YYYY-MM-DD")},${this.date.clone().add(1, 'd').format("YYYY-MM-DD")}`)
       .then((data: any) => {
         this.reservations = data;
         console.log(data);
