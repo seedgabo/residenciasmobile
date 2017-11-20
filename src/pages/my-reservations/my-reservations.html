@@ -15,7 +15,7 @@
 </ion-header>
 <ion-content>
   <ion-list *ngIf="view == 'list'">
-    <ion-item *ngFor="let reserv of reservations">
+    <ion-item *ngFor="let reserv of reservations" (click)="actions(reserv)">
 
       <ion-thumbnail item-left *ngIf="reserv.zone && reserv.zone.image">
         <img [src]="reserv.zone.image.url" alt="">
