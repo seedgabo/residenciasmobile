@@ -1,7 +1,7 @@
 import { Api } from './../../providers/api';
 import { Component } from '@angular/core';
 import { NavController, NavParams, ViewController, LoadingController } from 'ionic-angular';
-import {IonicPage} from "ionic-angular";
+import { IonicPage } from "ionic-angular";
 
 @IonicPage()
 @Component({
@@ -15,7 +15,11 @@ export class PaymentReportPage {
   transaction = "deposit";
   constructor(public navCtrl: NavController, public navParams: NavParams, public viewctrl: ViewController, public api: Api, public loading: LoadingController) {
     this.invoice = navParams.get('invoice');
-    this.amount = this.invoice.total - this.invoice.partially_paid;
+    this.amount = this.invoice.total;
+    if (this.amount < 0) {
+      this.amount = 0;
+    }
+    this.amount = Math.ceil(this.amount);
   }
 
   ionViewDidLoad() {
@@ -29,7 +33,10 @@ export class PaymentReportPage {
         loading.dismiss();
         this.dismiss();
       })
-      .catch(console.error)
+      .catch((err) => {
+        this.api.Error(err);
+        loading.dismiss();
+      })
   }
   dismiss() {
     this.viewctrl.dismiss();

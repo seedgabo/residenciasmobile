@@ -100,6 +100,7 @@ export class InvoicesPage {
   viewInvoice(invoice) {
     this.navCtrl.push('InvoicePage', { invoice: invoice });
   }
+
   reportPayment(invoice) {
     var popover = this.popover.create('PaymentReportPage', { invoice: invoice });
     popover.present();
