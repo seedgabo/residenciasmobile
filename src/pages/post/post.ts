@@ -8,6 +8,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class PostPage {
   post: any = {};
+  tap = '100%';
   constructor(public navCtrl: NavController, public navParams: NavParams, public api: Api) {
     this.post = navParams.get('post');
   }
@@ -37,6 +38,21 @@ export class PostPage {
       .catch((err) => {
         this.api.Error(err);
       });
+  }
+
+  tapEvent(e) {
+    if (this.tap == '500px') {
+      this.tap = '600px';
+    }
+    else if (this.tap == '600px') {
+      this.tap = '700px';
+    }
+    else if (this.tap == '700px') {
+      this.tap = '100%';
+    }
+    else {
+      this.tap = '500px';
+    }
   }
 
 }
