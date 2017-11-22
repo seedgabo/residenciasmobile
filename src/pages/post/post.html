@@ -11,35 +11,38 @@
 
 
 <ion-content>
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title> {{post.title}} </ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <div text-center *ngIf="post.image">
-        <img [src]="post.image.url" style="margin: 0 auto; max-width:100%;">
-      </div>
-      <div [innerHTML]="post.text" text-justify>
-      </div>
-      <ion-chip *ngFor="let tag of post.tags;let i = index">
-        <ion-label>
-          {{tag.name}}
-        </ion-label>
-      </ion-chip>
-      <ion-item *ngIf="post.user" text-justify>
-        <ion-avatar item-left>
-          <img [src]="post.user.image_url" alt="profile" style="width:40px;height:40px; border-radius:50%">
-        </ion-avatar>
-        <p *ngIf="post.user">
-          {{post.user.name}}
-        </p>
-        <small>
-          {{post.created_at | amCalendar}}
-        </small>
-        <button *ngIf="api.user.id == post.user_id" (click)="deletePost()" ion-button icon-only clear color="danger">
-          <ion-icon name="trash"></ion-icon>
-        </button>
-      </ion-item>
-    </ion-card-content>
-  </ion-card>
+  <!-- <ion-card> -->
+  <ion-card-header>
+    <ion-card-title text-wrap> {{post.title}} </ion-card-title>
+  </ion-card-header>
+  <!-- <ion-card-content> -->
+  <ion-scroll zooming="true" direction="xy" delegate-handle="zoom-pane" class="zoom-pane" min-zoom="1" scrollbar-x="false"
+    scrollbar-y="false" overflow-scroll="false" style="max-height:95%;height:95%;width:90%;margin-left:5%;">
+    <div text-center *ngIf="post.image">
+      <img [src]="post.image.url" style="margin: 0 auto; max-width:100%;">
+    </div>
+    <div [innerHTML]="post.text" text-justify>
+    </div>
+    <ion-chip *ngFor="let tag of post.tags;let i = index">
+      <ion-label>
+        {{tag.name}}
+      </ion-label>
+    </ion-chip>
+    <ion-item *ngIf="post.user" text-justify>
+      <ion-avatar item-left>
+        <img [src]="post.user.image_url" alt="profile" style="width:40px;height:40px; border-radius:50%">
+      </ion-avatar>
+      <p *ngIf="post.user">
+        {{post.user.name}}
+      </p>
+      <small>
+        {{post.created_at | amCalendar}}
+      </small>
+      <button *ngIf="api.user.id == post.user_id" (click)="deletePost()" ion-button icon-only clear color="danger">
+        <ion-icon name="trash"></ion-icon>
+      </button>
+    </ion-item>
+  </ion-scroll>
+  <!-- </ion-card-content> -->
+  <!-- </ion-card> -->
 </ion-content>

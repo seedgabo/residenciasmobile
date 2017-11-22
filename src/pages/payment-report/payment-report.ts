@@ -15,7 +15,7 @@ export class PaymentReportPage {
   transaction = "deposit";
   constructor(public navCtrl: NavController, public navParams: NavParams, public viewctrl: ViewController, public api: Api, public loading: LoadingController) {
     this.invoice = navParams.get('invoice');
-    this.amount = this.invoice.total;
+    this.amount = this.invoice.value - this.invoice.partially_paid;
     if (this.amount < 0) {
       this.amount = 0;
     }
