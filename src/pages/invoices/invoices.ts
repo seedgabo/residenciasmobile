@@ -17,6 +17,7 @@ export class InvoicesPage {
   types = 'all'
   toShow = [];
   view = 'grid'
+  loading = true;
   constructor(public navCtrl: NavController, public navParams: NavParams, public api: Api, public transfer: Transfer, public file: File, public fileOpener: FileOpener, public actionsheet: ActionSheetController, public popover: PopoverController) {
   }
 
@@ -30,6 +31,7 @@ export class InvoicesPage {
         console.log(data);
         this.api.invoices = data;
         this.filter()
+        this.loading = false;
         if (refresher != null)
           refresher.complete();
       })
@@ -37,6 +39,7 @@ export class InvoicesPage {
         console.error(err);
         if (refresher != null)
           refresher.complete();
+        this.loading = false;
 
       });
   }

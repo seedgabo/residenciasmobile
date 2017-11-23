@@ -30,7 +30,9 @@
 
 
 <ion-content>
-
+  <div text-center>
+    <ion-spinner color="primary" *ngIf="loading"></ion-spinner>
+  </div>
   <ion-grid *ngIf="view === 'grid'">
     <ion-row>
       <ion-col col-12 col-md-6 *ngFor="let invoice of toShow">
