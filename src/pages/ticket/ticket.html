@@ -23,6 +23,14 @@
     <span>{{'literals.'+ ticket. status | trans }}</span>
   </p>
 
+  <div class="form-add-comment" *ngIf="adding">
+    <ion-item>
+      <ion-label floating>{{'literals.comment'}}</ion-label>
+      <ion-textarea [(ngModel)]="new_comment.text"></ion-textarea>
+    </ion-item>
+    <button ion-button color="secondary" full clear (click)="addComent()" [disabled]="loading || !canAddComent()" >{{'crud.save'| trans }}</button>
+  </div>
+
   <ion-card *ngIf="ticket.comments" >
     <ion-card-title> {{'literals.comments' | trans }}</ion-card-title>
     <ion-list>

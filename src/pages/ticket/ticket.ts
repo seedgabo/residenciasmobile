@@ -8,6 +8,12 @@ import { Api } from '../../providers/api';
 })
 export class TicketPage {
   ticket;
+  new_comment = {
+    text: "",
+    user_id: this.api.user.id
+  }
+  loading = false;
+  adding =false;
   constructor(public navCtrl: NavController, public navParams: NavParams, public api:Api) {
     this.ticket = navParams.get("ticket")
   }
@@ -24,6 +30,25 @@ export class TicketPage {
     .catch((err)=>{
       this.api.Error(err);
     })
+  }
+
+  canAddComment(){
+    this.new_comment.text.length > 3;
+  }
+
+  addComent(){
+      this.loading = true;
+      this.api.post("comments",this.new_comment)
+      .then((data)=>{
+          this.ticket.comments.push(data);
+          this.loading=false;
+          this.new_comment.text = "";
+          this.adding = false;
+      })
+      .catch((err)=>{
+        this.api.Error(err);
+        this.loading=false;
+      })
   }
 
 }

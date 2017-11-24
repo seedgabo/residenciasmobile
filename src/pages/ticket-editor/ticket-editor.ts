@@ -23,7 +23,9 @@ export class TicketEditorPage {
   ]
   loading = false
   constructor(public navCtrl: NavController, public navParams: NavParams,public viewctrl:ViewController, public api:Api) {
-    this.ticket = navParams.get('ticket')
+    if(navParams.get('ticket')){
+      this.ticket = navParams.get('ticket')
+    }
   }
 
   ionViewDidLoad() {

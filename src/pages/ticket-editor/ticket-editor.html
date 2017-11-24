@@ -1,7 +1,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title> {{'crud.' + (ticket.id ? 'add' : 'update' | trans )}} {{'literal.ticket' | trans }}  </ion-title>
+    <ion-title> {{'crud.' + (ticket.id ? 'add' : 'update') | trans }} {{ 'literals.ticket' | trans }}  </ion-title>
     <ion-buttons end>
       <button ion-button icon-only clear (click)="dismiss()">
         <ion-icon name="close"></ion-icon>
@@ -15,15 +15,15 @@
 <ion-content padding>
   <ion-list>
     <ion-item>
-      <ion-label floating>{{'lierals.subject' | trans }}</ion-label>
+      <ion-label floating>{{'literals.subject' | trans }}</ion-label>
       <ion-input [(ngModel)]="ticket.subject" ></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label floating>{{'lierals.text' | trans }}</ion-label>
+      <ion-label floating>{{'literals.text' | trans }}</ion-label>
       <ion-textarea [(ngModel)]="ticket.text" ></ion-textarea>
     </ion-item>
     <ion-item>
-      <ion-label floating>{{'lierals.status' | trans }}</ion-label>
+      <ion-label floating>{{'literals.status' | trans }}</ion-label>
       <ion-select [(ngModel)]="ticket.status" [disabled]="!ticket.id">
         <ion-option *ngFor="let status of statuses" [value]="status" >
          {{'literals.' + status | trans }}
