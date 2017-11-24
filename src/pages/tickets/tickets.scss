@@ -1,0 +1,48 @@
+page-tickets {
+    .ticket-item{
+        &.open {
+            .indicator{
+                height:39px;
+                border-left:3px solid color($colors, 'secondary');
+            }
+        }
+
+        &.closed {
+            .indicator {
+                height: 39px;
+                border-left: 3px solid color($colors, 'dark');
+            }
+
+        }
+
+        &.in.proccess {
+            .indicator {
+                height: 39px;
+                border-left: 3px solid color($colors, 'warning');
+            }
+
+        }
+
+        &.rejected {
+            .indicator {
+                height: 39px;
+                border-left: 3px solid color($colors, 'danger');
+            }
+
+        }
+
+
+        .open{
+            color: color($colors,'secondary')
+        }
+        .closed{
+            color: color($colors,'dark')
+        }
+        .in.proccess{
+            color: color($colors,'warning')
+        }
+        .rejected{
+            color: color($colors,'danger')
+        }
+    }
+}

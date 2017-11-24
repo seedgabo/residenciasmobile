@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>{{'literals.tickets' | trans }}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content>
+  <ion-refresher (ionRefresh)="getTickets($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  
+  <ion-list [virtualScroll]="tickets">
+    <button ion-item *virtualItem="let ticket" (click)="actions(ticket)" class="ticket-item">
+      <span item-left class="indicator" ></span>
+      <h2>{{ticket.subject}}</h2>
+      <h3 ion-text [ngClass]="ticket.status" >{{ticket.status}}</h3>
+      <p><b>
+        {{ 'crud.updated_at'  | trans }}
+      </b> {{ticket.updated_at | amCalendar }}</p>
+      <span text-right>
+        <ion-badge color="favorite">
+          {{ticket.comments_count}}
+        </ion-badge>
+      </span>
+    </button>
+  </ion-list>
+
+  <div *ngIf="tickets  && tickets.length == 0" text-center>
+    <img src="assets/logo-happy.png" alt="Good" style="margin: 0 auto; height: 200px;width:50%">
+    <h2 ion-text color="secondary">
+      {{'__.no hay tickets' | trans }}
+    </h2>
+  </div>
+
+  <ion-fab bottom right>
+    <button ion-fab color="favorite" (click)="addTicket()" >
+      <ion-icon name="add"></ion-icon>
+    </button>
+  </ion-fab>
+</ion-content>

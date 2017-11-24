@@ -94,6 +94,10 @@ export class HomePage {
       }
     })
   }
+  gotoTickets(){
+    this.navCtrl.push('TicketsPage');
+
+  }
 
   gotoCorrespondences() {
     this.navCtrl.push('CorrespondencesPage');
