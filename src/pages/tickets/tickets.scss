@@ -33,16 +33,20 @@ page-tickets {
 
 
         .open{
-            color: color($colors,'secondary')
+            background-color: color($colors,'secondary');
+            color: white;
         }
         .closed{
-            color: color($colors,'dark')
+            background-color: color($colors,'dark');
+            color: white;
         }
         .in.proccess{
-            color: color($colors,'warning')
+            background-color: color($colors,'warning');
+            color: white;
         }
         .rejected{
-            color: color($colors,'danger')
+            background-color: color($colors,'danger');
+            color: white;
         }
     }
 }

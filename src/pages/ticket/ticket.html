@@ -1,41 +1,62 @@
 <ion-header>
   <ion-navbar color="primary">
-    <button  ion-button icon-only menuToggle>
+    <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>{{ticket.subject}}</ion-title>
   </ion-navbar>
 
 </ion-header>
-<ion-content padding>
+<ion-content>
 
   <ion-card>
-    <ion-card-header>
-      {{ticket.subject}}
+    <ion-card-header text-center>
+      <span ion-text color="primary">
+        {{ticket.subject}}
+      </span>
     </ion-card-header>
     <ion-card-content>
       <div [innerHTML]="ticket.text"></div>
     </ion-card-content>
   </ion-card>
 
-  <p>
+  <h5 padding >
     <b><span ion-text color="primary">{{'literals.status' | trans }}</span></b>
     <span>{{'literals.'+ ticket. status | trans }}</span>
-  </p>
+  </h5>
 
   <div class="form-add-comment" *ngIf="adding">
     <ion-item>
-      <ion-label floating>{{'literals.comment'}}</ion-label>
+      <ion-label floating>{{'literals.comment' | trans }}</ion-label>
       <ion-textarea [(ngModel)]="new_comment.text"></ion-textarea>
     </ion-item>
-    <button ion-button color="secondary" full clear (click)="addComent()" [disabled]="loading || !canAddComent()" >{{'crud.save'| trans }}</button>
+    <button ion-button color="secondary" full clear (click)="addComment()" 
+    [disabled]="loading || !canAddComment()" >{{'crud.save'| trans }}</button>
   </div>
 
   <ion-card *ngIf="ticket.comments" >
-    <ion-card-title> {{'literals.comments' | trans }}</ion-card-title>
     <ion-list>
+      <ion-list-header>
+        <h3>
+          <span> {{'literals.comments' | trans }}</span>
+        </h3>
+        <button ion-button color="primary" clear small (click)="adding=true" item-right>
+          {{ 'crud.add' | trans }} {{ 'literals.comment' | trans }}
+        </button>
+      </ion-list-header>
       <ion-item *ngFor="let comment of ticket.comments">
-        {{ comment.text }}
+        <ion-avatar item-lef *ngIf="comment.user && comment.user.image_url"t>
+          <img [src]="comment.user.image_url" alt="profile" style="width:40px;height:40px; border-radius:50%">
+        </ion-avatar>
+        <p>
+          {{ comment.text }}
+        </p>
+        <p *ngIf="comment.user" text-right>
+            {{comment.user.name}}
+        </p>
+        <small text-right>
+          {{comment.created_at | amCalendar}}
+        </small>
       </ion-item>
     </ion-list>
   </ion-card>

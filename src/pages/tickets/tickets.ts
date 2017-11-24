@@ -53,7 +53,7 @@ export class TicketsPage {
        }
     })
     sheet.addButton({
-      text: this.api.trans('crud.update') + " " + this.api.trans("literals.ticket"),
+      text: this.api.trans('crud.edit') + " " + this.api.trans("literals.ticket"),
       handler: () => {
         this.editTicket(ticket)
        }
@@ -92,14 +92,7 @@ export class TicketsPage {
   }
 
   viewTicket(ticket){
-    var modal = this.modal.create("TicketPage",{ticket:ticket})
-    modal.present();
-    modal.onWillDismiss((data)=>{
-      if(data && data.ticket){
-          this._tickets.push(data.ticket);
-          this.filter();
-      }
-    })
+    this.navCtrl.push("TicketPage",{ticket:ticket})
   }
 
 }

@@ -11,14 +11,14 @@
   </ion-refresher>
   
   <ion-list [virtualScroll]="tickets">
-    <button ion-item *virtualItem="let ticket" (click)="actions(ticket)" class="ticket-item">
-      <span item-left class="indicator" ></span>
+    <button ion-item *virtualItem="let ticket" (click)="actions(ticket)" class="ticket-item" [ngClass]="ticket.status" >
+      <span item-left class="indicator"></span>
       <h2>{{ticket.subject}}</h2>
-      <h3 ion-text [ngClass]="ticket.status" >{{ticket.status}}</h3>
+      <ion-badge ion-text [ngClass]="ticket.status" >{{'literals.'+ ticket.status | trans }}</ion-badge>
       <p><b>
-        {{ 'crud.updated_at'  | trans }}
+        {{ '__.updated_at'  | trans }}
       </b> {{ticket.updated_at | amCalendar }}</p>
-      <span text-right>
+      <span item-right>
         <ion-badge color="favorite">
           {{ticket.comments_count}}
         </ion-badge>

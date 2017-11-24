@@ -23,20 +23,23 @@ export class TicketPage {
   }
 
   getTicket(){
+    this.loading = true;
     this.api.get(`tickets/${this.ticket.id}?with[]=comments&with[]=comments.user&with[]=comments.user.residence`)
     .then((data)=>{
+        this.loading = false;
         this.ticket = data;
-    })
-    .catch((err)=>{
-      this.api.Error(err);
+      })
+      .catch((err)=>{
+        this.api.Error(err);
+        this.loading = false;
     })
   }
 
   canAddComment(){
-    this.new_comment.text.length > 3;
+    return this.new_comment.text.length > 3;
   }
 
-  addComent(){
+  addComment(){
       this.loading = true;
       this.api.post("comments",this.new_comment)
       .then((data)=>{
