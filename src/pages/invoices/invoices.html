@@ -95,7 +95,7 @@
       <p *ngIf="invoice.type === 'normal'">
         {{'crud.date' | trans }}:{{ invoice.date | amCalendar }}
       </p>
-      <b>{{'literals.status' | trans }}:</b>
+      <p ion-text [color]="invoice.status == 'paid' ? 'secondary' :invoice.status == 'unpaid' ? 'danger':'dark'" >{{'literals.status' | trans }}:</b>
       <span>
         {{'literals.' + invoice.status | trans}}
       </span>

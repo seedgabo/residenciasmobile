@@ -26,7 +26,7 @@ export class InvoicesPage {
   }
 
   getInvoices(refresher = null) {
-    this.api.get(`invoices?order[date]=desc&orWhere[residence_id]=${this.api.user.residence_id}&orWhere[user_id]=${this.api.user.id}&with[]=user&with[]=receipts&with[]=items&take=50`)
+    this.api.get(`invoices?order[date]=desc&orWhere[residence_id]=${this.api.user.residence_id}&orWhere[user_id]=${this.api.user.id}&with[]=user&with[]=receipts&with[]=items&take=500`)
       .then((data: any) => {
         console.log(data);
         this.api.invoices = data;
@@ -149,7 +149,7 @@ export class InvoicesPage {
       });
     }
 
-    if (invoice.status !== "paid") {
+    if (invoice.status !== "paid" && invoice.status !== "cancelled") {
       buttons.push({
         text: this.api.trans("__.report payment"),
         icon: "cash",
