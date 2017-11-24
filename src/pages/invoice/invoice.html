@@ -11,6 +11,13 @@
 
   <ion-list inset>
     <ion-list-header>
+      <b>{{'literals.status' | trans }}:</b>
+      <span> {{'literals.' + invoice.status | trans }} </span>
+    </ion-list-header>
+    <ion-item *ngIf="invoice.note" text-wrap>
+      {{invoice.note}}
+    </ion-item>
+    <ion-list-header>
       <h4 color="primary" ion-text>{{'literals.items' | trans }}</h4>
     </ion-list-header>
     <ion-item *ngFor="let item of invoice.items">
