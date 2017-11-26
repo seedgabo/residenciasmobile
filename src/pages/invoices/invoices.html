@@ -95,17 +95,18 @@
       <p *ngIf="invoice.type === 'normal'">
         {{'crud.date' | trans }}:{{ invoice.date | amCalendar }}
       </p>
-      <p ion-text [color]="invoice.status == 'paid' ? 'secondary' :invoice.status == 'unpaid' ? 'danger':'dark'" >{{'literals.status' | trans }}:</b>
-      <span>
-        {{'literals.' + invoice.status | trans}}
-      </span>
-      <p item-right [color]="invoice.status == 'paid'?'success':'danger'" ion-text text-center>
-        {{ invoice.value | currency:'COP':'symbol-narrow':'1.2-2' }}
-        <small *ngIf="invoice.partially_paid">
-          <br> {{'literals.partially paid' | trans }}: ({{ this.invoice.partially_paid | currency: 'COP':true:'1.2-2' }})
-        </small>
+      <p ion-text [color]="invoice.status == 'paid' ? 'secondary' :invoice.status == 'unpaid' ? 'danger':'dark'">
+        <b>{{'literals.status' | trans }}:</b>
+        <span>
+          {{'literals.' + invoice.status | trans}}
+        </span>
+        <p item-right [color]="invoice.status == 'paid'?'success':'danger'" ion-text text-center>
+          {{ invoice.value | currency:'COP':'symbol-narrow':'1.2-2' }}
+          <small *ngIf="invoice.partially_paid">
+            <br> {{'literals.partially paid' | trans }}: ({{ this.invoice.partially_paid | currency: 'COP':true:'1.2-2' }})
+          </small>
 
-      </p>
+        </p>
     </button>
   </ion-list>
 </ion-content>
