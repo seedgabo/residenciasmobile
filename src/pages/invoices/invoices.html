@@ -95,7 +95,7 @@
       <p *ngIf="invoice.type === 'normal'">
         {{'crud.date' | trans }}:{{ invoice.date | amCalendar }}
       </p>
-      <p ion-text [color]="invoice.status == 'paid' ? 'secondary' :invoice.status == 'unpaid' ? 'danger':'dark'" >{{'literals.status' | trans }}:</b>
+      <p ion-text [color]="invoice.status == 'paid' ? 'secondary' :invoice.status == 'unpaid' ? 'danger':'dark'">{{'literals.status' | trans }}:</p>
       <span>
         {{'literals.' + invoice.status | trans}}
       </span>
@@ -109,3 +109,21 @@
     </button>
   </ion-list>
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-grid>
+      <ion-row>
+        <ion-col align-self-center>
+          <b>{{'literals.debt' | trans}}:</b>
+          <span>{{ api.residence?.debt | currency:'COP':'symbol-narrow':'1.2-2' }} </span>
+        </ion-col>
+        <ion-col *ngIf="api.modules?.external_link_invoices" align-self-center>
+          <a block ion-button small clear [href]="api.modules.external_link_invoices" target="_system">
+            {{ '__.Pague Aquí' | trans }}
+          </a>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-footer>

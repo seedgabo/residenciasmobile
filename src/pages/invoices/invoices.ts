@@ -22,7 +22,9 @@ export class InvoicesPage {
   }
 
   ionViewDidLoad() {
-    this.getInvoices();
+    this.api.ready.then(() => {
+      this.getInvoices();
+    })
   }
 
   getInvoices(refresher = null) {
