@@ -119,7 +119,7 @@
           <span>{{ api.residence?.debt | currency:'COP':'symbol-narrow':'1.2-2' }} </span>
         </ion-col>
         <ion-col *ngIf="api.modules?.external_link_invoices" align-self-center>
-          <a block ion-button small clear [href]="api.modules.external_link_invoices" target="_system" icon-end>
+          <a block ion-button small [href]="api.modules.external_link_invoices" target="_system" icon-end>
             {{ '__.Pague Aquí' | trans }}
             <ion-icon name="link" small></ion-icon>
           </a>
