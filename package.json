@@ -10,7 +10,6 @@
     "lint": "ionic-app-scripts lint",
     "ionic:build": "ionic-app-scripts build",
     "ionic:serve": "ionic-app-scripts serve",
-    "migrate-to-lazy": "node ./make-lazy-script/migrate-to-lazy-loading.js",
     "release-android": "ionic cordova build android --prod && code-push release-cordova residencias android -d Android --mandatory",
     "release-ios": "ionic cordova build ios --prod && code-push release-cordova residencias ios -d Ios --mandatory",
     "build-android": "cordova build android --release -- --keystore='./residencias.jks' --storePassword=gab23gab --alias=residencias"
@@ -75,9 +74,7 @@
     "datepicker-ionic2": "^2.5.1",
     "de.appplant.cordova.plugin.local-notification": "^0.8.5",
     "es6-promise-plugin": "^4.1.0",
-    "font-awesome": "^4.7.0",
     "fullcalendar": "^3.4.0",
-    "ionic-angular": "3.7.0",
     "ionic-plugin-deeplinks": "^1.0.15",
     "ionic-plugin-keyboard": "^2.2.1",
     "ionic2-auto-complete": "^1.5.0-beta",
@@ -87,9 +84,7 @@
     "moment-weekdaysin": "^1.0.1",
     "onesignal-cordova-plugin": "^2.1.2",
     "pusher-js": "^4.1.0",
-    "rxjs": "5.4.3",
-    "sw-toolbox": "3.6.0",
-    "zone.js": "0.8.17"
+    "sw-toolbox": "3.6.0"
   },
   "devDependencies": {
     "@ionic/app-scripts": "3.0.0",
