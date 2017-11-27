@@ -89,9 +89,8 @@
     <platform name="ios">
         <preference name="CodePushDeploymentKey" value="vsUecGzQHjr4EV8mntWSQ5B0ab0dc0e4a0a6-2be5-4604-bcc1-c0b2c1387dd2" />
     </platform>
-    <engine name="ios" spec="^4.3.1" />
     <engine name="android" spec="^6.1.2" />
-    <engine name="ios" spec="^4.4.0" />
+    <engine name="ios" spec="^4.3.1" />
     <plugin name="cordova-plugin-appminimize" spec="git+https://github.com/tomloprod/cordova-plugin-appminimize.git" />
     <plugin name="cordova-plugin-background-mode" spec="^0.7.2" />
     <plugin name="cordova-plugin-camera" spec="^2.4.1">
@@ -139,14 +138,6 @@
         <variable name="DEEPLINK_5_SCHEME" value=" " />
         <variable name="DEEPLINK_5_HOST" value=" " />
     </plugin>
-    <plugin name="cordova-plugin-file" spec="^4.3.3" />
+    <plugin name="ionic-plugin-keyboard" spec="^2.2.1" />
     <plugin name="onesignal-cordova-plugin" spec="^2.1.2" />
-    <plugin name="cordova-plugin-camera" spec="^2.4.1">
-        <variable name="CAMERA_USAGE_DESCRIPTION" value="Residentes quiere usar tu camara para subir fotos de tus activos" />
-        <variable name="PHOTOLIBRARY_USAGE_DESCRIPTION" value="Residentes quiere acceder a tus fotos para compartir fotos de tus activos" />
-    </plugin>
-    <plugin name="cordova-plugin-shared-preferences" spec="0.0.1" />
-    <plugin name="cordova-plugin-geolocation" spec="^2.4.3">
-        <variable name="GEOLOCATION_USAGE_DESCRIPTION" value="To share to your location with the app" />
-    </plugin>
 </widget>
