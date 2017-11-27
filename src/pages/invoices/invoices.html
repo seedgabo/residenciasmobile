@@ -62,6 +62,12 @@
               <b>{{'literals.status' | trans }}:</b>
               <span>
                 {{'literals.'+invoice.status | trans}}
+                <span color="secondary" ion-text *ngIf="invoice.status!=='paid' && invoice.status!=='cancelled' && invoice.in_discount">
+                  ({{'literals.in discount' | trans }})
+                </span>
+                <span color="danger" ion-text *ngIf="invoice.status!=='paid' && invoice.status!=='cancelled' && invoice.in_interest">
+                  ({{ 'literals.in interest' | trans }})"
+                </span>
               </span>
             </ion-item>
             <ion-grid>
@@ -97,7 +103,14 @@
       </p>
       <p ion-text [color]="invoice.status == 'paid' ? 'secondary' :invoice.status == 'unpaid' ? 'danger':'dark'">{{'literals.status' | trans }}:</p>
       <span>
-        {{'literals.' + invoice.status | trans}}
+        {{ 'literals.' + invoice.status | trans }}
+        <span color="secondary" ion-text *ngIf="invoice.status!=='paid' && invoice.status!=='cancelled' && invoice.in_discount">
+          ({{'literals.in discount' | trans }})
+        </span>
+        <span color="danger" ion-text *ngIf="invoice.status!=='paid' && invoice.status!=='cancelled' && invoice.in_interest">
+          ({{ 'literals.in interest' | trans }})"
+        </span>
+
       </span>
       <p item-right [color]="invoice.status == 'paid'?'success':'danger'" ion-text text-center>
         {{ invoice.value | currency:'COP':'symbol-narrow':'1.2-2' }}
