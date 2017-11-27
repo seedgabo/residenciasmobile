@@ -152,10 +152,10 @@ export class Api {
       this.saveData(data);
       this.storage.set('allData', data);
       this.saveSharedPreferences();
+      this.pushRegister(this.user.onesignal_appId);
     }).catch((err) => {
       console.error(err);
     });
-    this.pushRegister(this.user.onesignal_appId);
     return promise;
   }
 
@@ -575,18 +575,14 @@ export class Api {
     this.onesignal.startInit(appid, "425679220353");
     this.onesignal.inFocusDisplaying(this.onesignal.OSInFocusDisplayOption.Notification);
     this.onesignal.syncHashedEmail(this.user.email);
+
     this.onesignal.sendTag("user_id", this.user.id);
     this.onesignal.sendTag("residence_id", this.user.residence_id);
-    if (!this.user.onesignal_app_name) {
-      this.user.onesignal_app_name = "Residentes Online";
-    }
     this.onesignal.sendTag("app_name", this.user.onesignal_app_name);
 
     this.onesignal.handleNotificationReceived().subscribe((not) => {
       console.log("push notification received", not);
     }, console.warn);
-
-
     this.onesignal.handleNotificationOpened().subscribe((not) => {
       console.log("push notification opened", not);
     }, console.warn);

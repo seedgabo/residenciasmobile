@@ -41,18 +41,19 @@ export class MyApp {
       })
     });
 
-    // used for an example of ngFor and navigation
     this.pages = [
       // { title: "home", component: 'HomePage', icon: 'home' },
       { title: "profile", component: 'ProfilePage', icon: 'person' },
       { title: "posts", component: 'PostsPage', icon: 'paper' },
       { title: "visitors", component: 'VisitTabsPage', icon: 'contacts', siteHas: 'visits' },
       { title: "lists", component: 'TablesPage', icon: 'list' },
+      { title: "tickets", component: 'TicketsPage', icon: 'filing', modules: 'tickets', siteHas: 'tickets' },
       { title: "correspondences", component: 'CorrespondencesPage', icon: 'cube', siteHas: 'correspondences' },
-      { title: "surveys", component: 'SurveysPage', icon: 'pie', siteHas: 'surveys' },
-      { title: "events", component: 'EventsPage', icon: 'calendar', siteHas: 'events' },
       { title: "invoices", component: 'InvoicesPage', icon: 'card', modules: 'finanze', siteHas: 'invoices' },
       { title: "dynamic_documents", component: 'DocumentsPage', icon: 'document', siteHas: 'documents' },
+      { title: "surveys", component: 'SurveysPage', icon: 'pie', siteHas: 'surveys' },
+      { title: "events", component: 'EventsPage', icon: 'calendar', modules: 'directives', siteHas: 'events' },
+      { title: "directives", component: 'DirectivesPage', icon: 'git-network', siteHas: 'directives' },
       { title: "reservations", component: 'ReservationsPage', icon: 'tennisball', modules: 'reservations', beta: true, siteHas: 'reservations' },
       { title: "parkings", component: 'ParkingsPage', icon: 'car', siteHas: 'parkings' },
       { title: "residences", component: 'Residences', icon: 'albums' },

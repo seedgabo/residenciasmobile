@@ -30,7 +30,9 @@
 
 
 <ion-content>
-
+  <div text-center>
+    <ion-spinner color="primary" *ngIf="loading"></ion-spinner>
+  </div>
   <ion-grid *ngIf="view === 'grid'">
     <ion-row>
       <ion-col col-12 col-md-6 *ngFor="let invoice of toShow">
@@ -51,7 +53,10 @@
           </ion-card-header>
           <ion-card-content>
             <p item-right [color]="invoice.status == 'paid'?'success':'danger'" ion-text text-center>
-              {{ invoice.total | currency:'COP':'symbol-narrow':'1.2-2' }}
+              {{ invoice.value | currency:'COP':true:'1.2-2' }}
+              <small *ngIf="invoice.partially_paid">
+                <br> {{'literals.partially paid' | trans }}: ({{ this.invoice.partially_paid | currency: 'COP':true:'1.2-2' }})
+              </small>
             </p>
             <ion-item>
               <b>{{'literals.status' | trans }}:</b>
@@ -90,13 +95,36 @@
       <p *ngIf="invoice.type === 'normal'">
         {{'crud.date' | trans }}:{{ invoice.date | amCalendar }}
       </p>
-      <b>{{'literals.status' | trans }}:</b>
+      <p ion-text [color]="invoice.status == 'paid' ? 'secondary' :invoice.status == 'unpaid' ? 'danger':'dark'">{{'literals.status' | trans }}:</p>
       <span>
         {{'literals.' + invoice.status | trans}}
       </span>
       <p item-right [color]="invoice.status == 'paid'?'success':'danger'" ion-text text-center>
-        {{ invoice.total | currency:'COP':'symbol-narrow':'1.2-2' }}
+        {{ invoice.value | currency:'COP':'symbol-narrow':'1.2-2' }}
+        <small *ngIf="invoice.partially_paid">
+          <br> {{'literals.partially paid' | trans }}: ({{ this.invoice.partially_paid | currency: 'COP':true:'1.2-2' }})
+        </small>
+
       </p>
     </button>
   </ion-list>
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-grid>
+      <ion-row>
+        <ion-col align-self-center>
+          <b>{{'literals.debt' | trans}}:</b>
+          <span>{{ api.residence?.debt | currency:'COP':'symbol-narrow':'1.2-2' }} </span>
+        </ion-col>
+        <ion-col *ngIf="api.modules?.external_link_invoices" align-self-center>
+          <a block ion-button small clear [href]="api.modules.external_link_invoices" target="_system" icon-end>
+            {{ '__.Pague Aquí' | trans }}
+            <ion-icon name="link" small></ion-icon>
+          </a>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-footer>

@@ -41,7 +41,7 @@
         Olvido su contraseña
       </button>
 
-      <button full clear ion-button color="red" (click)="goBack()" *ngIf="!preconfigured">
+      <button full clear ion-button color="danger" (click)="goBack()" *ngIf="!preconfigured">
         Volver
       </button>
     </div>
@@ -53,7 +53,7 @@
       <button style="margin-top:15px" full large ion-button color="secondary" (click)="recover(api.username)">
         Recuperar
       </button>
-      <button ion-button clear full color="light" (click)="forgot=false">
+      <button ion-button clear full color="dark" (click)="forgot=false">
         Volver al login
       </button>
 

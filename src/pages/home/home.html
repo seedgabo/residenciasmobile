@@ -53,6 +53,12 @@
           <ion-badge color="favorite" item-right *ngIf="api.user"> {{ correspondences.length }} </ion-badge>
 
         </button>
+
+        <button *ngIf="api.user && api.modules.tickets" ion-item (click)="gotoTickets()">
+          <ion-icon name="filing" item-left></ion-icon>
+          <b>{{'literals.tickets' | trans }}</b>
+          <ion-badge color="primary" item-right *ngIf="api.user"> {{ api.user.tickets_count }} </ion-badge>
+        </button>
       </ion-list>
     </ion-card-content>
   </ion-card>

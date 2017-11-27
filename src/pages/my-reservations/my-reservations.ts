@@ -2,6 +2,7 @@ import { Api } from './../../providers/api';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import moment from 'moment';
+import { ActionSheetController } from 'ionic-angular/components/action-sheet/action-sheet-controller';
 
 declare var $: any;
 moment.locale('es');
@@ -13,7 +14,7 @@ moment.locale('es');
 export class MyReservationsPage {
   view = 'list'
   reservations = [];
-  constructor(public navCtrl: NavController, public navParams: NavParams, public api: Api) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public actionsheet: ActionSheetController, public api: Api) {
     this.reservations = navParams.get('reservations');
   }
 
@@ -62,9 +63,97 @@ export class MyReservationsPage {
       locale: 'es',
       eventClick: (calEvent, jsEvent, view) => {
         console.log(calEvent);
+        this.actions(calEvent);
       }
     });
   }
+
+  actions(reserv) {
+    var sheet = this.actionsheet.create({
+      title: this.api.trans('literals.actions') + " " + this.api.trans('literals.reservation'),
+    })
+
+    if (this.canCancel(reserv)) {
+      sheet.addButton({
+        text: this.api.trans("crud.cancel") + " " + this.api.trans('literals.reservation'),
+        icon: 'remove-circle',
+        role: 'destructive',
+        cssClass: "icon-danger",
+        handler: () => {
+          this.cancelReservation(reserv);
+        }
+      })
+    }
+
+
+    sheet.addButton({
+      text: this.api.trans('crud.cancel'),
+      icon: 'close',
+      role: 'cancel',
+      handler: () => { }
+    })
+
+    sheet.present()
+  }
+
+  canCancel(reserv) {
+    var hours = this.api.settings.hours_to_cancel_reservation
+    if (!hours) {
+      hours = 24;
+    }
+    return moment(reserv.start).subtract(hours, "hours") <= moment()
+  }
+
+  cancelReservation(reservation) {
+    return new Promise((resolve, reject) => {
+      this.api.alert.create({
+        title: this.api.trans('__.Nota de cancelación'),
+        inputs: [{
+          label: this.api.trans('literals.notes'),
+          name: 'note',
+          placeholder: this.api.trans('literals.notes'),
+
+        }],
+        buttons: [{
+          text: this.api.trans('literals.send'),
+          handler: (data) => {
+            var promise = this.api.put(`reservations/${reservation.id}`, { status: 'cancelled', 'note': data.note })
+            promise
+              .then((resp) => {
+                reservation.status = 'cancelled';
+                reservation.note = data.note;
+                this.sendPush(this.api.trans('literals.reservation') + " " + this.api.trans('literals.cancelled') + ": " + data.note, reservation)
+                resolve(resp);
+              })
+              .catch((e) => {
+                reject(e)
+                this.api.Error(e);
+              })
+          }
+        },
+        {
+          text: this.api.trans('crud.cancel'),
+          handler: () => {
+            reject()
+          }
+        }
+        ]
+      }).present();
+
+    })
+  }
+
+  sendPush(message, reservation) {
+    var user_id = reservation.user_id
+    this.api.post('push/' + user_id + '/notification', { message: message })
+      .then(() => {
+
+      })
+      .catch((error) => {
+        console.error(error);
+      })
+  }
+
 
 
 }
