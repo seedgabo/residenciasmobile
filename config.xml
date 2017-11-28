@@ -138,4 +138,5 @@
     <plugin name="cordova-plugin-geolocation" spec="^2.4.3">
         <variable name="GEOLOCATION_USAGE_DESCRIPTION" value="To share to your location with the app" />
     </plugin>
+    <allow-navigation href="http://192.168.0.126:8100" />
 </widget>

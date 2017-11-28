@@ -1,10 +1,10 @@
 import { Api } from './../../providers/api';
-import { Component, ViewChild, ElementRef, NgZone } from '@angular/core';
-import { NavController, NavParams, Events, MenuController, Content, ModalController } from 'ionic-angular';
+import { Component, NgZone } from '@angular/core';
+import { NavController, NavParams, Events, MenuController, ModalController } from 'ionic-angular';
 
 import $ from 'jquery';
 var func;
-import {IonicPage} from "ionic-angular";
+import { IonicPage } from "ionic-angular";
 
 @IonicPage()
 @Component({

@@ -16,10 +16,10 @@
       <ion-card-title text-wrap> {{post.title}} </ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <div text-center *ngIf="post.image" (tap)="tapEvent($event)">
-        <img [ngStyle]="{'width' : tap, 'min-width' : tap }" [src]="post.image.url" *ngIf="tap=='100%'">
-        <ion-scroll *ngIf="tap!='100%'" scrollX="true" scrollY="true" style="height:450px;max-height:90%;width:100%;">
-          <img [ngStyle]="{'width' : tap, 'min-width' : tap }" [src]="post.image.url" style="margin: 0 auto; max-width:100%;">
+      <div text-center *ngIf="post.image" (tap)="tapEvent($event)" (pinch)="tapEvent($event)" #image>
+        <img style="width:100%;min-width:100%" [src]="post.image.url" *ngIf="tap === 100">
+        <ion-scroll *ngIf="tap!==100" scrollX="true" scrollY="true" style="height:450px;max-height:90%;width:100%;">
+          <img [ngStyle]="{'width' : tap+'px', 'min-width' : tap+'px' }" [src]="post.image.url" style="margin: 0 auto; max-width:100%;">
         </ion-scroll>
       </div>
       <div [innerHTML]="post.text" text-justify>
