@@ -8,7 +8,21 @@
 
 
 <ion-content>
+
   <ion-list inset>
+    <ion-list-header>
+      <b>{{'literals.status' | trans }}:</b>
+      <span> {{'literals.' + invoice.status | trans }} </span>
+      <span color="secondary" ion-text *ngIf="invoice.status!=='paid' && invoice.status!=='cancelled' && invoice.in_discount">
+        ({{'literals.in discount' | trans }})
+      </span>
+      <span color="danger" ion-text *ngIf="invoice.status!=='paid' && invoice.status!=='cancelled' && invoice.in_interest">
+        ({{ 'literals.in interest' | trans }})"
+      </span>
+    </ion-list-header>
+    <ion-item *ngIf="invoice.note" text-wrap>
+      {{invoice.note}}
+    </ion-item>
     <ion-list-header>
       <h4 color="primary" ion-text>{{'literals.items' | trans }}</h4>
     </ion-list-header>

@@ -17,19 +17,23 @@ export class InvoicesPage {
   types = 'all'
   toShow = [];
   view = 'grid'
+  loading = true;
   constructor(public navCtrl: NavController, public navParams: NavParams, public api: Api, public transfer: Transfer, public file: File, public fileOpener: FileOpener, public actionsheet: ActionSheetController, public popover: PopoverController) {
   }
 
   ionViewDidLoad() {
-    this.getInvoices();
+    this.api.ready.then(() => {
+      this.getInvoices();
+    })
   }
 
   getInvoices(refresher = null) {
-    this.api.get(`invoices?order[date]=desc&orWhere[residence_id]=${this.api.user.residence_id}&orWhere[user_id]=${this.api.user.id}&with[]=user&with[]=receipts&with[]=items&take=50`)
+    this.api.get(`invoices?order[date]=desc&orWhere[residence_id]=${this.api.user.residence_id}&orWhere[user_id]=${this.api.user.id}&with[]=user&with[]=receipts&with[]=items&take=500`)
       .then((data: any) => {
         console.log(data);
         this.api.invoices = data;
         this.filter()
+        this.loading = false;
         if (refresher != null)
           refresher.complete();
       })
@@ -37,6 +41,7 @@ export class InvoicesPage {
         console.error(err);
         if (refresher != null)
           refresher.complete();
+        this.loading = false;
 
       });
   }
@@ -100,6 +105,7 @@ export class InvoicesPage {
   viewInvoice(invoice) {
     this.navCtrl.push('InvoicePage', { invoice: invoice });
   }
+
   reportPayment(invoice) {
     var popover = this.popover.create('PaymentReportPage', { invoice: invoice });
     popover.present();
@@ -145,7 +151,7 @@ export class InvoicesPage {
       });
     }
 
-    if (invoice.status !== "paid") {
+    if (invoice.status !== "paid" && invoice.status !== "cancelled") {
       buttons.push({
         text: this.api.trans("__.report payment"),
         icon: "cash",

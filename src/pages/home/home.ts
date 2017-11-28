@@ -81,7 +81,6 @@ export class HomePage {
   gotoCalendar(event) {
     this.navCtrl.push('EventsPage', { event: event });
   }
-
   getCorrespondences() {
     this.api.ready.then(() => {
       if (this.api.modules.correspondences) {
@@ -95,11 +94,14 @@ export class HomePage {
       }
     })
   }
+  gotoTickets(){
+    this.navCtrl.push('TicketsPage');
+
+  }
 
   gotoCorrespondences() {
     this.navCtrl.push('CorrespondencesPage');
   }
-
   gotoPost(post) {
     this.navCtrl.push("PostPage", { post: post });
   }
