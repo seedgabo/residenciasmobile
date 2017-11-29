@@ -574,9 +574,6 @@ export class Api {
   pushRegister(appid = "ebf07feb-3c76-4639-8c87-b1e7a2e9ddd8") {
     this.onesignal.startInit(appid, "425679220353");
     this.onesignal.inFocusDisplaying(this.onesignal.OSInFocusDisplayOption.Notification);
-    this.onesignal.sendTag("user_id", this.user.id);
-    this.onesignal.sendTag("residence_id", this.user.residence_id);
-    this.onesignal.sendTag("app_name", this.user.onesignal_app_name);
     this.onesignal.sendTags({
       user_id: this.user.id,
       residence_id: this.user.residence_id,
