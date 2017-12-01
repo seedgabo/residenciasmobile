@@ -8,7 +8,7 @@ import { ViewController } from 'ionic-angular/navigation/view-controller';
   templateUrl: 'ticket-editor.html',
 })
 export class TicketEditorPage {
-  ticket:any = {
+  ticket: any = {
     subject: "",
     text: "",
     status: "open",
@@ -22,8 +22,8 @@ export class TicketEditorPage {
     "rejected"
   ]
   loading = false
-  constructor(public navCtrl: NavController, public navParams: NavParams,public viewctrl:ViewController, public api:Api) {
-    if(navParams.get('ticket')){
+  constructor(public navCtrl: NavController, public navParams: NavParams, public viewctrl: ViewController, public api: Api) {
+    if (navParams.get('ticket')) {
       this.ticket = navParams.get('ticket')
     }
   }
@@ -39,15 +39,22 @@ export class TicketEditorPage {
   save() {
     var promise: Promise<any>;
     this.loading = true;
+    var data = {
+      status: this.ticket.status,
+      text: this.ticket.text,
+      subject: this.ticket.subject,
+      user_id: this.ticket.user.id,
+      residence_id: this.ticket.residence_id,
+    }
     if (this.ticket.id) {
-      promise = this.api.put('tickets/' + this.ticket.id, this.ticket);
+      promise = this.api.put('tickets/' + this.ticket.id, data);
     } else {
-      promise = this.api.post('tickets', this.ticket);
+      promise = this.api.post('tickets', data);
     }
     promise.then((data) => {
       this.ticket = data;
       this.loading = false;
-      this.viewctrl.dismiss({ticket:data});
+      this.viewctrl.dismiss({ ticket: data });
     })
       .catch((err) => {
         this.loading = false;
