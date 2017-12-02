@@ -282,7 +282,11 @@
         "ios"
       ]
     },
-    "cordova-plugin-shared-preferences": {}
+    "cordova-plugin-shared-preferences": {},
+    "platforms": [
+      "android",
+      "ios"
+    ]
   },
   "platforms": [
     "android",
