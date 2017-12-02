@@ -765,6 +765,7 @@ export class Api {
   }
 
   Error(error) {
+    console.error(error)
     var message = "";
     if (error.error == 500 || error.errorStatus == 500) {
       message = this.trans("__.Internal Server Error")
@@ -773,12 +774,12 @@ export class Api {
       message = this.trans("__.Not Found")
     }
     if (error.error == 401 || error.errorStatus == 401) {
-      message = this.trans("__.Unathorized")
+      message = this.trans("__.Unauthorized")
     }
     this.alert.create({
       title: this.trans("__.Network Error"),
       subTitle: error.error,
-      message: message,
+      message: message + " " + error.message,
       buttons: ["OK"],
 
     }).present();
