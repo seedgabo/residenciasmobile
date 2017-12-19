@@ -65,13 +65,23 @@ export class Login {
 
       .catch((err) => {
         console.error(err);
-        let alert = this.alertCtrl.create({
-          title: "Error",
-          subTitle: 'Usuario y Contraseña Invalidos',
-          buttons: ['OK']
-        });
-        loading.dismiss();
-        alert.present();
+        if (err.status === 401) {
+          let alert = this.alertCtrl.create({
+            title: "Error",
+            subTitle: 'Usuario y Contraseña Invalidos',
+            buttons: ['OK']
+          });
+          loading.dismiss();
+          alert.present();
+        } else {
+          let alert = this.alertCtrl.create({
+            title: "Error",
+            subTitle: 'no se pudo hacer login: ' + err.error,
+            buttons: ['OK']
+          });
+          loading.dismiss();
+          alert.present();
+        }
 
       });
   }

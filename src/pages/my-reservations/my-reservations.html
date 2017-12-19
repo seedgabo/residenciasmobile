@@ -4,7 +4,7 @@
     <button ion-button icon-only menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>{{ '__.mys' | trans }} {{ 'literals.reservations' | trans }} </ion-title>
+    <ion-title ion-text color="favorite" text-capitalize> {{ '__.mys' | trans }} {{ 'literals.reservations' | trans }} </ion-title>
     <ion-buttons end>
       <button ion-button icon-only clear (click)="changeView()">
         <ion-icon [name]="view == 'list' ? 'list' : 'calendar'"></ion-icon>
@@ -33,28 +33,20 @@
 
       <p text-wrap>
         <b>
-          {{'literals.period' | trans }}:
+          {{'literals.start' | trans }}:
         </b>
         <span>
-          {{ reserv.start | amCalendar }} - {{reserv.end | amCalendar }}
+          {{ reserv.start | amDateFormat:'LLLL' }} - {{reserv.end | amDateFormat:'LLLL' }}
         </span>
       </p>
 
       <small text-wrap *ngIf="reserv.note">
+        <b> {{'literals.note' | trans }} </b>
         {{reserv.note}}
       </small>
-
       <small text-wrap *ngIf="reserv.event">
         {{reserv.event.name}}
       </small>
-
-      <p text-wrap>
-        <b>{{'literals.status' | trans }}</b>
-        <span>
-          {{ ('literals.'+reserv.status) | trans }}
-        </span>
-      </p>
-
     </ion-item>
   </ion-list>
 

@@ -18,7 +18,7 @@ export class TicketsPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public api: Api, public alert: AlertController, public actionsheet: ActionSheetController, public modal: ModalController) {
   }
 
-  ionViewDidLoad() {
+  ionViewDidEnter() {
     this.api.ready.then(() => {
       this.getTickets();
     });

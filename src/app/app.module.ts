@@ -1,7 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
 import { IonicStorageModule } from '@ionic/storage';
-import { MomentModule } from 'angular2-moment';
 
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
@@ -40,7 +39,10 @@ import { DatePickerModule } from 'datepicker-ionic2';
     BrowserModule,
     HttpModule,
     IonicModule.forRoot(MyApp),
-    IonicStorageModule.forRoot(),
+    IonicStorageModule.forRoot({
+      name: '__mydb',
+      driverOrder: ['sqlite', 'sqlite', 'websql']
+    }),
     DatePickerModule,
     PipesModule
   ],

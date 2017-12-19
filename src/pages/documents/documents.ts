@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { DomSanitizer } from '@angular/platform-browser';
 import { Api } from "../../providers/api";
 import { Transfer, TransferObject } from "@ionic-native/transfer";
 import { File } from "@ionic-native/file";
@@ -16,7 +15,7 @@ export class DocumentsPage {
   documents = [];
   selected = null;
   query = "";
-  constructor(public navCtrl: NavController, public navParams: NavParams, public api: Api, public sanitizer: DomSanitizer, public file: File, public transfer: Transfer, public fileOpener: FileOpener) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public api: Api, public file: File, public transfer: Transfer, public fileOpener: FileOpener) {
   }
 
   ionViewDidLoad() {

@@ -111,7 +111,7 @@ export class Api {
           this.saveSharedPreferences();
           resolve(data);
         }, error => {
-          return reject(this.handleData(error));
+          return reject(error);
         });
     });
   }
@@ -166,7 +166,7 @@ export class Api {
         .subscribe(data => {
           resolve(data);
         }, error => {
-          return reject(this.handleData(error));
+          return reject(error);
         });
     });
   }
@@ -178,7 +178,7 @@ export class Api {
         .subscribe(data => {
           resolve(data);
         }, error => {
-          return reject(this.handleData(error));
+          return reject(error);
         });
     });
   }
@@ -190,7 +190,7 @@ export class Api {
         .subscribe(data => {
           resolve(data);
         }, error => {
-          return reject(this.handleData(error));
+          return reject(error);
         });
     });
   }
@@ -202,7 +202,7 @@ export class Api {
         .subscribe(data => {
           resolve(data);
         }, error => {
-          return reject(this.handleData(error));
+          return reject(error);
         });
     });
   }
@@ -225,7 +225,7 @@ export class Api {
         .subscribe(data => {
           resolve(data);
         }, error => {
-          return reject(this.handleData(error));
+          return reject(error);
         });
     });
   }
@@ -574,11 +574,11 @@ export class Api {
   pushRegister(appid = "60e79092-443c-401a-be1b-4b1f57ef7446") {
     this.onesignal.startInit(appid, "425679220353");
     this.onesignal.inFocusDisplaying(this.onesignal.OSInFocusDisplayOption.Notification);
-    this.onesignal.syncHashedEmail(this.user.email);
-
-    this.onesignal.sendTag("user_id", this.user.id);
-    this.onesignal.sendTag("residence_id", this.user.residence_id);
-    this.onesignal.sendTag("app_name", this.user.onesignal_app_name);
+    this.onesignal.sendTags({
+      user_id: this.user.id,
+      residence_id: this.user.residence_id,
+      app_name: this.user.onesignal_app_name
+    });
 
     this.onesignal.handleNotificationReceived().subscribe((not) => {
       console.log("push notification received", not);
@@ -586,10 +586,6 @@ export class Api {
     this.onesignal.handleNotificationOpened().subscribe((not) => {
       console.log("push notification opened", not);
     }, console.warn);
-
-    this.onesignal.endInit();
-
-    this.onesignal.setSubscription(true);
     this.onesignal.getIds().then((ids: any) => {
       console.log("onesignal ids", ids)
       var data = {
@@ -605,11 +601,12 @@ export class Api {
         })
         .catch(console.error);
     }).catch(console.error);
+    this.onesignal.syncHashedEmail(this.user.email);
+    this.onesignal.endInit();
   }
 
   pushUnregister() {
     this.onesignal.deleteTags(['user_id', 'residence_id', 'app_name']);
-    this.onesignal.setSubscription(false);
   }
 
 
@@ -652,20 +649,6 @@ export class Api {
     return headers;
   }
 
-  private handleData(res) {
-    if (res.statusText == "Ok") {
-      return { status: "No Parace haber conexión con el servidor" };
-    }
-
-    // If request fails, throw an Error that will be caught
-    if (res.status < 200 || res.status >= 300) {
-      return { error: res.status }
-    }
-    // If everything went fine, return the response
-    else {
-      return res;
-    }
-  }
 
   newVisit(visit) {
     this.playSoundNotfication();
@@ -766,19 +749,19 @@ export class Api {
 
   Error(error) {
     var message = "";
-    if (error.error == 500 || error.errorStatus == 500) {
+    if (error.status == 500) {
       message = this.trans("__.Internal Server Error")
     }
-    if (error.error == 404 || error.errorStatus == 404) {
+    if (error.status == 404) {
       message = this.trans("__.Not Found")
     }
-    if (error.error == 401 || error.errorStatus == 401) {
-      message = this.trans("__.Unathorized")
+    if (error.status == 401) {
+      message = this.trans("__.Unauthorized")
     }
     this.alert.create({
       title: this.trans("__.Network Error"),
       subTitle: error.error,
-      message: message,
+      message: message + ":" + error.statusText,
       buttons: ["OK"],
 
     }).present();
