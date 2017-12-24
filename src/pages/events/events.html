@@ -19,7 +19,7 @@
             <div id="calendar"></div>
         </ion-card-content>
     </ion-card>
-    <ion-fab bottom right *ngIf="api.settings && api.settings.users_can_create_events">
+    <ion-fab bottom right *ngIf="api.settings && api.settings.users_can_create_events != 'false'">
         <button ion-fab (click)="addEvent()"><ion-icon name="calendar"></ion-icon></button>
     </ion-fab>
 </ion-content>
