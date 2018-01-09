@@ -94,8 +94,7 @@
     "zone.js": "0.8.18"
   },
   "devDependencies": {
-    "@ionic/app-scripts": "3.0.0",
-    "ionic": "3.19.0",
+    "@ionic/app-scripts": "3.1.6",
     "typescript": "2.4.2"
   },
   "description": "An Ionic project",
@@ -179,7 +178,7 @@
       "@ionic-native/transfer": "^3.13.0",
       "@ionic-native/vibration": "^3.10.3",
       "@ionic/storage": "2.0.1",
-      "angular-svg-round-progressbar": "^1.1.0",
+      "angular-svg-round-progressbar": "^1.2.1",
       "angular2-moment": "^1.3.3",
       "chart.js": "^2.6.0",
       "code-push": "^1.9.0-beta",
