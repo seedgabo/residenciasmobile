@@ -160,3 +160,57 @@ ion-toast {
 .toolbar-title {
     color: color($colors, 'favorite');
 }
+
+
+
+
+// FAB STUFFS
+.fab-label-button {
+  .label {
+    position: absolute;
+    background: #222;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 5px;
+    right: 65px;
+    white-space: nowrap;
+    animation: backwards .7s fadeIn;
+  }
+}
+
+.fab-label-button:nth-child(1) {
+  .label {
+    bottom: 15px;
+    animation-delay: .0s;
+  }
+}
+
+.fab-label-button:nth-child(2) {
+  .label {
+    bottom: 70px;
+    animation-delay: .1s;
+  }
+}
+
+.fab-label-button:nth-child(3) {
+  .label {
+    bottom: 125px;
+    animation-delay: .2s;
+  }
+}
+
+.fab-label-button:nth-child(4) {
+  .label {
+    bottom: 180px;
+    animation-delay: .3s;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
