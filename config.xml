@@ -87,8 +87,6 @@
     <platform name="ios">
         <preference name="CodePushDeploymentKey" value="VU6PWYelPgLITarQYscvnaZKmlHBc0e4a0a6-2be5-4604-bcc1-c0b2c1387dd2" />
     </platform>
-    <engine name="android" spec="^6.1.2" />
-    <engine name="ios" spec="4.3.1" />
     <plugin name="cordova-plugin-console" spec="^1.0.7" />
     <plugin name="cordova-plugin-device" spec="^1.1.6" />
     <plugin name="cordova-plugin-splashscreen" spec="^4.0.3" />
@@ -138,4 +136,6 @@
     <plugin name="cordova-plugin-geolocation" spec="^2.4.3">
         <variable name="GEOLOCATION_USAGE_DESCRIPTION" value="To share to your location with the app" />
     </plugin>
+    <engine name="android" spec="^6.1.2" />
+    <engine name="ios" spec="4.3.1" />
 </widget>
