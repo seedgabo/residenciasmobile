@@ -60,7 +60,7 @@ export class InvoicesPage {
 
   downloadinvoice(invoice) {
     var transfer: TransferObject = this.transfer.create();
-    var url = this.api.url + "api/invoice/" + invoice.id + "/pdf";
+    var url = this.api.url + "api/invoice/" + invoice.id + "/pdf?pdf=1";
     transfer.download(url, this.file.dataDirectory + 'invoice.pdf', true, {
       headers: {
         "Auth-Token": this.api.user.token
@@ -81,7 +81,7 @@ export class InvoicesPage {
     }
     var receipt = invoice.receipts[invoice.receipts.length - 1];
     var transfer: TransferObject = this.transfer.create();
-    var url = this.api.url + "api/receipt/" + receipt.id + "/pdf";
+    var url = this.api.url + "api/receipt/" + receipt.id + "/pdf?pdf=1";
     transfer.download(url, this.file.dataDirectory + 'receipt.pdf', true, {
       headers: {
         "Auth-Token": this.api.user.token
