@@ -282,29 +282,9 @@
                 "ios"
             ]
         },
-        <<
-        << << < HEAD "platforms": [
+        "platforms": [
             "android",
             "ios"
         ]
-    } ===
-    === =
-    "cordova-plugin-shared-preferences": {}
-},
-"platforms": [
-    "android",
-    "ios"
-]
-},
-"cordova-plugin-shared-preferences": {},
-"platforms": [
-    "android",
-    "ios"
-]
-},
-"platforms": [
-    "android",
-    "ios"
-] >>>
->>> > 2 c3553a90c3f4fc54a819ed09c6e4ae07f16f009
+    }
 }
