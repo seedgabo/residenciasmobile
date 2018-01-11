@@ -39,10 +39,7 @@ import { DatePickerModule } from 'datepicker-ionic2';
     BrowserModule,
     HttpModule,
     IonicModule.forRoot(MyApp),
-    IonicStorageModule.forRoot({
-      name: '__mydb',
-      driverOrder: ['sqlite', 'sqlite', 'websql']
-    }),
+    IonicStorageModule.forRoot(),
     DatePickerModule,
     PipesModule
   ],
