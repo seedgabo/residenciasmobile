@@ -10,7 +10,7 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <ion-list [virtualScroll]="tickets">
+  <ion-list [virtualScroll]="tickets" approxItemHeight="88px">
     <ion-item-sliding *virtualItem="let ticket">
       <button ion-item (click)="viewTicket(ticket)" (press)="actions(ticket)" class="ticket-item" [ngClass]="ticket.status">
         <span item-left class="indicator"></span>
