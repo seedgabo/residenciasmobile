@@ -29,6 +29,7 @@ export class TicketEditorPage {
   }
 
   ionViewDidLoad() {
+    console.log(this.ticket)
   }
 
   canSave() {
@@ -43,7 +44,7 @@ export class TicketEditorPage {
       status: this.ticket.status,
       text: this.ticket.text,
       subject: this.ticket.subject,
-      user_id: this.ticket.user.id,
+      user_id: this.ticket.user_id,
       residence_id: this.ticket.residence_id,
     }
     if (this.ticket.id) {
@@ -52,9 +53,9 @@ export class TicketEditorPage {
       promise = this.api.post('tickets', data);
     }
     promise.then((data) => {
-      this.ticket = data;
       this.loading = false;
       this.viewctrl.dismiss({ ticket: data });
+      this.ticket.id = data.id;
     })
       .catch((err) => {
         this.loading = false;
