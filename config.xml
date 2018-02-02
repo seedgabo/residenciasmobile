@@ -139,5 +139,5 @@
         <variable name="GEOLOCATION_USAGE_DESCRIPTION" value="To share to your location with the app" />
     </plugin>
     <engine name="android" spec="^6.1.2" />
-    <engine name="ios" spec="4.3.1" />
+    <engine name="ios" spec="^4.3.1" />
 </widget>
