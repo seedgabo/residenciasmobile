@@ -46,16 +46,17 @@ export class ZoneReservationPage {
       var start = this.date.clone().startOf('day').add(element[0].split(':')[0], 'hours').add(element[0].split(':')[1], 'minutes')
 
       var end = this.date.clone().startOf('day').add(element[1].split(':')[0], 'hours').add(element[1].split(':')[1], 'minutes')
-
-      var ref = {
-        available: this.zone.limit_user == 0 ? Number.MAX_SAFE_INTEGER : this.zone.limit_user,
-        limit_user: this.zone.limit_user,
-        start: start,
-        end: end,
-        ref: start.format("HH:mm")
+      if(start > moment() && end > moment()){
+        var ref = {
+          available: this.zone.limit_user == 0 ? Number.MAX_SAFE_INTEGER : this.zone.limit_user,
+          limit_user: this.zone.limit_user,
+          start: start,
+          end: end,
+          ref: start.format("HH:mm")
+        }
+        this.options[this.options.length] = ref
+        this.collection["" + start.clone().format("HH:mm")] = ref
       }
-      this.options[this.options.length] = ref
-      this.collection["" + start.clone().format("HH:mm")] = ref
     });
   }
 
