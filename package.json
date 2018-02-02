@@ -141,14 +141,6 @@
       "cordova-plugin-geolocation": {
         "GEOLOCATION_USAGE_DESCRIPTION": "To share to your location with the app"
       },
-      "cordova-plugin-facebook4": {
-        "APP_ID": "796212907168839",
-        "APP_NAME": "Residencias Online"
-      },
-      "cordova-plugin-googleplus": {
-        "REVERSED_CLIENT_ID": "600000041642-d423nns9o78c2g8qcvrpj57kkshhjkid.apps.googleusercontent.com"
-      },
-      "onesignal-cordova-plugin": {},
       "cordova-plugin-zip": {}
     },
     "dependencies": {
