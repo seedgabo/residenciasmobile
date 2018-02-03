@@ -16,7 +16,7 @@ export class CreateVisitPage {
   loading = false
   constructor(public navCtrl: NavController, public navParams: NavParams, public api: Api, public viewCtrl: ViewController) {
     var visitor = navParams.get('visitor');
-    var guest = navParams.get('guest');
+    navParams.get('guest');
     if (Array.isArray(visitor)) {
       this.visitors = visitor;
       this.visit.visitors = [];

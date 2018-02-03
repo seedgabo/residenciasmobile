@@ -75,14 +75,9 @@ export class MyReservationsPage {
   }
 
   actions(reserv) {
-    var sheet = this
-      .actionsheet
-      .create({
-        title: this
-          .api
-          .trans('literals.actions') + " " + this
-          .api
-          .trans('literals.reservation')
+    var sheet = this .actionsheet .create({ 
+        title: this .api .trans('literals.actions') + " " + this .api .trans('literals.reservation'),
+      subTitle: this.canCancel(reserv) ? this.api.trans('__.') + " " + `(${ this.api.settings.hours_to_cancel_reservation || 24} hrs)`  :  ''
       })
 
     if (this.canCancel(reserv)) {

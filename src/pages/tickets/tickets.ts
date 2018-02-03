@@ -78,7 +78,7 @@ export class TicketsPage {
     modal.present();
     modal.onWillDismiss((data) => {
       if (data && data.ticket) {
-        this._tickets.push(data.ticket);
+        this._tickets.data.push(data.ticket);
         this.filter();
       }
     })

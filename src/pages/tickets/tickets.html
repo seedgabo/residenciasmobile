@@ -10,12 +10,12 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <ion-list [virtualScroll]="tickets">
+  <ion-list [virtualScroll]="tickets" approxItemHeight="88px">
     <ion-item-sliding *virtualItem="let ticket">
       <button ion-item (click)="viewTicket(ticket)" (press)="actions(ticket)" class="ticket-item" [ngClass]="ticket.status">
         <span item-left class="indicator"></span>
         <h2>{{ticket.subject}}</h2>
-        <ion-badge ion-text [ngClass]="ticket.status">{{'literals.'+ ticket.status | trans }}</ion-badge>
+        <ion-badge ion-text color="light" [ngClass]="ticket.status">{{'literals.'+ ticket.status | trans }}</ion-badge>
         <p>
           <b>
             {{ '__.updated_at' | trans }}
