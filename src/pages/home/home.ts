@@ -25,14 +25,15 @@ export class HomePage {
 
   ionViewDidLoad() {
     this.api.startEcho();
-    this.getSliders();
-    this.getNextEvents()
-    this.getNews();
-    // this.getCorrespondences();
   }
 
   ionViewDidEnter() {
-    this.getCorrespondences();
+    this.api.ready.then(() => {
+      this.getCorrespondences();
+      this.getSliders();
+      this.getNextEvents()
+      this.getNews();
+    })
   }
 
   getSliders() {
@@ -94,7 +95,7 @@ export class HomePage {
       }
     })
   }
-  gotoTickets(){
+  gotoTickets() {
     this.navCtrl.push('TicketsPage');
 
   }

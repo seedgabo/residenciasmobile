@@ -38,7 +38,6 @@ export class TicketPage {
       })
   }
 
-
   canAddComment() {
     return this.new_comment.text.length > 3;
   }
