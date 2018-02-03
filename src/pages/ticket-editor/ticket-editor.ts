@@ -75,7 +75,7 @@ export class TicketEditorPage {
     this.viewctrl.dismiss();
   }
 
-  askFile(visitor) {
+  askFile() {
     var filer: any = document.querySelector("#input-file-ticket")
     filer.click();
   }
