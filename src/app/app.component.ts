@@ -91,7 +91,10 @@ export class MyApp {
             if (status == 8)
               this.splashScreen.show();
           }
-          , (err) => { console.warn(err) });
+          , (err) => {
+            console.warn(err)
+            this.splashScreen.hide();
+          });
 
       }
       sync();
