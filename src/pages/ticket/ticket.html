@@ -15,13 +15,13 @@
 <ion-content>
 
   <ion-card>
-    <ion-card-header text-center>
+    <ion-card-header text-center text-wrap>
       <span ion-text color="primary">
         {{ticket.subject}}
       </span>
     </ion-card-header>
-    <ion-card-content>
-      <div [innerHTML]="ticket.text"></div>
+    <ion-card-content text-wrap>
+      <div  text-wrap [innerHTML]="ticket.text"></div>
     </ion-card-content>
     <ion-item-divider *ngIf="ticket.file">
       <button ion-button color="primary" icon-left block (click)="downloadFile()">
