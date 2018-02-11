@@ -62,12 +62,10 @@
     "cordova-plugin-console": "^1.1.0",
     "cordova-plugin-device": "^1.1.7",
     "cordova-plugin-dialogs": "^2.0.1",
-    "cordova-plugin-facebook4": "^1.9.1",
     "cordova-plugin-file": "^5.0.0",
     "cordova-plugin-file-opener2": "^2.0.19",
     "cordova-plugin-file-transfer": "^1.7.0",
     "cordova-plugin-geolocation": "^2.4.3",
-    "cordova-plugin-googleplus": "^5.2.1",
     "cordova-plugin-shared-preferences": "0.0.1",
     "cordova-plugin-splashscreen": "^4.1.0",
     "cordova-plugin-statusbar": "^2.4.1",
@@ -109,13 +107,6 @@
       "cordova-plugin-whitelist": {},
       "ionic-plugin-keyboard": {},
       "cordova-plugin-code-push": {},
-      "cordova-plugin-facebook4": {
-        "APP_ID": "796212907168839",
-        "APP_NAME": "Residencias Online"
-      },
-      "cordova-plugin-googleplus": {
-        "REVERSED_CLIENT_ID": "600000041642-d423nns9o78c2g8qcvrpj57kkshhjkid.apps.googleusercontent.com"
-      },
       "cordova-plugin-background-mode": {},
       "cordova-plugin-appminimize": {},
       "cordova-plugin-file-transfer": {},
