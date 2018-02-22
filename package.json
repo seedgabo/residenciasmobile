@@ -13,7 +13,7 @@
     "migrate-to-lazy": "node ./make-lazy-script/migrate-to-lazy-loading.js",
     "release-android": "ionic cordova build android --prod && code-push release-cordova residencias android -d Android --mandatory",
     "release-ios": "ionic cordova build ios --prod && code-push release-cordova residencias ios -d Ios --mandatory",
-    "build-android": "cordova build android --release -- --keystore='./residencias.jks' --storePassword=gab23gab --alias=residencias"
+    "build-android": "cordova build android --release --password=gab23gab --keystore='./residencias.jks' --storePassword=gab23gab --alias=residencias"
   },
   "dependencies": {
     "@angular/common": "5.0.3",
