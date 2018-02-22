@@ -586,10 +586,13 @@ export class Api {
     this.onesignal.handleNotificationOpened().subscribe((not) => {
       console.log("push notification opened", not);
     }, console.warn);
+    this.onesignal.syncHashedEmail(this.user.email);
+    this.onesignal.endInit();
+
     this.onesignal.getIds().then((ids: any) => {
       console.log("onesignal ids", ids)
       var data = {
-        token: ids.userId,
+        token_id: ids.userId,
         user_id: this.user.id,
         platform: this.device.platform,
         model: this.device.model,
@@ -601,8 +604,6 @@ export class Api {
         })
         .catch(console.error);
     }).catch(console.error);
-    this.onesignal.syncHashedEmail(this.user.email);
-    this.onesignal.endInit();
   }
 
   pushUnregister() {

@@ -35,13 +35,13 @@
           <ion-icon name="settings" item-left></ion-icon>
           {{ 'literals.settings' | trans }}
         </ion-item-divider>
+        <button menuClose ion-item (click)="openPage({component:'AboutPage'})">
+          <ion-icon item-left name="information-circle"></ion-icon>
+          {{ api.trans('literals.about')}}
+        </button>
         <button menuClose ion-item (click)="logout()">
           <ion-icon item-left name="log-out"></ion-icon>
           Cerrar Sesión
-        </button>
-        <button menuClose ion-item (click)="openPage({component:'AboutPage'})">
-          <ion-icon item-left name="information-circle"></ion-icon>
-          {{'literals.about' | trans }}
         </button>
       </ion-list>
       <ion-list *ngIf="see_residences">

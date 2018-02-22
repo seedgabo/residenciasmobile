@@ -21,7 +21,7 @@
       </span>
     </ion-card-header>
     <ion-card-content text-wrap>
-      <div  text-wrap [innerHTML]="ticket.text"></div>
+      <div text-wrap [innerHTML]="ticket.text"></div>
     </ion-card-content>
     <ion-item-divider *ngIf="ticket.file">
       <button ion-button color="primary" icon-left block (click)="downloadFile()">
@@ -63,7 +63,7 @@
         </button>
       </ion-list-header>
       <ion-item *ngFor="let comment of ticket.comments">
-        <p>
+        <p text-wrap>
           {{ comment.text }}
         </p>
         <p *ngIf="comment.user" text-right>
