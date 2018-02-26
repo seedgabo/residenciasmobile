@@ -1,0 +1,23 @@
+#!/bin/bash
+# a Sample bash script
+echo -n Password: 
+read -s passwd
+cd ./platforms/browser/www
+
+folder="plazueladetoscan"
+sshpass -p "$passwd" rsync --exclude=assets/header.js -avz --delete . "eyc_proveedores@newton.eycproveedores.com:htdocs/$folder/web2" 
+
+folder="cretaricaurte"
+sshpass -p "$passwd" rsync --exclude=assets/header.js -avz --delete . "eyc_proveedores@newton.eycproveedores.com:htdocs/$folder/web2" 
+
+folder="santoriniricaurte"
+sshpass -p "$passwd" rsync --exclude=assets/header.js -avz --delete . "eyc_proveedores@newton.eycproveedores.com:htdocs/$folder/web2" 
+
+folder="bellasuiza"
+sshpass -p "$passwd" rsync --exclude=assets/header.js -avz --delete . "eyc_proveedores@newton.eycproveedores.com:htdocs/$folder/web2" 
+
+folder="horizontesdelcastillo"
+sshpass -p "$passwd" rsync --exclude=assets/header.js -avz --delete . "eyc_proveedores@newton.eycproveedores.com:htdocs/$folder/web2" 
+
+echo "syncronized"
+cd ../../../

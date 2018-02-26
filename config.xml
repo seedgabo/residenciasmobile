@@ -131,4 +131,5 @@
     </plugin>
     <plugin name="cordova-plugin-zip" spec="^3.1.0" />
     <plugin name="cordova-plugin-compat" spec="^1.2.0" />
+    <engine name="browser" spec="~5.0.3" />
 </widget>
