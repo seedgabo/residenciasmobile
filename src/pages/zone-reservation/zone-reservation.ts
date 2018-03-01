@@ -46,16 +46,16 @@ export class ZoneReservationPage {
       var start = this.date.clone().startOf('day').add(element[0].split(':')[0], 'hours').add(element[0].split(':')[1], 'minutes')
 
       var end = this.date.clone().startOf('day').add(element[1].split(':')[0], 'hours').add(element[1].split(':')[1], 'minutes')
-      if(start > moment() && end > moment()){
+      if (start > moment() && end > moment()) {
         var ref = {
           available: this.zone.limit_user == 0 ? Number.MAX_SAFE_INTEGER : this.zone.limit_user,
           limit_user: this.zone.limit_user,
           start: start,
           end: end,
-          ref: start.format("HH:mm")
+          ref: start.local().format("HH:mm")
         }
         this.options[this.options.length] = ref
-        this.collection["" + start.clone().format("HH:mm")] = ref
+        this.collection["" + start.local().clone().format("HH:mm")] = ref
       }
     });
   }
@@ -66,7 +66,7 @@ export class ZoneReservationPage {
         this.reservations = data;
         console.log(data);
         data.forEach(reservation => {
-          var ref = moment.utc(reservation.start).format("HH:mm")
+          var ref = moment.utc(reservation.start).local().format("HH:mm")
           console.log(this.collection[ref])
           this.collection[ref].available -= reservation.quotas;
           if (reservation.user_id === this.api.user.id) {
@@ -126,10 +126,10 @@ export class ZoneReservationPage {
     var reservable = true;
     this.reservations.forEach((reserv) => {
       if (reserv.user_id == this.api.user.id || reserv.residence_id == this.api.user.residence_id) {
-        if (moment.utc(reserv.start).format('HH:mm') == moment.utc(interval.start).format('HH:mm')
-          || moment.utc(reserv.start).format('HH:mm') == moment.utc(interval.end).format('HH:mm')
-          || moment.utc(reserv.end).format('HH:mm') == moment.utc(interval.start).format('HH:mm')
-          || moment.utc(reserv.end).format('HH:mm') == moment.utc(interval.end).format('HH:mm')) {
+        if (moment.utc(reserv.start).local().format('HH:mm') == moment.utc(interval.start).local().format('HH:mm')
+          || moment.utc(reserv.start).local().format('HH:mm') == moment.utc(interval.end).local().format('HH:mm')
+          || moment.utc(reserv.end).local().format('HH:mm') == moment.utc(interval.start).local().format('HH:mm')
+          || moment.utc(reserv.end).local().format('HH:mm') == moment.utc(interval.end).local().format('HH:mm')) {
           reservable = false;
         }
       }
@@ -165,8 +165,8 @@ export class ZoneReservationPage {
         quotas: quotas,
         zone_id: this.zone.id,
         user_id: this.api.user.id,
-        start: interval.start.format("YYYY-MM-DD HH:mm"),
-        end: interval.end.format("YYYY-MM-DD HH:mm"),
+        start: interval.start.local().format("YYYY-MM-DD HH:mm"),
+        end: interval.end.local().format("YYYY-MM-DD HH:mm"),
       })
       .then((data) => {
         console.log(data);

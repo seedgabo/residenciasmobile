@@ -22,7 +22,7 @@ export class ProfilePage {
     this.monthShortNames = moment.monthsShort().join(", ");
     this.months = moment.months().join(", ");
     this.profile = JSON.parse(JSON.stringify(this.api.user));
-    this.profile.birthday = moment(this.api.user.birthday).format('YYYY-MM-DD');
+    this.profile.birthday = moment(this.api.user.birthday).local().format('YYYY-MM-DD');
     this.residence = JSON.parse(JSON.stringify(this.api.residence));
     if (!this.residence.emergency_contact) {
       this.residence.emergency_contact = {
