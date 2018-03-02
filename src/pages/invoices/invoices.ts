@@ -8,7 +8,6 @@ import { FileOpener } from "@ionic-native/file-opener";
 
 import { IonicPage } from "ionic-angular";
 import moment from 'moment';
-import { CurrencyPipe } from '@angular/common';
 moment.locale('es')
 @IonicPage()
 @Component({
