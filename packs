@@ -5,19 +5,19 @@ read -s passwd
 cd ./platforms/browser/www
 
 folder="plazueladetoscan"
-sshpass -p "$passwd" rsync --exclude=assets/header.js -avz --delete . "eyc_proveedores@newton.eycproveedores.com:htdocs/$folder/web2" 
+sshpass -p "$passwd" rsync --exclude=assets/header.js -avz --delete . "eyc_proveedores@newton.eycproveedores.com:htdocs/$folder/mobile" 
 
 folder="cretaricaurte"
-sshpass -p "$passwd" rsync --exclude=assets/header.js -avz --delete . "eyc_proveedores@newton.eycproveedores.com:htdocs/$folder/web2" 
+sshpass -p "$passwd" rsync --exclude=assets/header.js -avz --delete . "eyc_proveedores@newton.eycproveedores.com:htdocs/$folder/mobile" 
 
 folder="santoriniricaurte"
-sshpass -p "$passwd" rsync --exclude=assets/header.js -avz --delete . "eyc_proveedores@newton.eycproveedores.com:htdocs/$folder/web2" 
+sshpass -p "$passwd" rsync --exclude=assets/header.js -avz --delete . "eyc_proveedores@newton.eycproveedores.com:htdocs/$folder/mobile" 
 
 folder="bellasuiza"
-sshpass -p "$passwd" rsync --exclude=assets/header.js -avz --delete . "eyc_proveedores@newton.eycproveedores.com:htdocs/$folder/web2" 
+sshpass -p "$passwd" rsync --exclude=assets/header.js -avz --delete . "eyc_proveedores@newton.eycproveedores.com:htdocs/$folder/mobile" 
 
 folder="horizontesdelcastillo"
-sshpass -p "$passwd" rsync --exclude=assets/header.js -avz --delete . "eyc_proveedores@newton.eycproveedores.com:htdocs/$folder/web2" 
+sshpass -p "$passwd" rsync --exclude=assets/header.js -avz --delete . "eyc_proveedores@newton.eycproveedores.com:htdocs/$folder/mobile" 
 
 echo "syncronized"
 cd ../../../
