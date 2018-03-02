@@ -24,7 +24,7 @@ import { Geolocation } from '@ionic-native/geolocation';
 import { Device } from "@ionic-native/device";
 import { File } from '@ionic-native/file';
 import { FileOpener } from "@ionic-native/file-opener";
-import { Transfer } from "@ionic-native/transfer";
+import { FileTransfer } from "@ionic-native/file-transfer";
 import { Deeplinks } from "@ionic-native/deeplinks";
 import { PipesModule } from '../pipes/pipes.module';
 
@@ -49,7 +49,7 @@ import { DatePickerModule } from 'datepicker-ionic2';
   ],
   providers: [
     StatusBar, SplashScreen, Camera, Facebook, GooglePlus, AppMinimize, BackgroundMode, CodePush, OneSignal, Device,
-    Deeplinks, Transfer, File, FileOpener, Vibration, Geolocation,
+    Deeplinks, FileTransfer, File, FileOpener, Vibration, Geolocation,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     Api,
   ]

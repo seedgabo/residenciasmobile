@@ -87,6 +87,10 @@ export class Login {
   }
 
   loginWithFacebook() {
+
+  }
+
+  loginWithFacebookCordova() {
     let loading = this.loadingCtrl.create({
       content: `
       <div>
@@ -135,7 +139,7 @@ export class Login {
       });
   }
 
-  loginWithGoogle() {
+  loginWithGoogleCordova() {
     let loading = this.loadingCtrl.create({
       content: `
       <div>
@@ -159,6 +163,7 @@ export class Login {
         }).present();
       });
   }
+
 
   recover(email) {
     this.api.post('forgot-password', { email: email })

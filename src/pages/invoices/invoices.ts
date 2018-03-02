@@ -2,12 +2,13 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, ActionSheetController, PopoverController, Platform } from 'ionic-angular';
 import { Api } from "../../providers/api";
-import { Transfer, TransferObject } from "@ionic-native/transfer";
+import { FileTransfer, FileTransferObject } from "@ionic-native/file-transfer";
 import { File } from '@ionic-native/file';
 import { FileOpener } from "@ionic-native/file-opener";
 
 import { IonicPage } from "ionic-angular";
-
+import moment from 'moment';
+moment.locale('es')
 @IonicPage()
 @Component({
   selector: 'page-invoices',
@@ -18,7 +19,17 @@ export class InvoicesPage {
   toShow = [];
   view = 'grid'
   loading = true;
-  constructor(public platform: Platform, public navCtrl: NavController, public navParams: NavParams, public api: Api, public transfer: Transfer, public file: File, public fileOpener: FileOpener, public actionsheet: ActionSheetController, public popover: PopoverController) {
+  mobile = false
+  rows = [];
+  columns = [
+    { prop: 'number', name: "#" },
+    { prop: 'date', name: this.api.trans("literals.date") },
+    { prop: 'type', name: this.api.trans("literals.type") },
+    { prop: 'status', name: this.api.trans("literals.status") },
+    { prop: 'total', name: this.api.trans("literals.total") },
+  ];
+  constructor(public platform: Platform, public navCtrl: NavController, public navParams: NavParams, public api: Api, public transfer: FileTransfer, public file: File, public fileOpener: FileOpener, public actionsheet: ActionSheetController, public popover: PopoverController) {
+    this.mobile = this.platform.is('android') || this.platform.is('ios')
   }
 
   ionViewDidLoad() {
@@ -46,12 +57,33 @@ export class InvoicesPage {
       });
   }
 
+
+
   filter() {
-    if (this.types === 'all')
-      return this.toShow = this.api.invoices;
+    if (this.types === 'all') {
+      this.toShow = this.api.invoices;
+      return this.getRows()
+    }
     this.toShow = this.api.invoices.filter((inv) => {
       return inv.type == this.types;
     });
+    this.getRows()
+  }
+
+  getRows() {
+    var arr = []
+    this.toShow.forEach((inv) => {
+      arr.push({
+        invoice: inv,
+        id: inv.id,
+        number: inv.number,
+        total: "$ " + inv.total,
+        type: this.api.trans('literals.' + inv.type),
+        status: inv.status,
+        date: moment(inv.date),
+      })
+    })
+    this.rows = arr
   }
 
   changeView() {
@@ -59,8 +91,8 @@ export class InvoicesPage {
   }
 
   downloadinvoice(invoice) {
-    if (this.platform.is('android')) {
-      var transfer: TransferObject = this.transfer.create();
+    if (this.platform.is('android') || this.platform.is('ios')) {
+      var transfer: FileTransferObject = this.transfer.create();
       var url = this.api.url + "api/invoice/" + invoice.id + "/pdf?pdf=1";
       transfer.download(url, this.file.dataDirectory + 'invoice.pdf', true, {
         headers: {
@@ -89,8 +121,8 @@ export class InvoicesPage {
     if (invoice.receipts.length == 0) {
       return
     }
-    if (this.platform.is('browser')) {
-      var transfer: TransferObject = this.transfer.create();
+    if (this.platform.is('android') || this.platform.is('ios')) {
+      var transfer: FileTransferObject = this.transfer.create();
       var url = this.api.url + "api/receipt/" + receipt.id + "/pdf?pdf=1";
       transfer.download(url, this.file.dataDirectory + 'receipt.pdf', true, {
         headers: {

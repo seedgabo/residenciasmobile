@@ -74,7 +74,7 @@ export class SurveyPage {
         labels: labels
       },
       options: {
-        responsive: true
+        responsive: false
       }
     })
   }

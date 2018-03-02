@@ -20,12 +20,12 @@
   </ion-header>
   <ion-content>
     <ion-list *ngIf="!see_residences">
-      <button menuClose ion-item (click)="backToHome()">
+      <button menuClose text-capitalize ion-item (click)="backToHome()">
         <ion-icon name="home" item-left color="grey"></ion-icon>
         {{ api.trans('literals.home')}}
       </button>
       <ng-container *ngFor="let p of pages">
-        <button menuClose ion-item (click)="openPage(p)" *ngIf="siteHas(p.siteHas)">
+        <button menuClose text-capitalize ion-item (click)="openPage(p)" *ngIf="siteHas(p.siteHas)">
           <ion-icon [name]="p.icon" item-left color="grey"></ion-icon>
           {{ api.trans('literals.' + p.title)}}
           <ion-badge item-right *ngIf="p.beta" color="secondary">BETA</ion-badge>
@@ -35,11 +35,11 @@
         <ion-icon name="settings" item-left></ion-icon>
         {{ 'literals.settings' | trans }}
       </ion-item-divider>
-      <button menuClose ion-item (click)="openPage({component:'AboutPage'})">
+      <button menuClose text-capitalize ion-item (click)="openPage({component:'AboutPage'})">
         <ion-icon item-left name="information-circle"></ion-icon>
         {{ api.trans('literals.about')}}
       </button>
-      <button menuClose ion-item (click)="logout()">
+      <button menuClose text-capitalize ion-item (click)="logout()">
         <ion-icon item-left name="log-out"></ion-icon>
         Cerrar Sesión
       </button>

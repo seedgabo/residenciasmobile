@@ -99,7 +99,6 @@
     <plugin name="cordova-plugin-code-push" spec="^1.11.7" />
     <plugin name="cordova-plugin-background-mode" spec="^0.7.2" />
     <plugin name="cordova-plugin-appminimize" spec="git+https://github.com/tomloprod/cordova-plugin-appminimize.git" />
-    <plugin name="cordova-plugin-file-transfer" spec="^1.7.1" />
     <plugin name="cordova-plugin-vibration" spec="^2.1.6" />
     <plugin name="onesignal-cordova-plugin" spec="^2.3.1" />
     <plugin name="cordova-plugin-file-opener2" spec="^2.0.19" />
@@ -132,4 +131,5 @@
     </plugin>
     <plugin name="cordova-plugin-zip" spec="^3.1.0" />
     <plugin name="cordova-plugin-compat" spec="^1.2.0" />
+    <plugin name="cordova-plugin-file-transfer" spec="^1.7.1" />
 </widget>

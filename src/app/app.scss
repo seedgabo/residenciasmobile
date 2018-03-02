@@ -14,155 +14,152 @@
 // automatically applied to the <body> element in the app.
 @import "../../node_modules/ionic2-auto-complete/auto-complete";
 .fullScreen {
-    .popover-content {
-        width: 90%;
-        left: 5% !important; // min-height: 50%;
-    }
+  .popover-content {
+    width: 90%;
+    left: 5% !important; // min-height: 50%;
+  }
 }
 
 .icon-primary {
-    ion-icon {
-        color: color($colors, 'primary');
-    }
+  ion-icon {
+    color: color($colors, 'primary');
+  }
 }
 
 .icon-secondary {
-    ion-icon {
-        color: color($colors, 'secondary');
-    }
+  ion-icon {
+    color: color($colors, 'secondary');
+  }
 }
 
 .icon-danger {
-    ion-icon {
-        color: color($colors, 'danger');
-    }
+  ion-icon {
+    color: color($colors, 'danger');
+  }
 }
 
 .icon-favorite {
-    ion-icon {
-        color: color($colors, 'favorite');
-    }
+  ion-icon {
+    color: color($colors, 'favorite');
+  }
 }
 
 .user-info {
-    background-image: url('../assets/background-user.png');
-    background-size: cover; // height: 100px;
-    text-align: center;
-    height: 150px;
-    color: white;
-    .avatar-user {
-        height: 50px;
-        width: 50px;
-        border-radius: 50%;
-    }
+  background-image: url('../assets/background-user.png');
+  background-size: cover; // height: 100px;
+  text-align: center;
+  height: 150px;
+  color: white;
+  .avatar-user {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+  }
 }
 
 ion-toast {
-    &.approved {
-        .toast-container {
-            background-color: color($colors, 'secondary');
-            color: white;
-        }
-        .toast-message {}
+  &.approved {
+    .toast-container {
+      background-color: color($colors, 'secondary');
+      color: white;
     }
-    &.rejected {
-        .toast-container {
-            background-color: color($colors, 'danger');
-            color: white;
-        }
-        .toast-message {}
+    .toast-message {}
+  }
+  &.rejected {
+    .toast-container {
+      background-color: color($colors, 'danger');
+      color: white;
     }
+    .toast-message {}
+  }
 }
 
 #full-calendar {
-    padding-top: 30px;
+  padding-top: 30px;
 }
 
 #calendar h2 {
-    font-size: 1.5rem;
-    text-transform: uppercase;
-    line-height: 35px;
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  line-height: 35px;
 }
 
 #calendar .fc-day-header {
-    text-transform: uppercase;
-    font-weight: 400;
+  text-transform: uppercase;
+  font-weight: 400;
 }
 
 #external-events {
-    padding-top: 50px;
+  padding-top: 50px;
 }
 
 #external-events .fc-event {
-    color: #fff;
-    text-decoration: none;
-    padding: 5px;
-    margin-bottom: 10px;
-    cursor: all-scroll;
-    border: none;
+  color: #fff;
+  text-decoration: none;
+  padding: 5px;
+  margin-bottom: 10px;
+  cursor: all-scroll;
+  border: none;
 }
 
 .fc button {
-    background: #fff;
+  background: #fff;
 }
 
 .fc td,
 .fc th {
-    border-width: 0px !important;
+  border-width: 0px !important;
 }
 
 .fc-state-active,
 .fc-state-down {
-    color: #ff4081 !important;
+  color: #ff4081 !important;
 }
 
 .pulse {
-    border: none;
-    box-shadow: 0 0 0 0 rgba(232, 76, 61, 0.7);
-    cursor: pointer;
-    -webkit-animation: pulse 4.5s infinite cubic-bezier(0.66, 0, 0, 1);
-    -moz-animation: pulse 4.5s infinite cubic-bezier(0.66, 0, 0, 1);
-    -ms-animation: pulse 4.5s infinite cubic-bezier(0.66, 0, 0, 1);
-    animation: pulse 4.5s infinite cubic-bezier(0.66, 0, 0, 1);
+  border: none;
+  box-shadow: 0 0 0 0 rgba(232, 76, 61, 0.7);
+  cursor: pointer;
+  -webkit-animation: pulse 4.5s infinite cubic-bezier(0.66, 0, 0, 1);
+  -moz-animation: pulse 4.5s infinite cubic-bezier(0.66, 0, 0, 1);
+  -ms-animation: pulse 4.5s infinite cubic-bezier(0.66, 0, 0, 1);
+  animation: pulse 4.5s infinite cubic-bezier(0.66, 0, 0, 1);
 }
 
 .pulse:hover {
-    -webkit-animation: none;
-    -moz-animation: none;
-    -ms-animation: none;
-    animation: none;
+  -webkit-animation: none;
+  -moz-animation: none;
+  -ms-animation: none;
+  animation: none;
 }
 
 @-webkit-keyframes pulse {
-    to {
-        box-shadow: 0 0 0 45px rgba(232, 76, 61, 0);
-    }
+  to {
+    box-shadow: 0 0 0 45px rgba(232, 76, 61, 0);
+  }
 }
 
 @-moz-keyframes pulse {
-    to {
-        box-shadow: 0 0 0 45px rgba(232, 76, 61, 0);
-    }
+  to {
+    box-shadow: 0 0 0 45px rgba(232, 76, 61, 0);
+  }
 }
 
 @-ms-keyframes pulse {
-    to {
-        box-shadow: 0 0 0 45px rgba(232, 76, 61, 0);
-    }
+  to {
+    box-shadow: 0 0 0 45px rgba(232, 76, 61, 0);
+  }
 }
 
 @keyframes pulse {
-    to {
-        box-shadow: 0 0 0 45px rgba(232, 76, 61, 0);
-    }
+  to {
+    box-shadow: 0 0 0 45px rgba(232, 76, 61, 0);
+  }
 }
 
 .toolbar-title {
-    color: color($colors, 'favorite');
+  color: color($colors, 'favorite');
 }
-
-
-
 
 // FAB STUFFS
 .fab-label-button {
