@@ -1,6 +1,5 @@
 <ion-header>
-
-  <ion-navbar>
+  <ion-navbar color="primary">
     <button ion-button icon-only menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
@@ -31,7 +30,7 @@
         {{corres.receptor.name}}
       </p>
       <small>
-        
+
         {{ corres.created_at | amCalendar }}
       </small>
       <ion-icon small item-right [name]="corres.status === 'arrival' ? 'mail' : corres.status === 'delivered'?'mail-open':'archive'"

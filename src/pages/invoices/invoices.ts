@@ -1,6 +1,6 @@
 
 import { Component } from '@angular/core';
-import { NavController, NavParams, ActionSheetController, PopoverController } from 'ionic-angular';
+import { NavController, NavParams, ActionSheetController, PopoverController, Platform } from 'ionic-angular';
 import { Api } from "../../providers/api";
 import { Transfer, TransferObject } from "@ionic-native/transfer";
 import { File } from '@ionic-native/file';
@@ -18,7 +18,7 @@ export class InvoicesPage {
   toShow = [];
   view = 'grid'
   loading = true;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public api: Api, public transfer: Transfer, public file: File, public fileOpener: FileOpener, public actionsheet: ActionSheetController, public popover: PopoverController) {
+  constructor(public platform: Platform, public navCtrl: NavController, public navParams: NavParams, public api: Api, public transfer: Transfer, public file: File, public fileOpener: FileOpener, public actionsheet: ActionSheetController, public popover: PopoverController) {
   }
 
   ionViewDidLoad() {
@@ -59,42 +59,63 @@ export class InvoicesPage {
   }
 
   downloadinvoice(invoice) {
-    var transfer: TransferObject = this.transfer.create();
-    var url = this.api.url + "api/invoice/" + invoice.id + "/pdf?pdf=1";
-    transfer.download(url, this.file.dataDirectory + 'invoice.pdf', true, {
-      headers: {
-        "Auth-Token": this.api.user.token
-      }
-    })
-      .then((entry) => {
-        console.log(entry)
-        this._openFile(entry.toURL())
+    if (this.platform.is('android')) {
+      var transfer: TransferObject = this.transfer.create();
+      var url = this.api.url + "api/invoice/" + invoice.id + "/pdf?pdf=1";
+      transfer.download(url, this.file.dataDirectory + 'invoice.pdf', true, {
+        headers: {
+          "Auth-Token": this.api.user.token
+        }
       })
-      .catch((err) => {
-        console.error(err)
-      })
+        .then((entry) => {
+          console.log(entry)
+          this._openFile(entry.toURL())
+        })
+        .catch((err) => {
+          console.error(err)
+        })
+    } else {
+      return this.downloadInvoiceBrowser(invoice)
+
+    }
+  }
+
+  downloadInvoiceBrowser(invoice) {
+    var url = this.api.url + "api/invoice/" + invoice.id + "/pdf?pdf=1&token=" + this.api.user.token;
+    window.open(url, "invoice");
   }
 
   downloadReceipt(invoice) {
     if (invoice.receipts.length == 0) {
       return
     }
-    var receipt = invoice.receipts[invoice.receipts.length - 1];
-    var transfer: TransferObject = this.transfer.create();
-    var url = this.api.url + "api/receipt/" + receipt.id + "/pdf?pdf=1";
-    transfer.download(url, this.file.dataDirectory + 'receipt.pdf', true, {
-      headers: {
-        "Auth-Token": this.api.user.token
-      }
-    })
-      .then((entry) => {
-        console.log(entry)
-        this._openFile(entry.toURL())
+    if (this.platform.is('browser')) {
+      var transfer: TransferObject = this.transfer.create();
+      var url = this.api.url + "api/receipt/" + receipt.id + "/pdf?pdf=1";
+      transfer.download(url, this.file.dataDirectory + 'receipt.pdf', true, {
+        headers: {
+          "Auth-Token": this.api.user.token
+        }
       })
-      .catch((err) => {
-        console.error(err)
-      })
+        .then((entry) => {
+          console.log(entry)
+          this._openFile(entry.toURL())
+        })
+        .catch((err) => {
+          console.error(err)
+        })
+    } else {
+      var receipt = invoice.receipts[invoice.receipts.length - 1];
+      this.downloadReceiptBrowser(receipt);
+
+    }
   }
+
+  downloadReceiptBrowser(receipt) {
+    var url = this.api.url + "api/receipt/" + receipt.id + "/pdf?pdf=1&token=" + this.api.user.token;
+    window.open(url, "receipt");
+  }
+
 
   _openFile(url, type = "pdf") {
     this.fileOpener.open(url, 'application/pdf')

@@ -1,6 +1,6 @@
 <ion-header>
 
-  <ion-navbar xcolor="primary">
+  <ion-navbar color="primary">
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
@@ -55,7 +55,8 @@
             <p item-right [color]="invoice.status == 'paid'?'success':'danger'" ion-text text-center>
               {{ invoice.value | currency:'COP':'symbol-narrow':'1.2-2' }}
               <small *ngIf="invoice.partially_paid">
-                <br> {{'literals.partially paid' | trans }}: ({{ this.invoice.partially_paid | currency:'COP':'symbol-narrow':'1.2-2' }})
+                <br> {{'literals.partially paid' | trans }}: ({{ this.invoice.partially_paid | currency:'COP':'symbol-narrow':'1.2-2'
+                }})
               </small>
             </p>
             <ion-item>
@@ -115,7 +116,8 @@
       <p item-right [color]="invoice.status == 'paid'?'success':'danger'" ion-text text-center>
         {{ invoice.value | currency:'COP':'symbol-narrow':'1.2-2' }}
         <small *ngIf="invoice.partially_paid">
-          <br> {{'literals.partially paid' | trans }}: ({{ this.invoice.partially_paid | currency: 'COP':'symbol-narrow':'1.2-2' }})
+          <br> {{'literals.partially paid' | trans }}: ({{ this.invoice.partially_paid | currency: 'COP':'symbol-narrow':'1.2-2'
+          }})
         </small>
 
       </p>
