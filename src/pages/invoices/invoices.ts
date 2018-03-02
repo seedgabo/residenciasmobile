@@ -8,6 +8,7 @@ import { FileOpener } from "@ionic-native/file-opener";
 
 import { IonicPage } from "ionic-angular";
 import moment from 'moment';
+import { CurrencyPipe } from '@angular/common';
 moment.locale('es')
 @IonicPage()
 @Component({
@@ -77,7 +78,7 @@ export class InvoicesPage {
         invoice: inv,
         id: inv.id,
         number: inv.number,
-        total: "$ " + inv.total,
+        total: inv.total,
         type: this.api.trans('literals.' + inv.type),
         status: inv.status,
         date: moment(inv.date),

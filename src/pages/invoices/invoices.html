@@ -116,7 +116,7 @@
 
         </span>
         <p item-right [color]="invoice.status == 'paid'?'success':'danger'" ion-text text-center>
-          {{ invoice.value | currency:'COP':'symbol-narrow':'1.2-2' }}
+          {{ invoice.total | currency:'COP':'symbol-narrow':'1.2-2' }}
           <small *ngIf="invoice.partially_paid">
             <br> {{'literals.partially paid' | trans }}: ({{ this.invoice.partially_paid | currency: 'COP':'symbol-narrow':'1.2-2'
             }})
@@ -129,13 +129,17 @@
   <div *ngIf="!mobile">
     <ngx-datatable text-capitalize class="material fullscreen" [columnMode]="'force'" [headerHeight]="50" [rowHeight]="'auto'"
       [rows]="rows" [columns]="columns">
-      <ngx-datatable-column prop="number" [name]="'literals.#' | trans" [width]="40"></ngx-datatable-column>
-      <ngx-datatable-column prop="date" [name]="'literals.date' | trans" [width]="200">
+
+      <ngx-datatable-column prop="number" [name]="'literals.#' | trans"></ngx-datatable-column>
+
+      <ngx-datatable-column prop="date" [name]="'literals.date' | trans">
         <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
           {{ value | amDateFormat: 'MMMM D YYYY' }}
         </ng-template>
       </ngx-datatable-column>
+
       <ngx-datatable-column prop="type" [name]="'literals.type' | trans"></ngx-datatable-column>
+
       <ngx-datatable-column prop="status" [name]="'literals.status' | trans">
         <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
           <span ion-text [color]="value == 'paid' ? 'secondary' : 'danger'">
@@ -143,9 +147,14 @@
           </span>
         </ng-template>
       </ngx-datatable-column>
-      <ngx-datatable-column prop="total" [name]="'literals.total' | trans"></ngx-datatable-column>
-      <ngx-datatable-column prop="actions" [name]="'literals.actions' | trans" [width]="10">
 
+      <ngx-datatable-column prop="total" [name]="'literals.total' | trans">
+        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+          {{ value | currency:'COP':'symbol-narrow':'1.2-2' }}
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column prop="actions" [name]="'literals.actions' | trans">
         <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
           <button ion-button clear icon-only (click)="openMenu(row.invoice)" color="dark" small>
             <ion-icon name="more"></ion-icon>
