@@ -36,7 +36,7 @@
   </div>
   <div *ngIf="mobile">
     <ion-grid *ngIf="view === 'grid'">
-      <ion-row>
+      <ion-row wrap responsive-sm>
         <ion-col col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 *ngFor="let invoice of toShow">
           <ion-card class="invoice-card" [ngClass]="[invoice.status,invoice.type]">
             <ion-card-header text-center>
