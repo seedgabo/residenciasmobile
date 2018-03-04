@@ -1,16 +1,17 @@
-import { ToastController } from 'ionic-angular';
+import { ToastController, ModalController } from 'ionic-angular';
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { Api } from "../../providers/api";
 import moment from 'moment';
 import { IonicPage } from "ionic-angular";
-
+import Chart from 'chart.js'
 @IonicPage()
 @Component({
   selector: 'page-profile',
   templateUrl: 'profile.html',
 })
 export class ProfilePage {
+  toImage: any;
   monthShortNames;
   months;
   profile: any = {};
@@ -18,7 +19,7 @@ export class ProfilePage {
   editable = false
   password = "";
   password_confirmation = ""
-  constructor(public navCtrl: NavController, public navParams: NavParams, public api: Api, public toast: ToastController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public api: Api, public toast: ToastController, public modal: ModalController) {
     this.monthShortNames = moment.monthsShort().join(", ");
     this.months = moment.months().join(", ");
     this.profile = JSON.parse(JSON.stringify(this.api.user));
@@ -33,8 +34,45 @@ export class ProfilePage {
     }
   }
 
-  ionViewDidLoad() {
-
+  ionViewDidEnter() {
+    this.profile = JSON.parse(JSON.stringify(this.api.user));
+    this.profile.birthday = moment(this.api.user.birthday).local().format('YYYY-MM-DD');
+    this.residence = JSON.parse(JSON.stringify(this.api.residence));
+    this.renderChart()
+  }
+  renderChart() {
+    var config = {
+      type: 'doughnut',
+      data: {
+        datasets: [{
+          data: [
+            100 - this.residence.total / (this.residence.total - this.residence.debt) * 100,
+            this.residence.total / (this.residence.total - this.residence.debt) * 100
+          ],
+          backgroundColor: [
+            '#00FF55',
+            '#FF3300',
+          ],
+          label: this.api.trans('%')
+        }],
+        labels: [
+          this.api.trans('literals.total'),
+          this.api.trans('literals.debt'),
+        ]
+      },
+      options: {
+        responsive: true,
+        legend: {
+          position: 'top',
+        },
+        animation: {
+          animateScale: true,
+          animateRotate: true
+        }
+      }
+    };
+    var ctx = document.getElementById('chart-debt');
+    new Chart(ctx, config);
   }
 
   updateProfile() {
@@ -111,8 +149,33 @@ export class ProfilePage {
       (this.residence.owner_id)
   }
 
+  createUser() {
+    this.modal.create('UserEditorPage').present()
+  }
 
-  askFile() {
+  deleteUser(user, index) {
+    // TODO CONFIRM
+    this.api.delete('users/' + user.id)
+      .then((resp) => {
+        this.api.residence.users.splice(index, 1);
+        this.ionViewDidEnter()
+        this.toast.create({
+          message: this.api.trans("literals.user") + " " + this.api.trans("crud.deleted"),
+          duration: 1500,
+          showCloseButton: true,
+        }).present();
+      })
+      .catch((err) => {
+        this.api.Error(err)
+      })
+  }
+
+
+  askFile(user = null) {
+    if (user == null) {
+      user = this.api.user
+    }
+    this.toImage = user
     var filer: any = document.querySelector("#input-file")
     filer.click();
   }
@@ -122,8 +185,8 @@ export class ProfilePage {
       var reader: any = new FileReader();
       reader.readAsDataURL(event.target.files[0])
       reader.onload = (result) => {
-        this.profile.image_url = result.target.result;
-        this.uploadImage(this.api.user.id)
+        this.toImage.image_url = result.target.result;
+        this.uploadImage(this.toImage.id)
       };
     } catch (error) {
       console.error(error)
@@ -131,13 +194,15 @@ export class ProfilePage {
   }
 
   uploadImage(id) {
-    return this.api.post('images/upload/user/' + id, { image: this.profile.image_url })
+    return this.api.post('images/upload/user/' + id, { image: this.toImage.image_url })
       .then((data: any) => {
-        console.log(data);
-        this.api.user.image = data.image;
-        this.api.user.image_url = data.resource.image_url;
-        this.api.user.image_id = data.resource.image_id
-        this.api.storage.set('user', this.api.user);
+        this.toImage.image = data.image;
+        this.toImage.image_url = data.resource.image_url;
+        this.toImage.image_id = data.resource.image_id
+        if (this.toImage.id == this.api.user.id) {
+          this.api.storage.set('user', this.api.user);
+        }
+        this.toImage = null;
         this.toast.create({
           message: this.api.trans("literals.image") + " " + this.api.trans("crud.updated"),
           duration: 1500,

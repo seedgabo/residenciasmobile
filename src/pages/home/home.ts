@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, Platform } from 'ionic-angular';
 import { Api } from "../../providers/api";
 
 // import { Camera, CameraOptions } from '@ionic-native/camera';
@@ -22,7 +22,7 @@ export class HomePage {
   nextEvents = [];
   news = [];
   correspondences = [];
-  constructor(public navCtrl: NavController, public api: Api, public popovermenu: PopoverMenu) {
+  constructor(public platform: Platform, public navCtrl: NavController, public api: Api, public popovermenu: PopoverMenu) {
   }
 
   ionViewDidLoad() {
@@ -128,7 +128,7 @@ export class HomePage {
         },
       },
     ]
-    if (this.api.user.admin) {
+    if ((!this.platform.is('android') && !this.platform.is('ios')) && this.api.user.admin) {
       buttons.unshift({
         text: this.api.trans('literals.administration'),
         icon: 'speedometer',

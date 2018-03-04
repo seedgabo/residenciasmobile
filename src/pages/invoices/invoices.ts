@@ -42,7 +42,7 @@ export class InvoicesPage {
     this.api.get(`invoices?order[date]=desc&orWhere[residence_id]=${this.api.user.residence_id}&orWhere[user_id]=${this.api.user.id}&with[]=user&with[]=receipts&with[]=items&take=500`)
       .then((data: any) => {
         console.log(data);
-        this.api.invoices = data;
+        this.api.objects.invoices = data;
         this.filter()
         this.loading = false;
         if (refresher != null)
@@ -61,10 +61,10 @@ export class InvoicesPage {
 
   filter() {
     if (this.types === 'all') {
-      this.toShow = this.api.invoices;
+      this.toShow = this.api.objects.invoices;
       return this.getRows()
     }
-    this.toShow = this.api.invoices.filter((inv) => {
+    this.toShow = this.api.objects.invoices.filter((inv) => {
       return inv.type == this.types;
     });
     this.getRows()

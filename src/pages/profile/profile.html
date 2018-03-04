@@ -78,23 +78,24 @@
       <ion-col col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-4>
         <!-- Residence  Card -->
         <ion-card>
+          <ion-list-header class="header-primary">
+            {{residence.name}}
+            <button item-right color="light" icon-only ion-button clear (click)="editable=!editable">
+              <ion-icon name="create"></ion-icon>
+            </button>
+          </ion-list-header>
           <ion-card-content>
             <ion-list no-padding>
-              <ion-list-header class="header-primary">
-                {{residence.name}}
-                <button item-right color="light" icon-only ion-button clear (click)="editable=!editable">
-                  <ion-icon name="create"></ion-icon>
-                </button>
-              </ion-list-header>
               <div *ngIf="!editable">
                 <ion-item>
                   <b>{{ 'literals.status' | trans }}</b>
-                  <span item-right>{{ 'literals.'+ residence.status | trans }}</span>
+                  <span item-right text-capitalize ion-text [color]="residence.status == 'solvent'? 'secondary':'danger'">{{ 'literals.'+ residence.status | trans }}</span>
                 </ion-item>
                 <ion-item text-center>
-                  <b>{{ residence.total/(residence.total - residence.debt)*100 }}%</b>
+                  <b>{{ residence.total/(residence.total - residence.debt)*100 | number:'1.2-2'}}%</b>
                   <br>
                 </ion-item>
+                <canvas id="chart-debt" height="100"></canvas>
                 <ion-item *ngIf="residence.owner">
                   <b>{{ 'literals.owner' | trans }}</b>
                   <span item-right>{{ residence.owner.name }}</span>
@@ -166,6 +167,30 @@
         </ion-card>
       </ion-col>
       <ion-col col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-4>
+        <!-- Users Card -->
+        <ion-card>
+          <ion-list-header color="primary">{{'literals.users' | trans}}
+            <button color="light" item-right ion-button clear (click)="createUser()" icon-only ng-if="api.settings && (api.settings.owners_can_create_users == true || api.settings.owners_can_create_users == 'true'">
+              <ion-icon name="add-circle"></ion-icon>
+            </button>
+          </ion-list-header>
+          <ion-card-content>
+            <ion-list>
+              <ion-item *ngFor="let user of residence.users;let i= index">
+                <ion-avatar item-left (click)="askFile(user)">
+                  <img [src]="user.image_url" *ngIf="user.image_id">
+                  <ion-icon large name="camera" *ngIf="!user.image_id"></ion-icon>
+                </ion-avatar>
+                <h2>{{user.name}}</h2>
+                <button (click)="deleteUser(user,i)" ion-button clear color="danger" icon-only item-right *ngIf="api.residence.owner_id !== user.id && user.id !== api.user.id">
+                  <ion-icon name="trash"></ion-icon>
+                </button>
+              </ion-item>
+            </ion-list>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-4>
         <!-- Password Card -->
         <ion-card>
           <ion-card-header>{{'crud.edit' | trans }} {{'literals.password'| trans}}</ion-card-header>
@@ -194,6 +219,4 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-
-
 </ion-content>
