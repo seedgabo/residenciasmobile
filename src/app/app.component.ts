@@ -160,6 +160,16 @@ export class MyApp {
     }, (nomatch) => {
       this.nav.setRoot('HomePage');
       console.warn('Unmatched Route', nomatch);
+      if (nomatch && nomatch.$link) {
+        if (nomatch.$link.url && nomatch.$link.url.indexOf("sos") > -1) {
+          this.api.ready.then(() => {
+            setTimeout(() => {
+              this.api.panic().then(() => { }).catch((err) => { this.api.Error(err) });
+            }, 1200);
+          })
+        }
+      }
+      this.registerDeepLinks()
     });
   }
 
