@@ -3,7 +3,7 @@ import { Api } from './../../providers/api';
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
-import {IonicPage} from "ionic-angular";
+import { IonicPage } from "ionic-angular";
 
 @IonicPage()
 @Component({
@@ -22,15 +22,15 @@ export class PetsPage {
   }
 
   getData() {
-    this.api.get('pets?where[residence_id]=' + this.api.user.residence_id)
-      .then((data: any) => { this.api.pets = data; this.filter() })
+    this.api.load('pets')
+      .then((data: any) => { this.api.objects.pets = data; this.filter() })
       .catch(console.error)
   }
 
   filter() {
     if (this.query == "")
-      return this.pets = this.api.pets;
-    this.pets = this.api.pets.filter((pet) => {
+      return this.pets = this.api.objects.pets;
+    this.pets = this.api.objects.pets.filter((pet) => {
       if (pet.name.toLowerCase().indexOf(this.query.toLowerCase()) > -1
         || pet.document.toLowerCase().indexOf(this.query.toLowerCase()) > -1
       )

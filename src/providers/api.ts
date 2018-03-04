@@ -33,15 +33,8 @@ export class Api {
     this.resolve = resolve;
   });
   langs = {};
-  workers = [];
-  vehicles = [];
-  visitors = [];
-  residences = [];
-  users = [];
-  parkings = [];
+  objects: any = {};
   visits = [];
-  invoices = [];
-  pets = [];
   chats = [];
   _events = [];
   constructor(public http: Http, public storage: Storage, public zone: NgZone, public popover: PopoverController, public toast: ToastController, public events: Events, public background: BackgroundMode, public onesignal: OneSignal, public device: Device, public platform: Platform, public vibration: Vibration, public geolocation: Geolocation, public alert: AlertController) {
@@ -65,12 +58,12 @@ export class Api {
       storage.get('allData').then((data) => {
         if (!data) return;
         this.residence = data.residence;
-        this.visitors = data.visitors;
-        this.visits = data.visits;
-        this.vehicles = data.vehicles;
-        this.workers = data.workers;
-        this.users = data.users;
-        this.residences = data.residences;
+        this.objects.visitors = data.visitors;
+        this.objects.visits = data.visits;
+        this.objects.vehicles = data.vehicles;
+        this.objects.workers = data.workers;
+        this.objects.users = data.users;
+        this.objects.residences = data.residences;
       });
       this.events.subscribe('stopSound', () => {
         if (this.sound)
@@ -91,14 +84,14 @@ export class Api {
           this.settings = data.settings;
           this.modules = data.modules;
 
-          this.visitors = this.residence.visitors;
-          this.visits = this.residence.visits;
-          this.vehicles = this.residence.vehicles;
-          this.workers = this.residence.workers;
-          this.pets = this.residence.pets;
-          this.users = this.residence.users;
-          this.parkings = this.residence.parkings;
-          this.invoices = this.residence.invoices;
+          this.objects.visitors = this.residence.visitors;
+          this.objects.visits = this.residence.visits;
+          this.objects.vehicles = this.residence.vehicles;
+          this.objects.workers = this.residence.workers;
+          this.objects.pets = this.residence.pets;
+          this.objects.users = this.residence.users;
+          this.objects.parkings = this.residence.parkings;
+          this.objects.invoices = this.residence.invoices;
 
           this.storage.set('user', data.user);
           this.storage.set('residence', data.residence);
@@ -135,16 +128,16 @@ export class Api {
       console.log(data);
       this.residence = data.residence;
       this.user.residence_id = data.residence.id;
-      this.visitors = data.visitors;
-      this.visits = data.visits;
-      this.vehicles = data.vehicles;
-      this.workers = data.workers;
-      this.pets = data.pets;
-      this.users = data.users;
+      this.objects.visitors = data.visitors;
+      this.objects.visits = data.visits;
+      this.objects.vehicles = data.vehicles;
+      this.objects.workers = data.workers;
+      this.objects.pets = data.pets;
+      this.objects.users = data.users;
       this.user.residences = data.residences;
-      this.parkings = data.parkings;
-      this.invoices = data.invoices;
-      this.residences = data.residences;
+      this.objects.parkings = data.parkings;
+      this.objects.invoices = data.invoices;
+      this.objects.residences = data.residences;
 
       this.modules = data.modules;
       this.settings = data.settings;
@@ -157,6 +150,57 @@ export class Api {
       console.error(err);
     });
     return promise;
+  }
+
+  load(resource) {
+    console.time("load " + resource)
+    return new Promise((resolve, reject) => {
+      if (this.objects[resource] && this.objects[resource].promise) {
+        this.objects[resource].promise
+          .then((resp) => {
+            resolve(resp);
+            console.timeEnd("load " + resource)
+          })
+          .catch(reject)
+        return
+      }
+      this.storage.get(resource + "_resource")
+        .then((data) => {
+          this.objects[resource] = []
+          if (data) {
+            this.objects[resource] = data;
+          }
+          var promise, query = "";
+          if (resource == 'users' || resource == 'workers' || resource == 'visitors' || resource == 'pets') {
+            query = "?where[residence_id]=" + this.user.residence_id + "&with[]=residence"
+          }
+          if (resource == 'vehicles') {
+            query = "?where[residence_id]=" + this.user.residence_id + "&with[]=owner&with[]=visitor&with[]=residence"
+          }
+          if (resource == 'parkings') {
+            query = "?with[]=user"
+          }
+          if (resource == 'products') {
+            query = "?with[]=category"
+          }
+          if (resource == 'residences') {
+            query = "?with[]=owner&with[]=users"
+          }
+          this.objects[resource].promise = promise = this.get(resource + query)
+          this.objects[resource].promise.then((resp) => {
+            this.objects[resource] = resp;
+            this.objects[resource].promise = promise;
+            this.objects[resource].collection = this.mapToCollection(resp);
+            this.storage.set(resource + "_resource", resp);
+            console.timeEnd("load " + resource)
+            return resolve(this.objects[resource]);
+          })
+            .catch((err) => {
+              reject(err);
+              this.Error(err)
+            })
+        })
+    })
   }
 
   get(uri) {
@@ -205,6 +249,14 @@ export class Api {
           return reject(error);
         });
     });
+  }
+
+  private mapToCollection(array, key = "id") {
+    var collection = {}
+    array.forEach(element => {
+      collection[element[key]] = element
+    });
+    return collection;
   }
 
   saveData(userData) {
@@ -257,82 +309,83 @@ export class Api {
       });
       this.Echo.private('Application')
 
+        // User Events
+        .listen('UserCreated', (data) => {
+          console.log("created user:", data);
+          this.UserChanged(data)
+        })
+        .listen('UserUpdated', (data) => {
+          console.log("updated user:", data);
+          this.UserChanged(data)
+        })
+        .listen('UserDeleted', (data) => {
+          console.log("deleted user:", data);
+          this.resourceDeleted(data, 'users', 'user');
+        })
+        // Parking Events
         .listen('ParkingCreated', (data) => {
           console.log("created parking:", data);
-          this.zone.run(() => {
-            data.parking.user = data.user;
-            data.parking.residence = data.residence;
-            this.parkings[this.parkings.length] = data.parking;
-          })
+          this.ParkingChanged(data);
         })
         .listen('ParkingUpdated', (data) => {
           console.log("updated parking:", data);
-          var parking = this.parkings.findIndex((parking) => {
-            return parking.id === data.parking.id;
-          });
-          this.zone.run(() => {
-            data.parking.user = data.user;
-            data.parking.residence = data.residence;
-            if (parking >= 0) {
-              this.parkings[parking] = data.parking;
-
-            }
-            else {
-              this.parkings[this.parkings.length] = data.parking;
-            }
-          });
+          this.ParkingChanged(data);
         })
         .listen('ParkingDeleted', (data) => {
           console.log("deleted parking:", data);
-          var parking = this.parkings.findIndex((parking) => {
-            return parking.id === data.parking.id;
-          });
-          this.zone.run(() => {
-            if (parking >= 0) {
-              this.parkings.splice(parking, 1);
-            }
-          })
+          this.resourceDeleted(data, 'parkings', 'parking')
         })
-
+        // Visitor Events
         .listen('VisitorCreated', (data) => {
           console.log("created visitor:", data);
-          if (data.visitor.residence_id != this.residence.id) return;
-          this.zone.run(() => {
-            var visitor = this.visitors[this.visitors.length] = data.visitor;
-            if (data.image)
-              visitor.image = data.image;
-          })
+          this.VisitorChanged(data)
         })
         .listen('VisitorUpdated', (data) => {
           console.log("updated visitor:", data);
-          if (data.visitor.residence_id != this.residence.id) return;
-          var visitor_index = this.visitors.findIndex((visitor) => {
-            return visitor.id === data.visitor.id;
-          });
-          this.zone.run(() => {
-            var visitor;
-            if (visitor_index > -1)
-              visitor = this.visitors[visitor_index] = data.visitor;
-            else {
-              visitor = this.visitors[this.visitors.length] = data.visitor;
-            }
-            if (data.image) {
-              visitor.image = data.image;
-            }
-          });
+          this.VisitorChanged(data)
         })
         .listen('VisitorDeleted', (data) => {
-          console.log("deleted visitor:", data);
-          var visitor = this.visitors.findIndex((visitor) => {
-            return visitor.id === data.visitor.id;
-          });
-          this.zone.run(() => {
-            if (visitor >= 0) {
-              this.visitors.splice(visitor, 1);
-            }
-          })
+          this.resourceDeleted(data, 'visitors', 'visitor')
+        })
+        // Vehicle Events
+        .listen('VehicleCreated', (data) => {
+          console.log("created vehicle:", data);
+          this.VehicleChanged(data);
+        })
+        .listen('VehicleUpdated', (data) => {
+          console.log("updated vehicle:", data);
+          this.VehicleChanged(data);
+        })
+        .listen('VehicleDeleted', (data) => {
+          console.log("deleted vehicle:", data);
+          this.resourceDeleted(data, 'vehicles', 'vehicle')
+        })
+        // Worker Events
+        .listen('WorkerCreated', (data) => {
+          console.log("created worker:", data);
+          this.WorkerChanged(data)
+        })
+        .listen('WorkerUpdated', (data) => {
+          console.log("updated worker", data.worker)
+          this.WorkerChanged(data)
+        })
+        .listen('WorkerDeleted', (data) => {
+          console.log("deleted worker:", data);
+          this.resourceDeleted(data, 'workers', 'worker')
         })
 
+        .listen('PetCreated', (data) => {
+          console.log("created pet:", data);
+          this.PetChanged(data)
+        })
+        .listen('PetUpdated', (data) => {
+          console.log("updated pet", data.pet)
+          this.PetChanged(data)
+        })
+        .listen('PetDeleted', (data) => {
+          console.log("deleted pet:", data);
+          this.resourceDeleted(data, 'pets', 'pet')
+        })
 
         .listen('VisitCreated', (data) => {
           if (data.visit.residence_id != this.residence.id) return;
@@ -389,85 +442,6 @@ export class Api {
             }
           })
         })
-
-        .listen('PetCreated', (data) => {
-          console.log("created pet:", data);
-          if (data.pet.residence_id != this.residence.id) return;
-          this.zone.run(() => {
-            var pet = this.pets[this.pets.length] = data.pet;
-            if (data.image)
-              pet.image = data.image;
-          })
-        })
-        .listen('PetUpdated', (data) => {
-          console.log("updated pet:", data);
-          if (data.pet.residence_id != this.residence.id) return;
-          var pet_index = this.pets.findIndex((pet) => {
-            return pet.id === data.pet.id;
-          });
-          this.zone.run(() => {
-            var pet;
-            if (pet_index > -1)
-              pet = this.pets[pet_index] = data.pet;
-            else {
-              pet = this.pets[this.pets.length] = data.pet;
-            }
-            if (data.image) {
-              pet.image = data.image;
-            }
-          });
-        })
-        .listen('PetDeleted', (data) => {
-          console.log("deleted pet:", data);
-          var pet = this.pets.findIndex((pet) => {
-            return pet.id === data.pet.id;
-          });
-          this.zone.run(() => {
-            if (pet >= 0) {
-              this.pets.splice(pet, 1);
-            }
-          })
-        })
-
-        .listen('WorkerCreated', (data) => {
-          console.log("created worker:", data);
-          if (data.worker.residence_id != this.residence.id) return;
-          this.zone.run(() => {
-            var worker = this.workers[this.workers.length] = data.worker;
-            if (data.image)
-              worker.image = data.image;
-          })
-        })
-        .listen('WorkerUpdated', (data) => {
-          console.log("updated worker:", data);
-          if (data.worker.residence_id != this.residence.id) return;
-          var worker_index = this.workers.findIndex((worker) => {
-            return worker.id === data.worker.id;
-          });
-          this.zone.run(() => {
-            var worker;
-            if (worker_index > -1)
-              worker = this.workers[worker_index] = data.worker;
-            else {
-              worker = this.workers[this.workers.length] = data.worker;
-            }
-            if (data.image) {
-              worker.image = data.image;
-            }
-          });
-        })
-        .listen('WorkerDeleted', (data) => {
-          console.log("deleted worker:", data);
-          var worker = this.workers.findIndex((worker) => {
-            return worker.id === data.worker.id;
-          });
-          this.zone.run(() => {
-            if (worker >= 0) {
-              this.workers.splice(worker, 1);
-            }
-          })
-        })
-
 
         .listen('EventCreated', (data) => {
           if (!(data.event.privacity == "public" || data.event.creator.residece_id == this.user.residence_id)) return;
@@ -833,4 +807,177 @@ export class Api {
 
   }
 
+
+
+
+
+  public UserChanged(data) {
+    if (this.objects.users) {
+      var user_index = this.objects.users.findIndex((user) => {
+        return user.id === data.user.id;
+      });
+      this.zone.run(() => {
+        var user;
+        if (user_index > -1) {
+          user = Object.assign(this.objects.users[user_index], data.user)
+          this.objects.users.collection[user.id] = data.user;
+        }
+
+        else {
+          user = this.objects.users[this.objects.users.length] = data.user;
+        }
+        if (data.residence)
+          user.residence = data.residence;
+        if (data.image)
+          user.image = data.image;
+      });
+    }
+  }
+  public VisitorChanged(data) {
+    if (this.objects.visitors) {
+      var visitor_index = this.objects.visitors.findIndex((visitor) => {
+        return visitor.id === data.visitor.id;
+      });
+      this.zone.run(() => {
+        var visitor;
+        if (visitor_index > -1) {
+          visitor = Object.assign(this.objects.visitors[visitor_index], data.visitor)
+          this.objects.visitors.collection[visitor.id] = data.visitor;
+        }
+        else {
+          visitor = this.objects.visitors[this.objects.visitors.length] = data.visitor;
+        }
+
+        if (data.image)
+          visitor.image = data.image;
+        if (data.residence)
+          visitor.residence = data.residence;
+      });
+
+    }
+  }
+  public VehicleChanged(data) {
+    if (this.objects.vehicles) {
+      var vehicle_index = this.objects.vehicles.findIndex((vehicle) => {
+        return vehicle.id === data.vehicle.id;
+      });
+      this.zone.run(() => {
+        var vehicle;
+        if (vehicle_index > -1) {
+          vehicle = Object.assign(this.objects.vehicles[vehicle_index], data.vehicle)
+          this.objects.vehicles.collection[vehicle.id] = data.vehicle;
+        }
+        else {
+          vehicle = this.objects.vehicles[this.objects.vehicles.length] = data.vehicle;
+        }
+        if (data.residence)
+          vehicle.residence = data.residence;
+        if (data.owner)
+          vehicle.owner = data.owner;
+        if (data.visitor)
+          vehicle.visitor = data.visitor;
+        if (data.image)
+          vehicle.image = data.image;
+      });
+    }
+  }
+  public ParkingChanged(data) {
+    if (this.objects.parkings) {
+      var parking_index = this.objects.parkings.findIndex((parking) => {
+        return parking.id === data.parking.id;
+      });
+      this.zone.run(() => {
+        var parking;
+        if (parking_index > -1) {
+          parking = Object.assign(this.objects.parkings[parking_index], data.parking)
+          this.objects.parkings.collection[parking.id] = data.parking;
+        }
+        else {
+          parking = this.objects.parkings[this.objects.parkings.length] = data.parking;
+        }
+        if (data.image)
+          parking.image = data.image;
+        if (data.residence)
+          parking.residence = data.residence;
+      });
+    }
+  }
+  public WorkerChanged(data) {
+    if (this.objects.workers) {
+      var worker_index = this.objects.workers.findIndex((worker) => {
+        return worker.id === data.worker.id;
+      });
+      this.zone.run(() => {
+        var worker;
+        if (worker_index > -1) {
+          worker = Object.assign(this.objects.workers[worker_index], data.worker)
+          this.objects.workers.collection[worker.id] = data.worker;
+        }
+        else {
+          worker = this.objects.workers[this.objects.workers.length] = data.worker;
+        }
+        if (data.image)
+          worker.image = data.image;
+        if (data.residence)
+          worker.residence = data.residence;
+      });
+    }
+  }
+  public PetChanged(data) {
+    if (this.objects.pets) {
+      var pet_index = this.objects.pets.findIndex((pet) => {
+        return pet.id === data.pet.id;
+      });
+      this.zone.run(() => {
+        var pet;
+        if (pet_index > -1) {
+          pet = Object.assign(this.objects.pets[pet_index], data.pet)
+          this.objects.pets.collection[pet.id] = data.pet;
+        }
+        else {
+          pet = this.objects.pets[this.objects.pets.length] = data.pet;
+        }
+        if (data.image)
+          pet.image = data.image;
+        if (data.residence)
+          pet.residence = data.residence;
+      });
+    }
+  }
+  public VisitChanged(data) {
+    var visit_index = this.visits.findIndex((visit) => {
+      return visit.id === data.visit.id;
+    });
+    this.zone.run(() => {
+      var visit;
+      if (visit_index > -1) {
+        visit = this.visits[visit_index] = data.visit;
+      }
+      else {
+        this.visits.unshift(data.visit);
+        visit = this.visits[0];
+      }
+      if (data.visitor) {
+        visit.visitor = data.visitor;
+        visit.visitors = data.visitors;
+        visit.guest = data.guest;
+        if (this.objects.residences)
+          visit.residence = this.objects.residences.collection[visit.residence_id];
+      }
+    });
+  }
+
+
+  public resourceDeleted(data, resource, item) {
+    var item_index = this.objects[resource].findIndex((i) => {
+      return i.id === data[item].id;
+    });
+    if (this.objects[resource])
+      this.zone.run(() => {
+        if (item_index >= 0) {
+          this.objects[resource].splice(item_index, 1);
+          delete (this.objects[resource][data[item].id])
+        }
+      })
+  }
 }

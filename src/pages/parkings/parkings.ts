@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { Api } from "../../providers/api";
 
-import {IonicPage} from "ionic-angular";
+import { IonicPage } from "ionic-angular";
 
 @IonicPage()
 @Component({
@@ -17,9 +17,8 @@ export class ParkingsPage {
   }
 
   ionViewDidLoad() {
-    this.api.get('parkings?with[]=user')
+    this.api.load('parkings')
       .then((parkings: any) => {
-        this.api.parkings = parkings;
         this.parkings = parkings;
       }).catch((err) => {
         console.error(err);
@@ -28,8 +27,8 @@ export class ParkingsPage {
 
   filter() {
     if (this.query == "")
-      return this.parkings = this.api.parkings;
-    this.parkings = this.api.parkings.filter((park) => {
+      return this.parkings = this.api.objects.parkings;
+    this.parkings = this.api.objects.parkings.filter((park) => {
       if (park.name.toLowerCase().indexOf(this.query.toLowerCase()) > -1)
         return true;
       if (park.user && park.user.full_name.toLowerCase().indexOf(this.query.toLowerCase()) > -1)

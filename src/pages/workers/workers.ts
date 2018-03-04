@@ -3,7 +3,7 @@ import { Api } from './../../providers/api';
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
-import {IonicPage} from "ionic-angular";
+import { IonicPage } from "ionic-angular";
 
 @IonicPage()
 @Component({
@@ -15,22 +15,22 @@ export class WorkersPage {
   query = ""
   workers = [];
   constructor(public navCtrl: NavController, public navParams: NavParams, public api: Api, public toast: ToastController, public actionsheet: ActionSheetController) {
-    this.workers = this.api.residence.workers;
+    this.workers = this.api.objects.workers;
   }
   ionViewDidEnter() {
     this.getData()
   }
 
   getData() {
-    this.api.get('workers?where[residence_id]=' + this.api.user.residence_id)
-      .then((data: any) => { this.api.workers = data; this.filter() })
+    this.api.load('workers')
+      .then((data: any) => { this.api.objects.workers = data; this.filter() })
       .catch(console.error)
   }
 
   filter() {
     if (this.query == "")
-      return this.workers = this.api.workers;
-    this.workers = this.api.workers.filter((worker) => {
+      return this.workers = this.api.objects.workers;
+    this.workers = this.api.objects.workers.filter((worker) => {
       if (worker.name.toLowerCase().indexOf(this.query.toLowerCase()) > -1)
         return true;
       return false;

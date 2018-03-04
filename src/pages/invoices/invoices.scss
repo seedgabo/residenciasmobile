@@ -36,9 +36,11 @@ page-invoices {
     font-size: 18px;
   }
 }
-
-.popover-content {
-  width: 90% !important;
-  left: 5% !important;
-  top: 20% !important;
+.popover-payment{
+  .popover-content {
+    width: 90% !important;
+    left: 5% !important;
+    top: 20% !important;
+  }
 }
+

@@ -17,7 +17,13 @@ export class VisitorsPage {
   }
 
   ionViewDidLoad() {
-    this.visitors = this.api.visitors;
+    this.api.load('visitors')
+      .then(() => {
+        this.visitors = this.api.objects.visitors;
+      })
+      .catch((err) => {
+        this.api.Error(err)
+      })
   }
 
   ionViewDidEnter() {
@@ -37,8 +43,8 @@ export class VisitorsPage {
 
   filter() {
     if (this.query == "")
-      return this.visitors = this.api.visitors;
-    this.visitors = this.api.visitors.filter((visitor) => {
+      return this.visitors = this.api.objects.visitors;
+    this.visitors = this.api.objects.visitors.filter((visitor) => {
       if (visitor.name.toLowerCase().indexOf(this.query.toLowerCase()) > -1 || visitor.document.toLowerCase().indexOf(this.query.toLowerCase()) > -1)
         return true;
       return false;

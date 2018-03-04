@@ -160,7 +160,7 @@ export class InvoicesPage {
   }
 
   reportPayment(invoice) {
-    var popover = this.popover.create('PaymentReportPage', { invoice: invoice });
+    var popover = this.popover.create('PaymentReportPage', { invoice: invoice }, { cssClass: 'popover-payment' });
     popover.present();
     popover.onWillDismiss(() => { this.getInvoices() });
   }

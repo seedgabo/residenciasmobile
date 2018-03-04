@@ -112,28 +112,33 @@ export class HomePage {
 
 
   presentPopover(Ev) {
+    var buttons = [
+      {
+        text: this.api.trans('literals.profile'),
+        icon: 'person',
+        handler: () => {
+          this.navCtrl.push('ProfilePage')
+        },
+      },
+      {
+        text: this.api.trans('__.Cerrar Sesión'),
+        icon: 'log-out',
+        handler: () => {
+          this.logout();
+        },
+      },
+    ]
+    if (this.api.user.admin) {
+      buttons.unshift({
+        text: this.api.trans('literals.administration'),
+        icon: 'speedometer',
+        handler: () => {
+          window.location.href = this.api.url + 'admin';
+        },
+      })
+    }
     let popover = this.popovermenu.create({
-      title: this.api.trans('literals.options'),
-      buttons: [
-        {
-          text: this.api.trans('literals.admin'),
-          handler: () => {
-            window.location.href = this.api.url + 'admin';
-          },
-        },
-        {
-          text: this.api.trans('literals.profile'),
-          handler: () => {
-            this.navCtrl.push('ProfilePage')
-          },
-        },
-        {
-          text: this.api.trans('__.Cerrar Sesión'),
-          handler: () => {
-            this.logout();
-          },
-        },
-      ]
+      buttons: buttons
     });
     popover.present({ ev: Ev })
   }

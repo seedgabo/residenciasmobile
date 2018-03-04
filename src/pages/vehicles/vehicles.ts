@@ -3,7 +3,7 @@ import { Api } from './../../providers/api';
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
-import {IonicPage} from "ionic-angular";
+import { IonicPage } from "ionic-angular";
 
 @IonicPage()
 @Component({
@@ -22,15 +22,15 @@ export class VehiclesPage {
   }
 
   getData() {
-    this.api.get('vehicles?where[residence_id]=' + this.api.user.residence_id)
-      .then((data: any) => { this.api.vehicles = data; this.filter() })
+    this.api.load('vehicles')
+      .then((data: any) => { this.api.objects.vehicles = data; this.filter() })
       .catch(console.error)
   }
 
   filter() {
     if (this.query == "")
-      return this.vehicles = this.api.vehicles;
-    this.vehicles = this.api.vehicles.filter((vehicle) => {
+      return this.vehicles = this.api.objects.vehicles;
+    this.vehicles = this.api.objects.vehicles.filter((vehicle) => {
       if (vehicle.name.toLowerCase().indexOf(this.query.toLowerCase()) > -1 || vehicle.plate.toLowerCase().indexOf(this.query.toLowerCase()) > -1)
         return true;
       return false;
