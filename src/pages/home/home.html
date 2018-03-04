@@ -7,6 +7,11 @@
       <img src="./assets/logo-completo.png" style="height:50px" *ngIf="!api.url">
       <img [src]="api.url + 'img/logo.png'" style="height:50px" *ngIf="api.url">
     </ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="presentPopover($event)">
+        <ion-icon name="more"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
@@ -23,7 +28,6 @@
       </ion-slide>
     </ion-slides>
   </div>
-
   <ion-grid>
     <ion-row wrap responsive-sm>
 

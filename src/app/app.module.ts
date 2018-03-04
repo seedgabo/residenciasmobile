@@ -29,6 +29,7 @@ import { Deeplinks } from "@ionic-native/deeplinks";
 import { PipesModule } from '../pipes/pipes.module';
 
 import { DatePickerModule } from 'datepicker-ionic2';
+import { PopoverMenu } from '../pages/popover/popover-menu';
 
 
 @NgModule({
@@ -51,7 +52,8 @@ import { DatePickerModule } from 'datepicker-ionic2';
     StatusBar, SplashScreen, Camera, Facebook, GooglePlus, AppMinimize, BackgroundMode, CodePush, OneSignal, Device,
     Deeplinks, FileTransfer, File, FileOpener, Vibration, Geolocation,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
-    Api,
+    Api, PopoverMenu,
+
   ]
 })
 export class AppModule { }

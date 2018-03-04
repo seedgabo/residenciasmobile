@@ -6,7 +6,9 @@ import { Api } from "../../providers/api";
 
 
 import { IonicPage } from "ionic-angular";
+import { PopoverMenu } from '../popover/popover-menu';
 
+declare var window: any;
 @IonicPage()
 @Component({
   selector: 'page-home',
@@ -20,7 +22,7 @@ export class HomePage {
   nextEvents = [];
   news = [];
   correspondences = [];
-  constructor(public navCtrl: NavController, public api: Api) {
+  constructor(public navCtrl: NavController, public api: Api, public popovermenu: PopoverMenu) {
   }
 
   ionViewDidLoad() {
@@ -107,5 +109,50 @@ export class HomePage {
     this.navCtrl.push("PostPage", { post: post });
   }
 
+
+
+  presentPopover(Ev) {
+    let popover = this.popovermenu.create({
+      title: this.api.trans('literals.options'),
+      buttons: [
+        {
+          text: this.api.trans('literals.admin'),
+          handler: () => {
+            window.location.href = this.api.url + 'admin';
+          },
+        },
+        {
+          text: this.api.trans('literals.profile'),
+          handler: () => {
+            this.navCtrl.push('ProfilePage')
+          },
+        },
+        {
+          text: this.api.trans('__.Cerrar Sesión'),
+          handler: () => {
+            this.logout();
+          },
+        },
+      ]
+    });
+    popover.present({ ev: Ev })
+  }
+
+  logout() {
+    this.api.storage.clear().then(() => {
+      this.navCtrl.setRoot('Login').then(() => {
+        this.api.stopEcho();
+        this.api.username = ""
+        if (!window.url) {
+          this.api.url = ""
+        };
+        this.api.user = null;
+        this.api.password = ""
+        this.api.residence = null;
+        this.api.pushUnregister();
+        this.api.clearSharedPreferences();
+      });
+    });
+  }
 }
 
