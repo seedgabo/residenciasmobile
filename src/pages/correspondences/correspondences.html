@@ -7,14 +7,15 @@
   </ion-navbar>
 </ion-header>
 
-
-<ion-content padding>
-  <ion-refresher (ionRefresh)="getCorrespondences($event)">
-    <ion-refresher-content></ion-refresher-content>
-  </ion-refresher>
+<!-- TODO Improve like residencias Admin -->
+<ion-content class="container">
   <div text-center *ngIf="loading">
     <ion-spinner></ion-spinner>
   </div>
+  <ion-refresher (ionRefresh)="getCorrespondences($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
   <ion-list>
     <button ion-item *ngFor="let corres of correspondences" (click)="actions(corres)">
       <h2>{{corres.item}}

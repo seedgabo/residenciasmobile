@@ -30,6 +30,11 @@ export class MyApp {
           this.api.getLang();
           this.registerDeepLinks();
         } else {
+          this.events.subscribe('login', () => {
+            this.api.getAllData();
+            this.api.getLang();
+            this.registerDeepLinks();
+          });
           this.rootPage = 'Login';
         }
       });

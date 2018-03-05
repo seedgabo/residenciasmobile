@@ -144,8 +144,8 @@ export class Api {
 
       this.saveData(data);
       this.storage.set('allData', data);
-      this.saveSharedPreferences();
       this.pushRegister(this.user.onesignal_appId);
+      this.saveSharedPreferences();
     }).catch((err) => {
       console.error(err);
     });
