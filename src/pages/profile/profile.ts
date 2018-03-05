@@ -150,7 +150,11 @@ export class ProfilePage {
   }
 
   createUser() {
-    this.modal.create('UserEditorPage').present()
+    var modal = this.modal.create('UserEditorPage')
+    modal.present()
+    modal.onWillDismiss(() => {
+      this.ionViewDidEnter()
+    })
   }
 
   deleteUser(user, index) {
