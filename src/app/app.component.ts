@@ -6,7 +6,6 @@ import { CodePush } from "@ionic-native/code-push";
 import { BackgroundMode } from '@ionic-native/background-mode';
 import { Deeplinks } from "@ionic-native/deeplinks";
 import { Api } from "../providers/api";
-import { AppMinimize } from "@ionic-native/app-minimize";
 declare var window: any;
 @Component({
   templateUrl: 'app.html'
@@ -19,7 +18,7 @@ export class MyApp {
   pages: Array<any>;
   VisitTabsPage = 'VisitTabsPage';
   disabled_panic = false;
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public codepush: CodePush, public backgroundmode: BackgroundMode, public api: Api, public minimize: AppMinimize, public deeplinks: Deeplinks, public events: Events) {
+  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public codepush: CodePush, public backgroundmode: BackgroundMode, public api: Api, public deeplinks: Deeplinks, public events: Events) {
     this.platform.ready().then(() => {
       this.api.ready.then(() => {
         this.initializeApp();
@@ -72,12 +71,10 @@ export class MyApp {
       this.statusBar.styleLightContent();
       this.splashScreen.hide();
       this.platform.registerBackButtonAction(() => {
-
         if (this.nav.canGoBack())
           return this.nav.pop();
         else {
-          this.minimize.minimize();
-          console.log("minimize");
+          this.backgroundmode.moveToBackground();
         }
       });
 
