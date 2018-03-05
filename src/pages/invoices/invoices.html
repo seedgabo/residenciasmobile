@@ -53,42 +53,42 @@
 
               </ion-card-title>
             </ion-card-header>
-            <ion-card-content>
-              <p item-right [color]="invoice.status == 'paid'?'success':'danger'" ion-text text-center>
-                {{ invoice.value | currency:'COP':'symbol-narrow':'1.2-2' }}
-                <small *ngIf="invoice.partially_paid">
-                  <br> {{'literals.partially paid' | trans }}: ({{ this.invoice.partially_paid | currency:'COP':'symbol-narrow':'1.2-2'
-                  }})
-                </small>
-              </p>
-              <ion-item>
-                <b>{{'literals.status' | trans }}:</b>
-                <span>
-                  {{'literals.'+invoice.status | trans}}
-                  <span color="secondary" ion-text *ngIf="invoice.status!=='paid' && invoice.status!=='cancelled' && invoice.in_discount">
-                    ({{'literals.in discount' | trans }})
-                  </span>
-                  <span color="danger" ion-text *ngIf="invoice.status!=='paid' && invoice.status!=='cancelled' && invoice.in_interest">
-                    ({{ 'literals.in interest' | trans }})"
-                  </span>
+            <!-- <ion-card-content> -->
+            <p item-right [color]="invoice.status == 'paid'?'success':'danger'" ion-text text-center>
+              {{ invoice.value | currency:'COP':'symbol-narrow':'1.2-2' }}
+              <small *ngIf="invoice.partially_paid">
+                <br> {{'literals.partially paid' | trans }}: ({{ this.invoice.partially_paid | currency:'COP':'symbol-narrow':'1.2-2'
+                }})
+              </small>
+            </p>
+            <ion-item>
+              <b>{{'literals.status' | trans }}:</b>
+              <span>
+                {{'literals.'+invoice.status | trans}}
+                <span color="secondary" ion-text *ngIf="invoice.status!=='paid' && invoice.status!=='cancelled' && invoice.in_discount">
+                  ({{'literals.in discount' | trans }})
                 </span>
-              </ion-item>
-              <ion-grid>
-                <ion-row>
-                  <ion-col col-9>
-                    <button ion-button icon-left color="primary" (click)="downloadinvoice(invoice)">
-                      <ion-icon name="document"></ion-icon>
-                      {{ 'literals.view_resource' | trans }} {{'literals.invoice' | trans}}
-                    </button>
-                  </ion-col>
-                  <ion-col col-2>
-                    <button ion-fab color="favorite" (click)="openMenu(invoice)">
-                      <ion-icon name="logo-buffer"></ion-icon>
-                    </button>
-                  </ion-col>
-                </ion-row>
-              </ion-grid>
-            </ion-card-content>
+                <span color="danger" ion-text *ngIf="invoice.status!=='paid' && invoice.status!=='cancelled' && invoice.in_interest">
+                  ({{ 'literals.in interest' | trans }})"
+                </span>
+              </span>
+            </ion-item>
+            <ion-grid>
+              <ion-row>
+                <ion-col col-9>
+                  <button ion-button icon-left color="primary" (click)="downloadinvoice(invoice)">
+                    <ion-icon name="document"></ion-icon>
+                    {{ 'literals.view_resource' | trans }} {{'literals.invoice' | trans}}
+                  </button>
+                </ion-col>
+                <ion-col col-2>
+                  <button ion-fab color="favorite" (click)="openMenu(invoice)">
+                    <ion-icon name="logo-buffer"></ion-icon>
+                  </button>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+            <!-- </ion-card-content> -->
           </ion-card>
         </ion-col>
       </ion-row>
