@@ -17,16 +17,16 @@
   <ion-list *ngIf="view == 'list'">
     <ion-item *ngFor="let reserv of reservations" (click)="actions(reserv)">
 
-      <ion-thumbnail item-left *ngIf="reserv.zone && reserv.zone.image">
-        <img [src]="reserv.zone.image.url" alt="">
+      <ion-thumbnail item-left *ngIf="reserv.zone && reserv.zone.image_url">
+        <img [src]="reserv.zone.image_url" alt="">
       </ion-thumbnail>
 
       <h2 text-wrap *ngIf="reserv.zone" text-center>
         {{reserv.zone.name}}
       </h2>
-      <h3 text-wrap text-center>
-        <b>{{'literals.status' | trans }}</b>
-        <span>
+      <h3 text-wrap>
+        <b>{{'literals.status' | trans }}:</b>
+        <span ion-text [color]="reserv.status == 'cancelled' ? 'danger' : reserv.status == 'waiting for confirmation' ? 'warning' : reserv.status == 'approved' ? 'secondary' : 'dark' ">
           {{'literals.' + reserv.status | trans }}
         </span>
       </h3>
@@ -36,7 +36,16 @@
           {{'literals.start' | trans }}:
         </b>
         <span>
-          {{ reserv.start | amDateFormat:'LLLL' }} - {{reserv.end | amDateFormat:'LLLL' }}
+          {{ reserv.start | amDateFormat:'LLLL' }}
+        </span>
+      </p>
+
+      <p text-wrap>
+        <b>
+          {{'literals.end' | trans }}:
+        </b>
+        <span>
+          {{ reserv.end | amDateFormat:'LLLL' }}
         </span>
       </p>
 

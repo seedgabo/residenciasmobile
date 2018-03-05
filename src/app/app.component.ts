@@ -158,8 +158,7 @@ export class MyApp {
         this.nav.push('ChatsPage', args);
       }
     }, (nomatch) => {
-      this.nav.setRoot('HomePage');
-      console.warn('Unmatched Route', nomatch);
+      // console.warn('Unmatched Route', nomatch);
       if (nomatch && nomatch.$link) {
         if (nomatch.$link.url && nomatch.$link.url.indexOf("sos") > -1) {
           this.api.ready.then(() => {
@@ -169,7 +168,6 @@ export class MyApp {
           })
         }
       }
-      this.registerDeepLinks()
     });
   }
 

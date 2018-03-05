@@ -73,14 +73,12 @@ ion-toast {
       background-color: color($colors, 'secondary');
       color: white;
     }
-    .toast-message {}
   }
   &.rejected {
     .toast-container {
       background-color: color($colors, 'danger');
       color: white;
     }
-    .toast-message {}
   }
 }
 

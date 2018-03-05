@@ -5,7 +5,7 @@ import moment from 'moment';
 import { ActionSheetController } from 'ionic-angular/components/action-sheet/action-sheet-controller';
 
 declare var $: any;
-moment.locale('es');
+moment.locale('es-us');
 @IonicPage()
 @Component({ selector: 'page-my-reservations', templateUrl: 'my-reservations.html' })
 export class MyReservationsPage {
@@ -20,10 +20,8 @@ export class MyReservationsPage {
   }
 
   getMyReservations() {
-    this
-      .api
-      .get('reservations?where[user_id]=' + this.api.user.id + "&order[start]=desc&with[]=zone&with[]=zone.image&with[]=event&whereDategte[start" +
-        "]=" + moment.utc().subtract(1, 'day').local().format("YYYY-MM-DD"))
+    this.api.get('reservations?where[user_id]=' + this.api.user.id + "&order[start]=desc&with[]=zone&with[]=zone.image&with[]=event&whereDategte[start" +
+      "]=" + moment.utc().subtract(1, 'day').local().format("YYYY-MM-DD"))
       .then((data: any) => {
         console.log(data);
         this.reservations = data;
@@ -33,16 +31,14 @@ export class MyReservationsPage {
   }
 
   prepareReservations() {
-    this
-      .reservations
-      .forEach((reserv) => {
-        reserv.title = `${reserv.zone.name}  ${reserv.event
-          ? '-' + reserv.event.name
-          : ''} : ${reserv
-            .quotas} ${this
-              .api
-              .trans('literals.persons')}`
-      })
+    this.reservations.forEach((reserv) => {
+      reserv.title = `${reserv.zone.name}  ${reserv.event
+        ? '-' + reserv.event.name
+        : ''} : ${reserv
+          .quotas} ${this
+            .api
+            .trans('literals.persons')}`
+    })
   }
 
   changeView() {
@@ -75,18 +71,18 @@ export class MyReservationsPage {
   }
 
   actions(reserv) {
+    var text = "";
+    if(!this.canCancel(reserv)){
+      text = this.api.trans('__.ya no es posible cancelar') + " (" + (this.api.settings.hours_to_cancel_reservation ? this.api.settings.hours_to_cancel_reservation : 24 ) +"hrs)"
+    } 
     var sheet = this.actionsheet.create({
       title: this.api.trans('literals.actions') + " " + this.api.trans('literals.reservation'),
-      subTitle: this.canCancel(reserv) ? this.api.trans('__.') + " " + `(${this.api.settings.hours_to_cancel_reservation || 24} hrs)` : ''
+      subTitle: text
     })
 
     if (this.canCancel(reserv)) {
       sheet.addButton({
-        text: this
-          .api
-          .trans("crud.cancel") + " " + this
-            .api
-            .trans('literals.reservation'),
+        text: this.api.trans("crud.cancel") + " " + this.api.trans('literals.reservation'),
         icon: 'remove-circle',
         role: 'destructive',
         cssClass: "icon-danger",
