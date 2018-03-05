@@ -576,8 +576,8 @@ export class Api {
         .then((response) => {
           console.log('device registered:', response);
         })
-        .catch(console.error);
-    }).catch(console.error);
+        .catch((error) => this.Error(error));
+    }).catch((error) => this.Error(error));
   }
 
   pushUnregister() {
