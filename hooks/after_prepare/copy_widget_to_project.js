@@ -155,14 +155,14 @@ public class SOSWidgetProvider extends AppWidgetProvider {
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.sos_appwidget_info);
 
-        String url = "residencias://sos";
+        String url = "residenciasOnline://sos";
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(url));
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
         views.setOnClickPendingIntent(R.id.button2,pendingIntent);
 
 
-        String url2 = "residencias://";
+        String url2 = "residenciasOnline://";
         Intent intent2 = new Intent(Intent.ACTION_VIEW);
         intent2.setData(Uri.parse(url2));
         PendingIntent pendingIntent2 = PendingIntent.getActivity(context, 0, intent2, 0);
