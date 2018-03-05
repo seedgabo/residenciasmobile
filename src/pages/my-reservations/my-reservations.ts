@@ -55,7 +55,10 @@ export class MyReservationsPage {
 
   renderCalendar() {
     $("#calendar-reservations").fullCalendar({
-      events: this.reservations,
+      events: this.reservations.map((r) => {
+        r.className = r.status
+        return r
+      }),
       height: "parent",
       header: {
         left: 'prev,next today',
@@ -72,9 +75,9 @@ export class MyReservationsPage {
 
   actions(reserv) {
     var text = "";
-    if(!this.canCancel(reserv)){
-      text = this.api.trans('__.ya no es posible cancelar') + " (" + (this.api.settings.hours_to_cancel_reservation ? this.api.settings.hours_to_cancel_reservation : 24 ) +"hrs)"
-    } 
+    if (!this.canCancel(reserv)) {
+      text = this.api.trans('__.ya no es posible cancelar') + " (" + (this.api.settings.hours_to_cancel_reservation ? this.api.settings.hours_to_cancel_reservation : 24) + "hrs)"
+    }
     var sheet = this.actionsheet.create({
       title: this.api.trans('literals.actions') + " " + this.api.trans('literals.reservation'),
       subTitle: text

@@ -1,10 +1,10 @@
 <ion-header>
 
-  <ion-navbar color="light">
+  <ion-navbar>
     <button ion-button icon-only menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title ion-text color="favorite" text-capitalize> {{ '__.mys' | trans }} {{ 'literals.reservations' | trans }} </ion-title>
+    <ion-title text-capitalize> {{ '__.mys' | trans }} {{ 'literals.reservations' | trans }} </ion-title>
     <ion-buttons end>
       <button ion-button icon-only clear (click)="changeView()">
         <ion-icon [name]="view == 'list' ? 'list' : 'calendar'"></ion-icon>
@@ -13,51 +13,53 @@
   </ion-navbar>
 
 </ion-header>
-<ion-content>
-  <ion-list *ngIf="view == 'list'">
-    <ion-item *ngFor="let reserv of reservations" (click)="actions(reserv)">
+<ion-content class="container">
+  <ion-card *ngIf="view == 'list'">
+    <ion-list>
+      <ion-item *ngFor="let reserv of reservations" (click)="actions(reserv)">
 
-      <ion-thumbnail item-left *ngIf="reserv.zone && reserv.zone.image_url">
-        <img [src]="reserv.zone.image_url" alt="">
-      </ion-thumbnail>
+        <ion-thumbnail item-left *ngIf="reserv.zone && reserv.zone.image_url">
+          <img [src]="reserv.zone.image_url" alt="">
+        </ion-thumbnail>
 
-      <h2 text-wrap *ngIf="reserv.zone" text-center>
-        {{reserv.zone.name}}
-      </h2>
-      <h3 text-wrap>
-        <b>{{'literals.status' | trans }}:</b>
-        <span ion-text [color]="reserv.status == 'cancelled' ? 'danger' : reserv.status == 'waiting for confirmation' ? 'warning' : reserv.status == 'approved' ? 'secondary' : 'dark' ">
-          {{'literals.' + reserv.status | trans }}
-        </span>
-      </h3>
+        <h2 text-wrap *ngIf="reserv.zone" text-center>
+          {{reserv.zone.name}}
+        </h2>
+        <h3 text-wrap>
+          <b>{{'literals.status' | trans }}:</b>
+          <span ion-text [color]="reserv.status == 'cancelled' ? 'danger' : reserv.status == 'waiting for confirmation' ? 'warning' : reserv.status == 'approved' ? 'secondary' : 'dark' ">
+            {{'literals.' + reserv.status | trans }}
+          </span>
+        </h3>
 
-      <p text-wrap>
-        <b>
-          {{'literals.start' | trans }}:
-        </b>
-        <span>
-          {{ reserv.start | amDateFormat:'LLLL' }}
-        </span>
-      </p>
+        <p text-wrap>
+          <b>
+            {{'literals.start' | trans }}:
+          </b>
+          <span>
+            {{ reserv.start | amDateFormat:'LLLL' }}
+          </span>
+        </p>
 
-      <p text-wrap>
-        <b>
-          {{'literals.end' | trans }}:
-        </b>
-        <span>
-          {{ reserv.end | amDateFormat:'LLLL' }}
-        </span>
-      </p>
+        <p text-wrap>
+          <b>
+            {{'literals.end' | trans }}:
+          </b>
+          <span>
+            {{ reserv.end | amDateFormat:'LLLL' }}
+          </span>
+        </p>
 
-      <small text-wrap *ngIf="reserv.note">
-        <b> {{'literals.note' | trans }} </b>
-        {{reserv.note}}
-      </small>
-      <small text-wrap *ngIf="reserv.event">
-        {{reserv.event.name}}
-      </small>
-    </ion-item>
-  </ion-list>
+        <small text-wrap *ngIf="reserv.note">
+          <b> {{'literals.note' | trans }} </b>
+          {{reserv.note}}
+        </small>
+        <small text-wrap *ngIf="reserv.event">
+          {{reserv.event.name}}
+        </small>
+      </ion-item>
+    </ion-list>
+  </ion-card>
 
   <ion-card style="height:95%" *ngIf="view == 'calendar'">
     <ion-card-content style="height:95%">
