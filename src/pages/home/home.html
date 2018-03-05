@@ -91,34 +91,36 @@
       <ion-col pull-md-5 pull-lg-5 pull-xl-5 col-xs-12 col-sm-12 col-md-7 col-lg-7 col-xl-7>
         <ion-card>
 
-          <ion-list *ngIf="news && news.length > 0">
+          <ion-list>
             <ion-list-header text-center>
               <span>
                 {{'literals.posts' | trans}}
               </span>
             </ion-list-header>
-            <button ion-item (click)="gotoPost(new)" *ngFor="let new of news">
-              <ion-thumbnail item-left>
-                <img *ngIf="new.image" [src]="new.image.url" alt="">
-              </ion-thumbnail>
-              <h2>
-                {{new.title}}
-              </h2>
-              <div [innerHTML]="new.text" text-justify></div>
-              <p text-right>
-                <span *ngIf="new.user">
-                  {{new.user.name}}
-                </span>
-                <br>
-                <small>
-                  {{new.created_at | amCalendar}}
-                </small>
-              </p>
+            <div *ngIf="news && news.length > 0">
+              <button ion-item (click)="gotoPost(new)" *ngFor="let new of news">
+                <ion-thumbnail item-left>
+                  <img *ngIf="new.image" [src]="new.image.url" alt="">
+                </ion-thumbnail>
+                <h2>
+                  {{new.title}}
+                </h2>
+                <div [innerHTML]="new.text" text-justify></div>
+                <p text-right>
+                  <span *ngIf="new.user">
+                    {{new.user.name}}
+                  </span>
+                  <br>
+                  <small>
+                    {{new.created_at | amCalendar}}
+                  </small>
+                </p>
 
-            </button>
-            <button ion-button full clear (click)="gotoNews()">
-              {{'literals.view_resource' | trans }} {{'literals.more' | trans }}
-            </button>
+              </button>
+              <button ion-button full clear (click)="gotoNews()">
+                {{'literals.view_resource' | trans }} {{'literals.more' | trans }}
+              </button>
+            </div>
           </ion-list>
 
         </ion-card>
