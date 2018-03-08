@@ -108,14 +108,22 @@ export class TicketEditorPage {
     xhr.open('POST', this.api.url + "api/files/upload/ticket/" + id, true);
     formData.append('file', this.file, this.file_name);
 
+    var toast = this.api.toast.create({
+      message: this.api.trans("__.uploading file"),
+      position: 'top',
+    })
+    toast.present()
     xhr.onload = () => {
       if (xhr.status === 200) {
-        this.api.toast.create({
-          message: this.api.trans("literals.file") + " " + this.api.trans("crud.updated"),
-          duration: 1500,
-          showCloseButton: true,
-        }).present();
+        toast.dismiss().then(() => {
+          this.api.toast.create({
+            message: this.api.trans("literals.file") + " " + this.api.trans("crud.updated"),
+            duration: 1500,
+            showCloseButton: true,
+          }).present();
+        });
       } else {
+        toast.dismiss()
         this.api.Error({ status: xhr.status })
       }
     };
