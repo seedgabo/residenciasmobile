@@ -12,7 +12,13 @@ export class PostPage {
   private gesture: Gesture;
   @ViewChild('image') element;
   constructor(public navCtrl: NavController, public navParams: NavParams, public api: Api) {
-    this.post = navParams.get('post');
+    if (navParams.get('postId')) {
+      var postId = navParams.get('postId')
+      this.getPost()
+    } else {
+      this.post = navParams.get('post');
+    }
+
   }
 
   ionViewDidLoad() {
@@ -24,7 +30,7 @@ export class PostPage {
   }
 
   getPost() {
-    this.api.get('posts/' + this.post + "?with[]=user&wit[]=image")
+    this.api.get('posts/' + this.post.id + "?with[]=user&wit[]=image")
       .then((data) => {
         this.post = data;
       })

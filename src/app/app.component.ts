@@ -134,6 +134,7 @@ export class MyApp {
       '/visitor/:visitorId': 'VisitTabsPage',
       '/surveys': 'SurveyPage',
       '/chat:chatId': 'ChatsPage',
+      '/post:postId': 'PostsPage',
       '/correspondences:correspondenceId': 'CorrespondencesPage',
     }).subscribe((match) => {
       console.log('Successfully routed', match);
@@ -158,6 +159,9 @@ export class MyApp {
       }
       if (match.$link.url.indexOf("residenciasOnline://app/chat") > -1) {
         this.nav.push('ChatsPage', args);
+      }
+      if (match.$link.url.indexOf("residenciasOnline://app/post") > -1) {
+        this.nav.push('PostPage', args);
       }
     }, (nomatch) => {
       // console.warn('Unmatched Route', nomatch);
