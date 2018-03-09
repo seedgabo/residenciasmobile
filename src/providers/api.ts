@@ -7,11 +7,12 @@ import { BackgroundMode } from "@ionic-native/background-mode";
 import { OneSignal } from "@ionic-native/onesignal";
 import { Device } from "@ionic-native/device";
 import { Geolocation } from '@ionic-native/geolocation';
+import { Vibration } from '@ionic-native/vibration';
 
+import { langs } from '../providers/langs';
 import Echo from 'laravel-echo';
 import Pusher from 'pusher-js';
 import moment from 'moment';
-import { Vibration } from '@ionic-native/vibration';
 declare var window: any;
 moment.locale('es');
 window.Pusher = Pusher;
@@ -32,7 +33,7 @@ export class Api {
   ready: Promise<any> = new Promise((resolve) => {
     this.resolve = resolve;
   });
-  langs = {};
+  langs: any = langs;
   objects: any = {};
   visits = [];
   chats = [];
@@ -43,7 +44,7 @@ export class Api {
       storage.get('password').then(password => { this.password = password });
       storage.get('modules').then(modules => { this.modules = modules });
       storage.get('settings').then(settings => { this.settings = settings });
-      storage.get('langs').then(langs => { this.langs = langs; console.log(langs) });
+      storage.get('langs').then(langs => { if (langs) this.langs = langs; });
       storage.get('residence').then(residence => { this.residence = residence; });
       storage.get('url').then(url_data => {
         if (url_data)
@@ -112,7 +113,6 @@ export class Api {
   getLang() {
     this.get('lang')
       .then((langs) => {
-        console.log(langs);
         this.storage.set('langs', langs);
         this.langs = langs;
       })
@@ -586,7 +586,7 @@ export class Api {
 
 
   trans(value, args = null) {
-    if (!this.langs) return value;
+    if (!this.langs) return value.replace('literals.', '').replace('__.', '');
     var splits = value.split('.');
     var base, trans;
     if (splits.length == 2) {

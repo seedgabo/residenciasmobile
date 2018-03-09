@@ -26,15 +26,15 @@
       </button>
 
 
-      <button style="margin-top:15px" full ion-button icon-left (click)="loginWithFacebook()">
+      <button style="margin-top:15px" full ion-button color="primary" icon-left (click)="loginWithFacebook()">
         <ion-icon name="logo-facebook"></ion-icon>
-        Iniciar sesion con Facebook
+        {{api.trans('literals.login_with_Facebook')}}
       </button>
 
 
       <button style="margin-top:15px" full ion-button color="danger" icon-left (click)="loginWithGoogle()">
         <ion-icon name="logo-googleplus"></ion-icon>
-        Iniciar sesion con Google
+        {{api.trans('literals.login_with_Google')}}
       </button>
 
       <button full clear ion-button color="dark" (click)="forgot=true">

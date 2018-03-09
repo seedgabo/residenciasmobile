@@ -52,7 +52,6 @@ export class Login {
       content: `
       <div>
         <img class="loading-img" src="${this.api.url + "img/logo.png"}" alt="">
-        <h3>Cargando ...</h3>
       </div>`,
       spinner: 'hide',
     });
@@ -101,7 +100,6 @@ export class Login {
       content: `
       <div>
         <img class="loading-img" src="${this.api.url + "img/logo.png"}" alt="">
-        <h3>Cargando ...</h3>
       </div>`,
       spinner: 'hide',
     });
@@ -122,7 +120,6 @@ export class Login {
       content: `
       <div>
         <img class="loading-img" src="${this.api.url + "img/logo.png"}" alt="">
-        <h3>Cargando ...</h3>
       </div>`,
       spinner: 'hide',
     });
@@ -141,7 +138,6 @@ export class Login {
       content: `
       <div>
         <img class="loading-img" src="${this.api.url + "img/logo.png"}" alt="">
-        <h3>Cargando ...</h3>
       </div>`,
       spinner: 'hide',
     });
@@ -177,7 +173,6 @@ export class Login {
       content: `
       <div>
         <img class="loading-img" src="${this.api.url + "img/logo.png"}" alt="">
-        <h3>Cargando ...</h3>
       </div>`,
       spinner: 'hide',
     });
