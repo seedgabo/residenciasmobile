@@ -41,38 +41,51 @@ export class ProfilePage {
     this.renderChart()
   }
   renderChart() {
-    var config = {
-      type: 'doughnut',
-      data: {
-        datasets: [{
-          data: [
-            this.residence.total,
-            this.residence.debt
-          ],
-          backgroundColor: [
-            '#00FF55',
-            '#FF3300',
-          ],
-          label: this.api.trans('%')
-        }],
-        labels: [
-          this.api.trans('literals.total'),
-          this.api.trans('literals.debt'),
-        ]
-      },
-      options: {
-        responsive: true,
-        legend: {
-          position: 'top',
+    setTimeout(() => {
+      var ctx = document.getElementById('chart-debt');
+      if (!ctx) return
+      var config = {
+        type: 'doughnut',
+        data: {
+          datasets: [{
+            data: [
+              this.residence.total,
+              this.residence.debt
+            ],
+            backgroundColor: [
+              '#00FF55',
+              '#FF3300',
+            ],
+            label: this.api.trans('%')
+          }],
+          labels: [
+            this.api.trans('literals.total'),
+            this.api.trans('literals.debt'),
+          ]
         },
-        animation: {
-          animateScale: true,
-          animateRotate: true
+        options: {
+          tooltips: {
+            callbacks: {
+              label: function (tooltipItem, data) {
+                var value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index]
+                return "$ " + Number(value).toFixed(0).replace(/./g, function (c, i, a) {
+                  return i > 0 && c !== "," && (a.length - i) % 3 === 0 ? "." + c : c;
+                });
+              }
+            },
+          },
+          responsive: true,
+          legend: {
+            position: 'top',
+          },
+          animation: {
+            animateScale: true,
+            animateRotate: true
+          }
         }
-      }
-    };
-    var ctx = document.getElementById('chart-debt');
-    new Chart(ctx, config);
+      };
+      new Chart(ctx, config);
+    }, 100);
   }
 
   updateProfile() {
@@ -158,20 +171,28 @@ export class ProfilePage {
   }
 
   deleteUser(user, index) {
-    // TODO CONFIRM
-    this.api.delete('users/' + user.id)
-      .then((resp) => {
-        this.api.residence.users.splice(index, 1);
-        this.ionViewDidEnter()
-        this.toast.create({
-          message: this.api.trans("literals.user") + " " + this.api.trans("crud.deleted"),
-          duration: 1500,
-          showCloseButton: true,
-        }).present();
-      })
-      .catch((err) => {
-        this.api.Error(err)
-      })
+    this.api.alert.create({
+      title: this.api.trans("__.are you sure"),
+      buttons: [{
+        text: this.api.trans('literals.yes'),
+        handler: () => {
+          this.api.delete('users/' + user.id)
+            .then((resp) => {
+              this.api.residence.users.splice(index, 1);
+              this.ionViewDidEnter()
+              this.toast.create({
+                message: this.api.trans("literals.user") + " " + this.api.trans("crud.deleted"),
+                duration: 1500,
+                showCloseButton: true,
+              }).present();
+            })
+            .catch((err) => {
+              this.api.Error(err)
+            })
+        }
+      }, this.api.trans("crud.cancel")]
+    }).present()
+
   }
 
 

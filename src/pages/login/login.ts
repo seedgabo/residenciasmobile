@@ -129,7 +129,10 @@ export class Login {
         console.log(userData)
         this.OauthSuccessfulLogin(userData, loading)
       })
-      .catch(console.error)
+      .catch((err) => {
+        loading.dismiss()
+        this.api.Error(err)
+      })
   }
 
 

@@ -80,7 +80,7 @@
         <ion-card>
           <ion-list-header class="header-primary">
             {{residence.name}}
-            <button item-right color="light" icon-only ion-button clear (click)="editable=!editable">
+            <button item-right color="light" icon-only ion-button clear (click)="editable=!editable; renderChart()">
               <ion-icon name="create"></ion-icon>
             </button>
           </ion-list-header>
