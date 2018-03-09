@@ -31,6 +31,28 @@ import { PipesModule } from '../pipes/pipes.module';
 import { DatePickerModule } from 'datepicker-ionic2';
 import { PopoverMenu } from '../pages/popover/popover-menu';
 
+import {
+  SocialLoginModule,
+  AuthServiceConfig,
+  GoogleLoginProvider,
+  FacebookLoginProvider,
+} from "angular5-social-login";
+// Configs 
+export function getAuthServiceConfigs() {
+  let config = new AuthServiceConfig(
+    [
+      {
+        id: FacebookLoginProvider.PROVIDER_ID,
+        provider: new FacebookLoginProvider("796212907168839")
+      },
+      {
+        id: GoogleLoginProvider.PROVIDER_ID,
+        provider: new GoogleLoginProvider("425679220353-u39prig4hkrjg592lnppmnbfj6lvi4qk.apps.googleusercontent.com")
+      },
+    ]
+  );
+  return config;
+}
 
 @NgModule({
   declarations: [
@@ -42,6 +64,7 @@ import { PopoverMenu } from '../pages/popover/popover-menu';
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot(),
     DatePickerModule,
+    SocialLoginModule,
     PipesModule
   ],
   bootstrap: [IonicApp],
@@ -49,10 +72,10 @@ import { PopoverMenu } from '../pages/popover/popover-menu';
     MyApp,
   ],
   providers: [
-    StatusBar, SplashScreen, Camera, Facebook, GooglePlus, AppMinimize, BackgroundMode, CodePush, OneSignal, Device,
-    Deeplinks, FileTransfer, File, FileOpener, Vibration, Geolocation,
-    { provide: ErrorHandler, useClass: IonicErrorHandler },
+    StatusBar, SplashScreen, Camera, Facebook, GooglePlus, AppMinimize, BackgroundMode, CodePush, OneSignal, Device, Deeplinks, FileTransfer, File, FileOpener, Vibration, Geolocation,
     Api, PopoverMenu,
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
+    { provide: AuthServiceConfig, useFactory: getAuthServiceConfigs },
 
   ]
 })

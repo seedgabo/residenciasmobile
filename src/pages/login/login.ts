@@ -1,11 +1,16 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController, LoadingController, Events } from 'ionic-angular';
-
+import { IonicPage, NavController, NavParams, AlertController, LoadingController, Events, Platform } from 'ionic-angular';
 import { Api } from "../../providers/api";
+
 import { Facebook } from '@ionic-native/facebook';
 import { GooglePlus } from '@ionic-native/google-plus';
 
-import { IonicPage } from "ionic-angular";
+import {
+  AuthService,
+  FacebookLoginProvider,
+  GoogleLoginProvider
+} from 'angular5-social-login';
+
 declare var window: any;
 @IonicPage()
 @Component({
@@ -18,7 +23,7 @@ export class Login {
   servers = { "0000": { "url": "http:\/\/residenciasonline.com\/residencias\/public\/", "name": "El Pe\u00f1on", "url_newton": "http:\/\/residenciasonline.com\/newton\/public" }, "1905": { "url": "http:\/\/residenciasonline.com\/aseinteg\/public\/", "name": "Aseinteg Especial", "url_newton": "http:\/\/residenciasonline.com\/newton\/public" }, "0001": { "url": "http:\/\/residenciasonline.com\/aseinteg\/public\/" }, "7000": { "url": "http:\/\/residenciasonline.com\/penon\/public\/", "name": "El Pe\u00f1on", "url_newton": "" }, "3720": { "url": "http:\/\/residenciasonline.com\/chestnut\/public\/", "name": "Prado Chestnut Hill", "url_newton": "" } };
   code = "";
   preconfigured = false;
-  constructor(public facebook: Facebook, public google: GooglePlus, public navCtrl: NavController, public navParams: NavParams, public api: Api, public alertCtrl: AlertController, public loadingCtrl: LoadingController, public events: Events) {
+  constructor(public platform: Platform, public facebook: Facebook, public google: GooglePlus, public navCtrl: NavController, public navParams: NavParams, public api: Api, public alertCtrl: AlertController, public loadingCtrl: LoadingController, public events: Events, public socialAuthService: AuthService) {
     if (window.url) {
       this.preconfigured = true;
       this.api.storage.set('url', window.url);
@@ -87,14 +92,55 @@ export class Login {
   }
 
   loginWithFacebook() {
+    if (this.platform.is('mobile')) {
+      return this.loginWithFacebookCordova()
+    }
 
+
+    let loading = this.loadingCtrl.create({
+      content: `
+      <div>
+        <img class="loading-img" src="${this.api.url + "img/logo.png"}" alt="">
+        <h3>Cargando ...</h3>
+      </div>`,
+      spinner: 'hide',
+    });
+    loading.present();
+    this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID)
+      .then((userData) => {
+        console.log(userData)
+        this.OauthSuccessfulLogin(userData, loading)
+      })
+      .catch(console.error)
   }
+
+  loginWithGoogle() {
+    if (this.platform.is('mobile')) {
+      return this.loginWithGoogleCordova()
+    }
+    let loading = this.loadingCtrl.create({
+      content: `
+      <div>
+        <img class="loading-img" src="${this.api.url + "img/logo.png"}" alt="">
+        <h3>Cargando ...</h3>
+      </div>`,
+      spinner: 'hide',
+    });
+    loading.present();
+    this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID)
+      .then((userData) => {
+        console.log(userData)
+        this.OauthSuccessfulLogin(userData, loading)
+      })
+      .catch(console.error)
+  }
+
 
   loginWithFacebookCordova() {
     let loading = this.loadingCtrl.create({
       content: `
       <div>
-        <img class="loading-img" src="${this.api.url + "img/logo-completo.png"}" alt="">
+        <img class="loading-img" src="${this.api.url + "img/logo.png"}" alt="">
         <h3>Cargando ...</h3>
       </div>`,
       spinner: 'hide',
@@ -105,20 +151,7 @@ export class Login {
         console.log(data);
         this.facebook.api(`${data.authResponse.userID}/?fields=id,email,name,picture,first_name,last_name,gender`, ['public_profile', 'email']).then((data) => {
           console.log(data);
-          this.api.loginOAuth(data).then((data) => {
-            console.log(data);
-            this.api.saveData(data);
-            this.goTo();
-            loading.dismiss();
-          }).catch((err) => {
-            console.error(err);
-            loading.dismiss();
-            this.alertCtrl.create({
-              message: JSON.stringify(err),
-              title: "Error",
-            }).present();
-
-          });
+          this.OauthSuccessfulLogin(data, loading)
         }).catch((err) => {
           console.error(err);
           loading.dismiss();
@@ -143,7 +176,7 @@ export class Login {
     let loading = this.loadingCtrl.create({
       content: `
       <div>
-        <img class="loading-img" src="${this.api.url + "img/logo-completo.png"}" alt="">
+        <img class="loading-img" src="${this.api.url + "img/logo.png"}" alt="">
         <h3>Cargando ...</h3>
       </div>`,
       spinner: 'hide',
@@ -162,6 +195,24 @@ export class Login {
           title: "Error",
         }).present();
       });
+  }
+
+
+  OauthSuccessfulLogin(data, loading) {
+    this.api.loginOAuth(data).then((data) => {
+      console.log(data);
+      this.api.saveData(data);
+      this.goTo();
+      if (loading) loading.dismiss();
+    }).catch((err) => {
+      console.error(err);
+      if (loading) loading.dismiss();
+      this.alertCtrl.create({
+        message: JSON.stringify(err),
+        title: "Error",
+      }).present();
+
+    });
   }
 
 
