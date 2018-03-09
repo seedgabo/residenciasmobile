@@ -1,52 +1,40 @@
 page-tickets {
-    .ticket-item{
-        &.open {
-            .indicator{
-                height:39px;
-                border-left:3px solid color($colors, 'secondary');
-            }
-        }
-
-        &.closed {
-            .indicator {
-                height: 39px;
-                border-left: 3px solid color($colors, 'dark');
-            }
-
-        }
-
-        &.in.proccess {
-            .indicator {
-                height: 39px;
-                border-left: 3px solid color($colors, 'warning');
-            }
-
-        }
-
-        &.rejected {
-            .indicator {
-                height: 39px;
-                border-left: 3px solid color($colors, 'danger');
-            }
-
-        }
-
-
-        .open{
-            color: color($colors,'secondary');
-            // color: white;
-        }
-        .closed{
-            color: color($colors,'dark');
-            // color: white;
-        }
-        .in.proccess{
-            color: color($colors,'warning');
-            // color: white;
-        }
-        .rejected{
-            color: color($colors,'danger');
-            // color: white;
-        }
+  .ticket-item {
+    &.open {
+      .indicator {
+        height: 100px;
+        border-left: 1px solid color($colors, 'secondary');
+      }
     }
+    &.closed {
+      .indicator {
+        height: 100px;
+        border-left: 1px solid color($colors, 'dark');
+      }
+    }
+    &.in.proccess {
+      .indicator {
+        height: 100px;
+        border-left: 1px solid color($colors, 'warning');
+      }
+    }
+    &.rejected {
+      .indicator {
+        height: 100px;
+        border-left: 1px solid color($colors, 'danger');
+      }
+    }
+    .open {
+      color: color($colors, 'secondary'); // color: white;
+    }
+    .closed {
+      color: color($colors, 'dark'); // color: white;
+    }
+    .in.proccess {
+      color: color($colors, 'warning'); // color: white;
+    }
+    .rejected {
+      color: color($colors, 'danger'); // color: white;
+    }
+  }
 }

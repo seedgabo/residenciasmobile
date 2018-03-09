@@ -36,7 +36,7 @@ export class PostsPage {
 
 
   gotoPost(post) {
-    this.navCtrl.push("PostPage", { post: post });
+    this.navCtrl.push("PostPage", { post: post, postId: post.id });
   }
 
   createPost() {

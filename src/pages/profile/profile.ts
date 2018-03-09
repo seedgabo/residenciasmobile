@@ -46,8 +46,8 @@ export class ProfilePage {
       data: {
         datasets: [{
           data: [
-            100 - this.residence.total / (this.residence.total - this.residence.debt) * 100,
-            this.residence.total / (this.residence.total - this.residence.debt) * 100
+            this.residence.total,
+            this.residence.debt
           ],
           backgroundColor: [
             '#00FF55',

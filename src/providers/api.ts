@@ -577,7 +577,7 @@ export class Api {
           console.log('device registered:', response);
         })
         .catch((error) => this.Error(error));
-    }).catch((error) => this.Error(error));
+    }).catch((error) => console.warn(error));
   }
 
   pushUnregister() {
@@ -723,6 +723,7 @@ export class Api {
   }
 
   Error(error) {
+    console.error(error)
     var message = "";
     if (error.status == 500) {
       message = this.trans("__.Internal Server Error")

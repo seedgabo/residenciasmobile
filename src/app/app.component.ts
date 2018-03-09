@@ -112,7 +112,7 @@ export class MyApp {
         console.log("change residence:", data);
         window.location.reload();
       })
-      .catch(console.error)
+      .catch(this.api.Error)
   }
 
   openPage(page) {
@@ -133,8 +133,8 @@ export class MyApp {
       '/visit/:visitId': 'VisitTabsPage',
       '/visitor/:visitorId': 'VisitTabsPage',
       '/surveys': 'SurveyPage',
-      '/chat:chatId': 'ChatsPage',
-      '/post:postId': 'PostsPage',
+      '/chat/:chatId': 'ChatsPage',
+      '/post/:postId': 'PostPage',
       '/correspondences:correspondenceId': 'CorrespondencesPage',
     }).subscribe((match) => {
       console.log('Successfully routed', match);
@@ -159,9 +159,6 @@ export class MyApp {
       }
       if (match.$link.url.indexOf("residenciasOnline://app/chat") > -1) {
         this.nav.push('ChatsPage', args);
-      }
-      if (match.$link.url.indexOf("residenciasOnline://app/post") > -1) {
-        this.nav.push('PostPage', args);
       }
     }, (nomatch) => {
       // console.warn('Unmatched Route', nomatch);

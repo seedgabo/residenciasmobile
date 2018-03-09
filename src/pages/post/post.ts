@@ -1,7 +1,10 @@
 import { Api } from './../../providers/api';
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Gesture } from 'ionic-angular';
-@IonicPage()
+@IonicPage({
+  segment: 'post/:postId',
+  defaultHistory: ['PostsPage']
+})
 @Component({
   selector: 'page-post',
   templateUrl: 'post.html',
@@ -10,31 +13,37 @@ export class PostPage {
   post: any = {};
   tap = 100;
   private gesture: Gesture;
+  ready
   @ViewChild('image') element;
   constructor(public navCtrl: NavController, public navParams: NavParams, public api: Api) {
-    if (navParams.get('postId')) {
-      var postId = navParams.get('postId')
-      this.getPost()
-    } else {
+    if (navParams.get('post')) {
       this.post = navParams.get('post');
+      this.ready = Promise.resolve(this.post)
+    } else {
+      var postId = navParams.get('postId')
+      this.post.id = postId
+      this.ready = this.getPost()
     }
 
   }
 
   ionViewDidLoad() {
-    this.gesture = new Gesture(this.element.nativeElement);
-    //listen for the gesture
-    this.gesture.listen();
-    //turn on listening for pinch or rotate events
-    this.gesture.on('pinch', e => this.pinchEvent(e));
+    this.ready.then(() => {
+      this.gesture = new Gesture(this.element.nativeElement);
+      //listen for the gesture
+      this.gesture.listen();
+      //turn on listening for pinch or rotate events
+      this.gesture.on('pinch', e => this.pinchEvent(e));
+    })
   }
 
   getPost() {
-    this.api.get('posts/' + this.post.id + "?with[]=user&wit[]=image")
-      .then((data) => {
-        this.post = data;
-      })
+    var promise = this.api.get('posts/' + this.post.id + "?with[]=user&wit[]=image")
+    promise.then((data) => {
+      this.post = data;
+    })
       .catch(this.api.Error);
+    return promise
   }
 
   createPost() {
