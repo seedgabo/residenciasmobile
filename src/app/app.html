@@ -50,7 +50,7 @@
       </ion-list-header>
       <button [disabled]="res.id == api.residence.id" menuClose ion-item (click)="changeResidence(res)" *ngFor="let res of api.user.residences"
         icon-left>
-        <ion-icon name="home" [color]="res.status == 'solvent'? 'secondary':'danger'"></ion-icon>
+        <ion-icon name="home" color="grey"></ion-icon>
         {{res.name}}
       </button>
     </ion-list>
