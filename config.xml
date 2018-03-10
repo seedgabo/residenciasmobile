@@ -88,7 +88,6 @@
         <preference name="CodePushDeploymentKey" value="VU6PWYelPgLITarQYscvnaZKmlHBc0e4a0a6-2be5-4604-bcc1-c0b2c1387dd2" />
     </platform>
     <allow-navigation href="http://192.168.0.114:8100" />
-    <plugin name="onesignal-cordova-plugin" spec="^2.3.1" />
     <plugin name="cordova-plugin-file" spec="^5.0.0" />
     <plugin name="cordova-plugin-console" spec="^1.1.0" />
     <plugin name="cordova-plugin-device" spec="^1.1.7" />
@@ -120,12 +119,25 @@
     <plugin name="cordova-plugin-geolocation" spec="^2.4.3">
         <variable name="GEOLOCATION_USAGE_DESCRIPTION" value="To share to your location with the app" />
     </plugin>
+    <edit-config target="NSCameraUsageDescription" file="*-Info.plist" mode="merge">
+        <string>need camera access to take pictures</string>
+    </edit-config>
+    <edit-config target="NSPhotoLibraryUsageDescription" file="*-Info.plist" mode="merge">
+        <string>need photo library access to get pictures from there</string>
+    </edit-config>
+    <edit-config target="NSLocationWhenInUseUsageDescription" file="*-Info.plist" mode="merge">
+        <string>need location access to find things nearby</string>
+    </edit-config>
+    <edit-config target="NSPhotoLibraryAddUsageDescription" file="*-Info.plist" mode="merge">
+        <string>need photo library access to save pictures there</string>
+    </edit-config>
     <plugin name="cordova-plugin-zip" spec="^3.1.0" />
     <plugin name="cordova-plugin-camera" spec="^4.0.2" />
     <plugin name="cordova-plugin-file-opener2" spec="^2.0.19" />
     <plugin name="cordova-plugin-vibration" spec="^3.0.1" />
     <plugin name="cordova-plugin-code-push" spec="^1.11.7" />
-    <engine name="ios" spec="4.3.1" />
+    <allow-navigation href="http://192.168.0.17:8100" />
     <engine name="browser" spec="5.0.3" />
     <engine name="android" spec="6.3.0" />
+    <engine name="ios" spec="4.5.4" />
 </widget>
