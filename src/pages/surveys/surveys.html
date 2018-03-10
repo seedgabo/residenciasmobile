@@ -8,11 +8,13 @@
 </ion-header>
 
 
-<ion-content>
-  <ion-list>
-    <button (click)="gotoSurvey(survey)" ion-item *ngFor="let survey of surveys">
-      <h4 text-center text-primary>{{survey.title}}</h4>
-      <p>{{survey.question}}</p>
-    </button>
-  </ion-list>
+<ion-content class="container">
+  <ion-card>
+    <ion-list>
+      <button (click)="gotoSurvey(survey)" ion-item *ngFor="let survey of surveys">
+        <h4 text-center text-primary>{{survey.title}}</h4>
+        <p>{{survey.question}}</p>
+      </button>
+    </ion-list>
+  </ion-card>
 </ion-content>
