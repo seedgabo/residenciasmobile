@@ -1,4 +1,4 @@
-<ion-content padding>
+<ion-content padding class="container">
   <div text-center>
     <img src="./assets/logo-completo.png" style="height:85px" *ngIf="!api.url">
     <img [src]="api.url + 'img/logo.png'" style="height:85px" *ngIf="api.url">
@@ -15,33 +15,41 @@
         <ion-label floating>Email</ion-label>
         <ion-input type="email" [(ngModel)]="api.username"> </ion-input>
       </ion-item>
+
       <ion-item>
         <ion-label floating>Contraseña</ion-label>
         <ion-input type="password" [(ngModel)]="api.password"></ion-input>
       </ion-item>
 
-      <button style="margin-top:15px" full large ion-button color="secondary" icon-right (click)="login()">
+      <button class="login-button" block large ion-button color="secondary" icon-right (click)="login()">
         Iniciar Sesion
         <ion-icon name="log-in"></ion-icon>
       </button>
 
+      <ion-grid>
+        <ion-row responsive-sm>
+          <ion-col>
+            <button hideWhen="android,ios" class="facebook-button" block ion-button icon-left (click)="loginWithFacebook()">
+              <ion-icon name="logo-facebook"></ion-icon>
+              {{api.trans('literals.login_with_Facebook')}}
+            </button>
+          </ion-col>
+          <ion-col>
+            <button hideWhen="android,ios" class="google-button" block ion-button icon-left (click)="loginWithGoogle()">
+              <ion-icon name="logo-googleplus"></ion-icon>
+              {{api.trans('literals.login_with_Google')}}
+            </button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
 
-      <button hideWhen="android,ios" style="margin-top:15px" full ion-button color="primary" icon-left (click)="loginWithFacebook()">
-        <ion-icon name="logo-facebook"></ion-icon>
-        {{api.trans('literals.login_with_Facebook')}}
-      </button>
 
 
-      <button hideWhen="android,ios" style="margin-top:15px" full ion-button color="danger" icon-left (click)="loginWithGoogle()">
-        <ion-icon name="logo-googleplus"></ion-icon>
-        {{api.trans('literals.login_with_Google')}}
-      </button>
-
-      <button full clear ion-button color="dark" (click)="forgot=true">
+      <button block clear ion-button color="dark" (click)="forgot=true">
         Olvido su contraseña
       </button>
 
-      <button full clear ion-button color="danger" (click)="goBack()" *ngIf="!preconfigured">
+      <button block clear ion-button color="danger" (click)="goBack()" *ngIf="!preconfigured">
         Volver
       </button>
     </div>
@@ -50,16 +58,13 @@
         <ion-label floating>Email</ion-label>
         <ion-input type="email" [(ngModel)]="api.username"> </ion-input>
       </ion-item>
-      <button style="margin-top:15px" full large ion-button color="secondary" (click)="recover(api.username)">
+      <button style="margin-top:15px" block large ion-button color="secondary" (click)="recover(api.username)">
         Recuperar
       </button>
-      <button ion-button clear full color="dark" (click)="forgot=false">
+      <button ion-button clear block color="dark" (click)="forgot=false">
         Volver al login
       </button>
 
     </div>
-
-
-
   </ion-list>
 </ion-content>

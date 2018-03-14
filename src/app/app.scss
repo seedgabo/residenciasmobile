@@ -14,11 +14,11 @@
 // automatically applied to the <body> element in the app.
 @import "../../node_modules/ionic2-auto-complete/auto-complete";
 @media (min-width: 600px) {
-  .container{
-    .scroll-content{
+  .container {
+    .scroll-content {
       text-align: center;
-      padding-left: 15%;
-      padding-right: 15%;
+      padding-left: 15% !important;
+      padding-right: 15% !important;
     }
   }
 }
