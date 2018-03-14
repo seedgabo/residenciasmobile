@@ -1,0 +1,16 @@
+<ion-card>
+  <ion-card-header text-center>
+    {{_survey?.question}}
+  </ion-card-header>
+  <ion-card-content text-center>
+    <canvas id="surveyChart" style="height:400px;margin:0 auto;"></canvas>
+  </ion-card-content>
+</ion-card>
+<p text-center text-capitalize *ngIf="vote">
+  <b>{{'literals.your_vote' | trans }}:</b>
+  <span *ngIf="_survey"> {{ _survey['response_'+vote.response] }} </span>
+</p>
+<button *ngIf="!vote" ion-button block color="secondary" large (click)="setVote()" icon-left>
+  <ion-icon name="thumbs-up"></ion-icon>
+  {{'literals.vote' | trans }}
+</button>
