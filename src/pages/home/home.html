@@ -98,21 +98,21 @@
               </span>
             </ion-list-header>
             <div *ngIf="news && news.length > 0">
-              <button ion-item (click)="gotoPost(post)" *ngFor="let post of news">
-                <div text-center *ngIf="post.image">
-                  <img [src]="post.image.url" style="margin: 0 auto; max-width:100%;">
-                </div>
+              <button ion-item (click)="gotoPost(new)" *ngFor="let new of news">
+                <ion-thumbnail item-left>
+                  <img *ngIf="new.image" [src]="new.image.url" alt="">
+                </ion-thumbnail>
                 <h2>
-                  {{post.title}}
+                  {{new.title}}
                 </h2>
-                <div [innerHTML]="post.text" text-justify></div>
+                <div [innerHTML]="new.text" text-justify></div>
                 <p text-right>
-                  <span *ngIf="post.user">
-                    {{post.user.name}}
+                  <span *ngIf="new.user">
+                    {{new.user.name}}
                   </span>
                   <br>
                   <small>
-                    {{post.created_at | amCalendar}}
+                    {{new.created_at | amCalendar}}
                   </small>
                 </p>
 

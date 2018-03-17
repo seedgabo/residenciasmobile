@@ -83,10 +83,10 @@ export class ZoneReservationPage {
     if (interval.reserved) {
       return this.viewReservation(interval)
     }
-    if (interval.available <= 0 || !this.canReservate(interval)) {
+    if (!this.canReservate(interval)) {
       return this.alert.create({
         title: this.api.trans('literals.reservation') + " " + this.api.trans('literals.cancelled'),
-        message: this.api.trans('__.No puedes reservar en este intervalo'),
+        message: this.api.trans('__.No puedes reservar en este intervalo por que tu o alguien de tu :residence ya reservo en un horario cercano', { residence: this.api.trans('literals.residence') }),
         buttons: ["OK"]
       }).present();
     }

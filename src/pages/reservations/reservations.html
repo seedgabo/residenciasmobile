@@ -16,7 +16,7 @@
     <ion-row responsive-sm>
       <ion-col *ngFor="let zone of zones" col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xs-4>
         <ion-card>
-          <img [src]="zone.image_url" style="height:200px;width:100%" onerror="this.src= 'assets/placeholder.png' ">
+          <img [src]="zone.image_url" style="max-height:200px;width:100%">
 
           <ion-item>
             <ion-icon color="primary" name="pin" item-start large></ion-icon>

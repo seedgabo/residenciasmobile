@@ -100,7 +100,7 @@ export class MyApp {
 
       }
       sync();
-      setTimeout(sync, 1000 *10)
+      setTimeout(sync, 1000 * 60 * 60 * 6)
     });
   }
 
