@@ -80,6 +80,7 @@ export class Login {
     public socialAuthService: AuthService
   ) {
     if (window.url) {
+      this.api.url = window.url;
       this.preconfigured = true;
       this.api.storage.set("url", window.url);
     }
@@ -92,6 +93,7 @@ export class Login {
     this.api.storage.remove("url");
     this.api.username = "";
     this.smarter = false;
+    this.logins = [];
     this.oauthInfo = null;
   }
 

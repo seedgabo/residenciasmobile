@@ -4,8 +4,15 @@
     <img [src]="api.url + 'img/logo.png'" style="height:85px" *ngIf="api.url">
   </div>
   <div *ngIf="!api.url">
-    <input (keydown)="keyDownFunction($event)" class="code" type="email" [(ngModel)]="api.username" placeholder="Email" (blur)="getLogins()">
-    <ion-grid *ngIf="!smarter">
+    <!-- <input (keydown)="keyDownFunction($event)" class="code" type="email" [(ngModel)]="api.username" placeholder="Email" (blur)="getLogins()"> -->
+    <ion-item>
+      <ion-label floating>
+        <ion-icon name="person" item-left></ion-icon>
+        Email
+      </ion-label>
+      <ion-input (keydown)="keyDownFunction($event)" type="email" [(ngModel)]="api.username" (blur)="getLogins()"></ion-input>
+    </ion-item>
+    <ion-grid *ngIf="!smarter && logins.length === 0">
       <ion-row responsive-sm>
         <ion-col>
           <button hideWhen="android,ios" class="facebook-button" block ion-button icon-left (click)="loginWithFacebook()">
