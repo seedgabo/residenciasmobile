@@ -4,8 +4,23 @@
     <img [src]="api.url + 'img/logo.png'" style="height:85px" *ngIf="api.url">
   </div>
   <div *ngIf="!api.url">
-    <input class="code" type="text" [(ngModel)]="code" placeholder="CODIGO" (input)="verifyCode()">
+    <input (keydown)="keyDownFunction($event)" class="code" type="email" [(ngModel)]="api.username" placeholder="Email" (blur)="getLogins()">
+  </div>
 
+  <div *ngIf="select">
+    <ion-card>
+      <ion-list [@list]="logins.length">
+        <ion-item-divider class="item" @item (click)="selectServer(user)" *ngFor="let user of logins">
+          <ion-thumbnail item-left>
+            <img [src]="user.url + 'img/icon.png'" onerror="this.style.display == 'none'">
+          </ion-thumbnail>
+          <h2>{{user.site}}</h2>
+          <h3>{{user.name}}</h3>
+          <!-- <ion-note>{{user.name}}</ion-note> -->
+          <ion-icon item-right large color="primary" name="log-in"></ion-icon>
+        </ion-item-divider>
+      </ion-list>
+    </ion-card>
   </div>
 
   <ion-list *ngIf="api.url">
