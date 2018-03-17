@@ -1,10 +1,10 @@
-import { Events } from 'ionic-angular';
+import { Events, Platform } from 'ionic-angular';
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { Api } from "../../providers/api";
 
 var func
-import {IonicPage} from "ionic-angular";
+import { IonicPage } from "ionic-angular";
 
 @IonicPage()
 @Component({
@@ -13,7 +13,10 @@ import {IonicPage} from "ionic-angular";
 })
 export class SurveysPage {
   surveys = [];
-  constructor(public navCtrl: NavController, public navParams: NavParams, public api: Api, public events: Events) {
+  survey = null
+  mobile = false
+  constructor(public platform: Platform, public navCtrl: NavController, public navParams: NavParams, public api: Api, public events: Events) {
+    this.mobile = this.platform.is('android') || this.platform.is('ios')
   }
 
   ionViewDidLoad() {
@@ -53,7 +56,12 @@ export class SurveysPage {
   }
 
   gotoSurvey(survey) {
-    this.navCtrl.push('SurveyPage', { survey: survey });
+    if (this.mobile) {
+      this.navCtrl.push('SurveyPage', { survey: survey });
+    }
+    else {
+      this.survey = survey
+    }
   }
 
 }

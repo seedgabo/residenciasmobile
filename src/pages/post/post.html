@@ -17,9 +17,10 @@
     </ion-card-header>
     <ion-card-content>
       <div text-center (tap)="tapEvent($event)" (pinch)="tapEvent($event)" #image>
-        <img style="width:100%;min-width:100%" [src]="post.image.url" *ngIf="tap === 100">
+        <img style="width:100%;min-width:100%" [src]="post.image?.url" *ngIf="tap === 100" onerror="this.style.display = 'none'">
         <ion-scroll *ngIf="tap!==100" scrollX="true" scrollY="true" style="height:450px;max-height:90%;width:100%;">
-          <img [ngStyle]="{'width' : tap+'px', 'min-width' : tap+'px' }" [src]="post.image.url" style="margin: 0 auto; max-width:100%;">
+          <img [ngStyle]="{'width' : tap+'px', 'min-width' : tap+'px' }" [src]="post.image?.url" style="margin: 0 auto; max-width:100%;"
+            onerror="this.style.display = 'none'">
         </ion-scroll>
       </div>
       <div [innerHTML]="post.text" text-justify>
@@ -29,7 +30,7 @@
           {{tag.name}}
         </ion-label>
       </ion-chip>
-      <ion-item *ngIf="post.user" text-justify>
+      <ion-item *ngIf="post.user" text-right>
         <ion-avatar item-left>
           <img [src]="post.user.image_url" alt="profile" style="width:40px;height:40px; border-radius:50%">
         </ion-avatar>
