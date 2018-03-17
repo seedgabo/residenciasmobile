@@ -41,7 +41,7 @@ declare var window: any;
           ":self",
           stagger(120, [
             style({ opacity: 0, transform: "translateX(-200px)" }),
-            animate("1350ms ease-in-out")
+            animate("800ms ease-in-out")
           ])
         )
       ])
@@ -52,7 +52,7 @@ declare var window: any;
           ".item",
           stagger(120, [
             style({ opacity: 0, transform: "translateX(-200px)" }),
-            animate("1350ms ease-in-out")
+            animate("800ms ease-in-out")
           ])
         )
       ])
@@ -65,6 +65,8 @@ export class Login {
   logins = [];
   preconfigured = false;
   select = false;
+  smarter = false;
+  oauthInfo;
   constructor(
     public platform: Platform,
     public facebook: Facebook,
@@ -89,6 +91,8 @@ export class Login {
     this.api.url = null;
     this.api.storage.remove("url");
     this.api.username = "";
+    this.smarter = false;
+    this.oauthInfo = null;
   }
 
   login() {
@@ -151,7 +155,7 @@ export class Login {
       .signIn(FacebookLoginProvider.PROVIDER_ID)
       .then(userData => {
         console.log(userData);
-        this.OauthSuccessfulLogin(userData, loading);
+        this.OauthSuccessfulSmartLogin(userData, loading);
       })
       .catch(console.error);
   }
@@ -172,7 +176,7 @@ export class Login {
       .signIn(GoogleLoginProvider.PROVIDER_ID)
       .then(userData => {
         console.log(userData);
-        this.OauthSuccessfulLogin(userData, loading);
+        this.OauthSuccessfulSmartLogin(userData, loading);
       })
       .catch(err => {
         loading.dismiss();
@@ -254,7 +258,7 @@ export class Login {
       });
   }
 
-  OauthSuccessfulLogin(data, loading) {
+  OauthSuccessfulLogin(data, loading = null) {
     this.api
       .loginOAuth(data)
       .then(data => {
@@ -273,6 +277,14 @@ export class Login {
           })
           .present();
       });
+  }
+
+  OauthSuccessfulSmartLogin(data, loading) {
+    this.smarter = true;
+    this.oauthInfo = data;
+    debugger;
+    this.api.username = data.email;
+    this.getLogins(loading);
   }
 
   recover(email) {
@@ -297,16 +309,21 @@ export class Login {
       });
   }
 
-  getLogins() {
-    let loading = this.loadingCtrl.create({
-      content: `
-      <div>
-        <img class="loading-img" src="http://residenciasonline.com/residencias/public/img/logo.png"}" alt="">
-      </div>`,
-      spinner: "hide"
-    });
+  getLogins(loading = null) {
+    if (this.api.username.length == 0) {
+      return;
+    }
+    if (!loading) {
+      loading = this.loadingCtrl.create({
+        content: `
+        <div>
+          <img class="loading-img" src="http://residenciasonline.com/residencias/public/img/logo.png"}" alt="">
+        </div>`,
+        spinner: "hide"
+      });
+      loading.present();
+    }
 
-    loading.present();
     this.api.http
       .get(
         "http://residenciasonline.com/residencias/public/api/smart-login?email=" +
@@ -353,6 +370,9 @@ export class Login {
     this.api.url = srv.url;
     this.api.storage.set("url", srv.url);
     this.select = false;
+    if (this.smarter) {
+      this.OauthSuccessfulLogin(this.oauthInfo);
+    }
   }
 
   goTo() {

@@ -5,6 +5,22 @@
   </div>
   <div *ngIf="!api.url">
     <input (keydown)="keyDownFunction($event)" class="code" type="email" [(ngModel)]="api.username" placeholder="Email" (blur)="getLogins()">
+    <ion-grid *ngIf="!smarter">
+      <ion-row responsive-sm>
+        <ion-col>
+          <button hideWhen="android,ios" class="facebook-button" block ion-button icon-left (click)="loginWithFacebook()">
+            <ion-icon name="logo-facebook"></ion-icon>
+            {{api.trans('literals.login_with_Facebook')}}
+          </button>
+        </ion-col>
+        <ion-col>
+          <button hideWhen="android,ios" class="google-button" block ion-button icon-left (click)="loginWithGoogle()">
+            <ion-icon name="logo-googleplus"></ion-icon>
+            {{api.trans('literals.login_with_Google')}}
+          </button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </div>
 
   <div *ngIf="select">
@@ -23,7 +39,7 @@
     </ion-card>
   </div>
 
-  <ion-list *ngIf="api.url">
+  <ion-list *ngIf="api.url && !smarter">
     <div *ngIf="!forgot">
 
       <ion-item>
@@ -41,7 +57,7 @@
         <ion-icon name="log-in"></ion-icon>
       </button>
 
-      <ion-grid>
+      <ion-grid *ngIf="!smarter">
         <ion-row responsive-sm>
           <ion-col>
             <button hideWhen="android,ios" class="facebook-button" block ion-button icon-left (click)="loginWithFacebook()">
