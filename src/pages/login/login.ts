@@ -140,7 +140,7 @@ export class Login {
       });
   }
 
-  loginWithFacebook() {
+  loginWithFacebook(smarter = true) {
     if (this.platform.is("mobile")) {
       return this.loginWithFacebookCordova();
     }
@@ -157,12 +157,16 @@ export class Login {
       .signIn(FacebookLoginProvider.PROVIDER_ID)
       .then(userData => {
         console.log(userData);
-        this.OauthSuccessfulSmartLogin(userData, loading);
+        if (smarter) {
+          this.OauthSuccessfulSmartLogin(userData, loading);
+        } else {
+          this.OauthSuccessfulLogin(userData, loading);
+        }
       })
       .catch(console.error);
   }
 
-  loginWithGoogle() {
+  loginWithGoogle(smarter = true) {
     if (this.platform.is("mobile")) {
       return this.loginWithGoogleCordova();
     }
@@ -178,7 +182,11 @@ export class Login {
       .signIn(GoogleLoginProvider.PROVIDER_ID)
       .then(userData => {
         console.log(userData);
-        this.OauthSuccessfulSmartLogin(userData, loading);
+        if (smarter) {
+          this.OauthSuccessfulSmartLogin(userData, loading);
+        } else {
+          this.OauthSuccessfulLogin(userData, loading);
+        }
       })
       .catch(err => {
         loading.dismiss();
