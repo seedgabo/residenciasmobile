@@ -1,1 +1,9 @@
-var url = "http://residentesonline.com/residencias/public/";
+// var url = "http://residentesonline.com/residencias/public/";
+// var url = "http://residentesonline.com/penon/public/";
+// var url = "http://residentesonline.com/aseinteg/public/";
+// var url = "http://residentesonline.com/chestnut/public/";
+// var url = "http://residentesonline.com/bellasuiza/public/";
+// var url = "http://residentesonline.com/cretaricaurte/public/";
+// var url = "http://residentesonline.com/horizontesdelcastillo/public/";
+// var url = "http://residentesonline.com/plazueladetoscan/public/";
+// var url = "http://residentesonline.com/santoriniricaurte/public/";

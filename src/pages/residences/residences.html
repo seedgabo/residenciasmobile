@@ -10,16 +10,17 @@
 </ion-header>
 
 
-<ion-content padding>
-
-  <ion-list>
-    <button ion-item *ngFor="let residence of residences">
-      <h3>{{residence.name}}</h3>
-      <span *ngIf="residence.owner!=null">{{residence.owner.name}}</span>
-      <span ion-text color="light" *ngIf="residence.owner==null">Sin Propietario</span>
-      <strong item-right>{{ 'literals.' + residence.type | trans }}</strong>
-    </button>
-  </ion-list>
+<ion-content class="container">
+  <ion-card>
+    <ion-list>
+      <button ion-item *ngFor="let residence of residences">
+        <h3>{{residence.name}}</h3>
+        <span *ngIf="residence.owner!=null">{{residence.owner.name}}</span>
+        <span ion-text color="light" *ngIf="residence.owner==null">Sin Propietario</span>
+        <strong item-right>{{ 'literals.' + residence.type | trans }}</strong>
+      </button>
+    </ion-list>
+  </ion-card>
 
 
 

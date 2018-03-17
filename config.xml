@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.seedgabo.residencias" version="1.5.4" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.seedgabo.residencias" version="1.6.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Residentes Online</name>
     <description>Tu Casa en Tu Bolsillo</description>
     <author email="seedgabo@gmail.com" href="http://residenciasonline.com/">Newton Developers</author>
@@ -134,6 +134,7 @@
     <plugin name="cordova-plugin-vibration" spec="^3.0.1" />
     <plugin name="cordova-plugin-code-push" spec="^1.11.7" />
     <allow-navigation href="http://192.168.0.17:8100" />
+    <plugin name="onesignal-cordova-plugin" spec="^2.3.1" />
     <engine name="browser" spec="5.0.3" />
     <engine name="android" spec="6.3.0" />
     <engine name="ios" spec="4.5.4" />
