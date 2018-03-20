@@ -12,7 +12,7 @@ import { IonicPage } from "ionic-angular";
 })
 export class Residences {
   residences: any = [];
-
+  loading = true;
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController, public api: Api) {
@@ -27,6 +27,7 @@ export class Residences {
     this.api.get("residences?with[]=owner")
       .then((data: any) => {
         console.log(data);
+        this.loading = false
         this.residences = data;
       })
       .catch((err) => {

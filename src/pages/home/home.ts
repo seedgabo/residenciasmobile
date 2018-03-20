@@ -21,6 +21,7 @@ export class HomePage {
   text = "";
   nextEvents = [];
   news = [];
+  loadingNews = true
   correspondences = [];
   constructor(public platform: Platform, public navCtrl: NavController, public api: Api, public popovermenu: PopoverMenu) {
   }
@@ -66,10 +67,12 @@ export class HomePage {
   getNews() {
     this.api.get('posts?order[created_at]=desc&limit=7&with[]=user.residence&with[]=image')
       .then((data: any) => {
-        console.log("news", data);
         this.news = data;
+        this.loadingNews = false
       })
       .catch((err) => {
+        this.api.Error(err)
+        this.loadingNews = false
       });
   }
   gotoNews() {

@@ -9,7 +9,7 @@
 
 <ion-content>
   <ion-searchbar (ionInput)="filter()" [(ngModel)]="query" [placeholder]="'crud.search' | trans" debounce="700"></ion-searchbar>
-  <ion-list>
+  <ion-list [ngClass]="{'skeleton': loading}" >
     <button ion-item *ngFor="let parking of parkings" (click)="false && park(parking)">
       <h2> {{parking.name}} </h2>
       <p *ngIf="parking.user"> {{parking.user.full_name}}</p>

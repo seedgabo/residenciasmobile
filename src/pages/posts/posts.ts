@@ -12,6 +12,7 @@ import { IonicPage } from "ionic-angular";
 })
 export class PostsPage {
   posts: any = [];
+  loading= true
   constructor(public navCtrl: NavController, public navParams: NavParams, public api: Api) {
   }
 
@@ -24,13 +25,14 @@ export class PostsPage {
       .then((data: any) => {
         console.log(data);
         this.posts = data;
-        if (refresher)
-          refresher.complete();
+        this.loading = false
+        if (refresher) refresher.complete();
       })
       .catch((err) => {
         console.error(err);
-        if (refresher)
-          refresher.complete();
+        this.api.Error(err)
+        this.loading = false
+        if (refresher) refresher.complete();
       });
   }
 

@@ -12,7 +12,7 @@
 
 <ion-content class="container">
   <ion-card>
-    <ion-list>
+    <ion-list [ngClass]="{'skeleton':loading}">
       <button ion-item *ngFor="let residence of residences">
         <h3>{{residence.name}}</h3>
         <span *ngIf="residence.owner!=null">{{residence.owner.name}}</span>

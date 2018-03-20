@@ -97,7 +97,7 @@
                 {{'literals.posts' | trans}}
               </span>
             </ion-list-header>
-            <div *ngIf="news && news.length > 0">
+            <div [ngClass]="{'skeleton': loadingNews}">
               <button ion-item (click)="gotoPost(post)" *ngFor="let post of news">
                 <div text-center *ngIf="post.image">
                   <img [src]="post.image.url" style="margin: 0 auto; max-width:100%;">
@@ -117,7 +117,7 @@
                 </p>
 
               </button>
-              <button ion-button full clear (click)="gotoNews()">
+              <button ion-button full clear  *ngIf="news.length > 0" (click)="gotoNews()">
                 {{'literals.view_resource' | trans }} {{'literals.more' | trans }}
               </button>
             </div>

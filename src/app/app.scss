@@ -32,30 +32,30 @@
 
 .icon-primary {
   ion-icon {
-    color: color($colors, 'primary');
+    color: color($colors, "primary");
   }
 }
 
 .icon-secondary {
   ion-icon {
-    color: color($colors, 'secondary');
+    color: color($colors, "secondary");
   }
 }
 
 .icon-danger {
   ion-icon {
-    color: color($colors, 'danger');
+    color: color($colors, "danger");
   }
 }
 
 .icon-favorite {
   ion-icon {
-    color: color($colors, 'favorite');
+    color: color($colors, "favorite");
   }
 }
 
 .user-info {
-  background-image: url('../assets/background-user.png');
+  background-image: url("../assets/background-user.png");
   background-size: cover; // height: 100px;
   text-align: center;
   height: 150px;
@@ -70,13 +70,13 @@
 ion-toast {
   &.approved {
     .toast-container {
-      background-color: color($colors, 'secondary');
+      background-color: color($colors, "secondary");
       color: white;
     }
   }
   &.rejected {
     .toast-container {
-      background-color: color($colors, 'danger');
+      background-color: color($colors, "danger");
       color: white;
     }
   }
@@ -166,7 +166,7 @@ ion-toast {
 }
 
 .toolbar-title {
-  color: color($colors, 'favorite');
+  color: color($colors, "favorite");
 }
 
 // FAB STUFFS
@@ -179,35 +179,35 @@ ion-toast {
     border-radius: 5px;
     right: 65px;
     white-space: nowrap;
-    animation: backwards .7s fadeIn;
+    animation: backwards 0.7s fadeIn;
   }
 }
 
 .fab-label-button:nth-child(1) {
   .label {
     bottom: 15px;
-    animation-delay: .0s;
+    animation-delay: 0s;
   }
 }
 
 .fab-label-button:nth-child(2) {
   .label {
     bottom: 70px;
-    animation-delay: .1s;
+    animation-delay: 0.1s;
   }
 }
 
 .fab-label-button:nth-child(3) {
   .label {
     bottom: 125px;
-    animation-delay: .2s;
+    animation-delay: 0.2s;
   }
 }
 
 .fab-label-button:nth-child(4) {
   .label {
     bottom: 180px;
-    animation-delay: .3s;
+    animation-delay: 0.3s;
   }
 }
 
@@ -217,5 +217,83 @@ ion-toast {
   }
   to {
     opacity: 1;
+  }
+}
+
+//Skeleton Implementation
+[skeleton],
+.skeleton {
+  margin: auto;
+  width: 500px;
+  height: 600px;
+  /* change height to see repeat-y behavior */
+  background-image: radial-gradient(
+      circle 50px at 50px 50px,
+      lightgray 99%,
+      transparent 0
+    ),
+    linear-gradient(
+      100deg,
+      rgba(255, 255, 255, 0),
+      rgba(255, 255, 255, 0.5) 50%,
+      rgba(255, 255, 255, 0) 80%
+    ),
+    linear-gradient(lightgray 20px, transparent 0),
+    linear-gradient(lightgray 20px, transparent 0),
+    linear-gradient(lightgray 20px, transparent 0),
+    linear-gradient(lightgray 20px, transparent 0);
+  background-repeat: repeat-y;
+  background-size: 100px 200px, /* circle */ 50px 200px,
+    /* highlight */ 150px 200px, 350px 200px, 300px 200px, 250px 200px;
+  background-position: 0 0, /* circle */ 0 0, /* highlight */ 120px 0,
+    120px 40px, 120px 80px, 120px 120px;
+  animation: shine 1s infinite;
+}
+@keyframes shine {
+  to {
+    background-position: 0 0, 100% 0, /* move highlight to right */ 120px 0,
+      120px 40px, 120px 80px, 120px 120px;
+  }
+}
+
+.skeleton-image {
+  background-color: #f5f5f5;
+  height: 20rem;
+  margin: 16px;
+  $from: #f5f5f5;
+  $to: scale-color($from, $lightness: -10%);
+  background: linear-gradient(-90deg, #efefef 0%, #fcfcfc 50%, #efefef 100%);
+  background-size: 400% 400%;
+  animation: shine-line 1s ease-in-out infinite alternate;
+}
+
+.skeleton-title {
+  background-color: #f5f5f5;
+  height: 16px;
+  margin: 16px;
+  $from: #f5f5f5;
+  $to: scale-color($from, $lightness: -10%);
+  background: linear-gradient(-90deg, #efefef 0%, #fcfcfc 50%, #efefef 100%);
+  background-size: 400% 400%;
+  animation: shine-line 1s ease-in-out infinite alternate;
+}
+
+.skeleton-line {
+  margin: 8px 16px 8px 16px;
+  height: 1rem;
+  background-color: #f5f5f5;
+  $from: #f5f5f5;
+  $to: scale-color($from, $lightness: -10%);
+  background: linear-gradient(-90deg, #efefef 0%, #fcfcfc 50%, #efefef 100%);
+  background-size: 400% 400%;
+  animation: shine-line 1s ease-in-out infinite alternate;
+}
+
+@keyframes shine-line {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: -50% 0%;
   }
 }
