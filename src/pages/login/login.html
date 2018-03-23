@@ -1,5 +1,5 @@
 <ion-content padding class="container">
-  <ion-card padding>
+  <ion-card *ngIf="!select" padding>
     <div text-left *ngIf="!select">
       <img src="./assets/logo-completo.png" style="height:80px; width:auto;" *ngIf="!api.url">
       <img [src]="api.url + 'img/logo.png'" style="height:80px; width:auto;" *ngIf="api.url">
@@ -20,14 +20,14 @@
         <ion-grid>
           <ion-row responsive-sm>
             <ion-col>
-              <button hideWhen="android,ios" class="facebook-button" block ion-button icon-left (click)="loginWithFacebook()">
-                <ion-icon name="logo-facebook"></ion-icon>
+              <button hideWhen="android,ios" class="facebook-button" full ion-button icon-left (click)="loginWithFacebook()">
+                <ion-icon item-left name="logo-facebook"></ion-icon>
                 {{api.trans('literals.login_with_Facebook')}}
               </button>
             </ion-col>
             <ion-col>
-              <button hideWhen="android,ios" class="google-button" block ion-button icon-left (click)="loginWithGoogle()">
-                <ion-icon name="logo-googleplus"></ion-icon>
+              <button hideWhen="android,ios" class="google-button" full ion-button icon-left (click)="loginWithGoogle()">
+                <ion-icon item-left name="logo-googleplus"></ion-icon>
                 {{api.trans('literals.login_with_Google')}}
               </button>
             </ion-col>
@@ -36,6 +36,7 @@
 
       </div>
     </div>
+
     <ion-list *ngIf="api.url && !smarter">
       <div *ngIf="!forgot">
 
@@ -49,22 +50,21 @@
           <ion-input type="password" [(ngModel)]="api.password"></ion-input>
         </ion-item>
 
-        <button class="login-button" block large ion-button color="secondary" icon-right (click)="login()">
-          Iniciar Sesion
-          <ion-icon name="log-in"></ion-icon>
+        <button class="pull-right login-button" ion-button color="primary" icon-right (click)="login()">
+          {{ api.trans('__.Iniciar Sesion') }}
         </button>
 
         <ion-grid *ngIf="!smarter">
           <ion-row responsive-sm>
             <ion-col>
-              <button hideWhen="android,ios" class="facebook-button" block ion-button icon-left (click)="loginWithFacebook(false)">
-                <ion-icon name="logo-facebook"></ion-icon>
+              <button hideWhen="android,ios" class="facebook-button" full ion-button icon-left (click)="loginWithFacebook(false)">
+                <ion-icon item-left name="logo-facebook"></ion-icon>
                 {{api.trans('literals.login_with_Facebook')}}
               </button>
             </ion-col>
             <ion-col>
-              <button hideWhen="android,ios" class="google-button" block ion-button icon-left (click)="loginWithGoogle(false)">
-                <ion-icon name="logo-googleplus"></ion-icon>
+              <button hideWhen="android,ios" class="google-button" full ion-button icon-left (click)="loginWithGoogle(false)">
+                <ion-icon item-left name="logo-googleplus"></ion-icon>
                 {{api.trans('literals.login_with_Google')}}
               </button>
             </ion-col>
@@ -77,7 +77,7 @@
           Olvido su contraseña
         </button>
 
-        <button block clear ion-button color="danger" (click)="goBack()" *ngIf="!preconfigured">
+        <button block small clear ion-button color="danger" (click)="goBack()" *ngIf="!preconfigured">
           Volver
         </button>
       </div>

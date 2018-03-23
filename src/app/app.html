@@ -31,8 +31,8 @@
           <ion-badge item-right *ngIf="p.beta" color="secondary">BETA</ion-badge>
         </button>
       </ng-container>
-      <ion-item-divider>
-        <ion-icon name="settings" item-left></ion-icon>
+      <ion-item-divider color="light">
+        <ion-icon name="settings" small item-right></ion-icon>
         {{ 'literals.settings' | trans }}
       </ion-item-divider>
       <button menuClose text-capitalize ion-item (click)="openPage({component:'AboutPage'})">
