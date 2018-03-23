@@ -28,12 +28,12 @@ export class HomePage {
 
   ionViewDidLoad() {
     this.api.startEcho();
+    this.getSliders();
   }
 
   ionViewDidEnter() {
     this.api.ready.then(() => {
       this.getCorrespondences();
-      this.getSliders();
       this.getNextEvents()
       this.getNews();
     })
