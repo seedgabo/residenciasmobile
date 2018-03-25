@@ -319,7 +319,7 @@ export class Login {
   }
 
   getLogins(loading = null) {
-    if (this.api.username.length == 0) {
+    if (!this.api.username || this.api.username.length == 0) {
       return;
     }
     if (!loading) {
