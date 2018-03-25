@@ -32,6 +32,7 @@ import { PipesModule } from "../pipes/pipes.module";
 import { DatePickerModule } from "datepicker-ionic2";
 import { PopoverMenu } from "../pages/popover/popover-menu";
 import * as Raven from "raven-js";
+declare var window: any;
 
 import {
   SocialLoginModule,
@@ -39,8 +40,6 @@ import {
   GoogleLoginProvider,
   FacebookLoginProvider
 } from "angular5-social-login";
-
-// Configs
 export function getAuthServiceConfigs() {
   let config = new AuthServiceConfig([
     {
@@ -83,6 +82,8 @@ export class SentryErrorHandler extends IonicErrorHandler {
   handleError(error) {
     super.handleError(error);
     try {
+      if (window.user)
+        Raven.setUserContext({ email: window.user.email, id: window.user.id });
       Raven.captureException(error.originalError || error);
     } catch (e) {
       console.error(e);
