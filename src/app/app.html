@@ -12,7 +12,7 @@
       <img *ngIf="api.user" [src]="api.user.image_url" class="avatar-user" (click)="openPage({component:'ProfilePage'})" menuClose>
       <h5 text-center *ngIf="api.user">{{api.user.name}}</h5>
       <ion-fab bottom right style="bottom:0px;">
-        <button (click)="see_residences=!see_residences" color="light" ion-button icon-right *ngIf="api.residence" clear>{{api.residence.name}}
+        <button (click)="see_residences=!see_residences" color="light" ion-button icon-right clear>{{api.residence?.name}}
           <ion-icon [name]="see_residences? 'arrow-dropdown' :'arrow-dropleft'"></ion-icon>
         </button>
       </ion-fab>

@@ -172,7 +172,7 @@ export class MyApp {
             }
           );
       };
-      sync();
+      if (this.platform.is("android") || this.platform.is("ios")) sync();
     });
   }
 
