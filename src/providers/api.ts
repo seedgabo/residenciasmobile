@@ -892,10 +892,10 @@ export class Api {
           prefs.putString("user_id", this.user.id);
           prefs.putString("residence_id", this.user.residence_id);
         },
-        console.error
+        console.warn
       );
     } catch (e) {
-      console.error("catch error saving shared pref", e);
+      console.warn("catch error saving shared pref", e);
     }
   }
 
