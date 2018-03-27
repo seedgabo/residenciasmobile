@@ -3,8 +3,8 @@
 
   <ion-header>
     <div class="user-info" padding>
-      <ion-fab bottom left>
-        <button ion-fab color="danger" xclass="pulse" (click)="!disable_panic && panic()" *ngIf="siteHas('panic')">
+      <ion-fab bottom left *ngIf="siteHas('panic')">
+        <button ion-fab color="danger" xclass="pulse" (click)="!disable_panic && panic()">
           <ion-icon name="help-buoy"></ion-icon>
         </button>
       </ion-fab>

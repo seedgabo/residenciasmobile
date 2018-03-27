@@ -1,5 +1,12 @@
 import { Component, ViewChild } from "@angular/core";
-import { Nav, Platform, Events } from "ionic-angular";
+import {
+  Nav,
+  Platform,
+  Events,
+  Keyboard,
+  IonicApp,
+  MenuController
+} from "ionic-angular";
 import { StatusBar } from "@ionic-native/status-bar";
 import { SplashScreen } from "@ionic-native/splash-screen";
 import { CodePush } from "@ionic-native/code-push";
@@ -19,7 +26,10 @@ export class MyApp {
   VisitTabsPage = "VisitTabsPage";
   disabled_panic = false;
   constructor(
+    public ionicApp: IonicApp,
+    public menuCtrl: MenuController,
     public platform: Platform,
+    public keyboard: Keyboard,
     public statusBar: StatusBar,
     public splashScreen: SplashScreen,
     public codepush: CodePush,
@@ -138,13 +148,7 @@ export class MyApp {
     this.platform.ready().then(() => {
       this.statusBar.styleLightContent();
       this.splashScreen.hide();
-      this.platform.registerBackButtonAction(() => {
-        if (this.nav.canGoBack()) return this.nav.pop();
-        else {
-          this.backgroundmode.moveToBackground();
-        }
-      });
-
+      this.registerBackButton();
       this.backgroundmode.enable();
       this.backgroundmode.setDefaults({
         icon: "icon",
@@ -156,8 +160,6 @@ export class MyApp {
       });
       this.backgroundmode.excludeFromTaskList();
       this.backgroundmode.disableWebViewOptimizations();
-      // this.backgroundmode.overrideBackButton();
-
       var sync = () => {
         this.codepush
           .sync({ updateDialog: false, ignoreFailedUpdates: false })
@@ -295,5 +297,32 @@ export class MyApp {
       return true;
     }
     return this.api.modules[modul];
+  }
+
+  registerBackButton() {
+    this.platform.registerBackButtonAction(() => {
+      let activePortal =
+        this.ionicApp._loadingPortal.getActive() ||
+        this.ionicApp._modalPortal.getActive() ||
+        this.ionicApp._toastPortal.getActive() ||
+        this.ionicApp._overlayPortal.getActive();
+
+      let view = this.nav.getActive();
+      let currentRootPage = view.component;
+
+      if (activePortal) {
+        activePortal.dismiss();
+      } else if (this.menuCtrl.isOpen()) {
+        this.menuCtrl.close();
+      } else if (this.nav.canGoBack() || (view && view.isOverlay)) {
+        this.nav.pop();
+      } else if (currentRootPage != "HomePage") {
+        this.backgroundmode.moveToBackground();
+      } else {
+        this.backgroundmode.moveToBackground();
+      }
+
+      return;
+    }, 1);
   }
 }
