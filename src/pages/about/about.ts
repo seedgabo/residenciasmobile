@@ -1,63 +1,79 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { CodePush } from '@ionic-native/code-push';
-import { SplashScreen } from '@ionic-native/splash-screen';
-import { ToastController } from 'ionic-angular';
+import { Component } from "@angular/core";
+import { IonicPage, NavController, NavParams } from "ionic-angular";
+import { CodePush } from "@ionic-native/code-push";
+import { SplashScreen } from "@ionic-native/splash-screen";
+import { ToastController } from "ionic-angular";
 declare var window: any;
 @IonicPage()
 @Component({
-  selector: 'page-about',
-  templateUrl: 'about.html',
+  selector: "page-about",
+  templateUrl: "about.html"
 })
 export class AboutPage {
-  store
-  live
-  description
-  ready = false
-  constructor(public navCtrl: NavController, public navParams: NavParams, public codepush: CodePush, public splashScreen: SplashScreen, public toast: ToastController) {
-  }
+  store;
+  live;
+  description;
+  ready = false;
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public codepush: CodePush,
+    public splashScreen: SplashScreen,
+    public toast: ToastController
+  ) {}
 
   ionViewDidLoad() {
-    this.get()
+    this.get();
   }
 
   get() {
-    this.codepush.getCurrentPackage()
-      .then((data) => {
+    var promise = this.codepush.getCurrentPackage();
+    promise
+      .then(data => {
         this.live = data.label;
         this.store = data.appVersion;
         this.description = data.description;
       })
-      .catch((err) => {
+      .catch(err => {
         this.store = "Web Version";
         this.live = window.live_version || "--";
         console.warn(err);
-      })
+      });
+    return promise;
   }
 
   sync(refresher = null) {
-    if (refresher) refresher.complete()
+    if (refresher) refresher.complete();
     var sync = () => {
-      this.codepush.sync({ updateDialog: false, ignoreFailedUpdates: false, }).subscribe(
-        (status) => {
-          console.log(status)
-          if (status == 6) {
-            var msg = "Downloading Update";
-            this.toast.create({
-              message: msg,
-              duration: 3000,
-            }).present()
+      this.codepush
+        .sync({ updateDialog: false, ignoreFailedUpdates: false })
+        .subscribe(
+          status => {
+            console.log(status);
+            if (status == 6) {
+              var msg = "Downloading Update";
+              this.toast
+                .create({
+                  message: msg,
+                  duration: 3000
+                })
+                .present();
+            }
+            if (status == 8) this.splashScreen.show();
+          },
+          err => {
+            console.warn(err);
+            this.splashScreen.hide();
           }
-          if (status == 8)
-            this.splashScreen.show();
-        }
-        , (err) => {
-          console.warn(err);
-          this.splashScreen.hide();
-        });
-
-    }
-    sync();
+        );
+    };
+    this.get()
+      .then(() => {
+        sync();
+      })
+      .catch(err => {
+        console.error(err);
+        sync();
+      });
   }
-
 }
