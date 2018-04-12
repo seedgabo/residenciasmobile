@@ -1,9 +1,20 @@
 <ion-card>
   <ion-card-header text-center>
-    {{_survey?.question}}
+    <h2>
+      {{_survey?.question}}
+    </h2>
+    <p text-center>
+      <b>
+        {{'__.Votos totales:' | trans}}
+      </b>
+      <span>
+        {{ total() }}
+      </span>
+    </p>
   </ion-card-header>
   <ion-card-content text-center>
     <canvas id="surveyChart" style="height:400px;margin:0 auto;"></canvas>
+
   </ion-card-content>
 </ion-card>
 <p text-center text-capitalize *ngIf="vote">
