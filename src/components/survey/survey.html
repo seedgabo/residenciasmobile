@@ -1,61 +1,75 @@
-<ion-card>
-  <ion-card-header text-center>
-    <h2>
-      {{_survey?.question}}
-    </h2>
-    <p text-center>
-      <b>
-        {{'__.Votos totales:' | trans}}
-      </b>
-      <span>
-        {{ total() }}
-      </span>
-    </p>
-  </ion-card-header>
-  <ion-card-content text-center>
-    <canvas id="surveyChart" style="height:400px;margin:0 auto;"></canvas>
-  </ion-card-content>
-</ion-card>
-<p text-center text-capitalize *ngIf="vote">
-  <b>{{'literals.your_vote' | trans }}:</b>
-  <span *ngIf="_survey"> {{ _survey['response_'+vote.response] }} </span>
-</p>
+<ion-grid>
+  <ion-row responsive-sm>
 
-<button *ngIf="!vote" ion-button block color="secondary" large (click)="setVote()" icon-left>
-  <ion-icon name="thumbs-up"></ion-icon>
-  {{'literals.vote' | trans }}
-</button>
+    <ion-col col-12 col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6>
+      <ion-card>
+        <ion-card-header text-center>
+          <h2>
+            {{_survey?.question}}
+          </h2>
+          <p text-center>
+            <b>
+              {{'__.Votos totales:' | trans}}
+            </b>
+            <span>
+              {{ total() }}
+            </span>
+          </p>
+        </ion-card-header>
+        <ion-card-content text-center>
+          <canvas id="surveyChart" style="height:400px;margin:0 auto;"></canvas>
+        </ion-card-content>
+      </ion-card>
 
-<ion-card>
-  <ion-card-header color="light" text-center>
-    <h2>
-      {{'__.summary' | trans }} {{'literals.votes' | trans}}
-    </h2>
-  </ion-card-header>
-  <ion-list>
-    <ion-item *ngIf="_survey.response_1">
-      <h2> {{_survey.response_1}} </h2>
-      <b item-right text-right> {{ _survey.results[1] }} </b>
-    </ion-item>
-    <ion-item *ngIf="_survey.response_2">
-      <h2> {{_survey.response_2}} </h2>
-      <b item-right text-right> {{ _survey.results[2] }} </b>
-    </ion-item>
-    <ion-item *ngIf="_survey.response_3">
-      <h2> {{_survey.response_3}} </h2>
-      <b item-right text-right> {{ _survey.results[3] }} </b>
-    </ion-item>
-    <ion-item *ngIf="_survey.response_4">
-      <h2> {{_survey.response_4}} </h2>
-      <b item-right text-right> {{ _survey.results[4] }} </b>
-    </ion-item>
-    <ion-item *ngIf="_survey.response_5">
-      <h2> {{_survey.response_5}} </h2>
-      <b item-right text-right> {{ _survey.results[5] }} </b>
-    </ion-item>
-    <ion-item *ngIf="_survey.response_6">
-      <h2> {{_survey.response_6}} </h2>
-      <b item-right text-right> {{ _survey.results[6] }} </b>
-    </ion-item>
-  </ion-list>
-</ion-card>
+      <p text-center text-capitalize *ngIf="vote">
+        <b>{{'literals.your_vote' | trans }}:</b>
+        <span *ngIf="_survey"> {{ _survey['response_'+vote.response] }} </span>
+      </p>
+
+      <button *ngIf="!vote" ion-button block color="secondary" large (click)="setVote()" icon-left>
+        <ion-icon name="thumbs-up"></ion-icon>
+        {{'literals.vote' | trans }}
+      </button>
+    </ion-col>
+
+    <ion-col col-12 col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6>
+      <ion-card>
+        <ion-card-header color="light" text-center>
+          <h2>
+            {{'__.summary' | trans }} {{'literals.votes' | trans}}
+          </h2>
+        </ion-card-header>
+        <ion-list>
+          <ion-item *ngIf="_survey.response_1">
+            <h2> {{_survey.response_1}} </h2>
+            <b item-right text-right> {{ _survey.results[1] }} </b>
+          </ion-item>
+          <ion-item *ngIf="_survey.response_2">
+            <h2> {{_survey.response_2}} </h2>
+            <b item-right text-right> {{ _survey.results[2] }} </b>
+          </ion-item>
+          <ion-item *ngIf="_survey.response_3">
+            <h2> {{_survey.response_3}} </h2>
+            <b item-right text-right> {{ _survey.results[3] }} </b>
+          </ion-item>
+          <ion-item *ngIf="_survey.response_4">
+            <h2> {{_survey.response_4}} </h2>
+            <b item-right text-right> {{ _survey.results[4] }} </b>
+          </ion-item>
+          <ion-item *ngIf="_survey.response_5">
+            <h2> {{_survey.response_5}} </h2>
+            <b item-right text-right> {{ _survey.results[5] }} </b>
+          </ion-item>
+          <ion-item *ngIf="_survey.response_6">
+            <h2> {{_survey.response_6}} </h2>
+            <b item-right text-right> {{ _survey.results[6] }} </b>
+          </ion-item>
+        </ion-list>
+      </ion-card>
+
+    </ion-col>
+
+  </ion-row>
+
+
+</ion-grid>
