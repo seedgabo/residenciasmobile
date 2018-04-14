@@ -19,7 +19,7 @@
         <ion-grid>
           <ion-row responsive-sm>
             <ion-col>
-              <button hideWhen="android,ios" class="facebook-button" full ion-button icon-left (click)="loginWithFacebook()">
+              <button xhideWhen="android,ios" class="facebook-button" full ion-button icon-left (click)="loginWithFacebook()">
                 <ion-icon item-left name="logo-facebook"></ion-icon>
                 {{api.trans('literals.login_with_Facebook')}}
               </button>

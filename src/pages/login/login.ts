@@ -1,32 +1,15 @@
-import {
-  trigger,
-  style,
-  transition,
-  animate,
-  query,
-  stagger
-} from "@angular/animations";
+import { trigger, style, transition, animate, query, stagger } from "@angular/animations";
 
-import {
-  IonicPage,
-  NavController,
-  NavParams,
-  AlertController,
-  LoadingController,
-  Events,
-  Platform
-} from "ionic-angular";
+import { IonicPage, NavController, NavParams, AlertController, LoadingController, Events, Platform } from "ionic-angular";
 import { Api } from "../../providers/api";
 
 import { Facebook } from "@ionic-native/facebook";
 import { GooglePlus } from "@ionic-native/google-plus";
 
-import {
-  AuthService,
-  FacebookLoginProvider,
-  GoogleLoginProvider
-} from "angular5-social-login";
+import { AuthService, FacebookLoginProvider, GoogleLoginProvider } from "angular5-social-login";
 import { Component } from "@angular/core";
+
+import { Facebook as FacebookCordova, FacebookLoginResponse } from "@ionic-native/facebook";
 
 declare var window: any;
 @IonicPage()
@@ -36,24 +19,12 @@ declare var window: any;
   animations: [
     trigger("item", [
       transition(":enter", [
-        query(
-          ":self",
-          stagger(120, [
-            style({ opacity: 0, transform: "translateX(-200px)" }),
-            animate("800ms ease-in-out")
-          ])
-        )
+        query(":self", stagger(120, [style({ opacity: 0, transform: "translateX(-200px)" }), animate("800ms ease-in-out")]))
       ])
     ]),
     trigger("list", [
       transition(":enter", [
-        query(
-          ".item",
-          stagger(120, [
-            style({ opacity: 0, transform: "translateX(-200px)" }),
-            animate("800ms ease-in-out")
-          ])
-        )
+        query(".item", stagger(120, [style({ opacity: 0, transform: "translateX(-200px)" }), animate("800ms ease-in-out")]))
       ])
     ])
   ]
@@ -70,6 +41,7 @@ export class Login {
     public platform: Platform,
     public facebook: Facebook,
     public google: GooglePlus,
+    public fb: FacebookCordova,
     public navCtrl: NavController,
     public navParams: NavParams,
     public api: Api,
@@ -117,7 +89,7 @@ export class Login {
         });
       })
 
-      .catch(err => {
+      .catch((err) => {
         console.error(err);
         if (err.status === 401) {
           let alert = this.alertCtrl.create({
@@ -141,7 +113,7 @@ export class Login {
 
   loginWithFacebook(smarter = true) {
     if (this.platform.is("mobile")) {
-      return this.loginWithFacebookCordova();
+      return this.loginWithFacebookCordova(smarter);
     }
 
     let loading = this.loadingCtrl.create({
@@ -154,7 +126,7 @@ export class Login {
     loading.present();
     this.socialAuthService
       .signIn(FacebookLoginProvider.PROVIDER_ID)
-      .then(userData => {
+      .then((userData) => {
         console.log(userData);
         if (smarter) {
           this.OauthSuccessfulSmartLogin(userData, loading);
@@ -179,7 +151,7 @@ export class Login {
     loading.present();
     this.socialAuthService
       .signIn(GoogleLoginProvider.PROVIDER_ID)
-      .then(userData => {
+      .then((userData) => {
         console.log(userData);
         if (smarter) {
           this.OauthSuccessfulSmartLogin(userData, loading);
@@ -187,13 +159,13 @@ export class Login {
           this.OauthSuccessfulLogin(userData, loading);
         }
       })
-      .catch(err => {
+      .catch((err) => {
         loading.dismiss();
         this.api.Error(err);
       });
   }
 
-  loginWithFacebookCordova() {
+  loginWithFacebookCordova(smarter = true) {
     let loading = this.loadingCtrl.create({
       content: `
       <div>
@@ -202,22 +174,21 @@ export class Login {
       spinner: "hide"
     });
     loading.present();
-    this.facebook
+    this.fb
       .login(["public_profile", "email"])
-      .then(data => {
+      .then((data) => {
         console.log(data);
-        this.facebook
-          .api(
-            `${
-              data.authResponse.userID
-            }/?fields=id,email,name,picture,first_name,last_name,gender`,
-            ["public_profile", "email"]
-          )
-          .then(data => {
-            console.log(data);
-            this.OauthSuccessfulLogin(data, loading);
+        this.fb
+          .api(`${data.authResponse.userID}/?fields=id,email,name,picture,first_name,last_name,gender`, ["public_profile", "email"])
+          .then((userData) => {
+            console.log(userData);
+            if (smarter) {
+              this.OauthSuccessfulSmartLogin(userData, loading);
+            } else {
+              this.OauthSuccessfulLogin(userData, loading);
+            }
           })
-          .catch(err => {
+          .catch((err) => {
             console.error(err);
             loading.dismiss();
             this.alertCtrl
@@ -228,7 +199,7 @@ export class Login {
               .present();
           });
       })
-      .catch(err => {
+      .catch((err) => {
         console.error(err);
         loading.dismiss();
         this.alertCtrl
@@ -251,11 +222,11 @@ export class Login {
     loading.present();
     this.google
       .login({})
-      .then(data => {
+      .then((data) => {
         console.log(data);
         loading.dismiss();
       })
-      .catch(err => {
+      .catch((err) => {
         console.error(err);
         loading.dismiss();
         this.alertCtrl
@@ -270,13 +241,13 @@ export class Login {
   OauthSuccessfulLogin(data, loading = null) {
     this.api
       .loginOAuth(data)
-      .then(data => {
+      .then((data) => {
         console.log(data);
         this.api.saveData(data);
         this.goTo();
         if (loading) loading.dismiss();
       })
-      .catch(err => {
+      .catch((err) => {
         console.error(err);
         if (loading) loading.dismiss();
         this.alertCtrl
@@ -310,8 +281,7 @@ export class Login {
       .catch(() => {
         let alert = this.alertCtrl.create({
           title: "Error",
-          subTitle:
-            "No hemos podido validar el usuario asegurese de escribirlo correctamente",
+          subTitle: "No hemos podido validar el usuario asegurese de escribirlo correctamente",
           buttons: ["OK"]
         });
         alert.present();
@@ -334,11 +304,8 @@ export class Login {
     }
 
     this.api.http
-      .get(
-        "http://residenciasonline.com/residencias/public/api/smart-login?email=" +
-          this.api.username
-      )
-      .map(res => res.json())
+      .get("http://residenciasonline.com/residencias/public/api/smart-login?email=" + this.api.username)
+      .map((res) => res.json())
       .subscribe(
         (data: any) => {
           if (data.length == 0) {
@@ -361,7 +328,7 @@ export class Login {
           this.select = true;
           loading.dismiss();
         },
-        err => {
+        (err) => {
           console.error(err);
           this.api.Error(err);
           loading.dismiss();
