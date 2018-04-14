@@ -18,16 +18,15 @@
 <ion-content>
 
   <div *ngIf="sliders && sliders.length > 0">
-    <ion-slides style="height:300px" pager paginationType="bullets" autoplay="3000" loop="true">
-      <ion-slide *ngFor="let slider of sliders">
+    <ion-slides parallax="true" autoplay="3000" pager loop="true" zoom="true">
+      <ion-slide *ngFor="let slider of sliders" class="custom-slide">
         <img [src]="slider.image.url" [alt]="slider.name" style="height:100%; width:100%">
-
         <h2 style="position:absolute; top:20%; left:12%;" [style.color]="slider.color? slider.color : 'white'">{{slider.name}}</h2>
         <p style="position:absolute; top:35%; left:12%;" [style.color]="slider.color? slider.color : 'white'">{{slider.text}}</p>
-
       </ion-slide>
     </ion-slides>
   </div>
+
   <ion-grid>
     <ion-row wrap responsive-sm>
       <ion-col push-md-7 push-lg-7 push-xl-7 col-md-5 col-lg-5 col-xl-5>
@@ -97,7 +96,7 @@
                 {{'literals.posts' | trans}}
               </span>
             </ion-list-header>
-            <div *ngIf="news && news.length > 0">
+            <div [ngClass]="{'skeleton': loadingNews}">
               <button ion-item (click)="gotoPost(post)" *ngFor="let post of news">
                 <div text-center *ngIf="post.image">
                   <img [src]="post.image.url" style="margin: 0 auto; max-width:100%;">
@@ -117,7 +116,7 @@
                 </p>
 
               </button>
-              <button ion-button full clear (click)="gotoNews()">
+              <button ion-button full clear *ngIf="news.length > 0" (click)="gotoNews()">
                 {{'literals.view_resource' | trans }} {{'literals.more' | trans }}
               </button>
             </div>

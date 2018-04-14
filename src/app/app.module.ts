@@ -31,6 +31,8 @@ import { PipesModule } from "../pipes/pipes.module";
 
 import { DatePickerModule } from "datepicker-ionic2";
 import { PopoverMenu } from "../pages/popover/popover-menu";
+import * as Raven from "raven-js";
+declare var window: any;
 
 import {
   SocialLoginModule,
@@ -38,8 +40,6 @@ import {
   GoogleLoginProvider,
   FacebookLoginProvider
 } from "angular5-social-login";
-import { ComponentsModule } from "../components/components.module";
-// Configs
 export function getAuthServiceConfigs() {
   let config = new AuthServiceConfig([
     {
@@ -54,6 +54,41 @@ export function getAuthServiceConfigs() {
     }
   ]);
   return config;
+}
+
+Raven.config(
+  "http://2be9a134440b470997adb14fcf1aac6c@residenciasonline.com:6010/3",
+  {
+    release: "1.0.0",
+    dataCallback: data => {
+      if (data.culprit) {
+        data.culprit = data.culprit.substring(data.culprit.lastIndexOf("/"));
+      }
+      var stacktrace =
+        data.stacktrace ||
+        (data.exception && data.exception.values[0].stacktrace);
+      if (stacktrace) {
+        stacktrace.frames.forEach(function(frame) {
+          frame.filename = frame.filename.substring(
+            frame.filename.lastIndexOf("/")
+          );
+        });
+      }
+    }
+  }
+).install();
+
+export class SentryErrorHandler extends IonicErrorHandler {
+  handleError(error) {
+    super.handleError(error);
+    try {
+      if (window.user)
+        Raven.setUserContext({ email: window.user.email, id: window.user.id });
+      Raven.captureException(error.originalError || error);
+    } catch (e) {
+      console.error(e);
+    }
+  }
 }
 
 @NgModule({
@@ -89,7 +124,8 @@ export function getAuthServiceConfigs() {
     Geolocation,
     Api,
     PopoverMenu,
-    { provide: ErrorHandler, useClass: IonicErrorHandler },
+    // { provide: ErrorHandler, useClass: IonicErrorHandler },
+    { provide: ErrorHandler, useClass: SentryErrorHandler },
     { provide: AuthServiceConfig, useFactory: getAuthServiceConfigs }
   ]
 })

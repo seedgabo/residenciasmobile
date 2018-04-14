@@ -12,13 +12,24 @@ page-login {
   }
   .facebook-button {
     margin-top: 10px;
-    background-color: #3b5998;
+    background-color: #3b5998 !important;
     color: white;
+    &:hover,
+    &:active {
+      background-color: #3b5998 !important;
+      color: white;
+    }
   }
   .google-button {
     margin-top: 10px;
-    background-color: #d62d20;
+    background-color: #d62d20 !important;
     color: white;
+    &:hover,
+    &:active {
+      background-color: #d62d20 !important;
+      color: white;
+    }
+    // color: white;
   }
   input.code {
     width: 100%;

@@ -3,7 +3,6 @@ import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Gesture } from 'ionic-angular';
 @IonicPage({
   segment: 'post/:postId',
-  defaultHistory: ['PostsPage']
 })
 @Component({
   selector: 'page-post',

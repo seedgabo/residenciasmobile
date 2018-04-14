@@ -3,19 +3,20 @@
 
   <ion-header>
     <div class="user-info" padding>
-      <ion-fab bottom left>
-        <button ion-fab color="danger" xclass="pulse" (click)="!disable_panic && panic()" *ngIf="siteHas('panic')">
+      <ion-fab bottom left *ngIf="siteHas('panic')">
+        <button ion-fab color="danger" xclass="pulse" (click)="!disable_panic && panic()">
           <ion-icon name="help-buoy"></ion-icon>
         </button>
       </ion-fab>
 
       <img *ngIf="api.user" [src]="api.user.image_url" class="avatar-user" (click)="openPage({component:'ProfilePage'})" menuClose>
       <h5 text-center *ngIf="api.user">{{api.user.name}}</h5>
-      <ion-fab bottom right style="bottom:0px;">
-        <button (click)="see_residences=!see_residences" color="light" ion-button icon-right *ngIf="api.residence" clear>{{api.residence.name}}
+      <div bottom right style="bottom:0px; right:0px; position:absolute;">
+        <button (click)="see_residences=!see_residences" color="light" ion-button icon-right clear>
+          {{api.residence?.name}}
           <ion-icon [name]="see_residences? 'arrow-dropdown' :'arrow-dropleft'"></ion-icon>
         </button>
-      </ion-fab>
+      </div>
     </div>
   </ion-header>
   <ion-content>
@@ -31,8 +32,8 @@
           <ion-badge item-right *ngIf="p.beta" color="secondary">BETA</ion-badge>
         </button>
       </ng-container>
-      <ion-item-divider>
-        <ion-icon name="settings" item-left></ion-icon>
+      <ion-item-divider color="light">
+        <ion-icon name="settings" small item-right></ion-icon>
         {{ 'literals.settings' | trans }}
       </ion-item-divider>
       <button menuClose text-capitalize ion-item (click)="openPage({component:'AboutPage'})">

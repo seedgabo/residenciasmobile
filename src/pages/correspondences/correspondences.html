@@ -9,33 +9,33 @@
 
 <!-- TODO Improve like residencias Admin -->
 <ion-content class="container">
-  <div text-center *ngIf="loading">
-    <ion-spinner></ion-spinner>
-  </div>
   <ion-refresher (ionRefresh)="getCorrespondences($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
+  <ion-searchbar [(ngModel)]="query" [debounce]="700" (ionChange)="filter()"></ion-searchbar>
+  <ion-card>
+    <ion-list>
+      <button ion-item *ngFor="let corres of correspondences" (click)="actions(corres)">
+        <h2>{{corres.item}}
+          <span *ngIf="corres.quantity>1">({{corres.quantity}})</span>
+        </h2>
+        <h4>
+          {{ ('literals.' + corres.status) | trans }}
+        </h4>
+        <p *ngIf="corres.user">
+          {{corres.user.name}}
+        </p>
+        <p *ngIf="corres.receptor">
+          {{corres.receptor.name}}
+        </p>
+        <ion-badge item-right [color]="corres.status == 'delivered' ? 'secondary'  : corres.status == 'lost' ?  'danger' : 'primary'">
+          {{ 'literals.' + corres.status | trans }}
+        </ion-badge>
+        <ion-note text-right>
 
-  <ion-list>
-    <button ion-item *ngFor="let corres of correspondences" (click)="actions(corres)">
-      <h2>{{corres.item}}
-        <span *ngIf="corres.quantity>1">({{corres.quantity}})</span>
-      </h2>
-      <h4>
-        {{ ('literals.' + corres.status) | trans }}
-      </h4>
-      <p *ngIf="corres.user">
-        {{corres.user.name}}
-      </p>
-      <p *ngIf="corres.receptor">
-        {{corres.receptor.name}}
-      </p>
-      <small>
-
-        {{ corres.created_at | amCalendar }}
-      </small>
-      <ion-icon small item-right [name]="corres.status === 'arrival' ? 'mail' : corres.status === 'delivered'?'mail-open':'archive'"
-        [color]="corres.status === 'arrival' ? 'primary' : corres.status === 'delivered' ? 'secondary':'warning'"></ion-icon>
-    </button>
-  </ion-list>
+          {{ corres.created_at | amCalendar }}
+        </ion-note>
+      </button>
+    </ion-list>
+  </ion-card>
 </ion-content>
