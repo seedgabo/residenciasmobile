@@ -1,0 +1,17 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{title}}</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only clear (click)="close()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content>
+  <iframe *ngIf="video" [src]="video" align="center" frameborder="0" class="visor" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+  <img [src]="url" *ngIf="url" [alt]="title" class="visor">
+</ion-content>
