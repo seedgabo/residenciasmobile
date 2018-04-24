@@ -34,12 +34,7 @@ import { PopoverMenu } from "../pages/popover/popover-menu";
 import * as Raven from "raven-js";
 declare var window: any;
 
-import {
-  SocialLoginModule,
-  AuthServiceConfig,
-  GoogleLoginProvider,
-  FacebookLoginProvider
-} from "angular5-social-login";
+import { SocialLoginModule, AuthServiceConfig, GoogleLoginProvider, FacebookLoginProvider } from "angular5-social-login";
 export function getAuthServiceConfigs() {
   let config = new AuthServiceConfig([
     {
@@ -48,42 +43,32 @@ export function getAuthServiceConfigs() {
     },
     {
       id: GoogleLoginProvider.PROVIDER_ID,
-      provider: new GoogleLoginProvider(
-        "425679220353-u39prig4hkrjg592lnppmnbfj6lvi4qk.apps.googleusercontent.com"
-      )
+      provider: new GoogleLoginProvider("425679220353-u39prig4hkrjg592lnppmnbfj6lvi4qk.apps.googleusercontent.com")
     }
   ]);
   return config;
 }
 
-Raven.config(
-  'http://21d54a6fc6f24c659a12464471ed2640@residenciasonline.com:6010/4',
-  {
-    release: "1.0.0",
-    dataCallback: data => {
-      if (data.culprit) {
-        data.culprit = data.culprit.substring(data.culprit.lastIndexOf("/"));
-      }
-      var stacktrace =
-        data.stacktrace ||
-        (data.exception && data.exception.values[0].stacktrace);
-      if (stacktrace) {
-        stacktrace.frames.forEach(function(frame) {
-          frame.filename = frame.filename.substring(
-            frame.filename.lastIndexOf("/")
-          );
-        });
-      }
+Raven.config("http://21d54a6fc6f24c659a12464471ed2640@residenciasonline.com:6010/4", {
+  release: "1.0.0",
+  dataCallback: (data) => {
+    if (data.culprit) {
+      data.culprit = data.culprit.substring(data.culprit.lastIndexOf("/"));
+    }
+    var stacktrace = data.stacktrace || (data.exception && data.exception.values[0].stacktrace);
+    if (stacktrace) {
+      stacktrace.frames.forEach(function(frame) {
+        frame.filename = frame.filename.substring(frame.filename.lastIndexOf("/"));
+      });
     }
   }
-).install();
+}).install();
 
 export class SentryErrorHandler extends IonicErrorHandler {
   handleError(error) {
     super.handleError(error);
     try {
-      if (window.user)
-        Raven.setUserContext({ email: window.user.email, id: window.user.id });
+      if (window.user) Raven.setUserContext({ email: window.user.email, id: window.user.id });
       Raven.captureException(error.originalError || error);
     } catch (e) {
       console.error(e);
