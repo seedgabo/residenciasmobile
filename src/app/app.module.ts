@@ -57,7 +57,7 @@ export function getAuthServiceConfigs() {
 }
 
 Raven.config(
-  "http://2be9a134440b470997adb14fcf1aac6c@residenciasonline.com:6010/3",
+  'http://21d54a6fc6f24c659a12464471ed2640@residenciasonline.com:6010/4',
   {
     release: "1.0.0",
     dataCallback: data => {
