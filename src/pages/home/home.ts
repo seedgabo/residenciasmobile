@@ -1,5 +1,5 @@
 import { Component, ViewChild } from "@angular/core";
-import { NavController, Platform, Slides } from "ionic-angular";
+import { NavController, Platform, Slides, ModalController } from "ionic-angular";
 import { Api } from "../../providers/api";
 
 // import { Camera, CameraOptions } from '@ionic-native/camera';
@@ -26,7 +26,8 @@ export class HomePage {
     public platform: Platform,
     public navCtrl: NavController,
     public api: Api,
-    public popovermenu: PopoverMenu
+    public popovermenu: PopoverMenu,
+    public modal: ModalController
   ) {}
 
   ionViewDidLoad() {
@@ -45,7 +46,7 @@ export class HomePage {
   }
 
   getSliders() {
-    this.api.storage.get("sliders").then(sliders => {
+    this.api.storage.get("sliders").then((sliders) => {
       if (sliders) this.sliders = sliders;
       this.api.ready.then(() => {
         this.api
@@ -55,7 +56,7 @@ export class HomePage {
             console.log(data);
             this.sliders = data;
           })
-          .catch(error => {
+          .catch((error) => {
             console.error("error trayendo los sliders:", error);
           });
       });
@@ -68,7 +69,7 @@ export class HomePage {
         .then((data: any) => {
           this.nextEvents = data;
         })
-        .catch(err => {
+        .catch((err) => {
           console.error(err);
         });
     });
@@ -76,14 +77,12 @@ export class HomePage {
   getNews() {
     this.api.ready.then(() => {
       this.api
-        .get(
-          "posts?order[created_at]=desc&limit=7&with[]=user.residence&with[]=image"
-        )
+        .get("posts?order[created_at]=desc&limit=7&with[]=user.residence&with[]=image")
         .then((data: any) => {
           this.news = data;
           this.loadingNews = false;
         })
-        .catch(err => {
+        .catch((err) => {
           this.api.Error(err);
           this.loadingNews = false;
         });
@@ -93,11 +92,7 @@ export class HomePage {
     this.api.ready.then(() => {
       if (this.api.modules.correspondences) {
         this.api
-          .get(
-            `correspondences?where[residence_id]=${
-              this.api.user.residence_id
-            }&where[status]=arrival`
-          )
+          .get(`correspondences?where[residence_id]=${this.api.user.residence_id}&where[status]=arrival`)
           .then((data: any) => {
             console.log(data);
             this.correspondences = data;
@@ -149,11 +144,7 @@ export class HomePage {
         }
       }
     ];
-    if (
-      !this.platform.is("android") &&
-      !this.platform.is("ios") &&
-      this.api.user.admin
-    ) {
+    if (!this.platform.is("android") && !this.platform.is("ios") && this.api.user.admin) {
       buttons.unshift({
         text: this.api.trans("literals.administration"),
         icon: "speedometer",
@@ -183,5 +174,17 @@ export class HomePage {
         this.api.clearSharedPreferences();
       });
     });
+  }
+
+  OpenHelp() {
+    this.modal
+      .create(
+        "ImageViewerPage",
+        { video: "https://www.youtube.com/embed/wyHNaoe-gMk" },
+        {
+          cssClass: "image-viewer"
+        }
+      )
+      .present();
   }
 }
