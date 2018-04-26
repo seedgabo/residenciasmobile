@@ -31,6 +31,14 @@
   <ion-grid>
     <ion-row>
       <ion-col>
+        <ion-item>
+          <ion-label floating> {{'literals.message' | trans}}</ion-label>
+          <ion-input [(ngModel)]="visit.message" type="text"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
         <button (click)="confirm()" ion-button full color="secondary">{{'literals.confirm' | trans}}</button>
       </ion-col>
       <ion-col>
