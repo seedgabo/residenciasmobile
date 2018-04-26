@@ -20,6 +20,9 @@
   <h4 text-center *ngIf="visit.creator">
     <b>{{'literals.creator' | trans }}:</b> {{ visit.creator.name }}
   </h4>
+  <h5 text-center *ngIf="visit.message">
+    <b>{{'literals.message' | trans}}:</b> {{ visit.message }}
+  </h5>
   <ion-list *ngIf="visit.visitors && visit.visitors.length > 1">
     <ion-item *ngFor="let person of visit.visitors">
       <ion-avatar item-left>
