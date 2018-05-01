@@ -25,7 +25,9 @@ export class ProfilePage {
     public api: Api,
     public toast: ToastController,
     public modal: ModalController
-  ) {
+  ) {}
+
+  ionViewDidEnter() {
     this.monthShortNames = moment.monthsShort().join(", ");
     this.months = moment.months().join(", ");
     this.profile = JSON.parse(JSON.stringify(this.api.user));
@@ -34,20 +36,8 @@ export class ProfilePage {
       .format("YYYY-MM-DD");
     this.residence = JSON.parse(JSON.stringify(this.api.residence));
     if (!this.residence.emergency_contact) {
-      this.residence.emergency_contact = {
-        name: "",
-        phone: "",
-        email: ""
-      };
+      this.residence.emergency_contact = { name: "", phone: "", email: "" };
     }
-  }
-
-  ionViewDidEnter() {
-    this.profile = JSON.parse(JSON.stringify(this.api.user));
-    this.profile.birthday = moment(this.api.user.birthday)
-      .local()
-      .format("YYYY-MM-DD");
-    this.residence = JSON.parse(JSON.stringify(this.api.residence));
     this.renderChart();
   }
   renderChart() {
