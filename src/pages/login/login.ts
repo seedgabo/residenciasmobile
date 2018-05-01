@@ -114,28 +114,28 @@ export class Login {
       return this.loginWithFacebookCordova();
     }
 
-    let loading = this.loadingCtrl.create({
-      content: `
-      <div>
-        <img class="loading-img" src="${this.api.url + "img/logo.png"}" alt="">
-      </div>`,
-      spinner: "hide",
-      duration: 1000 * 30
-    });
-    loading.present();
+    // let loading = this.loadingCtrl.create({
+    //   content: `
+    //   <div>
+    //     <img class="loading-img" src="${this.api.url + "img/logo.png"}" alt="">
+    //   </div>`,
+    //   spinner: "hide",
+    //   duration: 1000 * 30
+    // });
+    // loading.present();
     this.socialAuthService
       .signIn(FacebookLoginProvider.PROVIDER_ID)
       .then((userData) => {
         console.log(userData);
         if (smarter) {
-          this.OauthSuccessfulSmartLogin(userData, loading);
+          this.OauthSuccessfulSmartLogin(userData);
         } else {
-          this.OauthSuccessfulLogin(userData, loading);
+          this.OauthSuccessfulLogin(userData);
         }
       })
       .catch((error) => {
         this.api.Error(error);
-        loading.dismiss();
+        // loading.dismiss();
       });
   }
 
@@ -143,41 +143,23 @@ export class Login {
     if (this.platform.is("mobile")) {
       return this.loginWithGoogleCordova();
     }
-    let loading = this.loadingCtrl.create({
-      content: `
-      <div>
-        <img class="loading-img" src="${this.api.url + "img/logo.png"}" alt="">
-      </div>`,
-      spinner: "hide",
-      duration: 1000 * 30
-    });
-    loading.present();
     this.socialAuthService
       .signIn(GoogleLoginProvider.PROVIDER_ID)
       .then((userData) => {
         console.log(userData);
         if (smarter) {
-          this.OauthSuccessfulSmartLogin(userData, loading);
+          this.OauthSuccessfulSmartLogin(userData);
         } else {
-          this.OauthSuccessfulLogin(userData, loading);
+          this.OauthSuccessfulLogin(userData);
         }
       })
       .catch((error) => {
         this.api.Error(error);
-        loading.dismiss();
+        // loading.dismiss();
       });
   }
 
   loginWithFacebookCordova() {
-    let loading = this.loadingCtrl.create({
-      content: `
-      <div>
-        <img class="loading-img" src="${this.api.url + "img/logo.png"}" alt="">
-      </div>`,
-      spinner: "hide",
-      duration: 1000 * 30
-    });
-    loading.present();
     this.facebook
       .login(["public_profile", "email"])
       .then((data) => {
@@ -186,11 +168,10 @@ export class Login {
           .api(`${data.authResponse.userID}/?fields=id,email,name,picture,first_name,last_name,gender`, ["public_profile", "email"])
           .then((data) => {
             console.log(data);
-            this.OauthSuccessfulLogin(data, loading);
+            this.OauthSuccessfulLogin(data);
           })
           .catch((err) => {
             console.error(err);
-            loading.dismiss();
             this.alertCtrl
               .create({
                 message: err,
@@ -201,7 +182,6 @@ export class Login {
       })
       .catch((err) => {
         console.error(err);
-        loading.dismiss();
         this.alertCtrl
           .create({
             message: err,
@@ -212,24 +192,13 @@ export class Login {
   }
 
   loginWithGoogleCordova() {
-    let loading = this.loadingCtrl.create({
-      content: `
-      <div>
-        <img class="loading-img" src="${this.api.url + "img/logo.png"}" alt="">
-      </div>`,
-      spinner: "hide",
-      duration: 1000 * 30
-    });
-    loading.present();
     this.google
       .login({})
       .then((data) => {
         console.log(data);
-        loading.dismiss();
       })
       .catch((err) => {
         console.error(err);
-        loading.dismiss();
         this.alertCtrl
           .create({
             message: err,
@@ -239,18 +208,16 @@ export class Login {
       });
   }
 
-  OauthSuccessfulLogin(data, loading = null) {
+  OauthSuccessfulLogin(data) {
     this.api
       .loginOAuth(data)
       .then((data) => {
         console.log(data);
         this.api.saveData(data);
         this.goTo();
-        if (loading) loading.dismiss();
       })
       .catch((err) => {
         console.error(err);
-        if (loading) loading.dismiss();
         this.alertCtrl
           .create({
             message: JSON.stringify(err),
@@ -260,12 +227,11 @@ export class Login {
       });
   }
 
-  OauthSuccessfulSmartLogin(data, loading) {
+  OauthSuccessfulSmartLogin(data) {
     this.smarter = true;
     this.oauthInfo = data;
-    debugger;
     this.api.username = data.email;
-    this.getLogins(loading);
+    this.getLogins();
   }
 
   recover(email) {
