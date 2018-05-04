@@ -1,6 +1,6 @@
 <ion-header>
 
-  <ion-navbar xcolor="primary">
+  <ion-navbar color="primary">
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
@@ -12,7 +12,8 @@
     </ion-buttons>
   </ion-navbar>
 
-  <ion-toolbar>
+  <ion-toolbar *ngIf="mobile">
+
     <ion-segment [(ngModel)]="types" (ionChange)="filter()">
       <ion-segment-button value="all">
         {{'literals.all' | trans }}
@@ -33,35 +34,43 @@
   <div text-center>
     <ion-spinner color="primary" *ngIf="loading"></ion-spinner>
   </div>
-  <ion-grid *ngIf="view === 'grid'">
-    <ion-row>
-      <ion-col col-12 col-md-6 *ngFor="let invoice of toShow">
-        <ion-card class="invoice-card" [ngClass]="[invoice.status,invoice.type]">
-          <ion-card-header text-center>
-            <ion-card-title ion-text color="primary" text-primary>
-              <small *ngIf="invoice.type==='residential'">
-                {{ invoice.date | amDateFormat:'MMMM/YYYY'}}
-              </small>
-              <small *ngIf="invoice.type === 'normal'">
-                {{'literals.invoice' | trans }} # {{ invoice.number }}
-              </small>
-              <small *ngIf="invoice.type === 'normal'">
-                <br> {{ 'date.date' | trans }}:{{ invoice.date | amCalendar }}
-              </small>
+  <div *ngIf="mobile">
+    <ion-grid *ngIf="view === 'grid'">
+      <ion-row wrap responsive-sm>
+        <ion-col col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 *ngFor="let invoice of toShow">
+          <ion-card class="invoice-card" [ngClass]="[invoice.status,invoice.type]">
+            <ion-card-header text-center>
+              <ion-card-title ion-text color="primary" text-primary>
+                <small *ngIf="invoice.type==='residential'">
+                  {{ invoice.date | amDateFormat:'MMMM/YYYY'}}
+                </small>
+                <small *ngIf="invoice.type === 'normal'">
+                  {{'literals.invoice' | trans }} # {{ invoice.number }}
+                </small>
+                <small *ngIf="invoice.type === 'normal'">
+                  <br> {{ 'date.date' | trans }}:{{ invoice.date | amCalendar }}
+                </small>
 
-            </ion-card-title>
-          </ion-card-header>
-          <ion-card-content>
+              </ion-card-title>
+            </ion-card-header>
+            <!-- <ion-card-content> -->
             <p item-right [color]="invoice.status == 'paid'?'success':'danger'" ion-text text-center>
-              {{ invoice.value | currency:'COP':true:'1.2-2' }}
+              {{ invoice.value | currency:'COP':'symbol-narrow':'1.2-2' }}
               <small *ngIf="invoice.partially_paid">
-                <br> {{'literals.partially paid' | trans }}: ({{ this.invoice.partially_paid | currency: 'COP':true:'1.2-2' }})
+                <br> {{'literals.partially paid' | trans }}: ({{ this.invoice.partially_paid | currency:'COP':'symbol-narrow':'1.2-2'
+                }})
               </small>
             </p>
             <ion-item>
               <b>{{'literals.status' | trans }}:</b>
               <span>
                 {{'literals.'+invoice.status | trans}}
+                <span color="secondary" ion-text *ngIf="invoice.status!=='paid' && invoice.status!=='cancelled' && invoice.in_discount">
+                  ({{'literals.in discount' | trans }})
+                </span>
+                <span color="danger" ion-text *ngIf="invoice.status!=='paid' && invoice.status!=='cancelled' && invoice.in_interest">
+                  ({{ 'literals.in interest' | trans }})"
+                </span>
               </span>
             </ion-item>
             <ion-grid>
@@ -79,50 +88,97 @@
                 </ion-col>
               </ion-row>
             </ion-grid>
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-  <ion-list *ngIf="view=='list'">
-    <button ion-item *ngFor="let invoice of toShow" (click)="openMenu(invoice)">
-      <h2 *ngIf="invoice.type==='residential'">
-        {{ invoice.date | amDateFormat:'MMMM/YYYY'}}
-      </h2>
-      <h2 *ngIf="invoice.type === 'normal'">
-        {{'literals.invoice' | trans }} # {{ invoice.number }}
-      </h2>
-      <p *ngIf="invoice.type === 'normal'">
-        {{'crud.date' | trans }}:{{ invoice.date | amCalendar }}
-      </p>
-      <p ion-text [color]="invoice.status == 'paid' ? 'secondary' :invoice.status == 'unpaid' ? 'danger':'dark'">{{'literals.status' | trans }}:</p>
-      <span>
-        {{'literals.' + invoice.status | trans}}
-      </span>
-      <p item-right [color]="invoice.status == 'paid'?'success':'danger'" ion-text text-center>
-        {{ invoice.value | currency:'COP':'symbol-narrow':'1.2-2' }}
-        <small *ngIf="invoice.partially_paid">
-          <br> {{'literals.partially paid' | trans }}: ({{ this.invoice.partially_paid | currency: 'COP':true:'1.2-2' }})
-        </small>
+            <!-- </ion-card-content> -->
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <ion-list *ngIf="view=='list'">
+      <button ion-item *ngFor="let invoice of toShow" (click)="openMenu(invoice)">
+        <h2 *ngIf="invoice.type==='residential'">
+          {{ invoice.date | amDateFormat:'MMMM/YYYY'}}
+        </h2>
+        <h2 *ngIf="invoice.type === 'normal'">
+          {{'literals.invoice' | trans }} # {{ invoice.number }}
+        </h2>
+        <p *ngIf="invoice.type === 'normal'">
+          {{'crud.date' | trans }}:{{ invoice.date | amCalendar }}
+        </p>
+        <p ion-text [color]="invoice.status == 'paid' ? 'secondary' :invoice.status == 'unpaid' ? 'danger':'dark'">{{'literals.status' | trans }}:</p>
+        <span>
+          {{ 'literals.' + invoice.status | trans }}
+          <span color="secondary" ion-text *ngIf="invoice.status!=='paid' && invoice.status!=='cancelled' && invoice.in_discount">
+            ({{'literals.in discount' | trans }})
+          </span>
+          <span color="danger" ion-text *ngIf="invoice.status!=='paid' && invoice.status!=='cancelled' && invoice.in_interest">
+            ({{ 'literals.in interest' | trans }})"
+          </span>
 
-      </p>
-    </button>
-  </ion-list>
+        </span>
+        <p item-right [color]="invoice.status == 'paid'?'success':'danger'" ion-text text-center>
+          {{ invoice.total | currency:'COP':'symbol-narrow':'1.2-2' }}
+          <small *ngIf="invoice.partially_paid">
+            <br> {{'literals.partially paid' | trans }}: ({{ this.invoice.partially_paid | currency: 'COP':'symbol-narrow':'1.2-2'
+            }})
+          </small>
+
+        </p>
+      </button>
+    </ion-list>
+  </div>
+  <div *ngIf="!mobile">
+    <ngx-datatable text-capitalize class="material fullscreen" [columnMode]="'force'" [headerHeight]="50" [rowHeight]="'auto'"
+      [rows]="rows" [columns]="columns">
+
+      <ngx-datatable-column prop="number" [name]="'literals.#' | trans"></ngx-datatable-column>
+
+      <ngx-datatable-column prop="date" [name]="'literals.date' | trans">
+        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+          {{ value | amDateFormat: 'MMMM D YYYY' }}
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column prop="type" [name]="'literals.type' | trans"></ngx-datatable-column>
+
+      <ngx-datatable-column prop="status" [name]="'literals.status' | trans">
+        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+          <span ion-text [color]="value == 'paid' ? 'secondary' : 'danger'">
+            {{ 'literals.'+value | trans }}
+          </span>
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column prop="total" [name]="'literals.total' | trans">
+        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+          {{ value | currency:'COP':'symbol-narrow':'1.2-2' }}
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column prop="actions" [name]="'literals.actions' | trans">
+        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+          <button ion-button clear icon-only (click)="openMenu(row.invoice)" color="dark" small>
+            <ion-icon name="more"></ion-icon>
+          </button>
+        </ng-template>
+      </ngx-datatable-column>
+    </ngx-datatable>
+  </div>
 </ion-content>
 
 <ion-footer>
   <ion-toolbar>
     <ion-grid>
       <ion-row>
-        <ion-col align-self-center>
-          <b>{{'literals.debt' | trans}}:</b>
-          <span>{{ api.residence?.debt | currency:'COP':'symbol-narrow':'1.2-2' }} </span>
-        </ion-col>
         <ion-col *ngIf="api.modules?.external_link_invoices" align-self-center>
-          <a block ion-button small clear [href]="api.modules.external_link_invoices" target="_system" icon-end>
+          <a block ion-button small [href]="api.modules.external_link_invoices" target="_system" icon-end>
             {{ '__.Pague Aquí' | trans }}
             <ion-icon name="link" small></ion-icon>
           </a>
+        </ion-col>
+
+        <ion-col text-right align-self-center>
+          <b>{{'literals.debt' | trans}}:</b>
+          <span>{{ api.residence?.debt | currency:'COP':'symbol-narrow':'1.2-2' }} </span>
         </ion-col>
       </ion-row>
     </ion-grid>

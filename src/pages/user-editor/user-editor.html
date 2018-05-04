@@ -1,0 +1,51 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{'crud.add' | trans }} {{'literals.user' | trans}}</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="close()" icon-only clear>
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-list>
+    <ion-item>
+      <ion-label floating>{{'literals.name' | trans}}</ion-label>
+      <ion-input [(ngModel)]="user.name" type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>{{'literals.email' | trans}}</ion-label>
+      <ion-input [(ngModel)]="user.email" type="email"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>{{'literals.password' | trans}}</ion-label>
+      <ion-input [(ngModel)]="user.password" type="password"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>{{'literals.document' | trans}}</ion-label>
+      <ion-input [(ngModel)]="user.document" type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>{{'literals.relationship' | trans}}</ion-label>
+      <ion-input [(ngModel)]="user.relationship" type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>{{'literals.sex' | trans}}</ion-label>
+      <ion-select [(ngModel)]="user.sex">
+        <ion-option value="male">{{'literals.male' | trans}}</ion-option>
+        <ion-option value="female">{{'literals.female' | trans}}</ion-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+</ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <button ion-button block color="secondary" (click)="save()" [disabled]="!canSave() || loading">
+      {{'crud.save' | trans }}
+    </button>
+  </ion-toolbar>
+</ion-footer>

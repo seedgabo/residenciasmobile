@@ -1,0 +1,58 @@
+<ion-grid no-padding no-margin>
+  <ion-row responsive-sm>
+
+    <ion-col col-12 col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6>
+      <ion-card>
+        <ion-card-header text-center>
+          <h2 ion-text color="primary">
+            {{_survey?.question}}
+          </h2>
+          <p text-center>
+            <b>
+              {{'__.Votos totales:' | trans}}
+            </b>
+            <span>
+              {{ total() }}
+            </span>
+          </p>
+        </ion-card-header>
+        <ion-card-content text-center>
+          <canvas id="surveyChart" style="height:400px;margin:0 auto;"></canvas>
+        </ion-card-content>
+      </ion-card>
+
+      <p text-center text-capitalize *ngIf="vote">
+        <b>{{'literals.your_vote' | trans }}:</b>
+        <span> {{ vote.response }} </span>
+      </p>
+
+      <button [disabled]="survey?.type==='owners' && api.residence.owner_id != api.user.id" *ngIf="!vote" ion-button block color="secondary"
+        large (click)="setVote()" icon-left>
+        <ion-icon name="thumbs-up"></ion-icon>
+        {{'literals.vote' | trans }}
+      </button>
+      <ion-note *ngIf="survey?.type==='owners' && api.residence.owner_id != api.user.id">
+        {{'__.solo propietarios' | trans }}
+      </ion-note>
+
+    </ion-col>
+
+    <ion-col col-12 col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6>
+      <ion-card *ngIf="labels.length > 0">
+        <ion-card-header color="light" text-center>
+          <h2>
+            {{'__.summary' | trans }} {{'literals.votes' | trans}}
+          </h2>
+        </ion-card-header>
+        <ion-list *ngFor="let label of labels; let i = index">
+          <ion-item>
+            <h2> {{label}} </h2>
+            <b item-right text-right> {{ data[i]}} </b>
+          </ion-item>
+        </ion-list>
+      </ion-card>
+
+    </ion-col>
+
+  </ion-row>
+</ion-grid>

@@ -8,7 +8,7 @@ import { ViewController } from 'ionic-angular/navigation/view-controller';
   templateUrl: 'ticket-editor.html',
 })
 export class TicketEditorPage {
-  ticket:any = {
+  ticket: any = {
     subject: "",
     text: "",
     status: "open",
@@ -22,13 +22,16 @@ export class TicketEditorPage {
     "rejected"
   ]
   loading = false
-  constructor(public navCtrl: NavController, public navParams: NavParams,public viewctrl:ViewController, public api:Api) {
-    if(navParams.get('ticket')){
+  file = null
+  file_name = ""
+  constructor(public navCtrl: NavController, public navParams: NavParams, public viewctrl: ViewController, public api: Api) {
+    if (navParams.get('ticket')) {
       this.ticket = navParams.get('ticket')
     }
   }
 
   ionViewDidLoad() {
+    console.log(this.ticket)
   }
 
   canSave() {
@@ -39,15 +42,27 @@ export class TicketEditorPage {
   save() {
     var promise: Promise<any>;
     this.loading = true;
+    var data = {
+      status: this.ticket.status,
+      text: this.ticket.text,
+      subject: this.ticket.subject,
+      user_id: this.ticket.user_id,
+      residence_id: this.ticket.residence_id,
+    }
     if (this.ticket.id) {
-      promise = this.api.put('tickets/' + this.ticket.id, this.ticket);
+      promise = this.api.put('tickets/' + this.ticket.id, data);
     } else {
-      promise = this.api.post('tickets', this.ticket);
+      promise = this.api.post('tickets', data);
+    }
+    if (this.file) {
+      promise.then((data) => {
+        this.uploadFile(data.id)
+      })
     }
     promise.then((data) => {
-      this.ticket = data;
       this.loading = false;
-      this.viewctrl.dismiss({ticket:data});
+      this.viewctrl.dismiss({ ticket: data });
+      this.ticket.id = data.id;
     })
       .catch((err) => {
         this.loading = false;
@@ -58,6 +73,62 @@ export class TicketEditorPage {
 
   dismiss() {
     this.viewctrl.dismiss();
+  }
+
+  askFile() {
+    var filer: any = document.querySelector("#input-file-ticket")
+    filer.click();
+  }
+
+  readFile(event) {
+    try {
+      var reader: any = new FileReader();
+      reader.readAsDataURL(event.target.files[0])
+      if (event.target.files[0].size / 1024 / 1024 > 5) {
+        return this.errorFile(event.target.files[0].size)
+      }
+      this.file = event.target.files[0];
+      this.file_name = event.target.files[0].name
+    } catch (error) {
+      this.file = null
+      console.error(error)
+    }
+  }
+
+  errorFile(size) {
+    this.api.toast.create({
+      message: this.api.trans('__.los archivos deben sen inferior a 5MB, (' + size / 1024 / 1024 + " MB)"),
+      duration: 4000
+    }).present()
+  }
+
+  uploadFile(id) {
+    var formData = new FormData();
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', this.api.url + "api/files/upload/ticket/" + id, true);
+    formData.append('file', this.file, this.file_name);
+
+    var toast = this.api.toast.create({
+      message: this.api.trans("__.uploading file"),
+      position: 'top',
+    })
+    toast.present()
+    xhr.onload = () => {
+      if (xhr.status === 200) {
+        toast.dismiss().then(() => {
+          this.api.toast.create({
+            message: this.api.trans("literals.file") + " " + this.api.trans("crud.updated"),
+            duration: 1500,
+            showCloseButton: true,
+          }).present();
+        });
+      } else {
+        toast.dismiss()
+        this.api.Error({ status: xhr.status })
+      }
+    };
+    xhr.setRequestHeader("Auth-Token", this.api.user.token)
+    xhr.send(formData)
   }
 
 }

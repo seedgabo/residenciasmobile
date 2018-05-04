@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
-import { DomSanitizer } from '@angular/platform-browser';
+import { NavController, NavParams, Platform } from 'ionic-angular';
 import { Api } from "../../providers/api";
-import { Transfer, TransferObject } from "@ionic-native/transfer";
+import { FileTransfer, FileTransferObject } from "@ionic-native/file-transfer";
 import { File } from "@ionic-native/file";
 import { FileOpener } from "@ionic-native/file-opener";
 import { IonicPage } from "ionic-angular";
@@ -16,7 +15,7 @@ export class DocumentsPage {
   documents = [];
   selected = null;
   query = "";
-  constructor(public navCtrl: NavController, public navParams: NavParams, public api: Api, public sanitizer: DomSanitizer, public file: File, public transfer: Transfer, public fileOpener: FileOpener) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public api: Api, public file: File, public transfer: FileTransfer, public fileOpener: FileOpener, public platform: Platform) {
   }
 
   ionViewDidLoad() {
@@ -34,21 +33,31 @@ export class DocumentsPage {
   }
 
   download(document) {
-    var transfer: TransferObject = this.transfer.create();
-    var url = this.api.url + "api/document/" + document.id;
-    transfer.download(url, this.file.dataDirectory + 'document.pdf', true, {
-      headers: {
-        "Auth-Token": this.api.user.token
-      }
-    })
-      .then((entry) => {
-        console.log(entry)
-        this._openFile(entry.toURL(), document.type)
+    if (this.platform.is('android') || this.platform.is('ios')) {
+      var transfer: FileTransferObject = this.transfer.create();
+      var url = this.api.url + "api/document/" + document.id;
+      transfer.download(url, this.file.dataDirectory + 'document.pdf', true, {
+        headers: {
+          "Auth-Token": this.api.user.token
+        }
       })
-      .catch((err) => {
-        console.error(err)
-      })
+        .then((entry) => {
+          console.log(entry)
+          this._openFile(entry.toURL(), document.type)
+        })
+        .catch((err) => {
+          console.error(err)
+        })
+    } else {
+      return this.downloadBrowser(document)
+    }
   }
+
+  downloadBrowser(document) {
+    var url = this.api.url + "api/document/" + document.id + "?token=" + this.api.user.token;
+    window.open(url, "document");
+  }
+
   documentsFilter() {
     if (this.query === '') {
       return this.documents;

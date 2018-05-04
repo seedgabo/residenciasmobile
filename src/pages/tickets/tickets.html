@@ -1,51 +1,59 @@
 <ion-header>
   <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
     <ion-title>{{'literals.tickets' | trans }}</ion-title>
+    <!-- <ion-buttons end>
+      <button ion-button icon-only (click)="more($event)">
+        <ion-icon name="more"></ion-icon>
+      </button>
+    </ion-buttons> -->
   </ion-navbar>
 </ion-header>
 
 
-<ion-content>
+<ion-content class="container">
   <ion-refresher (ionRefresh)="getTickets($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
-
-  <ion-list [virtualScroll]="tickets">
-    <ion-item-sliding *virtualItem="let ticket">
-      <button ion-item (click)="viewTicket(ticket)" (press)="actions(ticket)" class="ticket-item" [ngClass]="ticket.status">
-        <span item-left class="indicator"></span>
-        <h2>{{ticket.subject}}</h2>
-        <ion-badge ion-text [ngClass]="ticket.status">{{'literals.'+ ticket.status | trans }}</ion-badge>
-        <p>
-          <b>
-            {{ '__.updated_at' | trans }}
-          </b> {{ticket.updated_at | amCalendar }}</p>
-        <span item-right>
-          <ion-badge color="favorite">
-            {{ticket.comments_count}}
-          </ion-badge>
-        </span>
-      </button>
-      <ion-item-options side="right">
-        <button ion-button color="primary" (click)="editTicket(ticket)">
-          <ion-icon name="create"></ion-icon>
-          {{'crud.edit' | trans}}
+  <ion-card>
+    <ion-list [virtualScroll]="tickets" approxItemHeight="88px">
+      <ion-item-sliding *virtualItem="let ticket">
+        <button ion-item (click)="viewTicket(ticket)" (press)="actions(ticket)" class="ticket-item" [ngClass]="ticket.status">
+          <!-- <span item-left class="indicator"></span> -->
+          <h2>{{ticket.subject}}</h2>
+          <ion-badge ion-text color="light" [ngClass]="ticket.status">{{'literals.'+ ticket.status | trans }}</ion-badge>
+          <p>
+            <b>
+              {{ '__.updated_at' | trans }}
+            </b> {{ticket.updated_at | amCalendar }}</p>
+          <span item-right>
+            <ion-badge color="favorite">
+              {{ticket.comments_count}}
+            </ion-badge>
+          </span>
         </button>
-        <button ion-button color="light" (click)="viewTicket(ticket)">
-          <ion-icon name="eye"></ion-icon>
-          {{'literals.view_resource' | trans}}
-        </button>
-      </ion-item-options>
-    </ion-item-sliding>
-  </ion-list>
+        <ion-item-options side="right">
+          <button ion-button color="primary" (click)="editTicket(ticket)">
+            <ion-icon name="create"></ion-icon>
+            {{'crud.edit' | trans}}
+          </button>
+          <button ion-button color="light" (click)="viewTicket(ticket)">
+            <ion-icon name="eye"></ion-icon>
+            {{'literals.view_resource' | trans}}
+          </button>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
+    <div *ngIf="tickets  && tickets.length == 0 && !loading" text-center>
+      <img src="assets/logo-happy.png" alt="Good" style="margin: 0 auto; height: 200px;width:50%">
+      <h2 ion-text color="secondary">
+        {{'__.no hay tickets' | trans }}
+      </h2>
+    </div>
 
-  <div *ngIf="tickets  && tickets.length == 0 && !loading" text-center>
-    <img src="assets/logo-happy.png" alt="Good" style="margin: 0 auto; height: 200px;width:50%">
-    <h2 ion-text color="secondary">
-      {{'__.no hay tickets' | trans }}
-    </h2>
-  </div>
-
+  </ion-card>
   <ion-fab bottom right>
     <button ion-fab color="favorite" (click)="addTicket()">
       <ion-icon name="add"></ion-icon>

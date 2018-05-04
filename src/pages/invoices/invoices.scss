@@ -1,3 +1,6 @@
+@import '../../../@swimlane/ngx-datatable/release/index';
+@import '../../../@swimlane/ngx-datatable/release/themes/material';
+@import '../../../@swimlane/ngx-datatable/release/assets/icons';
 page-invoices {
   .invoice-card {
     &.unpaid {
@@ -11,10 +14,33 @@ page-invoices {
       color: rgb(127, 127, 127)
     }
   }
+  .ngx-datatable.material {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  }
+  .datatable-header-cell {
+    font-size: 14px !important;
+    color: black !important;
+    font-weight: bold !important;
+    text-align: center !important;
+  }
+  .datatable-body-cell {
+    font-size: 12px !important;
+    text-align: center !important;
+  }
+  .datatable-icon-up:before {
+    content: "↑" !important;
+    font-size: 18px;
+  }
+  .datatable-icon-down:before {
+    content: "↓" !important;
+    font-size: 18px;
+  }
+}
+.popover-payment{
+  .popover-content {
+    width: 90% !important;
+    left: 5% !important;
+    top: 20% !important;
+  }
 }
 
-.popover-content {
-  width: 90% !important;
-  left: 5% !important;
-  top: 20% !important;
-}

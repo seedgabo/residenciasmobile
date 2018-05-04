@@ -8,9 +8,8 @@
 </ion-header>
 
 
-<ion-content>
-  <div text-center>
-    <ion-spinner color="primary" large *ngIf="loading"></ion-spinner>
+<ion-content class="container">
+  <div *ngIf="loading" class="skeleton">
   </div>
   <div *ngIf="tree">
     <tree-root [nodes]="tree">

@@ -46,26 +46,27 @@ export class ZoneReservationPage {
       var start = this.date.clone().startOf('day').add(element[0].split(':')[0], 'hours').add(element[0].split(':')[1], 'minutes')
 
       var end = this.date.clone().startOf('day').add(element[1].split(':')[0], 'hours').add(element[1].split(':')[1], 'minutes')
-
-      var ref = {
-        available: this.zone.limit_user == 0 ? Number.MAX_SAFE_INTEGER : this.zone.limit_user,
-        limit_user: this.zone.limit_user,
-        start: start,
-        end: end,
-        ref: start.format("HH:mm")
+      if (start > moment() && end > moment()) {
+        var ref = {
+          available: (this.zone.limit_user == 0 || this.zone.limit_user == null) ? Number.MAX_SAFE_INTEGER : this.zone.limit_user,
+          limit_user: this.zone.limit_user,
+          start: start,
+          end: end,
+          ref: start.local().format("HH:mm")
+        }
+        this.options[this.options.length] = ref
+        this.collection["" + start.local().clone().format("HH:mm")] = ref
       }
-      this.options[this.options.length] = ref
-      this.collection["" + start.clone().format("HH:mm")] = ref
     });
   }
 
   getReservations() {
-    this.api.get(`reservations?whereNot[status]=${'cancelled'}&whereNot[status]=${'rejected'}&${this.zone.id}&whereDateBetween[start]=${this.date.format("YYYY-MM-DD")},${this.date.clone().add(1, 'd').format("YYYY-MM-DD")}`)
+    this.api.get(`reservations?where[zone_id]=${this.zone.id}&whereNotIn[status]=cancelled,rejected&whereDateBetween[start]=${this.date.format("YYYY-MM-DD")},${this.date.clone().add(1, 'd').format("YYYY-MM-DD")}`)
       .then((data: any) => {
         this.reservations = data;
         console.log(data);
         data.forEach(reservation => {
-          var ref = moment.utc(reservation.start).format("HH:mm")
+          var ref = moment(reservation.start).local().format("HH:mm")
           console.log(this.collection[ref])
           this.collection[ref].available -= reservation.quotas;
           if (reservation.user_id === this.api.user.id) {
@@ -82,10 +83,10 @@ export class ZoneReservationPage {
     if (interval.reserved) {
       return this.viewReservation(interval)
     }
-    if (!this.canReservate(interval)) {
+    if (interval.available <= 0 || !this.canReservate(interval)) {
       return this.alert.create({
         title: this.api.trans('literals.reservation') + " " + this.api.trans('literals.cancelled'),
-        message: this.api.trans('__.No puedes reservar en este intervalo por que tu o alguien de tu :residence ya reservo en un horario cercano', { residence: this.api.trans('literals.residence') }),
+        message: this.api.trans('__.No puedes reservar en este intervalo'),
         buttons: ["OK"]
       }).present();
     }
@@ -125,10 +126,10 @@ export class ZoneReservationPage {
     var reservable = true;
     this.reservations.forEach((reserv) => {
       if (reserv.user_id == this.api.user.id || reserv.residence_id == this.api.user.residence_id) {
-        if (moment.utc(reserv.start).format('HH:mm') == moment.utc(interval.start).format('HH:mm')
-          || moment.utc(reserv.start).format('HH:mm') == moment.utc(interval.end).format('HH:mm')
-          || moment.utc(reserv.end).format('HH:mm') == moment.utc(interval.start).format('HH:mm')
-          || moment.utc(reserv.end).format('HH:mm') == moment.utc(interval.end).format('HH:mm')) {
+        if (moment.utc(reserv.start).local().format('HH:mm') == moment.utc(interval.start).local().format('HH:mm')
+          || moment.utc(reserv.start).local().format('HH:mm') == moment.utc(interval.end).local().format('HH:mm')
+          || moment.utc(reserv.end).local().format('HH:mm') == moment.utc(interval.start).local().format('HH:mm')
+          || moment.utc(reserv.end).local().format('HH:mm') == moment.utc(interval.end).local().format('HH:mm')) {
           reservable = false;
         }
       }
@@ -137,25 +138,83 @@ export class ZoneReservationPage {
   }
 
   viewReservation(interval) {
+    var buttons: any = [
+      {
+        text: "OK"
+      }
+    ]
+    if (this.canCancel(interval.reservation)) {
+      buttons.push({
+        text: this.api.trans("crud.cancel") + " " + this.api.trans("literals.reservation"),
+        role: "destructive",
+        handler: () => {
+          console.log(interval.reservation)
+          this.cancelReservation(interval.reservation)
+            .then(() => {
+              this.ionViewDidLoad()
+            })
+        }
+
+      })
+    }
     var alert = this.alert.create({
       title: this.api.trans('literals.reservation') + " " + this.zone.name,
       subTitle: this.api.trans('literals.quotas') + ": " + interval.reservation.quotas,
       message: this.api.trans('literals.user') + ": " + this.api.user.name,
-      buttons: [
-        {
-          text: "OK"
-        },
-        {
-          text: this.api.trans("crud.cancel") + " " + this.api.trans("literals.reservation"),
-          role: "destructive",
-          handler: () => {
-            this.alert.create({ message: "no disponible aun" }).present()
-          }
-
-        }
-      ]
+      buttons: buttons
     })
     alert.present();
+  }
+
+  canCancel(reserv) {
+    var hours = this.api.settings.hours_to_cancel_reservation
+    if (!hours)
+      hours = 24;
+    if (reserv.status == 'cancelled')
+      return false;
+    return moment(reserv.start).diff(moment(), "hours") >= hours
+  }
+
+  cancelReservation(reservation) {
+    return new Promise((resolve, reject) => {
+      this.api.alert.create({
+        title: this.api.trans('__.Nota de cancelación'),
+        inputs: [
+          {
+            label: this.api.trans('literals.notes'),
+            name: 'note',
+            placeholder: this.api.trans('literals.notes')
+          }
+        ],
+        buttons: [
+          {
+            text: this.api.trans('literals.send'),
+            handler: (data) => {
+              var promise = this.api.put(`reservations/${reservation.id}`, {
+                status: 'cancelled',
+                'note': data.note
+              })
+              promise.then((resp) => {
+                reservation.status = 'cancelled';
+                reservation.note = data.note;
+                this.sendPush(this.api.trans('literals.reservation') + " " + this.api.trans('literals.cancelled') + ": " + data.note, reservation)
+                resolve(resp);
+              }).catch((e) => {
+                reject(e)
+                this.api.Error(e);
+              })
+            }
+          }, {
+            text: this.api.trans('crud.cancel'),
+            handler: () => {
+              reject()
+            }
+          }
+        ]
+      })
+        .present();
+
+    })
   }
 
   postReservation(interval, quotas) {
@@ -164,14 +223,22 @@ export class ZoneReservationPage {
         quotas: quotas,
         zone_id: this.zone.id,
         user_id: this.api.user.id,
-        start: interval.start.format("YYYY-MM-DD HH:mm"),
-        end: interval.end.format("YYYY-MM-DD HH:mm"),
+        start: interval.start.clone().local().format("YYYY-MM-DD HH:mm"),
+        end: interval.end.clone().local().format("YYYY-MM-DD HH:mm"),
       })
       .then((data) => {
         console.log(data);
         this.ionViewDidLoad();
       })
       .catch(console.error)
+  }
+
+  sendPush(message, reservation) {
+    var user_id = reservation.user_id
+    this.api.post('push/' + user_id + '/notification', { message: message }).then(() => { })
+      .catch((error) => {
+        console.error(error);
+      })
   }
 
 }

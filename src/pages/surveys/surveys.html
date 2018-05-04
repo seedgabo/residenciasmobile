@@ -1,18 +1,29 @@
 <ion-header>
-    <ion-navbar xcolor="primary">
-        <button ion-button menuToggle>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-        <ion-title>{{'literals.surveys' | trans }}</ion-title>
-    </ion-navbar>
+    <ion-title>{{'literals.surveys' | trans }}</ion-title>
+  </ion-navbar>
 </ion-header>
 
 
 <ion-content>
-    <ion-list>
-        <button (click)="gotoSurvey(survey)" ion-item *ngFor="let survey of surveys">
-            <h4 text-center text-primary>{{survey.title}}</h4>
-            <p>{{survey.question}}</p>
-        </button>
-    </ion-list>
+  <ion-grid>
+    <ion-row responsive-sm>
+      <ion-col col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 col-12>
+        <ion-card>
+          <ion-list>
+            <button (click)="gotoSurvey(survey)" ion-item *ngFor="let survey of surveys">
+              <h4 text-center text-primary>{{survey.title}}</h4>
+              <p>{{survey.question}}</p>
+            </button>
+          </ion-list>
+        </ion-card>
+      </ion-col>
+      <ion-col col-xs-12 col-sm-12 col-md-6 col-lg-8 col-xl-8 col-12 *ngIf="!mobile">
+        <survey *ngIf="survey" [survey]="survey"></survey>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

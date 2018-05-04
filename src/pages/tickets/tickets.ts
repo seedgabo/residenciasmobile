@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angu
 import { Api } from '../../providers/api';
 import { ActionSheetController } from 'ionic-angular/components/action-sheet/action-sheet-controller';
 import { ModalController } from 'ionic-angular/components/modal/modal-controller';
+import { PopoverMenu } from '../popover/popover-menu';
 @IonicPage({
   defaultHistory: ['HomePage']
 })
@@ -15,10 +16,10 @@ export class TicketsPage {
   tickets = [];
   query = "";
   loading = false;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public api: Api, public alert: AlertController, public actionsheet: ActionSheetController, public modal: ModalController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public api: Api, public alert: AlertController, public actionsheet: ActionSheetController, public modal: ModalController, public popovermenu: PopoverMenu) {
   }
 
-  ionViewDidLoad() {
+  ionViewDidEnter() {
     this.api.ready.then(() => {
       this.getTickets();
     });
@@ -44,6 +45,12 @@ export class TicketsPage {
     if (this.query == "") {
       this.tickets = this._tickets.data;
     }
+  }
+
+  more(Event) {
+    // this.popovermenu.create({
+    //   title: 'test'
+    // }).present({ ev: Event });
   }
 
   actions(ticket) {
@@ -78,7 +85,7 @@ export class TicketsPage {
     modal.present();
     modal.onWillDismiss((data) => {
       if (data && data.ticket) {
-        this._tickets.push(data.ticket);
+        this._tickets.data.push(data.ticket);
         this.filter();
       }
     })

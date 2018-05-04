@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-navbar *ngIf="selecteds.length  === 0" xcolor="primary">
+  <ion-navbar *ngIf="selecteds.length  === 0" color="primary">
     <button ion-button icon-only menuToggle="">
       <ion-icon name="menu"></ion-icon>
     </button>
@@ -13,7 +13,7 @@
 </ion-header>
 <ion-content>
   <ion-searchbar [(ngModel)]="query" debounce="500" (ionInput)="filter()"></ion-searchbar>
-  <ion-list>
+  <ion-list [ngClass]="{'skeleton': loading}">
     <input type="file" accept="image/*" style="display:none;" id="input-file" (change)="readFile($event)">
     <button ion-item *ngFor="let visitor of visitors" (tap)="selecteds.length>0? toggleSelect(visitor) :actions(visitor)" (press)="toggleSelect(visitor);">
       <ion-thumbnail item-left (click)="askFile(visitor);$event.stopPropagation()" *ngIf="!visitor.selected">

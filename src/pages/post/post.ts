@@ -1,28 +1,48 @@
 import { Api } from './../../providers/api';
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-@IonicPage()
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, Gesture } from 'ionic-angular';
+@IonicPage({
+  segment: 'post/:postId',
+})
 @Component({
   selector: 'page-post',
   templateUrl: 'post.html',
 })
 export class PostPage {
   post: any = {};
-  tap = '100%';
+  tap = 100;
+  private gesture: Gesture;
+  ready
+  @ViewChild('image') element;
   constructor(public navCtrl: NavController, public navParams: NavParams, public api: Api) {
-    this.post = navParams.get('post');
+    if (navParams.get('post')) {
+      this.post = navParams.get('post');
+      this.ready = Promise.resolve(this.post)
+    } else {
+      var postId = navParams.get('postId')
+      this.post.id = postId
+      this.ready = this.getPost()
+    }
+
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad PostPage');
+    this.ready.then(() => {
+      this.gesture = new Gesture(this.element.nativeElement);
+      //listen for the gesture
+      this.gesture.listen();
+      //turn on listening for pinch or rotate events
+      this.gesture.on('pinch', e => this.pinchEvent(e));
+    })
   }
 
   getPost() {
-    this.api.get('posts/' + this.post + "?with[]=user&wit[]=image")
-      .then((data) => {
-        this.post = data;
-      })
+    var promise = this.api.get('posts/' + this.post.id + "?with[]=user&wit[]=image")
+    promise.then((data) => {
+      this.post = data;
+    })
       .catch(this.api.Error);
+    return promise
   }
 
   createPost() {
@@ -40,18 +60,33 @@ export class PostPage {
       });
   }
 
-  tapEvent(e) {
-    if (this.tap == '500px') {
-      this.tap = '600px';
+  pinchEvent(e) {
+    if (this.tap == 100) {
+      this.tap = 500;
     }
-    else if (this.tap == '600px') {
-      this.tap = '700px';
-    }
-    else if (this.tap == '700px') {
-      this.tap = '100%';
+
+    if (e.additionalEvent == "pinchout") {
+      if (this.tap < 950)
+        this.tap += 20;
     }
     else {
-      this.tap = '500px';
+      if (this.tap > 500)
+        this.tap -= 20;
+    }
+  }
+
+  tapEvent(e) {
+    if (this.tap == 500) {
+      this.tap = 600;
+    }
+    else if (this.tap == 600) {
+      this.tap = 700;
+    }
+    else if (this.tap == 700) {
+      this.tap = 100;
+    }
+    else {
+      this.tap = 500;
     }
   }
 

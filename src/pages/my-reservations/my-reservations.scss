@@ -1,3 +1,12 @@
 page-my-reservations {
-
+  .approved{
+    background-color: color($colors,'secondary');
+  }
+  .waiting{
+    background-color: color($colors,'warning');
+    color:black;
+  }
+  .cancelled{
+    background-color: color($colors,'danger');
+  }
 }

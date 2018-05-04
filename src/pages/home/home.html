@@ -7,111 +7,132 @@
       <img src="./assets/logo-completo.png" style="height:50px" *ngIf="!api.url">
       <img [src]="api.url + 'img/logo.png'" style="height:50px" *ngIf="api.url">
     </ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="OpenHelp($event)">
+        <ion-icon name="help"></ion-icon>
+      </button>
+      <button ion-button icon-only (click)="presentPopover($event)">
+        <ion-icon name="more"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
 
   <div *ngIf="sliders && sliders.length > 0">
-    <ion-slides style="height:200px" pager paginationType="bullets" autoplay="3000" loop="true">
-      <ion-slide *ngFor="let slider of sliders">
+    <ion-slides parallax="true" autoplay="3000" pager loop="true" zoom="true">
+      <ion-slide *ngFor="let slider of sliders" class="custom-slide">
         <img [src]="slider.image.url" [alt]="slider.name" style="height:100%; width:100%">
-
         <h2 style="position:absolute; top:20%; left:12%;" [style.color]="slider.color? slider.color : 'white'">{{slider.name}}</h2>
         <p style="position:absolute; top:35%; left:12%;" [style.color]="slider.color? slider.color : 'white'">{{slider.text}}</p>
-
       </ion-slide>
     </ion-slides>
   </div>
 
-  <ion-card *ngIf="api.residence">
+  <ion-grid>
+    <ion-row wrap responsive-sm>
+      <ion-col push-md-7 push-lg-7 push-xl-7 col-md-5 col-lg-5 col-xl-5>
+        <ion-card *ngIf="api.residence">
 
-    <ion-card-header text-center>
-      {{ api.residence.name }}
-    </ion-card-header>
-    <ion-card-content>
-      <ion-list>
-        <button ion-item (click)="gotoInvoices()">
-          <ion-icon name="stats" item-left></ion-icon>
-          <b>{{ 'literals.status' | trans }}</b>
-          <span item-right>{{ 'literals.' + api.residence.status | trans }}</span>
-        </button>
-        <button ion-item *ngIf="api.residence.owner" (click)="gotoProfile()">
-          <ion-icon name="person" item-left></ion-icon>
-          <b>{{'literals.owner' | trans }}</b>
-          <span item-right> {{ api.residence.owner.name }} </span>
-        </button>
-        <button ion-item (click)="gotoInvoices()">
-          <ion-icon name="cash" item-left></ion-icon>
-          <b>{{'literals.debt' | trans }}</b>
-          <span item-right> {{ api.residence.debt | currency:'COP':'symbol-narrow':'1.2-2' }} </span>
-        </button>
+          <ion-card-header text-center>
+            {{ api.residence.name }}
+          </ion-card-header>
+          <ion-card-content>
+            <ion-list>
+              <button ion-item (click)="gotoInvoices()">
+                <ion-icon name="stats" item-left></ion-icon>
+                <b>{{ 'literals.status' | trans }}</b>
+                <span item-right>{{ 'literals.' + api.residence.status | trans }}</span>
+              </button>
+              <button ion-item *ngIf="api.residence.owner" (click)="gotoProfile()">
+                <ion-icon name="person" item-left></ion-icon>
+                <b>{{'literals.owner' | trans }}</b>
+                <span item-right> {{ api.residence.owner.name }} </span>
+              </button>
+              <button ion-item (click)="gotoInvoices()">
+                <ion-icon name="cash" item-left></ion-icon>
+                <b>{{'literals.debt' | trans }}</b>
+                <span item-right> {{ api.residence.debt | currency:'COP':'symbol-narrow':'1.2-2' }} </span>
+              </button>
 
-        <button *ngIf="api.user && api.modules.correspondences" ion-item (click)="gotoCorrespondences()">
-          <ion-icon name="cube" item-left></ion-icon>
-          <b>{{'literals.correspondences' | trans }}</b>
-          <ion-badge color="favorite" item-right *ngIf="api.user"> {{ correspondences.length }} </ion-badge>
+              <button *ngIf="api.user && api.modules.correspondences" ion-item (click)="gotoCorrespondences()">
+                <ion-icon name="cube" item-left></ion-icon>
+                <b>{{'literals.correspondences' | trans }}</b>
+                <ion-badge color="favorite" item-right *ngIf="api.user"> {{ correspondences.length }} </ion-badge>
 
-        </button>
+              </button>
 
-        <button *ngIf="api.user && api.modules.tickets" ion-item (click)="gotoTickets()">
-          <ion-icon name="filing" item-left></ion-icon>
-          <b>{{'literals.tickets' | trans }}</b>
-          <ion-badge color="primary" item-right *ngIf="api.user"> {{ api.user.tickets_count }} </ion-badge>
-        </button>
-      </ion-list>
-    </ion-card-content>
-  </ion-card>
+              <button *ngIf="api.user && api.modules.tickets" ion-item (click)="gotoTickets()">
+                <ion-icon name="filing" item-left></ion-icon>
+                <b>{{'literals.tickets' | trans }}</b>
+                <ion-badge color="primary" item-right *ngIf="api.user"> {{ api.user.tickets_count }} </ion-badge>
+              </button>
+            </ion-list>
+          </ion-card-content>
+        </ion-card>
 
-  <ion-card *ngIf="nextEvents && nextEvents.length >0">
-    <ion-list>
-      <ion-list-header text-center>
-        <span>
-          {{'__.next events' | trans}}
-        </span>
-      </ion-list-header>
-      <ion-item (click)="gotoCalendar(event)" *ngFor="let event of nextEvents" class="event-list" [ngClass]="[event.type,event.privacity]"
-        [ngStyle]="{ 'border-right' : '8px solid ' + event.color }">
-        <h3>{{event.title}}</h3>
-        <p>
-          {{event.start | amCalendar }} - {{event.end | amCalendar }}
-        </p>
-      </ion-item>
-    </ion-list>
-  </ion-card>
+        <ion-card *ngIf="nextEvents && nextEvents.length >0">
+          <ion-list>
+            <ion-list-header text-center>
+              <span>
+                {{'__.next events' | trans}}
+              </span>
+            </ion-list-header>
+            <ion-item (click)="gotoCalendar(event)" *ngFor="let event of nextEvents" class="event-list" [ngClass]="[event.type,event.privacity]"
+              [ngStyle]="{ 'border-right' : '8px solid ' + event.color }">
+              <h3>{{event.title}}</h3>
+              <p>
+                {{event.start | amCalendar }} - {{event.end | amCalendar }}
+              </p>
+            </ion-item>
+          </ion-list>
+        </ion-card>
+      </ion-col>
 
-  <ion-card>
+      <ion-col pull-md-5 pull-lg-5 pull-xl-5 col-xs-12 col-sm-12 col-md-7 col-lg-7 col-xl-7>
+        <ion-card>
 
-    <ion-list *ngIf="news && news.length > 0">
-      <ion-list-header text-center>
-        <span>
-          {{'literals.posts' | trans}}
-        </span>
-      </ion-list-header>
-      <button ion-item (click)="gotoPost(new)" *ngFor="let new of news">
-        <ion-thumbnail item-left>
-          <img *ngIf="new.image" [src]="new.image.url" alt="">
-        </ion-thumbnail>
-        <h2>
-          {{new.title}}
-        </h2>
-        <div [innerHTML]="new.text" text-justify></div>
-        <p text-right>
-          <span *ngIf="new.user">
-            {{new.user.name}}
-          </span>
-          <br>
-          <small>
-            {{new.created_at | amCalendar}}
-          </small>
-        </p>
+          <ion-list>
+            <ion-list-header text-center>
+              <span>
+                {{'literals.posts' | trans}}
+              </span>
+            </ion-list-header>
+            <div [ngClass]="{'skeleton': loadingNews}">
+              <button ion-item (click)="gotoPost(post)" *ngFor="let post of news">
+                <div text-center *ngIf="post.image">
+                  <img [src]="post.image.url" style="margin: 0 auto; max-width:100%;">
+                </div>
+                <h2>
+                  {{post.title}}
+                </h2>
+                <div [innerHTML]="post.text" text-justify></div>
+                <p text-right>
+                  <span *ngIf="post.user">
+                    {{post.user.name}}
+                  </span>
+                  <br>
+                  <small>
+                    {{post.created_at | amCalendar}}
+                  </small>
+                </p>
 
-      </button>
-      <button ion-button full clear (click)="gotoNews()">
-        {{'literals.view_resource' | trans }} {{'literals.more' | trans }}
-      </button>
-    </ion-list>
+              </button>
+              <button ion-button full clear *ngIf="news.length > 0" (click)="gotoNews()">
+                {{'literals.view_resource' | trans }} {{'literals.more' | trans }}
+              </button>
+            </div>
+          </ion-list>
 
-  </ion-card>
+        </ion-card>
+
+      </ion-col>
+
+
+
+    </ion-row>
+  </ion-grid>
+
 
 </ion-content>

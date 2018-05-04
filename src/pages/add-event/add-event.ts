@@ -12,8 +12,8 @@ import { IonicPage } from "ionic-angular";
 export class AddEventPage {
   newEvent: any = {
     title: "",
-    start: moment.utc().startOf('day').add(1, 'day').format('YYYY-MM-DDTHH:mm:ss'),
-    end: moment.utc().startOf('day').add(2, 'day').format('YYYY-MM-DDTHH:mm:ss'),
+    start: moment.utc().startOf('day').add(1, 'day').local().format('YYYY-MM-DDTHH:mm:ss'),
+    end: moment.utc().startOf('day').add(2, 'day').local().format('YYYY-MM-DDTHH:mm:ss'),
     privacity: 'public',
     type: "no specified",
     zones: [],
