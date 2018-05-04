@@ -3,32 +3,45 @@
 cd ./platforms/browser/www
 
 folder="residencias"
+echo -------------$folder-----------------
 rsync --exclude=assets/header.js -avz --delete . "gabriel@residentesonline.com:htdocs/$folder/web"
 
 folder="residencias2"
+echo -------------$folder-----------------
 rsync --exclude=assets/header.js -avz --delete . "gabriel@residentesonline.com:htdocs/$folder/web"
 
 folder="plazueladetoscan"
+echo -------------$folder-----------------
 rsync --exclude=assets/header.js -avz --delete . "gabriel@residentesonline.com:htdocs/$folder/web"
 
 folder="cretaricaurte"
+echo -------------$folder-----------------
 rsync --exclude=assets/header.js -avz --delete . "gabriel@residentesonline.com:htdocs/$folder/web"
 
 folder="santoriniricaurte"
+echo -------------$folder-----------------
 rsync --exclude=assets/header.js -avz --delete . "gabriel@residentesonline.com:htdocs/$folder/web"
 
 folder="bellasuiza"
+echo -------------$folder-----------------
 rsync --exclude=assets/header.js -avz --delete . "gabriel@residentesonline.com:htdocs/$folder/web"
 
 folder="horizontesdelcastillo"
+echo -------------$folder-----------------
 rsync --exclude=assets/header.js -avz --delete . "gabriel@residentesonline.com:htdocs/$folder/web"
 
 
 
+folder="serrezuela"
+echo -------------$folder-----------------
+rsync --exclude=assets/header.js -avz --delete . "gabriel@residentesonline.com:htdocs/$folder/web"
+
 folder="chestnut"
+echo -------------$folder-----------------
 rsync --exclude=assets/header.js -avz --delete . "gabriel@residentesonline.com:htdocs/$folder/web"
 
 folder="aseinteg"
+echo -------------$folder-----------------
 rsync --exclude=assets/header.js -avz --delete . "gabriel@residentesonline.com:htdocs/$folder/web"
 
 echo "syncronized"
