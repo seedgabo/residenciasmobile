@@ -26,10 +26,14 @@
         <span> {{ vote.response }} </span>
       </p>
 
-      <button *ngIf="!vote" ion-button block color="secondary" large (click)="setVote()" icon-left>
+      <button [disabled]="survey?.type==='owners' && api.residence.owner_id != api.user.id" *ngIf="!vote" ion-button block color="secondary"
+        large (click)="setVote()" icon-left>
         <ion-icon name="thumbs-up"></ion-icon>
         {{'literals.vote' | trans }}
       </button>
+      <ion-note *ngIf="survey?.type==='owners' && api.residence.owner_id != api.user.id">
+        {{'__.solo propietarios' | trans }}
+      </ion-note>
 
     </ion-col>
 
