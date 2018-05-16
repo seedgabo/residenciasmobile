@@ -1,6 +1,6 @@
 import { trigger, style, transition, animate, query, stagger } from "@angular/animations";
 
-import { IonicPage, NavController, NavParams, AlertController, LoadingController, Events, Platform } from "ionic-angular";
+import { IonicPage, NavController, NavParams, AlertController, LoadingController, Events, Platform, ModalController } from "ionic-angular";
 import { Api } from "../../providers/api";
 
 import { Facebook } from "@ionic-native/facebook";
@@ -45,7 +45,8 @@ export class Login {
     public alertCtrl: AlertController,
     public loadingCtrl: LoadingController,
     public events: Events,
-    public socialAuthService: AuthService
+    public socialAuthService: AuthService,
+    public modal: ModalController
   ) {
     if (window.url) {
       this.api.url = window.url;
@@ -321,6 +322,21 @@ export class Login {
 
   goTo() {
     this.events.publish("login", {});
-    this.navCtrl.setRoot("HomePage");
+    this.navCtrl.setRoot("HomePage").then(() => {
+      if (!this.api.user.first_login) {
+        this.modal
+          .create(
+            "PasswordChangePage",
+            {
+              user: this.api.user
+            },
+            {
+              enableBackdropDismiss: false,
+              showBackdrop: true
+            }
+          )
+          .present();
+      }
+    });
   }
 }
