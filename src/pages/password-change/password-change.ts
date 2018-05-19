@@ -20,6 +20,10 @@ export class PasswordChangePage {
 
   ionViewDidLoad() {}
 
+  dismiss() {
+    this.viewCtrl.dismiss();
+  }
+
   updatePassword() {
     this.loading = true;
     this.api
