@@ -95,7 +95,8 @@ export class ProfilePage {
         sex: this.profile.sex,
         phone_number: this.profile.phone_number,
         birthday: this.profile.birthday,
-        relationship: this.profile.relationship
+        relationship: this.profile.relationship,
+        language: this.profile.language
       })
       .then((data: any) => {
         this.api.user.name = data.name;
@@ -104,7 +105,15 @@ export class ProfilePage {
         this.api.user.sex = data.sex;
         this.api.user.phone_number = data.phone_number;
         this.api.user.birthday = data.birthday;
+        if (data.language != this.api.user.language) {
+          this.api.user.language = data.language;
+          this.api.getLang();
+          setTimeout(() => {
+            this.navCtrl.setRoot("HomePage");
+          }, 1000);
+        }
         this.api.storage.set("user", this.api.user);
+
         this.toast
           .create({
             message: this.api.trans("literals.user") + " " + this.api.trans("crud.updated"),
