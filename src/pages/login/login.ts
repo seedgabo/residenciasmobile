@@ -339,4 +339,8 @@ export class Login {
       }
     });
   }
+
+  gotoTerms() {
+    this.navCtrl.push("TermsPage");
+  }
 }
