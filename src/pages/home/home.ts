@@ -14,7 +14,8 @@ declare var window: any;
   templateUrl: "home.html"
 })
 export class HomePage {
-  @ViewChild(Slides) slides: Slides;
+  @ViewChild(Slides)
+  slides: Slides;
 
   sliders = [];
   text = "";
@@ -94,9 +95,7 @@ export class HomePage {
         this.api
           .get(`correspondences?where[residence_id]=${this.api.user.residence_id}&where[status]=arrival`)
           .then((data: any) => {
-            console.log(data);
             this.correspondences = data;
-            this.api.user.correspondences = data;
           })
           .catch(console.error);
       }

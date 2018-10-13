@@ -1,30 +1,38 @@
-
-import { Component, ViewChild } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { Component, ViewChild } from "@angular/core";
+import { NavController, NavParams } from "ionic-angular";
 import { Api } from "../../providers/api";
-import { DatePickerDirective } from 'datepicker-ionic2';
+import { DatePickerDirective } from "datepicker-ionic2";
 import { IonicPage } from "ionic-angular";
-import moment from 'moment'
-
+import moment from "moment";
 
 @IonicPage()
 @Component({
-  selector: 'page-reservations',
-  templateUrl: 'reservations.html',
+  selector: "page-reservations",
+  templateUrl: "reservations.html"
 })
 export class ReservationsPage {
-  @ViewChild(DatePickerDirective) datepickerDirective: DatePickerDirective;
+  @ViewChild(DatePickerDirective)
+  datepickerDirective: DatePickerDirective;
   zones = [];
   reservations = [];
   selected;
-  date = moment.utc().add(1, 'day').toDate() //.format('YYYY-MM-DD')
-  today = moment.utc()
-  min = moment.utc().startOf('day').toDate() //.format('YYYY-MM-DD')
-  max = moment.utc().startOf('day').add(1, 'year').toDate() //.format('YYYY-MM-DD')
-  locale = { monday: false, weekdays: moment.weekdaysShort(), months: moment.months() }
-  disabledDates = []
-  constructor(public navCtrl: NavController, public navParams: NavParams, public api: Api) {
-  }
+  date = moment
+    .utc()
+    .add(1, "day")
+    .toDate(); //.format('YYYY-MM-DD')
+  today = moment.utc();
+  min = moment
+    .utc()
+    .startOf("day")
+    .toDate(); //.format('YYYY-MM-DD')
+  max = moment
+    .utc()
+    .startOf("day")
+    .add(1, "year")
+    .toDate(); //.format('YYYY-MM-DD')
+  locale = { monday: false, weekdays: moment.weekdaysShort(), months: moment.months() };
+  disabledDates = [];
+  constructor(public navCtrl: NavController, public navParams: NavParams, public api: Api) {}
 
   ionViewDidLoad() {
     this.getReservations();
@@ -32,56 +40,58 @@ export class ReservationsPage {
   }
 
   getReservations() {
-    this.api.get('reservations?where[user_id]=' + this.api.user.id)
-      .then((data: any) => { this.reservations = data })
-      .catch(console.error)
+    this.api
+      .get("reservations?where[user_id]=" + this.api.user.id)
+      .then((data: any) => {
+        this.reservations = data;
+      })
+      .catch(console.error);
   }
 
   getZones() {
-    this.api.get('zones?with[]=schedule&scope[reservable]=')
+    this.api
+      .get("zones?with[]=schedule&scope[reservable]=")
       .then((data: any) => {
         this.zones = data;
         this.formatZones();
-        console.log("zones:", data)
       })
-      .catch(console.error)
+      .catch(console.error);
   }
 
   formatZones() {
     this.zones.forEach((zone) => {
       if (zone.schedule) {
-        zone.days = []
+        zone.days = [];
 
         if (zone.schedule.monday.length > 0 && zone.schedule.monday[0] != null) {
-          zone.days.push('monday')
+          zone.days.push("monday");
         }
 
         if (zone.schedule.tuesday.length > 0 && zone.schedule.tuesday[0] != null) {
-          zone.days.push('tuesday')
+          zone.days.push("tuesday");
         }
 
         if (zone.schedule.wednesday.length > 0 && zone.schedule.wednesday[0] != null) {
-          zone.days.push('wednesday')
+          zone.days.push("wednesday");
         }
 
         if (zone.schedule.thursday.length > 0 && zone.schedule.thursday[0] != null) {
-          zone.days.push('thursday')
+          zone.days.push("thursday");
         }
 
         if (zone.schedule.friday.length > 0 && zone.schedule.friday[0] != null) {
-          zone.days.push('friday')
+          zone.days.push("friday");
         }
 
         if (zone.schedule.saturday.length > 0 && zone.schedule.saturday[0] != null) {
-          zone.days.push('saturday')
+          zone.days.push("saturday");
         }
 
         if (zone.schedule.sunday.length > 0 && zone.schedule.sunday[0] != null) {
-          zone.days.push('sunday')
+          zone.days.push("sunday");
         }
-
       }
-    })
+    });
   }
 
   humanize(interval) {
@@ -103,35 +113,32 @@ export class ReservationsPage {
   }
 
   reservate(zone) {
-    this.selected = zone
+    this.selected = zone;
     this.disabledDates = this.getDisabledDays(this.selected.days);
     setTimeout(() => {
-      this.datepickerDirective.open()
-    }, 200)
+      this.datepickerDirective.open();
+    }, 200);
   }
 
   setDate(ev) {
-    var date = moment.utc(ev)
-    this.navCtrl.push('ZoneReservationPage', { zone: this.selected, date: date, schedule: this.selected.schedule }, { animation: 'ios-transition' })
+    var date = moment.utc(ev);
+    this.navCtrl.push(
+      "ZoneReservationPage",
+      { zone: this.selected, date: date, schedule: this.selected.schedule },
+      { animation: "ios-transition" }
+    );
   }
 
   gotoMyReservations() {
-    this.navCtrl.push('MyReservationsPage', { reservations: this.reservations });
+    this.navCtrl.push("MyReservationsPage", { reservations: this.reservations });
   }
-
-
 
   getDisabledDays(availables_days) {
     var notDays = this.arr_diff(availables_days, ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]);
-    var disabledDates = []
+    var disabledDates = [];
     notDays.forEach((day) => {
-      disabledDates = disabledDates.concat(
-        this.getDaysBetweenDates(
-          this.min, this.max, day
-        )
-      )
-    })
-    console.log(disabledDates)
+      disabledDates = disabledDates.concat(this.getDaysBetweenDates(this.min, this.max, day));
+    });
     return disabledDates;
   }
 
@@ -150,7 +157,9 @@ export class ReservationsPage {
   }
 
   arr_diff(a1, a2) {
-    var a = [], diff = [], i = 0;
+    var a = [],
+      diff = [],
+      i = 0;
 
     for (i = 0; i < a1.length; i++) {
       a[a1[i]] = true;

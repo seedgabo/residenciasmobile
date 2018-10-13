@@ -2,7 +2,8 @@
 
   <ion-navbar>
 
-    <ion-title> {{('crud.' + (ticket.id ? 'edit' : 'add')) | trans }} {{ 'literals.ticket' | trans }} </ion-title>
+    <ion-title> {{('crud.' + (ticket.id ? 'edit' : 'add')) | trans }} {{ 'literals.ticket' | trans
+      }} </ion-title>
     <ion-buttons end>
       <button ion-button icon-only clear (click)="dismiss()">
         <ion-icon name="close"></ion-icon>
@@ -23,6 +24,15 @@
       <ion-label floating>{{'literals.text' | trans }}</ion-label>
       <ion-textarea [(ngModel)]="ticket.text"></ion-textarea>
     </ion-item>
+    <ion-item>
+      <ion-label floating>{{'literals.category' | trans }}</ion-label>
+      <ion-select [(ngModel)]="ticket.category" [disabled]="ticket.id">
+        <ion-option *ngFor="let category of categories" [value]="category">
+          {{'literals.' + category | trans }}
+        </ion-option>
+      </ion-select>
+    </ion-item>
+
     <ion-item>
       <ion-label floating>{{'literals.status' | trans }}</ion-label>
       <ion-select [(ngModel)]="ticket.status" [disabled]="!ticket.id">

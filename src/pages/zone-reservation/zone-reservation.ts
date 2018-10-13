@@ -92,16 +92,22 @@ export class ZoneReservationPage {
     }
     var alert = this.alert.create({
       title: this.api.trans('literals.reservation') + " " + this.zone.name,
-      message: this.api.trans("__.elija la cantidad de personas"),
       inputs: [
         {
           max: parseInt(interval.available),
           min: 1,
           value: "1",
           type: "number",
-          label: this.api.trans("literals.quotas"),
-          placeholder: this.api.trans("literals.quotas"),
+          label: this.api.trans("__.elija la cantidad de personas"),
+          placeholder: this.api.trans("__.elija la cantidad de personas"),
           name: "quotas"
+        },
+        {
+          value: "",
+          type: "text",
+          label: this.api.trans("literals.notes"),
+          placeholder: this.api.trans("literals.notes"),
+          name: "note"
         }
       ],
       buttons: [
@@ -114,7 +120,7 @@ export class ZoneReservationPage {
           text: this.api.trans('literals.reservate'),
           handler: (data) => {
             if (data.quotas > 0)
-              this.postReservation(interval, data.quotas)
+              this.postReservation(interval, data)
           }
         },
       ]
@@ -217,12 +223,14 @@ export class ZoneReservationPage {
     })
   }
 
-  postReservation(interval, quotas) {
+  postReservation(interval, data) {
+    var {quotas,note} = data;
     this.api.post('reservations',
       {
         quotas: quotas,
         zone_id: this.zone.id,
         user_id: this.api.user.id,
+        note: note,
         start: interval.start.clone().local().format("YYYY-MM-DD HH:mm"),
         end: interval.end.clone().local().format("YYYY-MM-DD HH:mm"),
       })
