@@ -25,8 +25,8 @@ export class TicketEditorPage {
     if (navParams.get("ticket")) {
       this.ticket = navParams.get("ticket");
     }
-    if (this.api.settings.tickets_tickets_categories) {
-      this.categories = this.api.settings.tickets_tickets_categories.split(",");
+    if (api.settings.tickets_categories) {
+      this.categories = api.settings.tickets_categories.split(",");
     }
   }
 

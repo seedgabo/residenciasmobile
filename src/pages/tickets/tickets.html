@@ -17,13 +17,15 @@
   <ion-refresher (ionRefresh)="getTickets($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
-  <ion-card>
+  <ion-card *ngIf="tickets  && tickets.length > 0">
     <ion-list [virtualScroll]="tickets" approxItemHeight="88px">
       <ion-item-sliding *virtualItem="let ticket">
-        <button ion-item (click)="viewTicket(ticket)" (press)="actions(ticket)" class="ticket-item" [ngClass]="ticket.status">
+        <button ion-item (click)="viewTicket(ticket)" (press)="actions(ticket)" class="ticket-item"
+                [ngClass]="ticket.status">
           <!-- <span item-left class="indicator"></span> -->
           <h2>{{ticket.subject}}</h2>
-          <ion-badge ion-text color="light" [ngClass]="ticket.status">{{'literals.'+ ticket.status | trans }}</ion-badge>
+          <ion-badge ion-text color="light" [ngClass]="ticket.status">{{'literals.'+ ticket.status
+            | trans }}</ion-badge>
           <p>
             <b>
               {{ '__.updated_at' | trans }}
@@ -46,14 +48,14 @@
         </ion-item-options>
       </ion-item-sliding>
     </ion-list>
-    <div *ngIf="tickets  && tickets.length == 0 && !loading" text-center>
-      <img src="assets/logo-happy.png" alt="Good" style="margin: 0 auto; height: 200px;width:50%">
-      <h2 ion-text color="secondary">
-        {{'__.no hay tickets' | trans }}
-      </h2>
-    </div>
 
   </ion-card>
+  <div *ngIf="tickets  && tickets.length == 0 && !loading" text-center>
+    <img src="assets/logo-happy.png" alt="Good" style="margin: 0 auto; height: 200px;width:50%">
+    <h2 ion-text color="secondary">
+      {{'__.no hay tickets' | trans }}
+    </h2>
+  </div>
   <ion-fab bottom right>
     <button ion-fab color="favorite" (click)="addTicket()">
       <ion-icon name="add"></ion-icon>
