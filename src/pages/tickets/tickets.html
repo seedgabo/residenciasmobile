@@ -17,7 +17,7 @@
   <ion-refresher (ionRefresh)="getTickets($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
-  <ion-card *ngIf="tickets  && tickets.length > 0">
+  <ion-card>
     <ion-list [virtualScroll]="tickets" approxItemHeight="88px">
       <ion-item-sliding *virtualItem="let ticket">
         <button ion-item (click)="viewTicket(ticket)" (press)="actions(ticket)" class="ticket-item"
@@ -50,7 +50,7 @@
     </ion-list>
 
   </ion-card>
-  <div *ngIf="tickets  && tickets.length == 0 && !loading" text-center>
+  <div *ngIf="tickets && tickets.length == 0 && !loading" text-center>
     <img src="assets/logo-happy.png" alt="Good" style="margin: 0 auto; height: 200px;width:50%">
     <h2 ion-text color="secondary">
       {{'__.no hay tickets' | trans }}
