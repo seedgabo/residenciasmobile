@@ -4,6 +4,7 @@ import { Api } from "../../providers/api";
 import { DatePickerDirective } from "datepicker-ionic2";
 import { IonicPage } from "ionic-angular";
 import moment from "moment";
+import { Lightbox } from "ngx-lightbox";
 
 @IonicPage()
 @Component({
@@ -32,11 +33,33 @@ export class ReservationsPage {
     .toDate(); //.format('YYYY-MM-DD')
   locale = { monday: false, weekdays: moment.weekdaysShort(), months: moment.months() };
   disabledDates = [];
-  constructor(public navCtrl: NavController, public navParams: NavParams, public api: Api) {}
+  albums = {};
+  constructor(public navCtrl: NavController, public navParams: NavParams, public api: Api, public lightBox: Lightbox) {}
 
   ionViewDidLoad() {
     this.getReservations();
     this.getZones();
+  }
+
+  async openImages(zone) {
+    if (!this.albums[zone.id]) {
+      var images = zone.images;
+      var pics = [{ src: zone.image_url, thumb: zone.image_url, caption: zone.name }];
+      images.forEach((i) => {
+        pics.push({
+          src: i.url,
+          thumb: i.url,
+          caption: zone.name
+        });
+      });
+      this.albums[zone.id] = pics;
+    }
+    this.lightBox.open(this.albums[zone.id], 0, {
+      fitImageInViewPort: true,
+      alwaysShowNavOnTouchDevices: true,
+      centerVertically: true,
+      showImageNumberLabel: true
+    });
   }
 
   getReservations() {
@@ -50,7 +73,7 @@ export class ReservationsPage {
 
   getZones() {
     this.api
-      .get("zones?with[]=schedule&scope[reservable]=")
+      .get("zones?with[]=images&with[]=schedule&scope[reservable]=")
       .then((data: any) => {
         this.zones = data;
         this.formatZones();

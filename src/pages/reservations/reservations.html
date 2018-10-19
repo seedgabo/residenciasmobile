@@ -16,7 +16,13 @@
     <ion-row responsive-sm>
       <ion-col *ngFor="let zone of zones" col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xs-4>
         <ion-card>
-          <img [src]="zone.image_url" style="height:200px;width:100%" onerror="this.src= 'assets/placeholder.png' ">
+          <div class="img-container">
+            <img (click)="openImages(zone)" [src]="zone.image_url" style="height:200px;width:100%"
+                 onerror="this.src= 'assets/placeholder.png' ">
+            <div class="click-to-see" (click)="openImages(zone)">
+              {{'literals.view_resource' | trans}} {{'literals.images' | trans }}
+            </div>
+          </div>
 
           <ion-item>
             <ion-icon color="primary" name="pin" item-start large></ion-icon>
@@ -53,6 +59,6 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-  <span ion-datepicker [disabledDates]="disabledDates" [localeStrings]="locale" (ionChanged)="setDate($event)" [value]="date"
-    [min]="min" clear class="ScheduleDate"></span>
+  <span ion-datepicker [disabledDates]="disabledDates" [localeStrings]="locale" (ionChanged)="setDate($event)"
+        [value]="date" [min]="min" clear class="ScheduleDate"></span>
 </ion-content>

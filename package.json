@@ -85,6 +85,7 @@
     "jquery": "^3.2.1",
     "laravel-echo": "^1.3.5",
     "moment-weekdaysin": "^1.0.1",
+    "ngx-lightbox": "^1.1.0",
     "onesignal-cordova-plugin": "^2.3.3",
     "pusher-js": "^4.1.0",
     "raven-js": "^3.24.0",

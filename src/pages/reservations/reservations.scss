@@ -1,3 +1,32 @@
 page-reservations {
+  .img-container {
+    position: relative;
+    max-height: 220px;
+    width: 100%;
 
+    .click-to-see {
+      opacity: 0;
+      font-weight: 900;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+      background-color: color($colors, 'primary');
+      color: white;
+      font-size: 13px;
+      padding: 10px 14px;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      text-align: center;
+      transition: opacity ease-in-out .2s;
+    }
+
+    &:hover {
+      .click-to-see {
+        opacity: 1;
+      }
+    }
+  }
 }
