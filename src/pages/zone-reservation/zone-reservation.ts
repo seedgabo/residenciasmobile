@@ -35,6 +35,7 @@ export class ZoneReservationPage {
     console.log(this.zone);
     this.buildList();
     this.getReservations();
+    console.log({ component: this });
   }
 
   buildList() {
@@ -68,20 +69,24 @@ export class ZoneReservationPage {
         .startOf("day")
         .add(element[1].split(":")[0], "hours")
         .add(element[1].split(":")[1], "minutes");
+      console.log(start.format(), end.format());
       if (start > moment() && end > moment()) {
         var ref = {
           available: this.zone.limit_user == 0 || this.zone.limit_user == null ? Number.MAX_SAFE_INTEGER : this.zone.limit_user,
           limit_user: this.zone.limit_user,
           start: start,
           end: end,
-          ref: start.local().format("HH:mm")
+          ref: start
+            .clone()
+            // .local()
+            .format("HH:mm")
         };
         this.options[this.options.length] = ref;
         this.collection[
           "" +
             start
-              .local()
               .clone()
+              // .local()
               .format("HH:mm")
         ] = ref;
       }
@@ -101,9 +106,7 @@ export class ZoneReservationPage {
       .then((data: any) => {
         this.reservations = data;
         data.forEach((reservation) => {
-          var ref = moment(reservation.start)
-            .local()
-            .format("HH:mm");
+          var ref = moment(reservation.start).format("HH:mm");
           if (this.collection[ref]) {
             this.collection[ref].available -= reservation.quotas;
             if (reservation.user_id === this.api.user.id) {
@@ -174,35 +177,35 @@ export class ZoneReservationPage {
         if (
           moment
             .utc(reserv.start)
-            .local()
+            // .local()
             .format("HH:mm") ==
             moment
               .utc(interval.start)
-              .local()
+              // .local()
               .format("HH:mm") ||
           moment
             .utc(reserv.start)
-            .local()
+            // .local()
             .format("HH:mm") ==
             moment
               .utc(interval.end)
-              .local()
+              // .local()
               .format("HH:mm") ||
           moment
             .utc(reserv.end)
-            .local()
+            // .local()
             .format("HH:mm") ==
             moment
               .utc(interval.start)
-              .local()
+              // .local()
               .format("HH:mm") ||
           moment
             .utc(reserv.end)
-            .local()
+            // .local()
             .format("HH:mm") ==
             moment
               .utc(interval.end)
-              .local()
+              // .local()
               .format("HH:mm")
         ) {
           reservable = false;
@@ -304,11 +307,11 @@ export class ZoneReservationPage {
         note: note,
         start: interval.start
           .clone()
-          .local()
+          // .local()
           .format("YYYY-MM-DD HH:mm"),
         end: interval.end
           .clone()
-          .local()
+          // .local()
           .format("YYYY-MM-DD HH:mm")
       })
       .then((data) => {
