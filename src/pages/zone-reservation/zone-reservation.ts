@@ -162,7 +162,16 @@ export class ZoneReservationPage {
           cssClass: "secondary",
           text: this.api.trans("literals.reservate"),
           handler: (data) => {
-            if (data.quotas > 0) this.postReservation(interval, data);
+            if (data.quotas > 0 && data.quotas <= parseInt(interval.available)) {
+              this.postReservation(interval, data);
+            } else {
+              this.alert
+                .create({
+                  title: this.api.trans("__.Cantidad Invalida"),
+                  buttons: ["Ok"]
+                })
+                .present();
+            }
           }
         }
       ]
